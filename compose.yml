@@ -1,0 +1,30 @@
+version: '3.8'
+
+services:
+  postgres:
+    image: bitnami/postgresql:latest
+    environment:
+      - POSTGRESQL_USERNAME=${DB_USER:-postgres}
+      - POSTGRESQL_PASSWORD=${DB_PASS:-postgres}
+      - POSTGRESQL_DATABASE=${DB_NAME:-mydatabase}
+      - POSTGRESQL_PORT_NUMBER=${DB_PORT:-5432}
+    volumes:
+      - postgres-data:/bitnami/postgresql
+    ports:
+      - "5432:5432"
+
+  pgadmin:
+    image: dpage/pgadmin4:latest
+    environment:
+      - PGADMIN_DEFAULT_EMAIL=admin@example.com
+      - PGADMIN_DEFAULT_PASSWORD=admin
+    volumes:
+      - pgadmin-data:/var/lib/pgadmin
+    ports:
+      - "80:80"
+
+volumes:
+  postgres-data:
+    driver: local
+  pgadmin-data:
+    driver: local

@@ -1,0 +1,490 @@
+2025-03-16 18:21:16 - __main__ - [92mINFO[0m - Cargado user_details: 27 registros
+2025-03-16 18:21:16 - __main__ - [92mINFO[0m - Cargado anime_dataset: 80 registros
+2025-03-16 18:21:16 - __main__ - [92mINFO[0m - Cargado user_score: 365 registros
+2025-03-16 18:21:16 - __main__ - [92mINFO[0m - [92mIniciando preprocess_data...[0m
+2025-03-16 18:21:16 - __main__ - [92mINFO[0m - [92mpreprocess_data completado.[0m
+2025-03-16 18:21:17 - __main__ - [91mCRITICAL[0m - Error en ejecución: 'GeneticRuleMiner' object has no attribute 'run'
+Traceback (most recent call last):
+  File "/home/user/UNIVERSIDAD/TFG/anime_dataset_generator/FINAL/train.py", line 190, in main
+    best_rule, fitness = miner.run(
+                         ^^^^^^^^^
+AttributeError: 'GeneticRuleMiner' object has no attribute 'run'
+2025-03-16 18:23:17 - __main__ - [92mINFO[0m - Cargado user_details: 27 registros
+2025-03-16 18:23:17 - __main__ - [92mINFO[0m - Cargado anime_dataset: 80 registros
+2025-03-16 18:23:17 - __main__ - [92mINFO[0m - Cargado user_score: 365 registros
+2025-03-16 18:23:17 - __main__ - [92mINFO[0m - [92mIniciando preprocess_data...[0m
+2025-03-16 18:23:17 - __main__ - [92mINFO[0m - [92mpreprocess_data completado.[0m
+2025-03-16 18:23:17 - __main__ - [92mINFO[0m - [92mIniciando run...[0m
+2025-03-16 18:23:17 - __main__ - [92mINFO[0m - Generación 0: Fitness=0.6000
+2025-03-16 18:23:17 - __main__ - [92mINFO[0m - Generación 1: Fitness=0.6000
+2025-03-16 18:23:17 - __main__ - [92mINFO[0m - Generación 2: Fitness=0.6000
+2025-03-16 18:23:17 - __main__ - [92mINFO[0m - Generación 3: Fitness=0.6000
+2025-03-16 18:23:17 - __main__ - [92mINFO[0m - Generación 4: Fitness=0.6000
+2025-03-16 18:23:17 - __main__ - [92mINFO[0m - Generación 5: Fitness=0.6000
+2025-03-16 18:23:18 - __main__ - [92mINFO[0m - Generación 6: Fitness=0.6000
+2025-03-16 18:23:18 - __main__ - [92mINFO[0m - Generación 7: Fitness=0.6000
+2025-03-16 18:23:18 - __main__ - [92mINFO[0m - Generación 8: Fitness=0.6000
+2025-03-16 18:23:18 - __main__ - [92mINFO[0m - Generación 9: Fitness=0.6000
+2025-03-16 18:23:18 - __main__ - [92mINFO[0m - Generación 10: Fitness=0.6000
+2025-03-16 18:23:18 - __main__ - [92mINFO[0m - Generación 11: Fitness=0.6000
+2025-03-16 18:23:18 - __main__ - [92mINFO[0m - Generación 12: Fitness=0.6000
+2025-03-16 18:23:18 - __main__ - [92mINFO[0m - Generación 13: Fitness=0.6000
+2025-03-16 18:23:18 - __main__ - [92mINFO[0m - Generación 14: Fitness=0.6000
+2025-03-16 18:23:18 - __main__ - [92mINFO[0m - Generación 15: Fitness=0.6000
+2025-03-16 18:23:18 - __main__ - [92mINFO[0m - Generación 16: Fitness=0.6000
+2025-03-16 18:23:18 - __main__ - [92mINFO[0m - Generación 17: Fitness=0.6000
+2025-03-16 18:23:18 - __main__ - [92mINFO[0m - Generación 18: Fitness=0.6000
+2025-03-16 18:23:18 - __main__ - [92mINFO[0m - Generación 19: Fitness=0.6000
+2025-03-16 18:23:18 - __main__ - [92mINFO[0m - Generación 20: Fitness=0.6000
+2025-03-16 18:23:18 - __main__ - [92mINFO[0m - Generación 21: Fitness=0.6000
+2025-03-16 18:23:18 - __main__ - [92mINFO[0m - Generación 22: Fitness=0.6000
+2025-03-16 18:23:18 - __main__ - [92mINFO[0m - Generación 23: Fitness=0.6000
+2025-03-16 18:23:18 - __main__ - [92mINFO[0m - Generación 24: Fitness=0.6000
+2025-03-16 18:23:19 - __main__ - [92mINFO[0m - Generación 25: Fitness=0.6000
+2025-03-16 18:23:19 - __main__ - [92mINFO[0m - Generación 26: Fitness=0.6000
+2025-03-16 18:23:19 - __main__ - [92mINFO[0m - Generación 27: Fitness=0.6000
+2025-03-16 18:23:19 - __main__ - [92mINFO[0m - Generación 28: Fitness=0.6000
+2025-03-16 18:23:19 - __main__ - [92mINFO[0m - Generación 29: Fitness=0.6000
+2025-03-16 18:23:19 - __main__ - [92mINFO[0m - Generación 30: Fitness=0.6000
+2025-03-16 18:23:19 - __main__ - [92mINFO[0m - Generación 31: Fitness=0.6000
+2025-03-16 18:23:19 - __main__ - [92mINFO[0m - Generación 32: Fitness=0.6000
+2025-03-16 18:23:19 - __main__ - [92mINFO[0m - Generación 33: Fitness=0.6000
+2025-03-16 18:23:19 - __main__ - [92mINFO[0m - Generación 34: Fitness=0.6000
+2025-03-16 18:23:19 - __main__ - [92mINFO[0m - Generación 35: Fitness=0.6000
+2025-03-16 18:23:19 - __main__ - [92mINFO[0m - Generación 36: Fitness=0.6000
+2025-03-16 18:23:19 - __main__ - [92mINFO[0m - Generación 37: Fitness=0.6000
+2025-03-16 18:23:19 - __main__ - [92mINFO[0m - Generación 38: Fitness=0.6000
+2025-03-16 18:23:19 - __main__ - [92mINFO[0m - Generación 39: Fitness=0.6000
+2025-03-16 18:23:19 - __main__ - [92mINFO[0m - Generación 40: Fitness=0.6000
+2025-03-16 18:23:19 - __main__ - [92mINFO[0m - Generación 41: Fitness=0.6000
+2025-03-16 18:23:19 - __main__ - [92mINFO[0m - Generación 42: Fitness=0.6000
+2025-03-16 18:23:19 - __main__ - [92mINFO[0m - Generación 43: Fitness=0.6000
+2025-03-16 18:23:19 - __main__ - [92mINFO[0m - Generación 44: Fitness=0.6000
+2025-03-16 18:23:20 - __main__ - [92mINFO[0m - Generación 45: Fitness=0.6000
+2025-03-16 18:23:20 - __main__ - [92mINFO[0m - Generación 46: Fitness=0.6000
+2025-03-16 18:23:20 - __main__ - [92mINFO[0m - Generación 47: Fitness=0.6000
+2025-03-16 18:23:20 - __main__ - [92mINFO[0m - Generación 48: Fitness=0.6000
+2025-03-16 18:23:20 - __main__ - [92mINFO[0m - Generación 49: Fitness=0.6000
+2025-03-16 18:23:20 - __main__ - [92mINFO[0m - Generación 50: Fitness=0.6000
+2025-03-16 18:23:20 - __main__ - [92mINFO[0m - Generación 51: Fitness=0.6000
+2025-03-16 18:23:20 - __main__ - [92mINFO[0m - Generación 52: Fitness=0.6000
+2025-03-16 18:23:20 - __main__ - [92mINFO[0m - Generación 53: Fitness=0.6000
+2025-03-16 18:23:20 - __main__ - [92mINFO[0m - Generación 54: Fitness=0.6000
+2025-03-16 18:23:20 - __main__ - [92mINFO[0m - Generación 55: Fitness=0.6000
+2025-03-16 18:23:20 - __main__ - [92mINFO[0m - Generación 56: Fitness=0.6000
+2025-03-16 18:23:20 - __main__ - [92mINFO[0m - Generación 57: Fitness=0.6000
+2025-03-16 18:23:20 - __main__ - [92mINFO[0m - Generación 58: Fitness=0.6000
+2025-03-16 18:23:20 - __main__ - [92mINFO[0m - Generación 59: Fitness=0.6000
+2025-03-16 18:23:20 - __main__ - [92mINFO[0m - Generación 60: Fitness=0.6000
+2025-03-16 18:23:20 - __main__ - [92mINFO[0m - Generación 61: Fitness=0.6000
+2025-03-16 18:23:21 - __main__ - [92mINFO[0m - Generación 62: Fitness=0.6000
+2025-03-16 18:23:21 - __main__ - [92mINFO[0m - Generación 63: Fitness=0.6000
+2025-03-16 18:23:21 - __main__ - [92mINFO[0m - Generación 64: Fitness=0.6000
+2025-03-16 18:23:21 - __main__ - [92mINFO[0m - Generación 65: Fitness=0.6000
+2025-03-16 18:23:21 - __main__ - [92mINFO[0m - Generación 66: Fitness=0.6000
+2025-03-16 18:23:21 - __main__ - [92mINFO[0m - Generación 67: Fitness=0.6000
+2025-03-16 18:23:21 - __main__ - [92mINFO[0m - Generación 68: Fitness=0.6000
+2025-03-16 18:23:21 - __main__ - [92mINFO[0m - Generación 69: Fitness=0.6000
+2025-03-16 18:23:21 - __main__ - [92mINFO[0m - Generación 70: Fitness=0.6000
+2025-03-16 18:23:21 - __main__ - [92mINFO[0m - Generación 71: Fitness=0.6000
+2025-03-16 18:23:21 - __main__ - [92mINFO[0m - Generación 72: Fitness=0.6000
+2025-03-16 18:23:21 - __main__ - [92mINFO[0m - Generación 73: Fitness=0.6000
+2025-03-16 18:23:21 - __main__ - [92mINFO[0m - Generación 74: Fitness=0.6000
+2025-03-16 18:23:21 - __main__ - [92mINFO[0m - Generación 75: Fitness=0.6000
+2025-03-16 18:23:21 - __main__ - [92mINFO[0m - Generación 76: Fitness=0.6000
+2025-03-16 18:23:22 - __main__ - [92mINFO[0m - Generación 77: Fitness=0.6000
+2025-03-16 18:23:22 - __main__ - [92mINFO[0m - Generación 78: Fitness=0.6000
+2025-03-16 18:23:22 - __main__ - [92mINFO[0m - Generación 79: Fitness=0.6000
+2025-03-16 18:23:22 - __main__ - [92mINFO[0m - Generación 80: Fitness=0.6000
+2025-03-16 18:23:22 - __main__ - [92mINFO[0m - Generación 81: Fitness=0.6000
+2025-03-16 18:23:22 - __main__ - [92mINFO[0m - Generación 82: Fitness=0.6000
+2025-03-16 18:23:22 - __main__ - [92mINFO[0m - Generación 83: Fitness=0.6000
+2025-03-16 18:23:22 - __main__ - [92mINFO[0m - Generación 84: Fitness=0.6000
+2025-03-16 18:23:22 - __main__ - [92mINFO[0m - Generación 85: Fitness=0.6000
+2025-03-16 18:23:22 - __main__ - [92mINFO[0m - Generación 86: Fitness=0.6000
+2025-03-16 18:23:22 - __main__ - [92mINFO[0m - Generación 87: Fitness=0.6000
+2025-03-16 18:23:22 - __main__ - [92mINFO[0m - Generación 88: Fitness=0.6000
+2025-03-16 18:23:22 - __main__ - [92mINFO[0m - Generación 89: Fitness=0.6000
+2025-03-16 18:23:22 - __main__ - [92mINFO[0m - Generación 90: Fitness=0.6000
+2025-03-16 18:23:22 - __main__ - [92mINFO[0m - Generación 91: Fitness=0.6000
+2025-03-16 18:23:22 - __main__ - [92mINFO[0m - Generación 92: Fitness=0.6000
+2025-03-16 18:23:23 - __main__ - [92mINFO[0m - Generación 93: Fitness=0.6000
+2025-03-16 18:23:23 - __main__ - [92mINFO[0m - Generación 94: Fitness=0.6000
+2025-03-16 18:23:23 - __main__ - [92mINFO[0m - Generación 95: Fitness=0.6000
+2025-03-16 18:23:23 - __main__ - [92mINFO[0m - Generación 96: Fitness=0.6000
+2025-03-16 18:23:23 - __main__ - [92mINFO[0m - Generación 97: Fitness=0.6000
+2025-03-16 18:23:23 - __main__ - [92mINFO[0m - Generación 98: Fitness=0.6000
+2025-03-16 18:23:23 - __main__ - [92mINFO[0m - Generación 99: Fitness=0.6000
+2025-03-16 18:23:23 - __main__ - [92mINFO[0m - Generación 100: Fitness=0.6000
+2025-03-16 18:23:23 - __main__ - [92mINFO[0m - Generación 101: Fitness=0.6000
+2025-03-16 18:23:23 - __main__ - [92mINFO[0m - Generación 102: Fitness=0.6000
+2025-03-16 18:23:23 - __main__ - [92mINFO[0m - Generación 103: Fitness=0.6000
+2025-03-16 18:23:23 - __main__ - [92mINFO[0m - Generación 104: Fitness=0.6000
+2025-03-16 18:23:23 - __main__ - [92mINFO[0m - Generación 105: Fitness=0.6000
+2025-03-16 18:23:23 - __main__ - [92mINFO[0m - Generación 106: Fitness=0.6000
+2025-03-16 18:23:23 - __main__ - [92mINFO[0m - Generación 107: Fitness=0.6000
+2025-03-16 18:23:23 - __main__ - [92mINFO[0m - Generación 108: Fitness=0.6000
+2025-03-16 18:23:23 - __main__ - [92mINFO[0m - Generación 109: Fitness=0.6000
+2025-03-16 18:23:23 - __main__ - [92mINFO[0m - Generación 110: Fitness=0.6000
+2025-03-16 18:23:24 - __main__ - [92mINFO[0m - Generación 111: Fitness=0.6000
+2025-03-16 18:23:24 - __main__ - [92mINFO[0m - Generación 112: Fitness=0.6000
+2025-03-16 18:23:24 - __main__ - [92mINFO[0m - Generación 113: Fitness=0.6000
+2025-03-16 18:23:24 - __main__ - [92mINFO[0m - Generación 114: Fitness=0.6000
+2025-03-16 18:23:24 - __main__ - [92mINFO[0m - Generación 115: Fitness=0.6000
+2025-03-16 18:23:24 - __main__ - [92mINFO[0m - Generación 116: Fitness=0.6000
+2025-03-16 18:23:24 - __main__ - [92mINFO[0m - Generación 117: Fitness=0.6000
+2025-03-16 18:23:24 - __main__ - [92mINFO[0m - Generación 118: Fitness=0.6000
+2025-03-16 18:23:24 - __main__ - [92mINFO[0m - Generación 119: Fitness=0.6000
+2025-03-16 18:23:24 - __main__ - [92mINFO[0m - Generación 120: Fitness=0.6000
+2025-03-16 18:23:24 - __main__ - [92mINFO[0m - Generación 121: Fitness=0.6000
+2025-03-16 18:23:24 - __main__ - [92mINFO[0m - Generación 122: Fitness=0.6000
+2025-03-16 18:23:24 - __main__ - [92mINFO[0m - Generación 123: Fitness=0.6000
+2025-03-16 18:23:24 - __main__ - [92mINFO[0m - Generación 124: Fitness=0.6000
+2025-03-16 18:23:24 - __main__ - [92mINFO[0m - Generación 125: Fitness=0.6000
+2025-03-16 18:23:24 - __main__ - [92mINFO[0m - Generación 126: Fitness=0.6000
+2025-03-16 18:23:25 - __main__ - [92mINFO[0m - Generación 127: Fitness=0.6000
+2025-03-16 18:23:25 - __main__ - [92mINFO[0m - Generación 128: Fitness=0.6000
+2025-03-16 18:23:25 - __main__ - [92mINFO[0m - Generación 129: Fitness=0.6000
+2025-03-16 18:23:25 - __main__ - [92mINFO[0m - Generación 130: Fitness=0.6000
+2025-03-16 18:23:25 - __main__ - [92mINFO[0m - Generación 131: Fitness=0.6000
+2025-03-16 18:23:25 - __main__ - [92mINFO[0m - Generación 132: Fitness=0.6000
+2025-03-16 18:23:25 - __main__ - [92mINFO[0m - Generación 133: Fitness=0.6000
+2025-03-16 18:23:25 - __main__ - [92mINFO[0m - Generación 134: Fitness=0.6000
+2025-03-16 18:23:25 - __main__ - [92mINFO[0m - Generación 135: Fitness=0.6000
+2025-03-16 18:23:25 - __main__ - [92mINFO[0m - Generación 136: Fitness=0.6000
+2025-03-16 18:23:25 - __main__ - [92mINFO[0m - Generación 137: Fitness=0.6000
+2025-03-16 18:23:26 - __main__ - [92mINFO[0m - Generación 138: Fitness=0.6000
+2025-03-16 18:23:26 - __main__ - [92mINFO[0m - Generación 139: Fitness=0.6000
+2025-03-16 18:23:26 - __main__ - [92mINFO[0m - Generación 140: Fitness=0.6000
+2025-03-16 18:23:26 - __main__ - [92mINFO[0m - Generación 141: Fitness=0.6000
+2025-03-16 18:23:26 - __main__ - [92mINFO[0m - Generación 142: Fitness=0.6000
+2025-03-16 18:23:26 - __main__ - [92mINFO[0m - Generación 143: Fitness=0.6000
+2025-03-16 18:23:26 - __main__ - [92mINFO[0m - Generación 144: Fitness=0.6000
+2025-03-16 18:23:26 - __main__ - [92mINFO[0m - Generación 145: Fitness=0.6000
+2025-03-16 18:23:26 - __main__ - [92mINFO[0m - Generación 146: Fitness=0.6000
+2025-03-16 18:23:26 - __main__ - [92mINFO[0m - Generación 147: Fitness=0.6000
+2025-03-16 18:23:26 - __main__ - [92mINFO[0m - Generación 148: Fitness=0.6000
+2025-03-16 18:23:26 - __main__ - [92mINFO[0m - Generación 149: Fitness=0.6000
+2025-03-16 18:23:26 - __main__ - [92mINFO[0m - Generación 150: Fitness=0.6000
+2025-03-16 18:23:26 - __main__ - [92mINFO[0m - Generación 151: Fitness=0.6000
+2025-03-16 18:23:26 - __main__ - [92mINFO[0m - Generación 152: Fitness=0.6000
+2025-03-16 18:23:26 - __main__ - [92mINFO[0m - Generación 153: Fitness=0.6000
+2025-03-16 18:23:27 - __main__ - [92mINFO[0m - Generación 154: Fitness=0.6000
+2025-03-16 18:23:27 - __main__ - [92mINFO[0m - Generación 155: Fitness=0.6000
+2025-03-16 18:23:27 - __main__ - [92mINFO[0m - Generación 156: Fitness=0.6000
+2025-03-16 18:23:27 - __main__ - [92mINFO[0m - Generación 157: Fitness=0.6000
+2025-03-16 18:23:27 - __main__ - [92mINFO[0m - Generación 158: Fitness=0.6000
+2025-03-16 18:23:27 - __main__ - [92mINFO[0m - Generación 159: Fitness=0.6000
+2025-03-16 18:23:27 - __main__ - [92mINFO[0m - Generación 160: Fitness=0.6000
+2025-03-16 18:23:27 - __main__ - [92mINFO[0m - Generación 161: Fitness=0.6000
+2025-03-16 18:23:27 - __main__ - [92mINFO[0m - Generación 162: Fitness=0.6000
+2025-03-16 18:23:27 - __main__ - [92mINFO[0m - Generación 163: Fitness=0.6000
+2025-03-16 18:23:27 - __main__ - [92mINFO[0m - Generación 164: Fitness=0.6000
+2025-03-16 18:23:27 - __main__ - [92mINFO[0m - Generación 165: Fitness=0.6000
+2025-03-16 18:23:27 - __main__ - [92mINFO[0m - Generación 166: Fitness=0.6000
+2025-03-16 18:23:27 - __main__ - [92mINFO[0m - Generación 167: Fitness=0.6000
+2025-03-16 18:23:27 - __main__ - [92mINFO[0m - Generación 168: Fitness=0.6000
+2025-03-16 18:23:28 - __main__ - [92mINFO[0m - Generación 169: Fitness=0.6000
+2025-03-16 18:23:28 - __main__ - [92mINFO[0m - Generación 170: Fitness=0.6000
+2025-03-16 18:23:28 - __main__ - [92mINFO[0m - Generación 171: Fitness=0.6000
+2025-03-16 18:23:28 - __main__ - [92mINFO[0m - Generación 172: Fitness=0.6000
+2025-03-16 18:23:28 - __main__ - [92mINFO[0m - Generación 173: Fitness=0.6000
+2025-03-16 18:23:28 - __main__ - [92mINFO[0m - Generación 174: Fitness=0.6000
+2025-03-16 18:23:28 - __main__ - [92mINFO[0m - Generación 175: Fitness=0.6000
+2025-03-16 18:23:28 - __main__ - [92mINFO[0m - Generación 176: Fitness=0.6000
+2025-03-16 18:23:28 - __main__ - [92mINFO[0m - Generación 177: Fitness=0.6000
+2025-03-16 18:23:28 - __main__ - [92mINFO[0m - Generación 178: Fitness=0.6000
+2025-03-16 18:23:28 - __main__ - [92mINFO[0m - Generación 179: Fitness=0.6000
+2025-03-16 18:23:28 - __main__ - [92mINFO[0m - Generación 180: Fitness=0.6000
+2025-03-16 18:23:28 - __main__ - [92mINFO[0m - Generación 181: Fitness=0.6000
+2025-03-16 18:23:28 - __main__ - [92mINFO[0m - Generación 182: Fitness=0.6000
+2025-03-16 18:23:28 - __main__ - [92mINFO[0m - Generación 183: Fitness=0.6000
+2025-03-16 18:23:29 - __main__ - [92mINFO[0m - Generación 184: Fitness=0.6000
+2025-03-16 18:23:29 - __main__ - [92mINFO[0m - Generación 185: Fitness=0.6000
+2025-03-16 18:23:29 - __main__ - [92mINFO[0m - Generación 186: Fitness=0.6000
+2025-03-16 18:23:29 - __main__ - [92mINFO[0m - Generación 187: Fitness=0.6000
+2025-03-16 18:23:29 - __main__ - [92mINFO[0m - Generación 188: Fitness=0.6000
+2025-03-16 18:23:29 - __main__ - [92mINFO[0m - Generación 189: Fitness=0.6000
+2025-03-16 18:23:29 - __main__ - [92mINFO[0m - Generación 190: Fitness=0.6000
+2025-03-16 18:23:29 - __main__ - [92mINFO[0m - Generación 191: Fitness=0.6000
+2025-03-16 18:23:29 - __main__ - [92mINFO[0m - Generación 192: Fitness=0.6000
+2025-03-16 18:23:29 - __main__ - [92mINFO[0m - Generación 193: Fitness=0.6000
+2025-03-16 18:23:29 - __main__ - [92mINFO[0m - Generación 194: Fitness=0.6000
+2025-03-16 18:23:29 - __main__ - [92mINFO[0m - Generación 195: Fitness=0.6000
+2025-03-16 18:23:29 - __main__ - [92mINFO[0m - Generación 196: Fitness=0.6000
+2025-03-16 18:23:29 - __main__ - [92mINFO[0m - Generación 197: Fitness=0.6000
+2025-03-16 18:23:29 - __main__ - [92mINFO[0m - Generación 198: Fitness=0.6000
+2025-03-16 18:23:29 - __main__ - [92mINFO[0m - Generación 199: Fitness=0.6000
+2025-03-16 18:23:29 - __main__ - [92mINFO[0m - [92mrun completado.[0m
+2025-03-16 18:23:29 - __main__ - [92mINFO[0m - 
+================ RESULTADO FINAL =================
+2025-03-16 18:23:29 - __main__ - [92mINFO[0m - Regla: SI  Academy,  Accompanying,  After,  Although,  Alvis,  America,  Archangel,  Arika,  Armageddon,  Armed,  Asakura,  Ayumi,  Ayumu,  Battousai,  Beneath,  Between,  Blanchett,  Built,  Capsules,  Caterina,  Caught,  Chidori,  Child,  Chiyo,  Chobit,  Clover,  Clowns,  Colony,  Coming,  Coordinator,  Couriers,  Creed,  Cunning,  Desert,  Directed,  During,  Echizen,  Empire,  Equipment,  Esther,  Evangelion,  Fantasy,  Feared,  Following,  Furthermore,  Fuuka,  Gendou,  Girls Love,  Gundam,  Gundanium,  Hachimitsu,  Having,  Heartnet,  Hideki,  Hitokiri,  Human,  Impact,  Influenced,  Jindai,  Joining,  Junko,  Kaneda,  Kasuga,  Kazami,  Kenkaku,  Knights,  Koyomi,  Lavie,  Little,  Luffy,  Mahou,  Mashiro,  Materializing,  Meister,  Melissa,  Meryl,  Methuselah,  Mikoto,  Milly,  Minagi,  Minami,  Minatsuki,  Mizuhara,  Monkey,  Moreover,  Nanoha,  National,  Naturals,  Peacecraft,  Persocoms,  Pirates,  Possessing,  Prefectural,  Racing,  Recognizing,  Revolution,  Rozen,  Rumble,  Rurouni,  Ryuusuke,  Sakura,  School,  Seeds,  Shima,  Shinbo,  Shinku,  Shinobu,  Shortly,  Shoujo,  Shoutarou,  Sister,  Slowly,  Solomon,  Street,  Strike,  Stronger,  Subaru,  Sunabouzu,  Supernatural,  Surviving,  Takahashi,  Takemoto,  Takumi,  Tennis,  Terrans,  Testarossa,  Their,  These,  Thompson,  Through,  Tokiha,  Tournament,  Train,  Tsuioku,  Tsukasa,  Typhoon,  Unable,  Unbeknownst,  Unlike,  Vatican,  Vixen,  While,  Witch,  Witches,  Yamada,  Yamato,  Yukio,  Yumemiya,  Zechs,  abandons,  ability,  abounds,  about,  absenteeism,  absurdity,  academic,  accept,  accident,  accuracy,  acquainted,  across,  adjustment,  adrift,  adversary,  affect,  affiliated,  afford,  after,  agonizing,  airships,  along,  already,  altered,  always,  amazing,  ambush,  amusement,  anyone,  apartment,  appearance,  appears,  arbitrates,  ashore,  asking,  aspire,  assassinated,  asset,  assigns,  assist,  attacks,  attempt,  attempts,  authorities,  authority,  avoiding,  avoids,  babes,  background,  barely,  battle,  battles,  becomes,  becoming,  befit,  befriends,  begins,  behind,  bestows,  between,  biological,  bizarre,  blasé,  bloodstained,  bonds,  bottom,  branch,  breakthrough,  bringing,  brought,  burdened,  called,  cannot,  capable,  captured,  carefree,  caught,  cause,  challenges,  champions,  change,  changing,  chaos,  chaotic,  check,  cherry,  childhood,  chooses,  christened,  clash,  classmates,  closer,  coexistence,  collect,  collide,  colonies,  colossal,  combat,  comical,  command,  competition,  complicate,  complicated,  complicates,  computers,  confess,  confinement,  conflict,  constant,  contact,  continues,  control,  cooperate,  corruption,  costs,  could,  country,  couriers,  create,  creating,  creator,  creature,  cries,  criminal,  culture,  custody,  custom,  cutting,  dangerous,  dangers,  daughter,  dazzles,  dealings,  dedicated,  delinquent,  delivery,  depicts,  desert,  destined,  destroyed,  destructive,  develop,  developing,  develops,  difficult,  diner,  disclosing,  discovery,  disorder,  disputes,  distinguished,  disturbances,  divided,  divulge,  dollmaker,  dolls,  dominant,  downhill,  downs,  dragged,  dream,  dreamed,  driving,  dunes,  earned,  earnest,  easily,  ecological,  effort,  elite,  elixir,  embracing,  emerge,  emotions,  endeavor,  endowed,  energetic,  enjoys,  enlists,  entails,  entertain,  environment,  escaping,  evening,  event,  every,  everyone,  evolve,  exactly,  exams,  existed,  expenses,  experience,  explores,  explosion,  extreme,  exuberant,  faces,  facing,  failing,  familial,  fearsome,  ferret,  ferry,  fifth,  final,  finds,  finished,  firepower,  flattens,  flourish,  follows,  fondness,  force,  forced,  forever,  found,  fraught,  friend,  friendship,  further,  garnering,  general,  gentle,  genuine,  gifting,  girls,  given,  glamour,  government,  grader,  graduate,  grant,  great,  greatest,  group,  groups,  guitar,  guitarist,  gunman,  hacker,  handled,  handling,  handyman,  harassed,  harbors,  hardships,  hearts,  helping,  herself,  hijack,  hoard,  hobbies,  homemade,  homeroom,  hopes,  hoping,  hostile,  house,  ideals,  identity,  ignites,  impostor,  improving,  inadvertently,  incidents,  indestructible,  inhospitable,  initially,  injured,  insatiable,  instead,  institution,  intelligence,  intention,  interested,  interesting,  introduces,  investigate,  joins,  jurisdiction,  keeps,  killer,  knees,  known,  lacks,  landing,  large,  later,  latest,  launched,  leader,  leading,  legend,  legendary,  lifetime,  likes,  little,  longs,  malicious,  masked,  matches,  matter,  means,  members,  memories,  mention,  methods,  middle,  militaristic,  misfits,  misunderstandings,  misusing,  moniker,  monitor,  monopoly,  morality,  mother,  motorcycles,  murder,  mysterious,  mysteriously,  mystery,  naive,  named,  nation,  nations,  night,  nonetheless,  nothing,  numerous,  occasionally,  officer,  often,  online,  operations,  order,  orders,  ordinary,  organization,  other,  painful,  parents,  particular,  particularly,  peaceful,  peculiar,  people,  perils,  period,  person,  personal,  pilot,  planet,  playing,  plethora,  political,  politics,  popular,  population,  positive,  possessive,  pottery,  powers,  precious,  presumes,  prevent,  previously,  princess,  problem,  prodigy,  produce,  produced,  profound,  proper,  psychic,  public,  purpose,  pushed,  putting,  quarantine,  quest,  quickly,  races,  ready,  reason,  rebellious,  rebels,  receiving,  records,  regard,  related,  relationships,  relative,  remain,  remains,  rescued,  rescues,  residence,  resolutely,  resort,  responsibilities,  responsible,  rests,  result,  results,  returns,  reveals,  riches,  riddled,  right,  rings,  roads,  rookie,  ruins,  ruled,  sacrifices,  safeguard,  saving,  school,  schools,  scientific,  season,  secretly,  seemingly,  seems,  select,  seniors,  sensei,  senseless,  sensible,  sensitive,  separates,  sergeants,  several,  shared,  shelter,  shortage,  shorter,  shroud,  sickly,  sight,  signs,  sister,  sizable,  skill,  slayer,  slight,  small,  social,  societies,  space,  specialized,  specific,  spends,  spirit,  split,  spring,  standard,  state,  steal,  story,  strange,  street,  streets,  strikes,  strives,  successes,  successful,  superhuman,  superior,  surreal,  surviving,  suspects,  swayed,  sweets,  sweltering,  sword,  swore,  takes,  taking,  talking,  teach,  teaches,  teammates,  tears,  teenage,  teenager,  teenagers,  temper,  temporarily,  tennis,  terrible,  terror,  terrorism,  terrorist,  their,  themselves,  theories,  there,  thing,  things,  thought,  threat,  threatened,  threats,  three,  throughout,  thrust,  title,  touching,  trail,  traits,  transfer,  transforms,  translator,  travels,  triggering,  troubled,  tweaked,  twofold,  ultimate,  unable,  unbreakable,  unconsciously,  underestimated,  units,  unnecessary,  upbringing,  uphold,  utility,  vampire,  vampires,  vanships,  vengeance,  version,  vicious,  virgin,  virtually,  virtuous,  voice,  walking,  wanders,  wants,  warring,  wasteland,  water,  weaken,  weaknesses,  weapon,  website,  western,  whereabouts,  whereas,  whether,  whirlpool,  whose,  winner,  wiping,  within,  without,  witnesses,  wondrous,  working,  works,  worthy,  years,  young,  younger,  youth, Adventure, Comedy, Completing, Cosmic, Fourteen, Great, Hatsunejima, Japan, Kingdom, Mithril, Nanoha, Stampede, Traumatized, Yuuta, completed, days_watched, decade, dropped, mankind, members, popularity, premiered, rank, request, scored_by, source, status, total_entries, watching, young ENTONCES rating_high
+2025-03-16 18:23:29 - __main__ - [92mINFO[0m - Fitness: 0.6000 (Confianza*0.7 + Soporte*0.3)
+2025-03-16 18:23:29 - __main__ - [92mINFO[0m - ==================================================
+2025-03-16 18:30:14 - __main__ - [92mINFO[0m - Cargado user_details: 27 registros
+2025-03-16 18:30:14 - __main__ - [92mINFO[0m - Cargado anime_dataset: 80 registros
+2025-03-16 18:30:14 - __main__ - [92mINFO[0m - Cargado user_score: 365 registros
+2025-03-16 18:30:14 - __main__ - [92mINFO[0m - [92mIniciando preprocess_data...[0m
+2025-03-16 18:30:15 - __main__ - [92mINFO[0m - [92mpreprocess_data completado.[0m
+2025-03-16 18:30:16 - __main__ - [92mINFO[0m - Distribución de targets:
+rating_high      163
+rating_medium     88
+rating_low        25
+Name: count, dtype: int64
+2025-03-16 18:30:16 - __main__ - [92mINFO[0m - [92mIniciando run...[0m
+2025-03-16 18:30:17 - __main__ - [92mINFO[0m - Generación 0: Fitness=0.5906
+2025-03-16 18:30:17 - __main__ - [92mINFO[0m - Generación 1: Fitness=0.5906
+2025-03-16 18:30:17 - __main__ - [92mINFO[0m - Generación 2: Fitness=0.5906
+2025-03-16 18:30:17 - __main__ - [92mINFO[0m - Generación 3: Fitness=0.5906
+2025-03-16 18:30:17 - __main__ - [92mINFO[0m - Generación 4: Fitness=0.5906
+2025-03-16 18:30:17 - __main__ - [92mINFO[0m - Generación 5: Fitness=0.5906
+2025-03-16 18:30:17 - __main__ - [92mINFO[0m - Generación 6: Fitness=0.5906
+2025-03-16 18:30:17 - __main__ - [92mINFO[0m - Generación 7: Fitness=0.5906
+2025-03-16 18:30:17 - __main__ - [92mINFO[0m - Generación 8: Fitness=0.5906
+2025-03-16 18:30:18 - __main__ - [92mINFO[0m - Generación 9: Fitness=0.5906
+2025-03-16 18:30:18 - __main__ - [92mINFO[0m - Generación 10: Fitness=0.5906
+2025-03-16 18:30:18 - __main__ - [92mINFO[0m - Generación 11: Fitness=0.5906
+2025-03-16 18:30:18 - __main__ - [92mINFO[0m - Generación 12: Fitness=0.5906
+2025-03-16 18:30:18 - __main__ - [92mINFO[0m - Generación 13: Fitness=0.5906
+2025-03-16 18:30:18 - __main__ - [92mINFO[0m - Generación 14: Fitness=0.5906
+2025-03-16 18:30:18 - __main__ - [92mINFO[0m - Generación 15: Fitness=0.5906
+2025-03-16 18:30:18 - __main__ - [92mINFO[0m - Generación 16: Fitness=0.5906
+2025-03-16 18:30:18 - __main__ - [92mINFO[0m - Generación 17: Fitness=0.5906
+2025-03-16 18:30:19 - __main__ - [92mINFO[0m - Generación 18: Fitness=0.5906
+2025-03-16 18:30:19 - __main__ - [92mINFO[0m - Generación 19: Fitness=0.5906
+2025-03-16 18:30:19 - __main__ - [92mINFO[0m - Generación 20: Fitness=0.5906
+2025-03-16 18:30:19 - __main__ - [92mINFO[0m - Generación 21: Fitness=0.5906
+2025-03-16 18:30:19 - __main__ - [92mINFO[0m - Generación 22: Fitness=0.5906
+2025-03-16 18:30:19 - __main__ - [92mINFO[0m - Generación 23: Fitness=0.5906
+2025-03-16 18:30:19 - __main__ - [92mINFO[0m - Generación 24: Fitness=0.5906
+2025-03-16 18:30:19 - __main__ - [92mINFO[0m - Generación 25: Fitness=0.5906
+2025-03-16 18:30:19 - __main__ - [92mINFO[0m - Generación 26: Fitness=0.5906
+2025-03-16 18:30:19 - __main__ - [92mINFO[0m - Generación 27: Fitness=0.5906
+2025-03-16 18:30:20 - __main__ - [92mINFO[0m - Generación 28: Fitness=0.5906
+2025-03-16 18:30:20 - __main__ - [92mINFO[0m - Generación 29: Fitness=0.5906
+2025-03-16 18:30:20 - __main__ - [92mINFO[0m - Generación 30: Fitness=0.5906
+2025-03-16 18:30:20 - __main__ - [92mINFO[0m - Generación 31: Fitness=0.5906
+2025-03-16 18:30:20 - __main__ - [92mINFO[0m - Generación 32: Fitness=0.5906
+2025-03-16 18:30:20 - __main__ - [92mINFO[0m - Generación 33: Fitness=0.5906
+2025-03-16 18:30:20 - __main__ - [92mINFO[0m - Generación 34: Fitness=0.5906
+2025-03-16 18:30:20 - __main__ - [92mINFO[0m - Generación 35: Fitness=0.5906
+2025-03-16 18:30:20 - __main__ - [92mINFO[0m - Generación 36: Fitness=0.5906
+2025-03-16 18:30:20 - __main__ - [92mINFO[0m - Generación 37: Fitness=0.5906
+2025-03-16 18:30:21 - __main__ - [92mINFO[0m - Generación 38: Fitness=0.5906
+2025-03-16 18:30:21 - __main__ - [92mINFO[0m - Generación 39: Fitness=0.5906
+2025-03-16 18:30:21 - __main__ - [92mINFO[0m - Generación 40: Fitness=0.5906
+2025-03-16 18:30:21 - __main__ - [92mINFO[0m - Generación 41: Fitness=0.5906
+2025-03-16 18:30:21 - __main__ - [92mINFO[0m - Generación 42: Fitness=0.5906
+2025-03-16 18:30:21 - __main__ - [92mINFO[0m - Generación 43: Fitness=0.5906
+2025-03-16 18:30:21 - __main__ - [92mINFO[0m - Generación 44: Fitness=0.5906
+2025-03-16 18:30:21 - __main__ - [92mINFO[0m - Generación 45: Fitness=0.5906
+2025-03-16 18:30:21 - __main__ - [92mINFO[0m - Generación 46: Fitness=0.5906
+2025-03-16 18:30:21 - __main__ - [92mINFO[0m - Generación 47: Fitness=0.5906
+2025-03-16 18:30:22 - __main__ - [92mINFO[0m - Generación 48: Fitness=0.5906
+2025-03-16 18:30:22 - __main__ - [92mINFO[0m - Generación 49: Fitness=0.5906
+2025-03-16 18:30:22 - __main__ - [92mINFO[0m - Generación 50: Fitness=0.5906
+2025-03-16 18:30:22 - __main__ - [92mINFO[0m - Generación 51: Fitness=0.5906
+2025-03-16 18:30:22 - __main__ - [92mINFO[0m - Generación 52: Fitness=0.5906
+2025-03-16 18:30:22 - __main__ - [92mINFO[0m - Generación 53: Fitness=0.5906
+2025-03-16 18:30:22 - __main__ - [92mINFO[0m - Generación 54: Fitness=0.5906
+2025-03-16 18:30:22 - __main__ - [92mINFO[0m - Generación 55: Fitness=0.5906
+2025-03-16 18:30:22 - __main__ - [92mINFO[0m - Generación 56: Fitness=0.5906
+2025-03-16 18:30:22 - __main__ - [92mINFO[0m - Generación 57: Fitness=0.5906
+2025-03-16 18:30:23 - __main__ - [92mINFO[0m - Generación 58: Fitness=0.5906
+2025-03-16 18:30:23 - __main__ - [92mINFO[0m - Generación 59: Fitness=0.5906
+2025-03-16 18:30:23 - __main__ - [92mINFO[0m - Generación 60: Fitness=0.5906
+2025-03-16 18:30:23 - __main__ - [92mINFO[0m - Generación 61: Fitness=0.5906
+2025-03-16 18:30:23 - __main__ - [92mINFO[0m - Generación 62: Fitness=0.5906
+2025-03-16 18:30:23 - __main__ - [92mINFO[0m - Generación 63: Fitness=0.5906
+2025-03-16 18:30:23 - __main__ - [92mINFO[0m - Generación 64: Fitness=0.5906
+2025-03-16 18:30:23 - __main__ - [92mINFO[0m - Generación 65: Fitness=0.5906
+2025-03-16 18:30:23 - __main__ - [92mINFO[0m - Generación 66: Fitness=0.5906
+2025-03-16 18:30:23 - __main__ - [92mINFO[0m - Generación 67: Fitness=0.5906
+2025-03-16 18:30:24 - __main__ - [92mINFO[0m - Generación 68: Fitness=0.5906
+2025-03-16 18:30:24 - __main__ - [92mINFO[0m - Generación 69: Fitness=0.5906
+2025-03-16 18:30:24 - __main__ - [92mINFO[0m - Generación 70: Fitness=0.5906
+2025-03-16 18:30:24 - __main__ - [92mINFO[0m - Generación 71: Fitness=0.5906
+2025-03-16 18:30:24 - __main__ - [92mINFO[0m - Generación 72: Fitness=0.5906
+2025-03-16 18:30:24 - __main__ - [92mINFO[0m - Generación 73: Fitness=0.5906
+2025-03-16 18:30:24 - __main__ - [92mINFO[0m - Generación 74: Fitness=0.5906
+2025-03-16 18:30:24 - __main__ - [92mINFO[0m - Generación 75: Fitness=0.5906
+2025-03-16 18:30:24 - __main__ - [92mINFO[0m - Generación 76: Fitness=0.5906
+2025-03-16 18:30:24 - __main__ - [92mINFO[0m - Generación 77: Fitness=0.5906
+2025-03-16 18:30:25 - __main__ - [92mINFO[0m - Generación 78: Fitness=0.5906
+2025-03-16 18:30:25 - __main__ - [92mINFO[0m - Generación 79: Fitness=0.5906
+2025-03-16 18:30:25 - __main__ - [92mINFO[0m - Generación 80: Fitness=0.5906
+2025-03-16 18:30:25 - __main__ - [92mINFO[0m - Generación 81: Fitness=0.5906
+2025-03-16 18:30:25 - __main__ - [92mINFO[0m - Generación 82: Fitness=0.5906
+2025-03-16 18:30:25 - __main__ - [92mINFO[0m - Generación 83: Fitness=0.5906
+2025-03-16 18:30:25 - __main__ - [92mINFO[0m - Generación 84: Fitness=0.5906
+2025-03-16 18:30:25 - __main__ - [92mINFO[0m - Generación 85: Fitness=0.5906
+2025-03-16 18:30:25 - __main__ - [92mINFO[0m - Generación 86: Fitness=0.5906
+2025-03-16 18:30:25 - __main__ - [92mINFO[0m - Generación 87: Fitness=0.5906
+2025-03-16 18:30:26 - __main__ - [92mINFO[0m - Generación 88: Fitness=0.5906
+2025-03-16 18:30:26 - __main__ - [92mINFO[0m - Generación 89: Fitness=0.5906
+2025-03-16 18:30:26 - __main__ - [92mINFO[0m - Generación 90: Fitness=0.5906
+2025-03-16 18:30:26 - __main__ - [92mINFO[0m - Generación 91: Fitness=0.5906
+2025-03-16 18:30:26 - __main__ - [92mINFO[0m - Generación 92: Fitness=0.5906
+2025-03-16 18:30:26 - __main__ - [92mINFO[0m - Generación 93: Fitness=0.5906
+2025-03-16 18:30:26 - __main__ - [92mINFO[0m - Generación 94: Fitness=0.5906
+2025-03-16 18:30:26 - __main__ - [92mINFO[0m - Generación 95: Fitness=0.5906
+2025-03-16 18:30:26 - __main__ - [92mINFO[0m - Generación 96: Fitness=0.5906
+2025-03-16 18:30:26 - __main__ - [92mINFO[0m - Generación 97: Fitness=0.5906
+2025-03-16 18:30:27 - __main__ - [92mINFO[0m - Generación 98: Fitness=0.5906
+2025-03-16 18:30:27 - __main__ - [92mINFO[0m - Generación 99: Fitness=0.5906
+2025-03-16 18:30:27 - __main__ - [92mINFO[0m - Generación 100: Fitness=0.5906
+2025-03-16 18:30:27 - __main__ - [92mINFO[0m - Generación 101: Fitness=0.5906
+2025-03-16 18:30:27 - __main__ - [92mINFO[0m - Generación 102: Fitness=0.5906
+2025-03-16 18:30:27 - __main__ - [92mINFO[0m - Generación 103: Fitness=0.5906
+2025-03-16 18:30:27 - __main__ - [92mINFO[0m - Generación 104: Fitness=0.5906
+2025-03-16 18:30:27 - __main__ - [92mINFO[0m - Generación 105: Fitness=0.5906
+2025-03-16 18:30:27 - __main__ - [92mINFO[0m - Generación 106: Fitness=0.5906
+2025-03-16 18:30:28 - __main__ - [92mINFO[0m - Generación 107: Fitness=0.5906
+2025-03-16 18:30:28 - __main__ - [92mINFO[0m - Generación 108: Fitness=0.5906
+2025-03-16 18:30:28 - __main__ - [92mINFO[0m - Generación 109: Fitness=0.5906
+2025-03-16 18:30:28 - __main__ - [92mINFO[0m - Generación 110: Fitness=0.5906
+2025-03-16 18:30:28 - __main__ - [92mINFO[0m - Generación 111: Fitness=0.5906
+2025-03-16 18:30:28 - __main__ - [92mINFO[0m - Generación 112: Fitness=0.5906
+2025-03-16 18:30:28 - __main__ - [92mINFO[0m - Generación 113: Fitness=0.5906
+2025-03-16 18:30:28 - __main__ - [92mINFO[0m - Generación 114: Fitness=0.5906
+2025-03-16 18:30:28 - __main__ - [92mINFO[0m - Generación 115: Fitness=0.5906
+2025-03-16 18:30:29 - __main__ - [92mINFO[0m - Generación 116: Fitness=0.5906
+2025-03-16 18:30:29 - __main__ - [92mINFO[0m - Generación 117: Fitness=0.5906
+2025-03-16 18:30:29 - __main__ - [92mINFO[0m - Generación 118: Fitness=0.5906
+2025-03-16 18:30:29 - __main__ - [92mINFO[0m - Generación 119: Fitness=0.5906
+2025-03-16 18:30:29 - __main__ - [92mINFO[0m - Generación 120: Fitness=0.5906
+2025-03-16 18:30:29 - __main__ - [92mINFO[0m - Generación 121: Fitness=0.5906
+2025-03-16 18:30:29 - __main__ - [92mINFO[0m - Generación 122: Fitness=0.5906
+2025-03-16 18:30:29 - __main__ - [92mINFO[0m - Generación 123: Fitness=0.5906
+2025-03-16 18:30:29 - __main__ - [92mINFO[0m - Generación 124: Fitness=0.5906
+2025-03-16 18:30:29 - __main__ - [92mINFO[0m - Generación 125: Fitness=0.5906
+2025-03-16 18:30:30 - __main__ - [92mINFO[0m - Generación 126: Fitness=0.5906
+2025-03-16 18:30:30 - __main__ - [92mINFO[0m - Generación 127: Fitness=0.5906
+2025-03-16 18:30:30 - __main__ - [92mINFO[0m - Generación 128: Fitness=0.5906
+2025-03-16 18:30:30 - __main__ - [92mINFO[0m - Generación 129: Fitness=0.5906
+2025-03-16 18:30:30 - __main__ - [92mINFO[0m - Generación 130: Fitness=0.5906
+2025-03-16 18:30:30 - __main__ - [92mINFO[0m - Generación 131: Fitness=0.5906
+2025-03-16 18:30:30 - __main__ - [92mINFO[0m - Generación 132: Fitness=0.5906
+2025-03-16 18:30:30 - __main__ - [92mINFO[0m - Generación 133: Fitness=0.5906
+2025-03-16 18:30:31 - __main__ - [92mINFO[0m - Generación 134: Fitness=0.5906
+2025-03-16 18:30:31 - __main__ - [92mINFO[0m - Generación 135: Fitness=0.5906
+2025-03-16 18:30:31 - __main__ - [92mINFO[0m - Generación 136: Fitness=0.5906
+2025-03-16 18:30:31 - __main__ - [92mINFO[0m - Generación 137: Fitness=0.5906
+2025-03-16 18:30:31 - __main__ - [92mINFO[0m - Generación 138: Fitness=0.5906
+2025-03-16 18:30:31 - __main__ - [92mINFO[0m - Generación 139: Fitness=0.5906
+2025-03-16 18:30:31 - __main__ - [92mINFO[0m - Generación 140: Fitness=0.5906
+2025-03-16 18:30:31 - __main__ - [92mINFO[0m - Generación 141: Fitness=0.5906
+2025-03-16 18:30:32 - __main__ - [92mINFO[0m - Generación 142: Fitness=0.5906
+2025-03-16 18:30:32 - __main__ - [92mINFO[0m - Generación 143: Fitness=0.5906
+2025-03-16 18:30:32 - __main__ - [92mINFO[0m - Generación 144: Fitness=0.5906
+2025-03-16 18:30:32 - __main__ - [92mINFO[0m - Generación 145: Fitness=0.5906
+2025-03-16 18:30:32 - __main__ - [92mINFO[0m - Generación 146: Fitness=0.5906
+2025-03-16 18:30:32 - __main__ - [92mINFO[0m - Generación 147: Fitness=0.5906
+2025-03-16 18:30:32 - __main__ - [92mINFO[0m - Generación 148: Fitness=0.5906
+2025-03-16 18:30:33 - __main__ - [92mINFO[0m - Generación 149: Fitness=0.5906
+2025-03-16 18:30:33 - __main__ - [92mINFO[0m - Generación 150: Fitness=0.5906
+2025-03-16 18:30:33 - __main__ - [92mINFO[0m - Generación 151: Fitness=0.5906
+2025-03-16 18:30:33 - __main__ - [92mINFO[0m - Generación 152: Fitness=0.5906
+2025-03-16 18:30:33 - __main__ - [92mINFO[0m - Generación 153: Fitness=0.5906
+2025-03-16 18:30:33 - __main__ - [92mINFO[0m - Generación 154: Fitness=0.5906
+2025-03-16 18:30:33 - __main__ - [92mINFO[0m - Generación 155: Fitness=0.5906
+2025-03-16 18:30:33 - __main__ - [92mINFO[0m - Generación 156: Fitness=0.5906
+2025-03-16 18:30:33 - __main__ - [92mINFO[0m - Generación 157: Fitness=0.5906
+2025-03-16 18:30:34 - __main__ - [92mINFO[0m - Generación 158: Fitness=0.5906
+2025-03-16 18:30:34 - __main__ - [92mINFO[0m - Generación 159: Fitness=0.5906
+2025-03-16 18:30:34 - __main__ - [92mINFO[0m - Generación 160: Fitness=0.5906
+2025-03-16 18:30:34 - __main__ - [92mINFO[0m - Generación 161: Fitness=0.5906
+2025-03-16 18:30:34 - __main__ - [92mINFO[0m - Generación 162: Fitness=0.5906
+2025-03-16 18:30:34 - __main__ - [92mINFO[0m - Generación 163: Fitness=0.5906
+2025-03-16 18:30:34 - __main__ - [92mINFO[0m - Generación 164: Fitness=0.5906
+2025-03-16 18:30:34 - __main__ - [92mINFO[0m - Generación 165: Fitness=0.5906
+2025-03-16 18:30:34 - __main__ - [92mINFO[0m - Generación 166: Fitness=0.5906
+2025-03-16 18:30:35 - __main__ - [92mINFO[0m - Generación 167: Fitness=0.5906
+2025-03-16 18:30:35 - __main__ - [92mINFO[0m - Generación 168: Fitness=0.5906
+2025-03-16 18:30:35 - __main__ - [92mINFO[0m - Generación 169: Fitness=0.5906
+2025-03-16 18:30:35 - __main__ - [92mINFO[0m - Generación 170: Fitness=0.5906
+2025-03-16 18:30:35 - __main__ - [92mINFO[0m - Generación 171: Fitness=0.5906
+2025-03-16 18:30:35 - __main__ - [92mINFO[0m - Generación 172: Fitness=0.5906
+2025-03-16 18:30:35 - __main__ - [92mINFO[0m - Generación 173: Fitness=0.5906
+2025-03-16 18:30:35 - __main__ - [92mINFO[0m - Generación 174: Fitness=0.5906
+2025-03-16 18:30:35 - __main__ - [92mINFO[0m - Generación 175: Fitness=0.5906
+2025-03-16 18:30:35 - __main__ - [92mINFO[0m - Generación 176: Fitness=0.5906
+2025-03-16 18:30:36 - __main__ - [92mINFO[0m - Generación 177: Fitness=0.5906
+2025-03-16 18:30:36 - __main__ - [92mINFO[0m - Generación 178: Fitness=0.5906
+2025-03-16 18:30:36 - __main__ - [92mINFO[0m - Generación 179: Fitness=0.5906
+2025-03-16 18:30:36 - __main__ - [92mINFO[0m - Generación 180: Fitness=0.5906
+2025-03-16 18:30:36 - __main__ - [92mINFO[0m - Generación 181: Fitness=0.5906
+2025-03-16 18:30:36 - __main__ - [92mINFO[0m - Generación 182: Fitness=0.5906
+2025-03-16 18:30:36 - __main__ - [92mINFO[0m - Generación 183: Fitness=0.5906
+2025-03-16 18:30:36 - __main__ - [92mINFO[0m - Generación 184: Fitness=0.5906
+2025-03-16 18:30:36 - __main__ - [92mINFO[0m - Generación 185: Fitness=0.5906
+2025-03-16 18:30:36 - __main__ - [92mINFO[0m - Generación 186: Fitness=0.5906
+2025-03-16 18:30:37 - __main__ - [92mINFO[0m - Generación 187: Fitness=0.5906
+2025-03-16 18:30:37 - __main__ - [92mINFO[0m - Generación 188: Fitness=0.5906
+2025-03-16 18:30:37 - __main__ - [92mINFO[0m - Generación 189: Fitness=0.5906
+2025-03-16 18:30:37 - __main__ - [92mINFO[0m - Generación 190: Fitness=0.5906
+2025-03-16 18:30:37 - __main__ - [92mINFO[0m - Generación 191: Fitness=0.5906
+2025-03-16 18:30:37 - __main__ - [92mINFO[0m - Generación 192: Fitness=0.5906
+2025-03-16 18:30:37 - __main__ - [92mINFO[0m - Generación 193: Fitness=0.5906
+2025-03-16 18:30:37 - __main__ - [92mINFO[0m - Generación 194: Fitness=0.5906
+2025-03-16 18:30:38 - __main__ - [92mINFO[0m - Generación 195: Fitness=0.5906
+2025-03-16 18:30:38 - __main__ - [92mINFO[0m - Generación 196: Fitness=0.5906
+2025-03-16 18:30:38 - __main__ - [92mINFO[0m - Generación 197: Fitness=0.5906
+2025-03-16 18:30:38 - __main__ - [92mINFO[0m - Generación 198: Fitness=0.5906
+2025-03-16 18:30:38 - __main__ - [92mINFO[0m - Generación 199: Fitness=0.5906
+2025-03-16 18:30:38 - __main__ - [92mINFO[0m - Generación 200: Fitness=0.5906
+2025-03-16 18:30:38 - __main__ - [92mINFO[0m - Generación 201: Fitness=0.5906
+2025-03-16 18:30:38 - __main__ - [92mINFO[0m - Generación 202: Fitness=0.5906
+2025-03-16 18:30:38 - __main__ - [92mINFO[0m - Generación 203: Fitness=0.5906
+2025-03-16 18:30:38 - __main__ - [92mINFO[0m - Generación 204: Fitness=0.5906
+2025-03-16 18:30:39 - __main__ - [92mINFO[0m - Generación 205: Fitness=0.5906
+2025-03-16 18:30:39 - __main__ - [92mINFO[0m - Generación 206: Fitness=0.5906
+2025-03-16 18:30:39 - __main__ - [92mINFO[0m - Generación 207: Fitness=0.5906
+2025-03-16 18:30:39 - __main__ - [92mINFO[0m - Generación 208: Fitness=0.5906
+2025-03-16 18:30:39 - __main__ - [92mINFO[0m - Generación 209: Fitness=0.5906
+2025-03-16 18:30:39 - __main__ - [92mINFO[0m - Generación 210: Fitness=0.5906
+2025-03-16 18:30:39 - __main__ - [92mINFO[0m - Generación 211: Fitness=0.5906
+2025-03-16 18:30:39 - __main__ - [92mINFO[0m - Generación 212: Fitness=0.5906
+2025-03-16 18:30:39 - __main__ - [92mINFO[0m - Generación 213: Fitness=0.5906
+2025-03-16 18:30:39 - __main__ - [92mINFO[0m - Generación 214: Fitness=0.5906
+2025-03-16 18:30:40 - __main__ - [92mINFO[0m - Generación 215: Fitness=0.5906
+2025-03-16 18:30:40 - __main__ - [92mINFO[0m - Generación 216: Fitness=0.5906
+2025-03-16 18:30:40 - __main__ - [92mINFO[0m - Generación 217: Fitness=0.5906
+2025-03-16 18:30:40 - __main__ - [92mINFO[0m - Generación 218: Fitness=0.5906
+2025-03-16 18:30:40 - __main__ - [92mINFO[0m - Generación 219: Fitness=0.5906
+2025-03-16 18:30:40 - __main__ - [92mINFO[0m - Generación 220: Fitness=0.5906
+2025-03-16 18:30:40 - __main__ - [92mINFO[0m - Generación 221: Fitness=0.5906
+2025-03-16 18:30:40 - __main__ - [92mINFO[0m - Generación 222: Fitness=0.5906
+2025-03-16 18:30:40 - __main__ - [92mINFO[0m - Generación 223: Fitness=0.5906
+2025-03-16 18:34:57 - __main__ - [92mINFO[0m - Cargado user_details: 27 registros
+2025-03-16 18:34:57 - __main__ - [92mINFO[0m - Cargado anime_dataset: 80 registros
+2025-03-16 18:34:57 - __main__ - [92mINFO[0m - Cargado user_score: 365 registros
+2025-03-16 18:34:57 - __main__ - [92mINFO[0m - [92mIniciando preprocess_data...[0m
+2025-03-16 18:34:57 - __main__ - [91mCRITICAL[0m - Error en ejecución: 'list' object has no attribute 'empty'
+Traceback (most recent call last):
+  File "/home/user/UNIVERSIDAD/TFG/anime_dataset_generator/FINAL/train.py", line 246, in main
+    df_preprocessed = preprocess_data(df_clean)  # Eliminado el muestreo del 10%
+                      ^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "/home/user/UNIVERSIDAD/TFG/anime_dataset_generator/FINAL/config.py", line 58, in wrapper
+    result = func(*args, **kwargs)
+             ^^^^^^^^^^^^^^^^^^^^^
+  File "/home/user/UNIVERSIDAD/TFG/anime_dataset_generator/FINAL/train.py", line 106, in preprocess_data
+    if not numeric_cols.empty:
+           ^^^^^^^^^^^^^^^^^^
+AttributeError: 'list' object has no attribute 'empty'
+2025-03-16 18:35:08 - __main__ - [92mINFO[0m - Cargado user_details: 27 registros
+2025-03-16 18:35:08 - __main__ - [92mINFO[0m - Cargado anime_dataset: 80 registros
+2025-03-16 18:35:08 - __main__ - [92mINFO[0m - Cargado user_score: 365 registros
+2025-03-16 18:35:08 - __main__ - [92mINFO[0m - [92mIniciando preprocess_data...[0m
+2025-03-16 18:35:08 - __main__ - [91mCRITICAL[0m - Error en ejecución: 'list' object has no attribute 'empty'
+Traceback (most recent call last):
+  File "/home/user/UNIVERSIDAD/TFG/anime_dataset_generator/FINAL/train.py", line 246, in main
+    df_preprocessed = preprocess_data(df_clean)  # Eliminado el muestreo del 10%
+                      ^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "/home/user/UNIVERSIDAD/TFG/anime_dataset_generator/FINAL/config.py", line 58, in wrapper
+    result = func(*args, **kwargs)
+             ^^^^^^^^^^^^^^^^^^^^^
+  File "/home/user/UNIVERSIDAD/TFG/anime_dataset_generator/FINAL/train.py", line 106, in preprocess_data
+    if not numeric_cols.empty:
+           ^^^^^^^^^^^^^^^^^^
+AttributeError: 'list' object has no attribute 'empty'
