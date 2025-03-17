@@ -1,6 +1,7 @@
 import io
 import logging
 import random
+import re
 from functools import wraps
 from typing import List, Set, Tuple
 
@@ -8,6 +9,7 @@ import pandas as pd
 from config import DBConfig, LogConfig
 from database import DatabaseManager
 from sklearn.preprocessing import StandardScaler
+from sqlalchemy import create_engine
 
 
 def validate_dataframe(*columns):
@@ -29,90 +31,123 @@ LogConfig.setup(enable_colors=True)
 logger = logging.getLogger(__name__)
 
 # -------------------------------
-# Data Manager usando DatabaseManager
+# Data Manager
 # -------------------------------
 class DataManager:
-    """Clase adaptada para usar DatabaseManager desde database.py"""
+    """SQLAlchemy y validación"""
     
     def __init__(self, db_config: DBConfig):
-        self.db_manager = DatabaseManager(config=db_config)
+        self.db_config = db_config
         
     @DatabaseManager.error_handler
     def load_data(self) -> Tuple[pd.DataFrame, pd.DataFrame, pd.DataFrame]:
-        """Carga datos usando el contexto de DatabaseManager."""
+        """Carga datos usando SQLAlchemy para compatibilidad."""
+        engine = create_engine(
+            f"postgresql://{self.db_config.user}:{self.db_config.password}@"
+            f"{self.db_config.host}:{self.db_config.port}/{self.db_config.database}"
+        )
         dfs = []
-        with self.db_manager.connection() as conn:
-            for table in ["user_details", "anime_dataset", "user_score"]:
-                dfs.append(pd.read_sql(f"SELECT * FROM {table}", conn))
+        for table in ["user_details", "anime_dataset", "user_score"]:
+            dfs.append(pd.read_sql_table(table, engine))  # <-- Método compatible
         return tuple(dfs)
 
     @staticmethod
     def merge_data(*dfs: pd.DataFrame) -> pd.DataFrame:
-        """Combina DataFrames con validación mejorada."""
+        """Combina DataFrames con relaciones correctas."""
         if len(dfs) != 3:
             raise ValueError("Se requieren exactamente 3 DataFrames")
             
-        merged = dfs[0].merge(
-            dfs[1], 
+        # 1. Merge user_scores (N) <-> user_details (1)
+        base = dfs[0].merge(  # user_scores
+            dfs[1],           # user_details
             left_on="user_id", 
             right_on="mal_id", 
             how="inner",
-            suffixes=("_user", "")
-        ).merge(
-            dfs[2], 
-            on="anime_id", 
-            how="inner"
+            validate="many_to_one",  # <-- Corrección clave
+            suffixes=("_score", "")
         )
+        
+        # 2. Merge resultante (N) <-> anime_dataset (1)
+        merged = base.merge(
+            dfs[2],  # anime_dataset
+            on="anime_id", 
+            how="inner",
+            validate="many_to_one"
+        )
+        
         return merged.drop(columns=["user_id", "mal_id", "anime_id"], errors="ignore")
 
 # -------------------------------
-# Preprocesamiento mejorado
+# Preprocesamiento optimizado
 # -------------------------------
 def clean_string_columns(df: pd.DataFrame) -> pd.DataFrame:
-    """Limpieza robusta de columnas de texto."""
+    """Limpieza robusta con manejo de nulos."""
     str_cols = df.select_dtypes(include=["object", "string"]).columns
-    df[str_cols] = df[str_cols].apply(lambda x: x.str.strip().replace('\\N', pd.NA))
-    return df
+    df[str_cols] = df[str_cols].apply(lambda x: x.str.strip().replace(['\\N', 'nan'], pd.NA))
+    return df.dropna(how='all', axis=1)
 
 @LogConfig.log_execution
 def preprocess_data(df: pd.DataFrame) -> pd.DataFrame:
-    """Pipeline de preprocesamiento con validaciones."""
+    """Pipeline de preprocesamiento con validaciones y manejo de nombres de columnas."""
+    # Convertir todos los nombres de columnas a strings y limpiarlos
+    df.columns = [str(col).strip().replace(' ', '_').replace('-', '_').lower() for col in df.columns]
+    df.columns = [
+        re.sub(r'[^a-zA-Z0-9_]', '_', str(col)).lower()  # Reemplaza todo lo que no sea alfanumérico o _
+        for col in df.columns
+    ]
+    # Validación de columnas necesarias (los ratings)
     required_cols = ["rating_x", "rating_y"]
     if not all(col in df.columns for col in required_cols):
         raise KeyError(f"Columnas requeridas faltantes: {required_cols}")
-    
-    # Discretización mejorada
+
+    # Discretización de ratings
     df['rating_class'] = pd.cut(
         df['rating_x'],
-        bins=[0, 5, 7, 10],
+        bins=[0, 4.9, 6.9, 10],  # Rangos ajustados
         labels=['low', 'medium', 'high'],
-        include_lowest=True
-    ).cat.add_categories('unknown').fillna('unknown')
-    
-    # One-hot encoding seguro
-    rating_dummies = pd.get_dummies(df['rating_class'], prefix='rating', dummy_na=True)
+        right=False
+    ).cat.remove_unused_categories()  # Eliminar categorías no usadas
+
+    # Eliminar filas sin clase de rating
+    df = df.dropna(subset=['rating_class'])
+
+    # One-hot encoding de la clase de rating
+    rating_dummies = pd.get_dummies(df['rating_class'], prefix='rating', dtype=int)
     df = pd.concat([df.drop(columns=['rating_class']), rating_dummies], axis=1)
-    
-    # Procesamiento de features
+
+    # Procesamiento de columnas de texto (géneros y keywords)
     for col in ['keywords', 'genres']:
         if col in df.columns:
-            df = pd.concat([df.drop(columns=[col]), df[col].str.get_dummies(sep=',')], axis=1)
-    
-    # Escalado numérico seguro con filtrado de baja varianza
-    variance_threshold = 0.01  # <-- Nuevo: Filtrar características con baja varianza
-    numeric_cols = df.select_dtypes(include="number").columns.difference(['rating_low', 'rating_medium', 'rating_high'])
-    numeric_cols = [col for col in numeric_cols if df[col].var() > variance_threshold]  # <--
-    
+            # One-hot encoding con nombres limpios
+            dummies = df[col].str.get_dummies(sep=',').add_prefix(f'{col}_')
+            dummies = dummies.rename(columns=lambda x: x.replace(' ', '_').lower())
+            
+            # Filtrar columnas con baja frecuencia (<5%)
+            dummies = dummies.loc[:, dummies.mean() > 0.05]
+            
+            # Concatenar con el DataFrame original
+            df = pd.concat([df.drop(columns=[col]), dummies], axis=1)
+
+    # Escalado numérico seguro
+    numeric_cols = df.select_dtypes(include="number").columns.difference(rating_dummies.columns)
     if not numeric_cols.empty:
+        # Asegurar que los nombres de columnas sean strings antes de escalar
+        numeric_cols = [str(col) for col in numeric_cols]  # <-- Conversión explícita
         df[numeric_cols] = StandardScaler().fit_transform(df[numeric_cols])
-    
-    return df.dropna(how='all', axis=1).dropna()
+
+    # Eliminar columnas con muchos nulos (>70%)
+    df = df.dropna(axis=1, thresh=0.7 * len(df))
+
+    # Eliminar filas con valores nulos
+    df = df.dropna()
+
+    return df
 
 # -------------------------------
-# Algoritmo Genético Mejorado
+# Algoritmo Genético Corregido
 # -------------------------------
 class GeneticRuleMiner:
-    """Versión optimizada con manejo de datos robusto"""
+    """Manejo de edge cases"""
     
     def __init__(self, transactions: List[Tuple[Set[str], str]], target: str):
         self._validate_inputs(transactions, target)
@@ -120,12 +155,6 @@ class GeneticRuleMiner:
         self.target = target
         self.feature_map, self.tx_masks = self._precompute_features()
         
-    def _validate_inputs(self, transactions, target):
-        if not transactions or not target:
-            raise ValueError("Datos de entrada inválidos")
-        if not any(cons == target for _, cons in transactions):
-            raise ValueError(f"Target no encontrado: {target}")
-
     def _precompute_features(self):
         features = sorted({f for antecedents, _ in self.transactions for f in antecedents})
         feature_map = {f: i for i, f in enumerate(features)}
@@ -135,6 +164,12 @@ class GeneticRuleMiner:
         ]
         return feature_map, masks
     
+    def _validate_inputs(self, transactions, target):
+        if not transactions:
+            raise ValueError("Lista de transacciones vacía")
+        if not any(t[1] == target for t in transactions):
+            raise ValueError(f"Target '{target}' no encontrado en transacciones")
+        
     def calculate_fitness(self, individual: List[int]) -> float:
         individual_mask = sum(bit << idx for idx, bit in enumerate(individual))
         if not individual_mask:
@@ -144,14 +179,17 @@ class GeneticRuleMiner:
             (mask & individual_mask) == individual_mask and cons == self.target
             for mask, (_, cons) in zip(self.tx_masks, self.transactions)
         )
-        total = sum((mask & individual_mask) == individual_mask for mask in self.tx_masks)
         
-        confidence = matches / total if total else 0
+        total = sum((mask & individual_mask) == individual_mask for mask in self.tx_masks)
+        if total == 0 or matches == 0:
+            return 0.0  # <-- Evitar divisiones inválidas
+            
+        confidence = matches / total
         support = matches / len(self.transactions)
         
-        # Penalización por reglas largas (nuevo)
-        rule_length_penalty = 0.9 ** len([bit for bit in individual if bit == 1])  # <--
-        return (0.5 * confidence + 0.5 * support) * rule_length_penalty  # <--
+        # Balancear clases desequilibradas
+        weight = 1.5 if self.target == 'rating_low' else 1.0
+        return (0.6 * confidence + 0.4 * support * weight) * (0.95 ** sum(individual))
 
     @LogConfig.log_execution
     def run(self, generations: int = 500, pop_size: int = 300, mutation_rate: float = 0.25) -> Tuple[List[str], float]:
@@ -197,8 +235,8 @@ class GeneticRuleMiner:
             population = new_population
             logger.info(f"Generación {gen}: Fitness={best_fitness:.4f}")
 
-            # Reinicialización adaptativa si el fitness es bajo (nuevo)
-            if gen % 20 == 0 and best_fitness < 0.3:  # <--
+            # Reinicialización adaptativa si el fitness es bajo
+            if gen % 20 == 0 and best_fitness < 0.3:
                 logger.warning("Reinicialización adaptativa por bajo fitness")
                 population = self.initialize_population(pop_size, num_features)
 
@@ -221,6 +259,7 @@ class GeneticRuleMiner:
             parents.append(candidates[0][0])
         return tuple(parents)
 
+
 # -------------------------------
 # Script Principal Actualizado
 # -------------------------------
@@ -231,6 +270,7 @@ def main():
         data_manager = DataManager(db_config)
         user_details, anime_data, user_scores = data_manager.load_data()
         
+        # Validación de datos cargados
         for df, name in [(user_details, "user_details"), (anime_data, "anime_dataset"), (user_scores, "user_score")]:
             if df.empty:
                 raise ValueError(f"{name} está vacío")
@@ -238,34 +278,47 @@ def main():
         
         merged_data = DataManager.merge_data(user_scores, user_details, anime_data)
         
+        # Log de diagnóstico
         with io.StringIO() as buffer:
             merged_data.info(buf=buffer, show_counts=True)
             logger.debug(f"Metadata mergeada:\n{buffer.getvalue()}")
         
         df_clean = clean_string_columns(merged_data)
-        df_preprocessed = preprocess_data(df_clean)  # Eliminado el muestreo del 10%
+        df_preprocessed = preprocess_data(df_clean)
         
-        # Generación de transacciones con validación reforzada
+        # Generación de transacciones con logging
         transactions = []
+        invalid_count = 0
+
         for _, row in df_preprocessed.iterrows():
-            antecedents = {col for col in df_preprocessed.columns 
-                          if not col.startswith('rating_') and row[col] != 0}
-            consequent = next((col for col in df_preprocessed.columns 
-                              if col.startswith('rating_') and row[col] == 1), None)
+            row_dict = row.to_dict()  # Convertir la fila a diccionario
+            antecedents = {
+                col for col in df_preprocessed.columns 
+                if not col.startswith('rating_') and row_dict[col] != 0
+            }
+            
+            consequent = next(
+                (col for col in df_preprocessed.columns 
+                if col.startswith('rating_') and row_dict[col] == 1),
+                None
+            )
+            
             if consequent and antecedents:
                 transactions.append((antecedents, consequent))
+            else:
+                invalid_count += 1
         
-        # Validación de balance de clases
+        # Balance de clases
         target_counts = pd.Series([t[1] for t in transactions]).value_counts()
         logger.info(f"Distribución de targets:\n{target_counts}")
         
         target = 'rating_high'
         miner = GeneticRuleMiner(transactions, target)
-        best_rule, fitness = miner.run()  # Usando nuevos hiperparámetros por defecto
+        best_rule, fitness = miner.run(mutation_rate=0.3, pop_size=500)
         
         logger.info(f"\n{' RESULTADO FINAL ':=^50}")
         logger.info(f"Regla: SI {', '.join(best_rule)} ENTONCES {target}")
-        logger.info(f"Fitness: {fitness:.4f} (Confianza*0.7 + Soporte*0.3)")
+        logger.info(f"Fitness: {fitness:.4f}")
         logger.info("=" * 50)
 
     except Exception as e:
