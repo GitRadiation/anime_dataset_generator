@@ -169,13 +169,14 @@ def main():
                 'On Hold': 'on_hold',
                 'Dropped': 'dropped',
                 'Plan to Watch': 'plan_to_watch',
-                'Rewatched': 'rewatched'
+                'Rewatched': 'rewatched',
+                'Birthday': 'birthday'
             }, inplace=True)
             
             details_buffer = preprocess_to_memory(
                 details_df,
                 columns_to_keep=[
-                    "mal_id", "gender", "days_watched", "mean_score",
+                    "mal_id", "gender", "days_watched", "mean_score", "birthday",
                     "watching", "completed", "on_hold", "dropped",
                     "plan_to_watch", "total_entries", "rewatched", "episodes_watched"
                 ],

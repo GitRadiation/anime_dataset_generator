@@ -71,21 +71,39 @@ class DatabaseManager:
                     for key, value in row.items()
                 }
                 
-                # Generar SQL dinámico para UPSERT
-                placeholders = ', '.join([f"%({col})s" for col in columns])
-                update_clause = ', '.join([f"{col} = EXCLUDED.{col}" 
-                                        for col in columns if col not in ('user_id', 'anime_id')])
+                # Determine conflict columns based on table
+                if table == "user_score":
+                    conflict_columns = ["user_id", "anime_id"]
+                elif table == "anime_dataset":
+                    conflict_columns = ["anime_id"]
+                elif table == "user_details":
+                    conflict_columns = ["mal_id"]
+                else:
+                    conflict_columns = []  # Default to no conflict resolution
                 
-                sql = f"""
-                    INSERT INTO {table} ({', '.join(columns)})
-                    VALUES ({placeholders})
-                    ON CONFLICT (user_id, anime_id) 
-                    DO UPDATE SET {update_clause}
-                """ if conflict_action == "DO UPDATE" else f"""
-                    INSERT INTO {table} ({', '.join(columns)})
-                    VALUES ({placeholders})
-                    ON CONFLICT {conflict_action}
-                """
+                placeholders = ', '.join([f"%({col})s" for col in columns])
+                
+                if conflict_columns and conflict_action == "DO UPDATE":
+                    update_clause = ', '.join([f"{col} = EXCLUDED.{col}" 
+                                            for col in columns if col not in conflict_columns])
+                    
+                    sql = f"""
+                        INSERT INTO {table} ({', '.join(columns)})
+                        VALUES ({placeholders})
+                        ON CONFLICT ({', '.join(conflict_columns)}) 
+                        DO UPDATE SET {update_clause}
+                    """
+                elif conflict_columns:
+                    sql = f"""
+                        INSERT INTO {table} ({', '.join(columns)})
+                        VALUES ({placeholders})
+                        ON CONFLICT ({', '.join(conflict_columns)}) {conflict_action}
+                    """
+                else:
+                    sql = f"""
+                        INSERT INTO {table} ({', '.join(columns)})
+                        VALUES ({placeholders})
+                    """
                 
                 cur.execute(sql, cleaned_row)
             conn.commit()
