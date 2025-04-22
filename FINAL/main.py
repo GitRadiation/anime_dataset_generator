@@ -1,4 +1,5 @@
 import logging
+import re
 import time
 from io import BytesIO, StringIO
 
@@ -20,6 +21,27 @@ def clean_string_columns(df):
         df[col] = df[col].str.strip()
     return df
 
+
+def convert_duration_to_minutes(duration):
+    """Convierte la duración en formato '1 hr 31 min' o '24 min' a minutos"""
+    # Expresión regular para encontrar horas y minutos
+    duration_pattern = re.match(r'(?:(\d+)\s*hr)?(?:\s*(\d+)\s*min)?', duration.strip())
+    
+    if not duration_pattern:
+        return None  # Si no coincide con el patrón, devolvemos None (o podrías usar otro valor por defecto)
+    
+    hours = duration_pattern.group(1)
+    minutes = duration_pattern.group(2)
+    
+    # Si hay horas, las convertimos a minutos (1 hora = 60 minutos)
+    total_minutes = 0
+    if hours:
+        total_minutes += int(hours) * 60
+    if minutes:
+        total_minutes += int(minutes)
+    
+    return total_minutes
+
 def preprocess_to_memory(df, columns_to_keep, integer_columns, float_columns=None):
     """Preprocesa y convierte tipos de datos según el esquema de la base de datos"""
     df = df.copy()  # Asegurarse de trabajar con una copia del DataFrame
@@ -29,6 +51,9 @@ def preprocess_to_memory(df, columns_to_keep, integer_columns, float_columns=Non
     missing_columns = [col for col in columns_to_keep if col not in df.columns]
     if missing_columns:
         raise ValueError(f"Las siguientes columnas no se encontraron: {missing_columns}")
+    
+    if 'duration' in df.columns:
+        df['duration'] = df['duration'].astype(str).apply(convert_duration_to_minutes)
     
     df = df[columns_to_keep]
     
@@ -145,11 +170,11 @@ def main():
                 anime_df,
                 columns_to_keep=[
                     "anime_id", "score", "type", "episodes", "status",
-                    "rank", "popularity", "favorites", "scored_by", "members"
+                    "duration", "rank", "popularity", "favorites", "scored_by", "members"
                 ],
                 integer_columns=[
                     "anime_id", "episodes", "rank", "popularity",
-                    "favorites", "scored_by", "members"
+                    "favorites", "scored_by", "members", "duration"
                 ],
                 float_columns=["score"]
             )
