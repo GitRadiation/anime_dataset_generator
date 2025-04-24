@@ -48,13 +48,12 @@ def preprocess_data(df: pd.DataFrame) -> pd.DataFrame:
     df = df.copy()
 
     try:
-        # 1. Enhanced duration parsing
         if "duration" in df.columns:
             df["duration"] = (
                 df["duration"]
                 .astype(str)
                 .str.extract(r"(\d+)")[0]  # Extract numeric part
-                .replace(["", "nan", "None", "Unknown", "N/A"], pd.NA)
+                .replace(["", "nan", "None", "Unknown", "N/A"], np.nan)
                 .astype(float)
             )
 
@@ -67,7 +66,7 @@ def preprocess_data(df: pd.DataFrame) -> pd.DataFrame:
             df["episodes"] = (
                 df["episodes"]
                 .astype(str)
-                .replace(["", "nan", "None", "Unknown", "N/A"], pd.NA)
+                .replace(["", "nan", "None", "Unknown", "N/A"], np.nan)
                 .astype(float)
             )
 
