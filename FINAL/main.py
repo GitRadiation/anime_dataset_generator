@@ -36,6 +36,13 @@ def download_nltk_resources():
 download_nltk_resources()
 
 
+def clean_premiered(value):
+    if pd.isna(value) or value.strip().lower() == "none none":
+        return None
+    match = re.match(r"(spring|summer|fall|winter)", value.strip().lower())
+    return match.group(1) if match else None
+
+
 def clean_string_columns(df):
     """Elimina espacios en blanco en las columnas de tipo objeto"""
     for col in df.select_dtypes(include=["object"]).columns:
@@ -206,10 +213,36 @@ def main():
         with db.connection() as _:
             logger.info("📥 Iniciando carga de datos...")
 
-            # Preprocesar y cargar anime_dataset
+            # Leer y guardar datos originales
             anime_df = pd.read_csv(
                 StringIO(anime_buffer.getvalue().decode("utf-8"))
             )
+            details_df = pd.read_csv(
+                StringIO(details_buffer.getvalue().decode("utf-8"))
+            )
+            scores_df = pd.read_csv(
+                StringIO(scores_buffer.getvalue().decode("utf-8"))
+            )
+
+            # Guardar datos originales a Excel
+            with pd.ExcelWriter(
+                "datos_antes_del_procesamiento.xlsx"
+            ) as writer:
+                anime_df.to_excel(
+                    writer, sheet_name="anime_dataset_raw", index=False
+                )
+                details_df.to_excel(
+                    writer, sheet_name="user_details_raw", index=False
+                )
+                scores_df.to_excel(
+                    writer, sheet_name="user_scores_raw", index=False
+                )
+
+            # Procesamiento
+            anime_df["premiered"] = anime_df["premiered"].apply(
+                clean_premiered
+            )
+
             anime_buffer = preprocess_to_memory(
                 anime_df,
                 columns_to_keep=[
@@ -219,11 +252,17 @@ def main():
                     "episodes",
                     "status",
                     "duration",
+                    "keywords",
                     "rank",
                     "popularity",
                     "favorites",
                     "scored_by",
                     "members",
+                    "premiered",
+                    "producers",
+                    "studios",
+                    "source",
+                    "rating",
                 ],
                 integer_columns=[
                     "anime_id",
@@ -237,12 +276,7 @@ def main():
                 ],
                 float_columns=["score"],
             )
-            db.copy_from_buffer(anime_buffer, "anime_dataset")
 
-            # Preprocesar y cargar user_details
-            details_df = pd.read_csv(
-                StringIO(details_buffer.getvalue().decode("utf-8"))
-            )
             details_df.rename(
                 columns={
                     "Mal ID": "mal_id",
@@ -292,12 +326,7 @@ def main():
                 ],
                 float_columns=["days_watched", "mean_score"],
             )
-            db.copy_from_buffer(details_buffer, "user_details")
 
-            # Preprocesar y cargar user_score
-            scores_df = pd.read_csv(
-                StringIO(scores_buffer.getvalue().decode("utf-8"))
-            )
             scores_df.rename(
                 columns={
                     "User ID": "user_id",
@@ -314,6 +343,32 @@ def main():
                 integer_columns=["user_id", "anime_id", "rating"],
                 valid_anime_ids=valid_anime_ids,
             )
+
+            """# Leer datos procesados desde buffers para exportarlos a Excel
+            anime_df_processed = pd.read_csv(anime_buffer)
+            details_df_processed = pd.read_csv(details_buffer)
+            scores_df_processed = pd.read_csv(scores_buffer)
+
+            # Guardar datos procesados a Excel
+            with pd.ExcelWriter(
+                "datos_despues_del_procesamiento.xlsx"
+            ) as writer:
+                anime_df_processed.to_excel(
+                    writer, sheet_name="anime_dataset_clean", index=False
+                )
+                details_df_processed.to_excel(
+                    writer, sheet_name="user_details_clean", index=False
+                )
+                scores_df_processed.to_excel(
+                    writer, sheet_name="user_scores_clean", index=False
+                )"""
+
+            # Cargar a base de datos
+            anime_buffer.seek(0)
+            db.copy_from_buffer(anime_buffer, "anime_dataset")
+            details_buffer.seek(0)
+            db.copy_from_buffer(details_buffer, "user_details")
+            scores_buffer.seek(0)
             db.copy_from_buffer(scores_buffer, "user_score")
 
         logger.info("✅ Carga completada exitosamente")

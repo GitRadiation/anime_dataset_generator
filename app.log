@@ -40051,3 +40051,222 @@ Regla #5:
 2025-04-01 19:01:19 - __main__ - [92mINFO[0m - Mejor regla: SI [USER] dropped menor que 20.93 Y [USER] completed menor que 209.49 ENTONCES rating = high
 2025-04-01 19:01:19 - __main__ - [92mINFO[0m - Soporte: 0.6011 | Confianza: 0.5888
 
+2025-04-24 10:34:20 - __main__ - [92mINFO[0m - 🤔 Intento 1 de obtener datos base...
+2025-04-24 10:37:22 - user_service - [92mINFO[0m - Progreso: 100.0%
+2025-04-24 10:37:22 - user_service - [92mINFO[0m - Generación completada. Usuarios válidos: 27/100
+2025-04-24 10:37:23 - details_service - [92mINFO[0m - Procesados 3/27
+2025-04-24 10:37:25 - details_service - [93mWARNING[0m - Intento 1 fallido para vondur
+2025-04-24 10:37:26 - details_service - [92mINFO[0m - Procesados 6/27
+2025-04-24 10:37:28 - details_service - [93mWARNING[0m - Intento 1 fallido para megan
+2025-04-24 10:37:29 - details_service - [92mINFO[0m - Procesados 9/27
+2025-04-24 10:37:31 - details_service - [93mWARNING[0m - Intento 1 fallido para seif
+2025-04-24 10:37:32 - details_service - [92mINFO[0m - Procesados 12/27
+2025-04-24 10:37:34 - details_service - [92mINFO[0m - Procesados 15/27
+2025-04-24 10:37:36 - details_service - [93mWARNING[0m - Intento 1 fallido para Smoka
+2025-04-24 10:37:38 - details_service - [92mINFO[0m - Procesados 18/27
+2025-04-24 10:37:39 - details_service - [93mWARNING[0m - Intento 1 fallido para koalatees
+2025-04-24 10:37:41 - details_service - [92mINFO[0m - Procesados 21/27
+2025-04-24 10:37:43 - details_service - [93mWARNING[0m - Intento 1 fallido para wicked2k
+2025-04-24 10:37:44 - details_service - [92mINFO[0m - Procesados 24/27
+2025-04-24 10:37:46 - details_service - [93mWARNING[0m - Intento 1 fallido para sorairo
+2025-04-24 10:37:47 - details_service - [92mINFO[0m - Procesados 27/27
+2025-04-24 10:37:48 - details_service - [92mINFO[0m - Tiempo total: 26.33s
+2025-04-24 10:37:50 - score_service - [92mINFO[0m - Datos obtenidos para Xinil
+2025-04-24 10:37:50 - score_service - [93mWARNING[0m - Sin datos para Aokaado
+2025-04-24 10:37:51 - score_service - [92mINFO[0m - Datos obtenidos para Crystal
+2025-04-24 10:37:52 - score_service - [92mINFO[0m - Datos obtenidos para Arcane
+2025-04-24 10:37:52 - score_service - [93mWARNING[0m - Sin datos para Mad
+2025-04-24 10:37:52 - score_service - [92mINFO[0m - Datos obtenidos para vondur
+2025-04-24 10:37:53 - score_service - [92mINFO[0m - Datos obtenidos para Amuro
+2025-04-24 10:37:54 - score_service - [93mWARNING[0m - Sin datos para Baman
+2025-04-24 10:37:54 - score_service - [92mINFO[0m - Datos obtenidos para megan
+2025-04-24 10:37:54 - score_service - [93mWARNING[0m - Sin datos para beddan
+2025-04-24 10:37:55 - score_service - [92mINFO[0m - Datos obtenidos para kei-clone
+2025-04-24 10:37:56 - score_service - [92mINFO[0m - Datos obtenidos para seif
+2025-04-24 10:37:56 - score_service - [92mINFO[0m - Datos obtenidos para Ladholyman
+2025-04-24 10:37:57 - score_service - [92mINFO[0m - Datos obtenidos para Hiromi
+2025-04-24 10:37:57 - score_service - [92mINFO[0m - Datos obtenidos para ShadowOz
+2025-04-24 10:37:58 - score_service - [92mINFO[0m - Datos obtenidos para Cruzle
+2025-04-24 10:37:58 - score_service - [92mINFO[0m - Datos obtenidos para Smoka
+2025-04-24 10:37:59 - score_service - [92mINFO[0m - Datos obtenidos para james2k
+2025-04-24 10:37:59 - score_service - [93mWARNING[0m - Sin datos para Emp-
+2025-04-24 10:38:00 - score_service - [92mINFO[0m - Datos obtenidos para koalatees
+2025-04-24 10:38:01 - score_service - [92mINFO[0m - Datos obtenidos para Ramp
+2025-04-24 10:38:02 - score_service - [92mINFO[0m - Datos obtenidos para Achtor
+2025-04-24 10:38:02 - score_service - [92mINFO[0m - Datos obtenidos para jaames
+2025-04-24 10:38:03 - score_service - [92mINFO[0m - Datos obtenidos para wicked2k
+2025-04-24 10:38:03 - score_service - [93mWARNING[0m - Sin datos para xich
+2025-04-24 10:38:03 - score_service - [92mINFO[0m - Datos obtenidos para marvin_9martian
+2025-04-24 10:38:04 - score_service - [92mINFO[0m - Datos obtenidos para sorairo
+2025-04-24 10:38:04 - score_service - [92mINFO[0m - Procesado: 27/27 (100.0%)
+2025-04-24 10:38:04 - __main__ - [92mINFO[0m - ✅ Obtención de datos base exitosa
+2025-04-24 10:38:04 - __main__ - [92mINFO[0m - ✅ DatabaseManager cargado correctamente
+2025-04-24 10:38:25 - __main__ - [92mINFO[0m - 📥 Iniciando carga de datos...
+2025-04-24 10:38:25 - __main__ - [91mERROR[0m - 🚨 Error crítico: No module named 'openpyxl'
+2025-04-24 10:38:45 - __main__ - [92mINFO[0m - 🤔 Intento 1 de obtener datos base...
+2025-04-24 10:41:20 - user_service - [92mINFO[0m - Progreso: 100.0%
+2025-04-24 10:41:20 - user_service - [92mINFO[0m - Generación completada. Usuarios válidos: 27/100
+2025-04-24 10:41:20 - details_service - [93mWARNING[0m - Intento 1 fallido para Xinil
+2025-04-24 10:41:21 - details_service - [93mWARNING[0m - Intento 1 fallido para Crystal
+2025-04-24 10:41:23 - details_service - [92mINFO[0m - Procesados 3/27
+2025-04-24 10:41:24 - details_service - [93mWARNING[0m - Intento 1 fallido para vondur
+2025-04-24 10:41:26 - details_service - [92mINFO[0m - Procesados 6/27
+2025-04-24 10:41:27 - details_service - [93mWARNING[0m - Intento 1 fallido para Baman
+2025-04-24 10:41:28 - details_service - [92mINFO[0m - Procesados 9/27
+2025-04-24 10:41:30 - details_service - [93mWARNING[0m - Intento 1 fallido para kei-clone
+2025-04-24 10:41:31 - details_service - [92mINFO[0m - Procesados 12/27
+2025-04-24 10:41:33 - details_service - [93mWARNING[0m - Intento 1 fallido para Hiromi
+2025-04-24 10:41:34 - details_service - [93mWARNING[0m - Intento 1 fallido para ShadowOz
+2025-04-24 10:41:35 - details_service - [92mINFO[0m - Procesados 15/27
+2025-04-24 10:41:37 - details_service - [93mWARNING[0m - Intento 1 fallido para james2k
+2025-04-24 10:41:38 - details_service - [92mINFO[0m - Procesados 18/27
+2025-04-24 10:41:40 - details_service - [93mWARNING[0m - Intento 1 fallido para Ramp
+2025-04-24 10:41:41 - details_service - [92mINFO[0m - Procesados 21/27
+2025-04-24 10:41:42 - details_service - [93mWARNING[0m - Intento 1 fallido para wicked2k
+2025-04-24 10:41:44 - details_service - [92mINFO[0m - Procesados 24/27
+2025-04-24 10:41:45 - details_service - [93mWARNING[0m - Intento 1 fallido para sorairo
+2025-04-24 10:41:47 - details_service - [92mINFO[0m - Procesados 27/27
+2025-04-24 10:41:48 - details_service - [92mINFO[0m - Tiempo total: 27.84s
+2025-04-24 10:41:49 - score_service - [92mINFO[0m - Datos obtenidos para Xinil
+2025-04-24 10:41:49 - score_service - [93mWARNING[0m - Sin datos para Aokaado
+2025-04-24 10:41:50 - score_service - [92mINFO[0m - Datos obtenidos para Crystal
+2025-04-24 10:41:50 - score_service - [92mINFO[0m - Datos obtenidos para Arcane
+2025-04-24 10:41:51 - score_service - [93mWARNING[0m - Sin datos para Mad
+2025-04-24 10:41:51 - score_service - [92mINFO[0m - Datos obtenidos para vondur
+2025-04-24 10:41:53 - score_service - [92mINFO[0m - Datos obtenidos para Amuro
+2025-04-24 10:41:54 - score_service - [93mWARNING[0m - Sin datos para Baman
+2025-04-24 10:41:54 - score_service - [92mINFO[0m - Datos obtenidos para megan
+2025-04-24 10:41:55 - score_service - [93mWARNING[0m - Sin datos para beddan
+2025-04-24 10:41:55 - score_service - [92mINFO[0m - Datos obtenidos para kei-clone
+2025-04-24 10:41:56 - score_service - [92mINFO[0m - Datos obtenidos para seif
+2025-04-24 10:41:56 - score_service - [92mINFO[0m - Datos obtenidos para Ladholyman
+2025-04-24 10:41:57 - score_service - [92mINFO[0m - Datos obtenidos para Hiromi
+2025-04-24 10:41:57 - score_service - [92mINFO[0m - Datos obtenidos para ShadowOz
+2025-04-24 10:41:58 - score_service - [92mINFO[0m - Datos obtenidos para Cruzle
+2025-04-24 10:41:59 - score_service - [92mINFO[0m - Datos obtenidos para Smoka
+2025-04-24 10:41:59 - score_service - [92mINFO[0m - Datos obtenidos para james2k
+2025-04-24 10:42:00 - score_service - [93mWARNING[0m - Sin datos para Emp-
+2025-04-24 10:42:00 - score_service - [92mINFO[0m - Datos obtenidos para koalatees
+2025-04-24 10:42:01 - score_service - [92mINFO[0m - Datos obtenidos para Ramp
+2025-04-24 10:42:02 - score_service - [92mINFO[0m - Datos obtenidos para Achtor
+2025-04-24 10:42:02 - score_service - [92mINFO[0m - Datos obtenidos para jaames
+2025-04-24 10:42:03 - score_service - [92mINFO[0m - Datos obtenidos para wicked2k
+2025-04-24 10:42:03 - score_service - [93mWARNING[0m - Sin datos para xich
+2025-04-24 10:42:04 - score_service - [92mINFO[0m - Datos obtenidos para marvin_9martian
+2025-04-24 10:42:04 - score_service - [92mINFO[0m - Datos obtenidos para sorairo
+2025-04-24 10:42:04 - score_service - [92mINFO[0m - Procesado: 27/27 (100.0%)
+2025-04-24 10:42:04 - __main__ - [92mINFO[0m - ✅ Obtención de datos base exitosa
+2025-04-24 10:42:04 - __main__ - [92mINFO[0m - ✅ DatabaseManager cargado correctamente
+2025-04-24 10:42:25 - __main__ - [92mINFO[0m - 📥 Iniciando carga de datos...
+2025-04-24 10:43:30 - __main__ - [92mINFO[0m - ✅ Carga completada exitosamente
+2025-04-24 10:55:07 - __main__ - [92mINFO[0m - 🤔 Intento 1 de obtener datos base...
+2025-04-24 10:57:42 - user_service - [92mINFO[0m - Progreso: 100.0%
+2025-04-24 10:57:42 - user_service - [92mINFO[0m - Generación completada. Usuarios válidos: 27/100
+2025-04-24 10:57:42 - details_service - [93mWARNING[0m - Intento 1 fallido para Aokaado
+2025-04-24 10:57:43 - details_service - [92mINFO[0m - Procesados 3/27
+2025-04-24 10:57:45 - details_service - [93mWARNING[0m - Intento 1 fallido para Mad
+2025-04-24 10:57:46 - details_service - [92mINFO[0m - Procesados 6/27
+2025-04-24 10:57:48 - details_service - [93mWARNING[0m - Intento 1 fallido para Baman
+2025-04-24 10:57:49 - details_service - [92mINFO[0m - Procesados 9/27
+2025-04-24 10:57:51 - details_service - [93mWARNING[0m - Intento 1 fallido para kei-clone
+2025-04-24 10:57:52 - details_service - [93mWARNING[0m - Intento 1 fallido para seif
+2025-04-24 10:57:53 - details_service - [92mINFO[0m - Procesados 12/27
+2025-04-24 10:57:55 - details_service - [93mWARNING[0m - Intento 1 fallido para ShadowOz
+2025-04-24 10:57:56 - details_service - [92mINFO[0m - Procesados 15/27
+2025-04-24 10:57:58 - details_service - [93mWARNING[0m - Intento 1 fallido para james2k
+2025-04-24 10:57:59 - details_service - [92mINFO[0m - Procesados 18/27
+2025-04-24 10:58:00 - details_service - [93mWARNING[0m - Intento 1 fallido para Ramp
+2025-04-24 10:58:02 - details_service - [92mINFO[0m - Procesados 21/27
+2025-04-24 10:58:03 - details_service - [93mWARNING[0m - Intento 1 fallido para jaames
+2025-04-24 10:58:04 - details_service - [92mINFO[0m - Procesados 24/27
+2025-04-24 10:58:06 - details_service - [93mWARNING[0m - Intento 1 fallido para marvin_9martian
+2025-04-24 10:58:07 - details_service - [92mINFO[0m - Procesados 27/27
+2025-04-24 10:58:08 - details_service - [92mINFO[0m - Tiempo total: 26.74s
+2025-04-24 10:58:09 - score_service - [92mINFO[0m - Datos obtenidos para Xinil
+2025-04-24 10:58:10 - score_service - [93mWARNING[0m - Sin datos para Aokaado
+2025-04-24 10:58:11 - score_service - [92mINFO[0m - Datos obtenidos para Crystal
+2025-04-24 10:58:11 - score_service - [92mINFO[0m - Datos obtenidos para Arcane
+2025-04-24 10:58:12 - score_service - [93mWARNING[0m - Sin datos para Mad
+2025-04-24 10:58:12 - score_service - [92mINFO[0m - Datos obtenidos para vondur
+2025-04-24 10:58:13 - score_service - [92mINFO[0m - Datos obtenidos para Amuro
+2025-04-24 10:58:13 - score_service - [93mWARNING[0m - Sin datos para Baman
+2025-04-24 10:58:14 - score_service - [92mINFO[0m - Datos obtenidos para megan
+2025-04-24 10:58:14 - score_service - [93mWARNING[0m - Sin datos para beddan
+2025-04-24 10:58:15 - score_service - [92mINFO[0m - Datos obtenidos para kei-clone
+2025-04-24 10:58:15 - score_service - [92mINFO[0m - Datos obtenidos para seif
+2025-04-24 10:58:16 - score_service - [92mINFO[0m - Datos obtenidos para Ladholyman
+2025-04-24 10:58:16 - score_service - [92mINFO[0m - Datos obtenidos para Hiromi
+2025-04-24 10:58:17 - score_service - [92mINFO[0m - Datos obtenidos para ShadowOz
+2025-04-24 10:58:17 - score_service - [92mINFO[0m - Datos obtenidos para Cruzle
+2025-04-24 10:58:18 - score_service - [92mINFO[0m - Datos obtenidos para Smoka
+2025-04-24 10:58:19 - score_service - [92mINFO[0m - Datos obtenidos para james2k
+2025-04-24 10:58:19 - score_service - [93mWARNING[0m - Sin datos para Emp-
+2025-04-24 10:58:20 - score_service - [92mINFO[0m - Datos obtenidos para koalatees
+2025-04-24 10:58:21 - score_service - [92mINFO[0m - Datos obtenidos para Ramp
+2025-04-24 10:58:21 - score_service - [92mINFO[0m - Datos obtenidos para Achtor
+2025-04-24 10:58:22 - score_service - [92mINFO[0m - Datos obtenidos para jaames
+2025-04-24 10:58:23 - score_service - [92mINFO[0m - Datos obtenidos para wicked2k
+2025-04-24 10:58:23 - score_service - [93mWARNING[0m - Sin datos para xich
+2025-04-24 10:58:23 - score_service - [92mINFO[0m - Datos obtenidos para marvin_9martian
+2025-04-24 10:58:24 - score_service - [92mINFO[0m - Datos obtenidos para sorairo
+2025-04-24 10:58:24 - score_service - [92mINFO[0m - Procesado: 27/27 (100.0%)
+2025-04-24 10:58:24 - __main__ - [92mINFO[0m - ✅ Obtención de datos base exitosa
+2025-04-24 10:58:24 - __main__ - [92mINFO[0m - ✅ DatabaseManager cargado correctamente
+2025-04-24 10:58:45 - __main__ - [92mINFO[0m - 📥 Iniciando carga de datos...
+2025-04-24 10:59:49 - __main__ - [92mINFO[0m - ✅ Carga completada exitosamente
+2025-04-24 11:02:25 - __main__ - [92mINFO[0m - 🤔 Intento 1 de obtener datos base...
+2025-04-24 11:04:57 - user_service - [92mINFO[0m - Progreso: 100.0%
+2025-04-24 11:04:57 - user_service - [92mINFO[0m - Generación completada. Usuarios válidos: 27/100
+2025-04-24 11:04:58 - details_service - [93mWARNING[0m - Intento 1 fallido para Aokaado
+2025-04-24 11:04:59 - details_service - [92mINFO[0m - Procesados 3/27
+2025-04-24 11:05:00 - details_service - [93mWARNING[0m - Intento 1 fallido para Mad
+2025-04-24 11:05:02 - details_service - [93mWARNING[0m - Intento 1 fallido para vondur
+2025-04-24 11:05:03 - details_service - [92mINFO[0m - Procesados 6/27
+2025-04-24 11:05:05 - details_service - [93mWARNING[0m - Intento 1 fallido para megan
+2025-04-24 11:05:06 - details_service - [92mINFO[0m - Procesados 9/27
+2025-04-24 11:05:08 - details_service - [93mWARNING[0m - Intento 1 fallido para seif
+2025-04-24 11:05:09 - details_service - [92mINFO[0m - Procesados 12/27
+2025-04-24 11:05:10 - details_service - [93mWARNING[0m - Intento 1 fallido para ShadowOz
+2025-04-24 11:05:12 - details_service - [92mINFO[0m - Procesados 15/27
+2025-04-24 11:05:13 - details_service - [93mWARNING[0m - Intento 1 fallido para Smoka
+2025-04-24 11:05:14 - details_service - [92mINFO[0m - Procesados 18/27
+2025-04-24 11:05:16 - details_service - [93mWARNING[0m - Intento 1 fallido para koalatees
+2025-04-24 11:05:17 - details_service - [92mINFO[0m - Procesados 21/27
+2025-04-24 11:05:19 - details_service - [93mWARNING[0m - Intento 1 fallido para jaames
+2025-04-24 11:05:20 - details_service - [92mINFO[0m - Procesados 24/27
+2025-04-24 11:05:22 - details_service - [93mWARNING[0m - Intento 1 fallido para marvin_9martian
+2025-04-24 11:05:23 - details_service - [93mWARNING[0m - Intento 1 fallido para sorairo
+2025-04-24 11:05:24 - details_service - [92mINFO[0m - Procesados 27/27
+2025-04-24 11:05:25 - details_service - [92mINFO[0m - Tiempo total: 27.87s
+2025-04-24 11:05:26 - score_service - [92mINFO[0m - Datos obtenidos para Xinil
+2025-04-24 11:05:27 - score_service - [93mWARNING[0m - Sin datos para Aokaado
+2025-04-24 11:05:27 - score_service - [92mINFO[0m - Datos obtenidos para Crystal
+2025-04-24 11:05:28 - score_service - [92mINFO[0m - Datos obtenidos para Arcane
+2025-04-24 11:05:28 - score_service - [93mWARNING[0m - Sin datos para Mad
+2025-04-24 11:05:29 - score_service - [92mINFO[0m - Datos obtenidos para vondur
+2025-04-24 11:05:30 - score_service - [92mINFO[0m - Datos obtenidos para Amuro
+2025-04-24 11:05:30 - score_service - [93mWARNING[0m - Sin datos para Baman
+2025-04-24 11:05:31 - score_service - [92mINFO[0m - Datos obtenidos para megan
+2025-04-24 11:05:31 - score_service - [93mWARNING[0m - Sin datos para beddan
+2025-04-24 11:05:31 - score_service - [92mINFO[0m - Datos obtenidos para kei-clone
+2025-04-24 11:05:33 - score_service - [92mINFO[0m - Datos obtenidos para seif
+2025-04-24 11:05:33 - score_service - [92mINFO[0m - Datos obtenidos para Ladholyman
+2025-04-24 11:05:33 - score_service - [92mINFO[0m - Datos obtenidos para Hiromi
+2025-04-24 11:05:34 - score_service - [92mINFO[0m - Datos obtenidos para ShadowOz
+2025-04-24 11:05:35 - score_service - [92mINFO[0m - Datos obtenidos para Cruzle
+2025-04-24 11:05:35 - score_service - [92mINFO[0m - Datos obtenidos para Smoka
+2025-04-24 11:05:36 - score_service - [92mINFO[0m - Datos obtenidos para james2k
+2025-04-24 11:05:36 - score_service - [93mWARNING[0m - Sin datos para Emp-
+2025-04-24 11:05:37 - score_service - [92mINFO[0m - Datos obtenidos para koalatees
+2025-04-24 11:05:37 - score_service - [92mINFO[0m - Datos obtenidos para Ramp
+2025-04-24 11:05:38 - score_service - [92mINFO[0m - Datos obtenidos para Achtor
+2025-04-24 11:05:39 - score_service - [92mINFO[0m - Datos obtenidos para jaames
+2025-04-24 11:05:40 - score_service - [92mINFO[0m - Datos obtenidos para wicked2k
+2025-04-24 11:05:40 - score_service - [93mWARNING[0m - Sin datos para xich
+2025-04-24 11:05:41 - score_service - [92mINFO[0m - Datos obtenidos para marvin_9martian
+2025-04-24 11:05:42 - score_service - [92mINFO[0m - Datos obtenidos para sorairo
+2025-04-24 11:05:42 - score_service - [92mINFO[0m - Procesado: 27/27 (100.0%)
+2025-04-24 11:05:42 - __main__ - [92mINFO[0m - ✅ Obtención de datos base exitosa
+2025-04-24 11:05:42 - __main__ - [92mINFO[0m - ✅ DatabaseManager cargado correctamente
+2025-04-24 11:06:03 - __main__ - [92mINFO[0m - 📥 Iniciando carga de datos...
+2025-04-24 11:07:07 - __main__ - [92mINFO[0m - ✅ Carga completada exitosamente
