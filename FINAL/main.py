@@ -224,7 +224,7 @@ def main():
                 StringIO(scores_buffer.getvalue().decode("utf-8"))
             )
 
-            # Guardar datos originales a Excel
+            """ # Guardar datos originales a Excel
             with pd.ExcelWriter(
                 "datos_antes_del_procesamiento.xlsx"
             ) as writer:
@@ -236,7 +236,7 @@ def main():
                 )
                 scores_df.to_excel(
                     writer, sheet_name="user_scores_raw", index=False
-                )
+                )"""
 
             # Procesamiento
             anime_df["premiered"] = anime_df["premiered"].apply(
@@ -252,6 +252,8 @@ def main():
                     "episodes",
                     "status",
                     "duration",
+                    "genres",
+                    "aired",
                     "keywords",
                     "rank",
                     "popularity",

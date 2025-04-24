@@ -40270,3 +40270,55 @@ Regla #5:
 2025-04-24 11:05:42 - __main__ - [92mINFO[0m - ✅ DatabaseManager cargado correctamente
 2025-04-24 11:06:03 - __main__ - [92mINFO[0m - 📥 Iniciando carga de datos...
 2025-04-24 11:07:07 - __main__ - [92mINFO[0m - ✅ Carga completada exitosamente
+2025-04-24 11:48:32 - __main__ - [92mINFO[0m - 🤔 Intento 1 de obtener datos base...
+2025-04-24 11:51:22 - user_service - [92mINFO[0m - Progreso: 100.0%
+2025-04-24 11:51:22 - user_service - [92mINFO[0m - Generación completada. Usuarios válidos: 27/100
+2025-04-24 11:51:23 - details_service - [93mWARNING[0m - Intento 1 fallido para Crystal
+2025-04-24 11:51:24 - details_service - [92mINFO[0m - Procesados 3/27
+2025-04-24 11:51:26 - details_service - [92mINFO[0m - Procesados 6/27
+2025-04-24 11:51:27 - details_service - [93mWARNING[0m - Intento 1 fallido para Baman
+2025-04-24 11:51:29 - details_service - [92mINFO[0m - Procesados 9/27
+2025-04-24 11:51:31 - details_service - [93mWARNING[0m - Intento 1 fallido para kei-clone
+2025-04-24 11:51:32 - details_service - [92mINFO[0m - Procesados 12/27
+2025-04-24 11:51:34 - details_service - [93mWARNING[0m - Intento 1 fallido para ShadowOz
+2025-04-24 11:51:35 - details_service - [92mINFO[0m - Procesados 15/27
+2025-04-24 11:51:37 - details_service - [93mWARNING[0m - Intento 1 fallido para james2k
+2025-04-24 11:51:39 - details_service - [92mINFO[0m - Procesados 18/27
+2025-04-24 11:51:41 - details_service - [93mWARNING[0m - Intento 1 fallido para Ramp
+2025-04-24 11:51:42 - details_service - [92mINFO[0m - Procesados 21/27
+2025-04-24 11:51:44 - details_service - [92mINFO[0m - Procesados 24/27
+2025-04-24 11:51:46 - details_service - [93mWARNING[0m - Intento 1 fallido para marvin_9martian
+2025-04-24 11:51:47 - details_service - [92mINFO[0m - Procesados 27/27
+2025-04-24 11:51:48 - details_service - [92mINFO[0m - Tiempo total: 26.50s
+2025-04-24 11:51:49 - score_service - [92mINFO[0m - Datos obtenidos para Xinil
+2025-04-24 11:51:50 - score_service - [93mWARNING[0m - Sin datos para Aokaado
+2025-04-24 11:51:51 - score_service - [92mINFO[0m - Datos obtenidos para Crystal
+2025-04-24 11:51:52 - score_service - [92mINFO[0m - Datos obtenidos para Arcane
+2025-04-24 11:51:52 - score_service - [93mWARNING[0m - Sin datos para Mad
+2025-04-24 11:51:52 - score_service - [92mINFO[0m - Datos obtenidos para vondur
+2025-04-24 11:51:53 - score_service - [92mINFO[0m - Datos obtenidos para Amuro
+2025-04-24 11:51:54 - score_service - [93mWARNING[0m - Sin datos para Baman
+2025-04-24 11:51:54 - score_service - [92mINFO[0m - Datos obtenidos para megan
+2025-04-24 11:51:54 - score_service - [93mWARNING[0m - Sin datos para beddan
+2025-04-24 11:51:55 - score_service - [92mINFO[0m - Datos obtenidos para kei-clone
+2025-04-24 11:51:56 - score_service - [92mINFO[0m - Datos obtenidos para seif
+2025-04-24 11:51:56 - score_service - [92mINFO[0m - Datos obtenidos para Ladholyman
+2025-04-24 11:51:57 - score_service - [92mINFO[0m - Datos obtenidos para Hiromi
+2025-04-24 11:51:57 - score_service - [92mINFO[0m - Datos obtenidos para ShadowOz
+2025-04-24 11:51:58 - score_service - [92mINFO[0m - Datos obtenidos para Cruzle
+2025-04-24 11:51:58 - score_service - [92mINFO[0m - Datos obtenidos para Smoka
+2025-04-24 11:51:59 - score_service - [92mINFO[0m - Datos obtenidos para james2k
+2025-04-24 11:51:59 - score_service - [93mWARNING[0m - Sin datos para Emp-
+2025-04-24 11:52:00 - score_service - [92mINFO[0m - Datos obtenidos para koalatees
+2025-04-24 11:52:01 - score_service - [92mINFO[0m - Datos obtenidos para Ramp
+2025-04-24 11:52:01 - score_service - [92mINFO[0m - Datos obtenidos para Achtor
+2025-04-24 11:52:02 - score_service - [92mINFO[0m - Datos obtenidos para jaames
+2025-04-24 11:52:02 - score_service - [92mINFO[0m - Datos obtenidos para wicked2k
+2025-04-24 11:52:03 - score_service - [93mWARNING[0m - Sin datos para xich
+2025-04-24 11:52:03 - score_service - [92mINFO[0m - Datos obtenidos para marvin_9martian
+2025-04-24 11:52:04 - score_service - [92mINFO[0m - Datos obtenidos para sorairo
+2025-04-24 11:52:04 - score_service - [92mINFO[0m - Procesado: 27/27 (100.0%)
+2025-04-24 11:52:04 - __main__ - [92mINFO[0m - ✅ Obtención de datos base exitosa
+2025-04-24 11:52:04 - __main__ - [92mINFO[0m - ✅ DatabaseManager cargado correctamente
+2025-04-24 11:52:25 - __main__ - [92mINFO[0m - 📥 Iniciando carga de datos...
+2025-04-24 11:53:30 - __main__ - [92mINFO[0m - ✅ Carga completada exitosamente

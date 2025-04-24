@@ -14,6 +14,7 @@ sqlalchemy = "^2.0.0"
 tqdm = "^4.65.0"
 python-dotenv = "^1.0.0"
 typing-extensions = "^4.5.0"  # For better type hints
+openpyxl = "^3.1.5"
 
 [tool.poetry.group.dev.dependencies]
 pytest = "^7.3.0"

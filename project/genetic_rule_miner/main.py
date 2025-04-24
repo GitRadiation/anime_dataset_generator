@@ -1,5 +1,6 @@
 """Main execution pipeline for genetic rule mining."""
 
+import pandas as pd
 from config import DBConfig
 from data.manager import DataManager
 from data.preprocessing import (
@@ -7,7 +8,27 @@ from data.preprocessing import (
     preprocess_data,
 )
 from models.genetic import GeneticRuleMiner
-from utils.logging import LogManager
+from utils.logging import LogManager, log_execution
+
+
+@log_execution
+def save_to_excel(
+    df: pd.DataFrame, output_path: str = "processed_data.xlsx"
+) -> None:
+    """Save the DataFrame to an Excel file.
+
+    Args:
+        df: DataFrame to save.
+        output_path: Path to save the Excel file.
+    """
+    try:
+        # Save the DataFrame to an Excel file
+        df.to_excel(output_path, index=False)
+        logger.info(f"Data successfully saved to {output_path}")
+    except Exception as e:
+        logger.error(f"Failed to save data to Excel: {str(e)}")
+        raise
+
 
 LogManager.configure()
 logger = LogManager.get_logger(__name__)
@@ -30,6 +51,7 @@ def main() -> None:
         merged_data = DataManager.merge_data(
             user_scores, user_details, anime_data
         )
+        save_to_excel(merged_data, "processed_data.xlsx")
         processed_df = preprocess_data(clean_string_columns(merged_data))
         processed_df.to_csv("datos_limpios.csv", index=False)
         # Genetic algorithm execution

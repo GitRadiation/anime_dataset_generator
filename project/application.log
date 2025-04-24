@@ -3727,3 +3727,310 @@ Fitness: 0.4000
  False False False False False False False False False False False]
 2025-04-24 09:38:42 - __main__ - [92mINFO[0m - Confidence: 0
 2025-04-24 09:38:42 - genetic_rule_miner.data.database - [92mINFO[0m - PostgreSQL connection pool closed
+2025-04-24 11:38:12 - __main__ - [92mINFO[0m - Starting rule mining pipeline
+2025-04-24 11:38:34 - genetic_rule_miner.data.database - [92mINFO[0m - PostgreSQL connection pool initialized
+2025-04-24 11:38:34 - __main__ - [92mINFO[0m - Loading data from database...
+2025-04-24 11:38:34 - data.manager - [92mINFO[0m - [92mEntering load_data...[0m
+2025-04-24 11:38:34 - data.manager - [92mINFO[0m - [92mload_data completed in 0.8329s[0m
+2025-04-24 11:38:34 - __main__ - [92mINFO[0m - Merging and preprocessing data...
+2025-04-24 11:38:34 - data.manager - [92mINFO[0m - [92mEntering merge_data...[0m
+2025-04-24 11:38:34 - data.manager - [92mINFO[0m - [92mmerge_data completed in 0.0294s[0m
+2025-04-24 11:38:34 - data.preprocessing - [92mINFO[0m - [92mEntering clean_string_columns...[0m
+2025-04-24 11:38:35 - data.preprocessing - [92mINFO[0m - [92mclean_string_columns completed in 0.0293s[0m
+2025-04-24 11:38:35 - data.preprocessing - [92mINFO[0m - [92mEntering preprocess_data...[0m
+2025-04-24 11:38:35 - data.preprocessing - [91mERROR[0m - Preprocessing failed. Current data state:
+   rating_x gender    birthday  days_watched  mean_score  watching  completed  on_hold  dropped  plan_to_watch  total_entries  rewatched  episodes_watched  score genres keywords   type  episodes aired premiered           status                                                                      producers           studios    source  duration                        rating_y   rank  popularity  favorites  scored_by  members
+0         7   Male  1985-03-04         142.3        7.37         1        233        8       93             64            399         60              8481   6.94   <NA>     <NA>     TV      26.0  <NA>    spring  Finished Airing                       Bandai Visual, Yomiko Advertising, Bandai, CyberConnect2         Bee Train  Original      24.0       PG-13 - Teens 13 or older   4663        1369       1432      86289   189123
+1         7   Male  1985-03-04         142.3        7.37         1        233        8       93             64            399         60              8481   7.05   <NA>     <NA>  Movie       1.0  <NA>      <NA>  Finished Airing  Mainichi Broadcasting System, TOHO, TYO Animations, TYO, Geneon Entertainment  Digital Frontier     Manga     105.0  R - 17+ (violence & profanity)   4190        2663        185      42381    76310
+2         6   Male  1985-03-04         142.3        7.37         1        233        8       93             64            399         60              8481   5.85   <NA>     <NA>     TV      13.0  <NA>      fall  Finished Airing                                                             Yomiko Advertising         Bee Train  Original      23.0  R - 17+ (violence & profanity)  10783        5346         22       7309    18706
+3         7   Male  1985-03-04         142.3        7.37         1        233        8       93             64            399         60              8481   7.31   <NA>     <NA>     TV      23.0  <NA>      fall  Finished Airing                  GDH, Dentsu, TBS, Sotsu Music Publishing, Future Vision Music             Gonzo     Manga      24.0       PG-13 - Teens 13 or older   2834         942       1810     131754   277502
+4         8   Male  1985-03-04         142.3        7.37         1        233        8       93             64            399         60              8481   7.01   <NA>     <NA>     TV      26.0  <NA>      fall  Finished Airing                                                            Youmex, Toshiba EMI               AIC  Original      23.0                R+ - Mild Nudity   4408        2481        445      31549    85588
+2025-04-24 11:38:35 - data.preprocessing - [91mERROR[0m - [91mpreprocess_data failed after 0.0185s: Data preprocessing failed: float() argument must be a string or a real number, not 'NAType'[0m
+Traceback (most recent call last):
+  File "c:\Users\PRCAAL\PROYECTOS\anime_dataset_generator\project\genetic_rule_miner\data\preprocessing.py", line 68, in preprocess_data
+    .astype(float)
+     ~~~~~~^^^^^^^
+  File "C:\Users\PRCAAL\PROYECTOS\anime_dataset_generator\project\.venv\Lib\site-packages\pandas\core\generic.py", line 6643, in astype
+    new_data = self._mgr.astype(dtype=dtype, copy=copy, errors=errors)
+  File "C:\Users\PRCAAL\PROYECTOS\anime_dataset_generator\project\.venv\Lib\site-packages\pandas\core\internals\managers.py", line 430, in astype
+    return self.apply(
+           ~~~~~~~~~~^
+        "astype",
+        ^^^^^^^^^
+    ...<3 lines>...
+        using_cow=using_copy_on_write(),
+        ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+    )
+    ^
+  File "C:\Users\PRCAAL\PROYECTOS\anime_dataset_generator\project\.venv\Lib\site-packages\pandas\core\internals\managers.py", line 363, in apply
+    applied = getattr(b, f)(**kwargs)
+  File "C:\Users\PRCAAL\PROYECTOS\anime_dataset_generator\project\.venv\Lib\site-packages\pandas\core\internals\blocks.py", line 758, in astype
+    new_values = astype_array_safe(values, dtype, copy=copy, errors=errors)
+  File "C:\Users\PRCAAL\PROYECTOS\anime_dataset_generator\project\.venv\Lib\site-packages\pandas\core\dtypes\astype.py", line 237, in astype_array_safe
+    new_values = astype_array(values, dtype, copy=copy)
+  File "C:\Users\PRCAAL\PROYECTOS\anime_dataset_generator\project\.venv\Lib\site-packages\pandas\core\dtypes\astype.py", line 182, in astype_array
+    values = _astype_nansafe(values, dtype, copy=copy)
+  File "C:\Users\PRCAAL\PROYECTOS\anime_dataset_generator\project\.venv\Lib\site-packages\pandas\core\dtypes\astype.py", line 133, in _astype_nansafe
+    return arr.astype(dtype, copy=True)
+           ~~~~~~~~~~^^^^^^^^^^^^^^^^^^
+TypeError: float() argument must be a string or a real number, not 'NAType'
+
+The above exception was the direct cause of the following exception:
+
+Traceback (most recent call last):
+  File "C:\Users\PRCAAL\PROYECTOS\anime_dataset_generator\project\genetic_rule_miner\utils\logging.py", line 125, in wrapper
+    result = func(*args, **kwargs)
+  File "C:\Users\PRCAAL\PROYECTOS\anime_dataset_generator\project\genetic_rule_miner\utils\decorators.py", line 17, in wrapper
+    return func(df, *args, **kwargs)
+  File "c:\Users\PRCAAL\PROYECTOS\anime_dataset_generator\project\genetic_rule_miner\data\preprocessing.py", line 125, in preprocess_data
+    raise ValueError(f"Data preprocessing failed: {str(e)}") from e
+ValueError: Data preprocessing failed: float() argument must be a string or a real number, not 'NAType'
+2025-04-24 11:38:35 - __main__ - [91mERROR[0m - Pipeline failed: Data preprocessing failed: float() argument must be a string or a real number, not 'NAType'
+Traceback (most recent call last):
+  File "c:\Users\PRCAAL\PROYECTOS\anime_dataset_generator\project\genetic_rule_miner\data\preprocessing.py", line 68, in preprocess_data
+    .astype(float)
+     ~~~~~~^^^^^^^
+  File "C:\Users\PRCAAL\PROYECTOS\anime_dataset_generator\project\.venv\Lib\site-packages\pandas\core\generic.py", line 6643, in astype
+    new_data = self._mgr.astype(dtype=dtype, copy=copy, errors=errors)
+  File "C:\Users\PRCAAL\PROYECTOS\anime_dataset_generator\project\.venv\Lib\site-packages\pandas\core\internals\managers.py", line 430, in astype
+    return self.apply(
+           ~~~~~~~~~~^
+        "astype",
+        ^^^^^^^^^
+    ...<3 lines>...
+        using_cow=using_copy_on_write(),
+        ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+    )
+    ^
+  File "C:\Users\PRCAAL\PROYECTOS\anime_dataset_generator\project\.venv\Lib\site-packages\pandas\core\internals\managers.py", line 363, in apply
+    applied = getattr(b, f)(**kwargs)
+  File "C:\Users\PRCAAL\PROYECTOS\anime_dataset_generator\project\.venv\Lib\site-packages\pandas\core\internals\blocks.py", line 758, in astype
+    new_values = astype_array_safe(values, dtype, copy=copy, errors=errors)
+  File "C:\Users\PRCAAL\PROYECTOS\anime_dataset_generator\project\.venv\Lib\site-packages\pandas\core\dtypes\astype.py", line 237, in astype_array_safe
+    new_values = astype_array(values, dtype, copy=copy)
+  File "C:\Users\PRCAAL\PROYECTOS\anime_dataset_generator\project\.venv\Lib\site-packages\pandas\core\dtypes\astype.py", line 182, in astype_array
+    values = _astype_nansafe(values, dtype, copy=copy)
+  File "C:\Users\PRCAAL\PROYECTOS\anime_dataset_generator\project\.venv\Lib\site-packages\pandas\core\dtypes\astype.py", line 133, in _astype_nansafe
+    return arr.astype(dtype, copy=True)
+           ~~~~~~~~~~^^^^^^^^^^^^^^^^^^
+TypeError: float() argument must be a string or a real number, not 'NAType'
+
+The above exception was the direct cause of the following exception:
+
+Traceback (most recent call last):
+  File "c:\Users\PRCAAL\PROYECTOS\anime_dataset_generator\project\genetic_rule_miner\main.py", line 33, in main
+    processed_df = preprocess_data(clean_string_columns(merged_data))
+  File "C:\Users\PRCAAL\PROYECTOS\anime_dataset_generator\project\genetic_rule_miner\utils\logging.py", line 125, in wrapper
+    result = func(*args, **kwargs)
+  File "C:\Users\PRCAAL\PROYECTOS\anime_dataset_generator\project\genetic_rule_miner\utils\decorators.py", line 17, in wrapper
+    return func(df, *args, **kwargs)
+  File "c:\Users\PRCAAL\PROYECTOS\anime_dataset_generator\project\genetic_rule_miner\data\preprocessing.py", line 125, in preprocess_data
+    raise ValueError(f"Data preprocessing failed: {str(e)}") from e
+ValueError: Data preprocessing failed: float() argument must be a string or a real number, not 'NAType'
+2025-04-24 11:38:35 - genetic_rule_miner.data.database - [92mINFO[0m - PostgreSQL connection pool closed
+2025-04-24 11:41:53 - __main__ - [92mINFO[0m - Starting rule mining pipeline
+2025-04-24 11:42:15 - genetic_rule_miner.data.database - [92mINFO[0m - PostgreSQL connection pool initialized
+2025-04-24 11:42:15 - __main__ - [92mINFO[0m - Loading data from database...
+2025-04-24 11:42:15 - data.manager - [92mINFO[0m - [92mEntering load_data...[0m
+2025-04-24 11:42:15 - data.manager - [92mINFO[0m - [92mload_data completed in 0.2224s[0m
+2025-04-24 11:42:15 - __main__ - [92mINFO[0m - Merging and preprocessing data...
+2025-04-24 11:42:15 - data.manager - [92mINFO[0m - [92mEntering merge_data...[0m
+2025-04-24 11:42:15 - data.manager - [92mINFO[0m - [92mmerge_data completed in 0.0053s[0m
+2025-04-24 11:42:15 - __main__ - [92mINFO[0m - [92mEntering save_to_excel...[0m
+2025-04-24 11:42:15 - __main__ - [91mERROR[0m - Failed to save data to Excel: [WinError 3] El sistema no puede encontrar la ruta especificada: ''
+2025-04-24 11:42:15 - __main__ - [91mERROR[0m - [91msave_to_excel failed after 0.0006s: [WinError 3] El sistema no puede encontrar la ruta especificada: ''[0m
+Traceback (most recent call last):
+  File "c:\Users\PRCAAL\PROYECTOS\anime_dataset_generator\project\genetic_rule_miner\utils\logging.py", line 125, in wrapper
+    result = func(*args, **kwargs)
+  File "c:\Users\PRCAAL\PROYECTOS\anime_dataset_generator\project\genetic_rule_miner\main.py", line 28, in save_to_excel
+    os.makedirs(os.path.dirname(output_path), exist_ok=True)
+    ~~~~~~~~~~~^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "<frozen os>", line 227, in makedirs
+FileNotFoundError: [WinError 3] El sistema no puede encontrar la ruta especificada: ''
+2025-04-24 11:42:15 - __main__ - [91mERROR[0m - Pipeline failed: [WinError 3] El sistema no puede encontrar la ruta especificada: ''
+Traceback (most recent call last):
+  File "c:\Users\PRCAAL\PROYECTOS\anime_dataset_generator\project\genetic_rule_miner\main.py", line 59, in main
+    save_to_excel(merged_data, "processed_data.xlsx")
+    ~~~~~~~~~~~~~^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "c:\Users\PRCAAL\PROYECTOS\anime_dataset_generator\project\genetic_rule_miner\utils\logging.py", line 125, in wrapper
+    result = func(*args, **kwargs)
+  File "c:\Users\PRCAAL\PROYECTOS\anime_dataset_generator\project\genetic_rule_miner\main.py", line 28, in save_to_excel
+    os.makedirs(os.path.dirname(output_path), exist_ok=True)
+    ~~~~~~~~~~~^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "<frozen os>", line 227, in makedirs
+FileNotFoundError: [WinError 3] El sistema no puede encontrar la ruta especificada: ''
+2025-04-24 11:42:15 - genetic_rule_miner.data.database - [92mINFO[0m - PostgreSQL connection pool closed
+2025-04-24 11:42:48 - __main__ - [92mINFO[0m - Starting rule mining pipeline
+2025-04-24 11:43:09 - genetic_rule_miner.data.database - [92mINFO[0m - PostgreSQL connection pool initialized
+2025-04-24 11:43:09 - __main__ - [92mINFO[0m - Loading data from database...
+2025-04-24 11:43:09 - data.manager - [92mINFO[0m - [92mEntering load_data...[0m
+2025-04-24 11:43:09 - data.manager - [92mINFO[0m - [92mload_data completed in 0.2155s[0m
+2025-04-24 11:43:09 - __main__ - [92mINFO[0m - Merging and preprocessing data...
+2025-04-24 11:43:09 - data.manager - [92mINFO[0m - [92mEntering merge_data...[0m
+2025-04-24 11:43:09 - data.manager - [92mINFO[0m - [92mmerge_data completed in 0.0060s[0m
+2025-04-24 11:43:09 - __main__ - [92mINFO[0m - [92mEntering save_to_excel...[0m
+2025-04-24 11:43:09 - __main__ - [91mERROR[0m - Failed to save data to Excel: No module named 'openpyxl'
+2025-04-24 11:43:09 - __main__ - [91mERROR[0m - [91msave_to_excel failed after 0.0459s: No module named 'openpyxl'[0m
+Traceback (most recent call last):
+  File "c:\Users\PRCAAL\PROYECTOS\anime_dataset_generator\project\genetic_rule_miner\utils\logging.py", line 125, in wrapper
+    result = func(*args, **kwargs)
+  File "c:\Users\PRCAAL\PROYECTOS\anime_dataset_generator\project\genetic_rule_miner\main.py", line 28, in save_to_excel
+    df.to_excel(output_path, index=False)
+    ~~~~~~~~~~~^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "C:\Users\PRCAAL\PROYECTOS\anime_dataset_generator\project\.venv\Lib\site-packages\pandas\util\_decorators.py", line 333, in wrapper
+    return func(*args, **kwargs)
+  File "C:\Users\PRCAAL\PROYECTOS\anime_dataset_generator\project\.venv\Lib\site-packages\pandas\core\generic.py", line 2417, in to_excel
+    formatter.write(
+    ~~~~~~~~~~~~~~~^
+        excel_writer,
+        ^^^^^^^^^^^^^
+    ...<6 lines>...
+        engine_kwargs=engine_kwargs,
+        ^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+    )
+    ^
+  File "C:\Users\PRCAAL\PROYECTOS\anime_dataset_generator\project\.venv\Lib\site-packages\pandas\io\formats\excel.py", line 943, in write
+    writer = ExcelWriter(
+        writer,
+    ...<2 lines>...
+        engine_kwargs=engine_kwargs,
+    )
+  File "C:\Users\PRCAAL\PROYECTOS\anime_dataset_generator\project\.venv\Lib\site-packages\pandas\io\excel\_openpyxl.py", line 57, in __init__
+    from openpyxl.workbook import Workbook
+ModuleNotFoundError: No module named 'openpyxl'
+2025-04-24 11:43:09 - __main__ - [91mERROR[0m - Pipeline failed: No module named 'openpyxl'
+Traceback (most recent call last):
+  File "c:\Users\PRCAAL\PROYECTOS\anime_dataset_generator\project\genetic_rule_miner\main.py", line 56, in main
+    save_to_excel(merged_data, "processed_data.xlsx")
+    ~~~~~~~~~~~~~^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "c:\Users\PRCAAL\PROYECTOS\anime_dataset_generator\project\genetic_rule_miner\utils\logging.py", line 125, in wrapper
+    result = func(*args, **kwargs)
+  File "c:\Users\PRCAAL\PROYECTOS\anime_dataset_generator\project\genetic_rule_miner\main.py", line 28, in save_to_excel
+    df.to_excel(output_path, index=False)
+    ~~~~~~~~~~~^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "C:\Users\PRCAAL\PROYECTOS\anime_dataset_generator\project\.venv\Lib\site-packages\pandas\util\_decorators.py", line 333, in wrapper
+    return func(*args, **kwargs)
+  File "C:\Users\PRCAAL\PROYECTOS\anime_dataset_generator\project\.venv\Lib\site-packages\pandas\core\generic.py", line 2417, in to_excel
+    formatter.write(
+    ~~~~~~~~~~~~~~~^
+        excel_writer,
+        ^^^^^^^^^^^^^
+    ...<6 lines>...
+        engine_kwargs=engine_kwargs,
+        ^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+    )
+    ^
+  File "C:\Users\PRCAAL\PROYECTOS\anime_dataset_generator\project\.venv\Lib\site-packages\pandas\io\formats\excel.py", line 943, in write
+    writer = ExcelWriter(
+        writer,
+    ...<2 lines>...
+        engine_kwargs=engine_kwargs,
+    )
+  File "C:\Users\PRCAAL\PROYECTOS\anime_dataset_generator\project\.venv\Lib\site-packages\pandas\io\excel\_openpyxl.py", line 57, in __init__
+    from openpyxl.workbook import Workbook
+ModuleNotFoundError: No module named 'openpyxl'
+2025-04-24 11:43:09 - genetic_rule_miner.data.database - [92mINFO[0m - PostgreSQL connection pool closed
+2025-04-24 11:43:32 - __main__ - [92mINFO[0m - Starting rule mining pipeline
+2025-04-24 11:43:53 - genetic_rule_miner.data.database - [92mINFO[0m - PostgreSQL connection pool initialized
+2025-04-24 11:43:53 - __main__ - [92mINFO[0m - Loading data from database...
+2025-04-24 11:43:53 - data.manager - [92mINFO[0m - [92mEntering load_data...[0m
+2025-04-24 11:43:53 - data.manager - [92mINFO[0m - [92mload_data completed in 0.2148s[0m
+2025-04-24 11:43:53 - __main__ - [92mINFO[0m - Merging and preprocessing data...
+2025-04-24 11:43:53 - data.manager - [92mINFO[0m - [92mEntering merge_data...[0m
+2025-04-24 11:43:53 - data.manager - [92mINFO[0m - [92mmerge_data completed in 0.0069s[0m
+2025-04-24 11:43:53 - __main__ - [92mINFO[0m - [92mEntering save_to_excel...[0m
+2025-04-24 11:43:55 - __main__ - [92mINFO[0m - Data successfully saved to processed_data.xlsx
+2025-04-24 11:43:55 - __main__ - [92mINFO[0m - [92msave_to_excel completed in 1.7412s[0m
+2025-04-24 11:43:55 - data.preprocessing - [92mINFO[0m - [92mEntering clean_string_columns...[0m
+2025-04-24 11:43:55 - data.preprocessing - [92mINFO[0m - [92mclean_string_columns completed in 0.0153s[0m
+2025-04-24 11:43:55 - data.preprocessing - [92mINFO[0m - [92mEntering preprocess_data...[0m
+2025-04-24 11:43:55 - data.preprocessing - [91mERROR[0m - Preprocessing failed. Current data state:
+   rating_x gender    birthday  days_watched  mean_score  watching  completed  on_hold  dropped  plan_to_watch  total_entries  rewatched  episodes_watched  score genres keywords   type  episodes aired premiered           status                                                                      producers           studios    source  duration                        rating_y   rank  popularity  favorites  scored_by  members
+0         7   Male  1985-03-04         142.3        7.37         1        233        8       93             64            399         60              8481   6.94   <NA>     <NA>     TV      26.0  <NA>    spring  Finished Airing                       Bandai Visual, Yomiko Advertising, Bandai, CyberConnect2         Bee Train  Original      24.0       PG-13 - Teens 13 or older   4663        1369       1432      86289   189123
+1         7   Male  1985-03-04         142.3        7.37         1        233        8       93             64            399         60              8481   7.05   <NA>     <NA>  Movie       1.0  <NA>      <NA>  Finished Airing  Mainichi Broadcasting System, TOHO, TYO Animations, TYO, Geneon Entertainment  Digital Frontier     Manga     105.0  R - 17+ (violence & profanity)   4190        2663        185      42381    76310
+2         6   Male  1985-03-04         142.3        7.37         1        233        8       93             64            399         60              8481   5.85   <NA>     <NA>     TV      13.0  <NA>      fall  Finished Airing                                                             Yomiko Advertising         Bee Train  Original      23.0  R - 17+ (violence & profanity)  10783        5346         22       7309    18706
+3         7   Male  1985-03-04         142.3        7.37         1        233        8       93             64            399         60              8481   7.31   <NA>     <NA>     TV      23.0  <NA>      fall  Finished Airing                  GDH, Dentsu, TBS, Sotsu Music Publishing, Future Vision Music             Gonzo     Manga      24.0       PG-13 - Teens 13 or older   2834         942       1810     131754   277502
+4         8   Male  1985-03-04         142.3        7.37         1        233        8       93             64            399         60              8481   7.01   <NA>     <NA>     TV      26.0  <NA>      fall  Finished Airing                                                            Youmex, Toshiba EMI               AIC  Original      23.0                R+ - Mild Nudity   4408        2481        445      31549    85588
+2025-04-24 11:43:55 - data.preprocessing - [91mERROR[0m - [91mpreprocess_data failed after 0.0110s: Data preprocessing failed: float() argument must be a string or a real number, not 'NAType'[0m
+Traceback (most recent call last):
+  File "c:\Users\PRCAAL\PROYECTOS\anime_dataset_generator\project\genetic_rule_miner\data\preprocessing.py", line 71, in preprocess_data
+    .astype(float)
+     ~~~~~~^^^^^^^
+  File "C:\Users\PRCAAL\PROYECTOS\anime_dataset_generator\project\.venv\Lib\site-packages\pandas\core\generic.py", line 6643, in astype
+    new_data = self._mgr.astype(dtype=dtype, copy=copy, errors=errors)
+  File "C:\Users\PRCAAL\PROYECTOS\anime_dataset_generator\project\.venv\Lib\site-packages\pandas\core\internals\managers.py", line 430, in astype
+    return self.apply(
+           ~~~~~~~~~~^
+        "astype",
+        ^^^^^^^^^
+    ...<3 lines>...
+        using_cow=using_copy_on_write(),
+        ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+    )
+    ^
+  File "C:\Users\PRCAAL\PROYECTOS\anime_dataset_generator\project\.venv\Lib\site-packages\pandas\core\internals\managers.py", line 363, in apply
+    applied = getattr(b, f)(**kwargs)
+  File "C:\Users\PRCAAL\PROYECTOS\anime_dataset_generator\project\.venv\Lib\site-packages\pandas\core\internals\blocks.py", line 758, in astype
+    new_values = astype_array_safe(values, dtype, copy=copy, errors=errors)
+  File "C:\Users\PRCAAL\PROYECTOS\anime_dataset_generator\project\.venv\Lib\site-packages\pandas\core\dtypes\astype.py", line 237, in astype_array_safe
+    new_values = astype_array(values, dtype, copy=copy)
+  File "C:\Users\PRCAAL\PROYECTOS\anime_dataset_generator\project\.venv\Lib\site-packages\pandas\core\dtypes\astype.py", line 182, in astype_array
+    values = _astype_nansafe(values, dtype, copy=copy)
+  File "C:\Users\PRCAAL\PROYECTOS\anime_dataset_generator\project\.venv\Lib\site-packages\pandas\core\dtypes\astype.py", line 133, in _astype_nansafe
+    return arr.astype(dtype, copy=True)
+           ~~~~~~~~~~^^^^^^^^^^^^^^^^^^
+TypeError: float() argument must be a string or a real number, not 'NAType'
+
+The above exception was the direct cause of the following exception:
+
+Traceback (most recent call last):
+  File "C:\Users\PRCAAL\PROYECTOS\anime_dataset_generator\project\genetic_rule_miner\utils\logging.py", line 125, in wrapper
+    result = func(*args, **kwargs)
+  File "C:\Users\PRCAAL\PROYECTOS\anime_dataset_generator\project\genetic_rule_miner\utils\decorators.py", line 17, in wrapper
+    return func(df, *args, **kwargs)
+  File "c:\Users\PRCAAL\PROYECTOS\anime_dataset_generator\project\genetic_rule_miner\data\preprocessing.py", line 140, in preprocess_data
+    raise ValueError(f"Data preprocessing failed: {str(e)}") from e
+ValueError: Data preprocessing failed: float() argument must be a string or a real number, not 'NAType'
+2025-04-24 11:43:55 - __main__ - [91mERROR[0m - Pipeline failed: Data preprocessing failed: float() argument must be a string or a real number, not 'NAType'
+Traceback (most recent call last):
+  File "c:\Users\PRCAAL\PROYECTOS\anime_dataset_generator\project\genetic_rule_miner\data\preprocessing.py", line 71, in preprocess_data
+    .astype(float)
+     ~~~~~~^^^^^^^
+  File "C:\Users\PRCAAL\PROYECTOS\anime_dataset_generator\project\.venv\Lib\site-packages\pandas\core\generic.py", line 6643, in astype
+    new_data = self._mgr.astype(dtype=dtype, copy=copy, errors=errors)
+  File "C:\Users\PRCAAL\PROYECTOS\anime_dataset_generator\project\.venv\Lib\site-packages\pandas\core\internals\managers.py", line 430, in astype
+    return self.apply(
+           ~~~~~~~~~~^
+        "astype",
+        ^^^^^^^^^
+    ...<3 lines>...
+        using_cow=using_copy_on_write(),
+        ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+    )
+    ^
+  File "C:\Users\PRCAAL\PROYECTOS\anime_dataset_generator\project\.venv\Lib\site-packages\pandas\core\internals\managers.py", line 363, in apply
+    applied = getattr(b, f)(**kwargs)
+  File "C:\Users\PRCAAL\PROYECTOS\anime_dataset_generator\project\.venv\Lib\site-packages\pandas\core\internals\blocks.py", line 758, in astype
+    new_values = astype_array_safe(values, dtype, copy=copy, errors=errors)
+  File "C:\Users\PRCAAL\PROYECTOS\anime_dataset_generator\project\.venv\Lib\site-packages\pandas\core\dtypes\astype.py", line 237, in astype_array_safe
+    new_values = astype_array(values, dtype, copy=copy)
+  File "C:\Users\PRCAAL\PROYECTOS\anime_dataset_generator\project\.venv\Lib\site-packages\pandas\core\dtypes\astype.py", line 182, in astype_array
+    values = _astype_nansafe(values, dtype, copy=copy)
+  File "C:\Users\PRCAAL\PROYECTOS\anime_dataset_generator\project\.venv\Lib\site-packages\pandas\core\dtypes\astype.py", line 133, in _astype_nansafe
+    return arr.astype(dtype, copy=True)
+           ~~~~~~~~~~^^^^^^^^^^^^^^^^^^
+TypeError: float() argument must be a string or a real number, not 'NAType'
+
+The above exception was the direct cause of the following exception:
+
+Traceback (most recent call last):
+  File "c:\Users\PRCAAL\PROYECTOS\anime_dataset_generator\project\genetic_rule_miner\main.py", line 57, in main
+    processed_df = preprocess_data(clean_string_columns(merged_data))
+  File "C:\Users\PRCAAL\PROYECTOS\anime_dataset_generator\project\genetic_rule_miner\utils\logging.py", line 125, in wrapper
+    result = func(*args, **kwargs)
+  File "C:\Users\PRCAAL\PROYECTOS\anime_dataset_generator\project\genetic_rule_miner\utils\decorators.py", line 17, in wrapper
+    return func(df, *args, **kwargs)
+  File "c:\Users\PRCAAL\PROYECTOS\anime_dataset_generator\project\genetic_rule_miner\data\preprocessing.py", line 140, in preprocess_data
+    raise ValueError(f"Data preprocessing failed: {str(e)}") from e
+ValueError: Data preprocessing failed: float() argument must be a string or a real number, not 'NAType'
+2025-04-24 11:43:55 - genetic_rule_miner.data.database - [92mINFO[0m - PostgreSQL connection pool closed
