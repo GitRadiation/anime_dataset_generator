@@ -2926,3 +2926,804 @@ Traceback (most recent call last):
                                     ~~~~~~~^^^
 TypeError: 'NoneType' object is not subscriptable
 2025-04-09 19:26:58 - genetic_rule_miner.data.database - [92mINFO[0m - PostgreSQL connection pool closed
+2025-04-24 09:24:37 - __main__ - [92mINFO[0m - Starting rule mining pipeline
+2025-04-24 09:24:58 - genetic_rule_miner.data.database - [92mINFO[0m - PostgreSQL connection pool initialized
+2025-04-24 09:24:58 - __main__ - [92mINFO[0m - Loading data from database...
+2025-04-24 09:24:58 - data.manager - [92mINFO[0m - [92mEntering load_data...[0m
+2025-04-24 09:24:59 - data.manager - [92mINFO[0m - [92mload_data completed in 1.3954s[0m
+2025-04-24 09:24:59 - __main__ - [92mINFO[0m - Merging and preprocessing data...
+2025-04-24 09:24:59 - data.manager - [92mINFO[0m - [92mEntering merge_data...[0m
+2025-04-24 09:24:59 - data.manager - [92mINFO[0m - [92mmerge_data completed in 0.0056s[0m
+2025-04-24 09:24:59 - data.preprocessing - [92mINFO[0m - [92mEntering clean_string_columns...[0m
+2025-04-24 09:24:59 - data.preprocessing - [92mINFO[0m - [92mclean_string_columns completed in 0.0216s[0m
+2025-04-24 09:24:59 - data.preprocessing - [92mINFO[0m - [92mEntering preprocess_data...[0m
+2025-04-24 09:24:59 - data.preprocessing - [92mINFO[0m - [92mpreprocess_data completed in 0.0084s[0m
+2025-04-24 09:24:59 - __main__ - [92mINFO[0m - Initializing genetic algorithm...
+2025-04-24 09:24:59 - __main__ - [92mINFO[0m - Starting evolution process...
+2025-04-24 09:24:59 - __main__ - [91mERROR[0m - Pipeline failed: 'NoneType' object is not subscriptable
+Traceback (most recent call last):
+  File "c:\Users\PRCAAL\PROYECTOS\anime_dataset_generator\project\genetic_rule_miner\main.py", line 47, in main
+    results = miner.evolve()
+  File "c:\Users\PRCAAL\PROYECTOS\anime_dataset_generator\project\genetic_rule_miner\models\genetic.py", line 263, in evolve
+    new_population = self._create_new_generation(parents)
+  File "c:\Users\PRCAAL\PROYECTOS\anime_dataset_generator\project\genetic_rule_miner\models\genetic.py", line 286, in _create_new_generation
+    child1, child2 = self.crossover(parents[i], parents[i+1])
+                                    ~~~~~~~^^^
+TypeError: 'NoneType' object is not subscriptable
+2025-04-24 09:24:59 - genetic_rule_miner.data.database - [92mINFO[0m - PostgreSQL connection pool closed
+2025-04-24 09:25:36 - __main__ - [92mINFO[0m - Starting rule mining pipeline
+2025-04-24 09:25:57 - genetic_rule_miner.data.database - [92mINFO[0m - PostgreSQL connection pool initialized
+2025-04-24 09:25:57 - __main__ - [92mINFO[0m - Loading data from database...
+2025-04-24 09:25:57 - data.manager - [92mINFO[0m - [92mEntering load_data...[0m
+2025-04-24 09:25:58 - data.manager - [92mINFO[0m - [92mload_data completed in 0.9489s[0m
+2025-04-24 09:25:58 - __main__ - [92mINFO[0m - Merging and preprocessing data...
+2025-04-24 09:25:58 - data.manager - [92mINFO[0m - [92mEntering merge_data...[0m
+2025-04-24 09:25:58 - data.manager - [92mINFO[0m - [92mmerge_data completed in 0.0070s[0m
+2025-04-24 09:25:58 - data.preprocessing - [92mINFO[0m - [92mEntering clean_string_columns...[0m
+2025-04-24 09:25:58 - data.preprocessing - [92mINFO[0m - [92mclean_string_columns completed in 0.0229s[0m
+2025-04-24 09:25:58 - data.preprocessing - [92mINFO[0m - [92mEntering preprocess_data...[0m
+2025-04-24 09:25:58 - data.preprocessing - [92mINFO[0m - [92mpreprocess_data completed in 0.0100s[0m
+2025-04-24 09:25:58 - __main__ - [92mINFO[0m - Initializing genetic algorithm...
+2025-04-24 09:25:58 - __main__ - [92mINFO[0m - <function preprocess_data at 0x00000284B84F0CC0>
+2025-04-24 09:25:58 - __main__ - [92mINFO[0m - Starting evolution process...
+2025-04-24 09:25:58 - __main__ - [91mERROR[0m - Pipeline failed: 'NoneType' object is not subscriptable
+Traceback (most recent call last):
+  File "c:\Users\PRCAAL\PROYECTOS\anime_dataset_generator\project\genetic_rule_miner\main.py", line 47, in main
+    results = miner.evolve()
+  File "c:\Users\PRCAAL\PROYECTOS\anime_dataset_generator\project\genetic_rule_miner\models\genetic.py", line 263, in evolve
+    new_population = self._create_new_generation(parents)
+  File "c:\Users\PRCAAL\PROYECTOS\anime_dataset_generator\project\genetic_rule_miner\models\genetic.py", line 286, in _create_new_generation
+    child1, child2 = self.crossover(parents[i], parents[i+1])
+                                    ~~~~~~~^^^
+TypeError: 'NoneType' object is not subscriptable
+2025-04-24 09:25:58 - genetic_rule_miner.data.database - [92mINFO[0m - PostgreSQL connection pool closed
+2025-04-24 09:27:02 - __main__ - [92mINFO[0m - Starting rule mining pipeline
+2025-04-24 09:27:23 - genetic_rule_miner.data.database - [92mINFO[0m - PostgreSQL connection pool initialized
+2025-04-24 09:27:23 - __main__ - [92mINFO[0m - Loading data from database...
+2025-04-24 09:27:23 - data.manager - [92mINFO[0m - [92mEntering load_data...[0m
+2025-04-24 09:27:23 - data.manager - [92mINFO[0m - [92mload_data completed in 0.2220s[0m
+2025-04-24 09:27:23 - __main__ - [92mINFO[0m - Merging and preprocessing data...
+2025-04-24 09:27:23 - data.manager - [92mINFO[0m - [92mEntering merge_data...[0m
+2025-04-24 09:27:23 - data.manager - [92mINFO[0m - [92mmerge_data completed in 0.0060s[0m
+2025-04-24 09:27:23 - data.preprocessing - [92mINFO[0m - [92mEntering clean_string_columns...[0m
+2025-04-24 09:27:23 - data.preprocessing - [92mINFO[0m - [92mclean_string_columns completed in 0.0134s[0m
+2025-04-24 09:27:23 - data.preprocessing - [92mINFO[0m - [92mEntering preprocess_data...[0m
+2025-04-24 09:27:23 - data.preprocessing - [92mINFO[0m - [92mpreprocess_data completed in 0.0053s[0m
+2025-04-24 09:27:23 - __main__ - [92mINFO[0m - Initializing genetic algorithm...
+2025-04-24 09:27:23 - __main__ - [92mINFO[0m -      gender    birthday  days_watched  mean_score  watching  completed  ...  favorites  scored_by  members  duration_class  episodes_class  rating
+0      Male  1985-03-04         142.3        7.37         1        233  ...        259      27828    56581            long           short    high
+1      Male  1985-03-04         142.3        7.37         1        233  ...        472      55020   114544        standard            long  medium
+2      Male  1985-03-04         142.3        7.37         1        233  ...      14401     539355   910855            long           short     low
+3      Male  1985-03-04         142.3        7.37         1        233  ...         14       6445    17529        standard            long     low
+4      Male  1985-03-04         142.3        7.37         1        233  ...       8823     146093   359083            long            long    high
+..      ...         ...           ...         ...       ...        ...  ...        ...        ...      ...             ...             ...     ...
+222  Female        <NA>          36.4        6.66         4         57  ...       3677      99438   178914        standard            long     low
+223  Female        <NA>          36.4        6.66         4         57  ...     111650    1147758  1919766        standard            long  medium
+224    Male        <NA>          50.5        6.09         1        114  ...      14401     539355   910855            long           short  medium
+225    Male        <NA>          50.5        6.09         1        114  ...       1389     113204   202660            long            long    high
+226    Male        <NA>          50.5        6.09         1        114  ...      82913    2054933  2982943        standard            long    high
+
+[227 rows x 33 columns]
+2025-04-24 09:27:23 - __main__ - [92mINFO[0m - Starting evolution process...
+2025-04-24 09:27:23 - __main__ - [91mERROR[0m - Pipeline failed: 'NoneType' object is not subscriptable
+Traceback (most recent call last):
+  File "c:\Users\PRCAAL\PROYECTOS\anime_dataset_generator\project\genetic_rule_miner\main.py", line 47, in main
+    results = miner.evolve()
+  File "c:\Users\PRCAAL\PROYECTOS\anime_dataset_generator\project\genetic_rule_miner\models\genetic.py", line 263, in evolve
+    new_population = self._create_new_generation(parents)
+  File "c:\Users\PRCAAL\PROYECTOS\anime_dataset_generator\project\genetic_rule_miner\models\genetic.py", line 286, in _create_new_generation
+    child1, child2 = self.crossover(parents[i], parents[i+1])
+                                    ~~~~~~~^^^
+TypeError: 'NoneType' object is not subscriptable
+2025-04-24 09:27:23 - genetic_rule_miner.data.database - [92mINFO[0m - PostgreSQL connection pool closed
+2025-04-24 09:29:49 - __main__ - [92mINFO[0m - Starting rule mining pipeline
+2025-04-24 09:30:10 - genetic_rule_miner.data.database - [92mINFO[0m - PostgreSQL connection pool initialized
+2025-04-24 09:30:10 - __main__ - [92mINFO[0m - Loading data from database...
+2025-04-24 09:30:10 - data.manager - [92mINFO[0m - [92mEntering load_data...[0m
+2025-04-24 09:30:10 - data.manager - [92mINFO[0m - [92mload_data completed in 0.2445s[0m
+2025-04-24 09:30:10 - __main__ - [92mINFO[0m - Merging and preprocessing data...
+2025-04-24 09:30:10 - data.manager - [92mINFO[0m - [92mEntering merge_data...[0m
+2025-04-24 09:30:10 - data.manager - [92mINFO[0m - [92mmerge_data completed in 0.0046s[0m
+2025-04-24 09:30:10 - data.preprocessing - [92mINFO[0m - [92mEntering clean_string_columns...[0m
+2025-04-24 09:30:10 - data.preprocessing - [92mINFO[0m - [92mclean_string_columns completed in 0.0110s[0m
+2025-04-24 09:30:10 - data.preprocessing - [92mINFO[0m - [92mEntering preprocess_data...[0m
+2025-04-24 09:30:10 - data.preprocessing - [92mINFO[0m - [92mpreprocess_data completed in 0.0054s[0m
+2025-04-24 09:30:10 - __main__ - [92mINFO[0m - Initializing genetic algorithm...
+2025-04-24 09:30:10 - __main__ - [92mINFO[0m -      gender    birthday  days_watched  mean_score  watching  completed  ...  favorites  scored_by  members  duration_class  episodes_class  rating
+0      Male  1985-03-04         142.3        7.37         1        233  ...        259      27828    56581            long           short    high
+1      Male  1985-03-04         142.3        7.37         1        233  ...        472      55020   114544        standard            long  medium
+2      Male  1985-03-04         142.3        7.37         1        233  ...      14401     539355   910855            long           short     low
+3      Male  1985-03-04         142.3        7.37         1        233  ...         14       6445    17529        standard            long     low
+4      Male  1985-03-04         142.3        7.37         1        233  ...       8823     146093   359083            long            long    high
+..      ...         ...           ...         ...       ...        ...  ...        ...        ...      ...             ...             ...     ...
+222  Female        <NA>          36.4        6.66         4         57  ...       3677      99438   178914        standard            long     low
+223  Female        <NA>          36.4        6.66         4         57  ...     111650    1147758  1919766        standard            long  medium
+224    Male        <NA>          50.5        6.09         1        114  ...      14401     539355   910855            long           short  medium
+225    Male        <NA>          50.5        6.09         1        114  ...       1389     113204   202660            long            long    high
+226    Male        <NA>          50.5        6.09         1        114  ...      82913    2054933  2982943        standard            long    high
+
+[227 rows x 33 columns]
+2025-04-24 09:30:10 - __main__ - [92mINFO[0m - Starting evolution process...
+2025-04-24 09:30:10 - models.genetic - [92mINFO[0m - Generation 0: Best Fitness=0.4000, Avg Fitness=0.0003
+2025-04-24 09:30:10 - models.genetic - [92mINFO[0m - Generation 1: Best Fitness=0.4000, Avg Fitness=0.0003
+2025-04-24 09:30:10 - models.genetic - [92mINFO[0m - Generation 2: Best Fitness=0.4000, Avg Fitness=0.0003
+2025-04-24 09:30:10 - models.genetic - [92mINFO[0m - Generation 3: Best Fitness=0.4000, Avg Fitness=0.0003
+2025-04-24 09:30:10 - models.genetic - [92mINFO[0m - Generation 4: Best Fitness=0.4000, Avg Fitness=0.0003
+2025-04-24 09:30:10 - models.genetic - [92mINFO[0m - Generation 5: Best Fitness=0.4000, Avg Fitness=0.0003
+2025-04-24 09:30:10 - models.genetic - [92mINFO[0m - Generation 6: Best Fitness=0.4000, Avg Fitness=0.0003
+2025-04-24 09:30:11 - models.genetic - [92mINFO[0m - Generation 7: Best Fitness=0.4000, Avg Fitness=0.0003
+2025-04-24 09:30:11 - models.genetic - [92mINFO[0m - Generation 8: Best Fitness=0.4000, Avg Fitness=0.0003
+2025-04-24 09:30:11 - models.genetic - [92mINFO[0m - Generation 9: Best Fitness=0.4000, Avg Fitness=0.0003
+2025-04-24 09:30:11 - models.genetic - [92mINFO[0m - Generation 10: Best Fitness=0.4000, Avg Fitness=0.0003
+2025-04-24 09:30:11 - models.genetic - [92mINFO[0m - Generation 11: Best Fitness=0.4000, Avg Fitness=0.0003
+2025-04-24 09:30:11 - models.genetic - [92mINFO[0m - Generation 12: Best Fitness=0.4000, Avg Fitness=0.0003
+2025-04-24 09:30:11 - models.genetic - [92mINFO[0m - Generation 13: Best Fitness=0.4000, Avg Fitness=0.0003
+2025-04-24 09:30:11 - models.genetic - [92mINFO[0m - Generation 14: Best Fitness=0.4000, Avg Fitness=0.0003
+2025-04-24 09:30:11 - models.genetic - [92mINFO[0m - Generation 15: Best Fitness=0.4000, Avg Fitness=0.0003
+2025-04-24 09:30:11 - models.genetic - [92mINFO[0m - Generation 16: Best Fitness=0.4000, Avg Fitness=0.0003
+2025-04-24 09:30:11 - models.genetic - [92mINFO[0m - Generation 17: Best Fitness=0.4000, Avg Fitness=0.0003
+2025-04-24 09:30:11 - models.genetic - [92mINFO[0m - Generation 18: Best Fitness=0.4000, Avg Fitness=0.0003
+2025-04-24 09:30:11 - models.genetic - [92mINFO[0m - Generation 19: Best Fitness=0.4000, Avg Fitness=0.0003
+2025-04-24 09:30:11 - models.genetic - [92mINFO[0m - Generation 20: Best Fitness=0.4000, Avg Fitness=0.0003
+2025-04-24 09:30:11 - models.genetic - [92mINFO[0m - Generation 21: Best Fitness=0.4000, Avg Fitness=0.0003
+2025-04-24 09:30:11 - models.genetic - [92mINFO[0m - Generation 22: Best Fitness=0.4000, Avg Fitness=0.0003
+2025-04-24 09:30:11 - models.genetic - [92mINFO[0m - Generation 23: Best Fitness=0.4000, Avg Fitness=0.0003
+2025-04-24 09:30:11 - models.genetic - [92mINFO[0m - Generation 24: Best Fitness=0.4000, Avg Fitness=0.0003
+2025-04-24 09:30:11 - models.genetic - [92mINFO[0m - Generation 25: Best Fitness=0.4000, Avg Fitness=0.0003
+2025-04-24 09:30:11 - models.genetic - [92mINFO[0m - Generation 26: Best Fitness=0.4000, Avg Fitness=0.0003
+2025-04-24 09:30:11 - models.genetic - [92mINFO[0m - Generation 27: Best Fitness=0.4000, Avg Fitness=0.0003
+2025-04-24 09:30:11 - models.genetic - [92mINFO[0m - Generation 28: Best Fitness=0.4000, Avg Fitness=0.0003
+2025-04-24 09:30:11 - models.genetic - [92mINFO[0m - Generation 29: Best Fitness=0.4000, Avg Fitness=0.0003
+2025-04-24 09:30:11 - models.genetic - [92mINFO[0m - Generation 30: Best Fitness=0.4000, Avg Fitness=0.0003
+2025-04-24 09:30:11 - models.genetic - [92mINFO[0m - Generation 31: Best Fitness=0.4000, Avg Fitness=0.0003
+2025-04-24 09:30:11 - models.genetic - [92mINFO[0m - Generation 32: Best Fitness=0.4000, Avg Fitness=0.0003
+2025-04-24 09:30:11 - models.genetic - [92mINFO[0m - Generation 33: Best Fitness=0.4000, Avg Fitness=0.0003
+2025-04-24 09:30:11 - models.genetic - [92mINFO[0m - Generation 34: Best Fitness=0.4000, Avg Fitness=0.0003
+2025-04-24 09:30:11 - models.genetic - [92mINFO[0m - Generation 35: Best Fitness=0.4000, Avg Fitness=0.0003
+2025-04-24 09:30:11 - models.genetic - [92mINFO[0m - Generation 36: Best Fitness=0.4000, Avg Fitness=0.0003
+2025-04-24 09:30:11 - models.genetic - [92mINFO[0m - Generation 37: Best Fitness=0.4000, Avg Fitness=0.0003
+2025-04-24 09:30:11 - models.genetic - [92mINFO[0m - Generation 38: Best Fitness=0.4000, Avg Fitness=0.0003
+2025-04-24 09:30:11 - models.genetic - [92mINFO[0m - Generation 39: Best Fitness=0.4000, Avg Fitness=0.0003
+2025-04-24 09:30:11 - models.genetic - [92mINFO[0m - Generation 40: Best Fitness=0.4000, Avg Fitness=0.0003
+2025-04-24 09:30:11 - models.genetic - [92mINFO[0m - Generation 41: Best Fitness=0.4000, Avg Fitness=0.0003
+2025-04-24 09:30:11 - models.genetic - [92mINFO[0m - Generation 42: Best Fitness=0.4000, Avg Fitness=0.0003
+2025-04-24 09:30:11 - models.genetic - [92mINFO[0m - Generation 43: Best Fitness=0.4000, Avg Fitness=0.0003
+2025-04-24 09:30:11 - models.genetic - [92mINFO[0m - Generation 44: Best Fitness=0.4000, Avg Fitness=0.0003
+2025-04-24 09:30:11 - models.genetic - [92mINFO[0m - Generation 45: Best Fitness=0.4000, Avg Fitness=0.0003
+2025-04-24 09:30:11 - models.genetic - [92mINFO[0m - Generation 46: Best Fitness=0.4000, Avg Fitness=0.0003
+2025-04-24 09:30:11 - models.genetic - [92mINFO[0m - Generation 47: Best Fitness=0.4000, Avg Fitness=0.0003
+2025-04-24 09:30:11 - models.genetic - [92mINFO[0m - Generation 48: Best Fitness=0.4000, Avg Fitness=0.0003
+2025-04-24 09:30:11 - models.genetic - [92mINFO[0m - Generation 49: Best Fitness=0.4000, Avg Fitness=0.0003
+2025-04-24 09:30:11 - models.genetic - [92mINFO[0m - Generation 50: Best Fitness=0.4000, Avg Fitness=0.0003
+2025-04-24 09:30:11 - models.genetic - [92mINFO[0m - Generation 51: Best Fitness=0.4000, Avg Fitness=0.0003
+2025-04-24 09:30:11 - models.genetic - [92mINFO[0m - Generation 52: Best Fitness=0.4000, Avg Fitness=0.0003
+2025-04-24 09:30:11 - models.genetic - [92mINFO[0m - Generation 53: Best Fitness=0.4000, Avg Fitness=0.0003
+2025-04-24 09:30:11 - models.genetic - [92mINFO[0m - Generation 54: Best Fitness=0.4000, Avg Fitness=0.0003
+2025-04-24 09:30:12 - models.genetic - [92mINFO[0m - Generation 55: Best Fitness=0.4000, Avg Fitness=0.0003
+2025-04-24 09:30:12 - models.genetic - [92mINFO[0m - Generation 56: Best Fitness=0.4000, Avg Fitness=0.0003
+2025-04-24 09:30:12 - models.genetic - [92mINFO[0m - Generation 57: Best Fitness=0.4000, Avg Fitness=0.0003
+2025-04-24 09:30:12 - models.genetic - [92mINFO[0m - Generation 58: Best Fitness=0.4000, Avg Fitness=0.0003
+2025-04-24 09:30:12 - models.genetic - [92mINFO[0m - Generation 59: Best Fitness=0.4000, Avg Fitness=0.0003
+2025-04-24 09:30:12 - models.genetic - [92mINFO[0m - Generation 60: Best Fitness=0.4000, Avg Fitness=0.0003
+2025-04-24 09:30:12 - models.genetic - [92mINFO[0m - Generation 61: Best Fitness=0.4000, Avg Fitness=0.0003
+2025-04-24 09:30:12 - models.genetic - [92mINFO[0m - Generation 62: Best Fitness=0.4000, Avg Fitness=0.0003
+2025-04-24 09:30:12 - models.genetic - [92mINFO[0m - Generation 63: Best Fitness=0.4000, Avg Fitness=0.0003
+2025-04-24 09:30:12 - models.genetic - [92mINFO[0m - Generation 64: Best Fitness=0.4000, Avg Fitness=0.0003
+2025-04-24 09:30:12 - models.genetic - [92mINFO[0m - Generation 65: Best Fitness=0.4000, Avg Fitness=0.0003
+2025-04-24 09:30:12 - models.genetic - [92mINFO[0m - Generation 66: Best Fitness=0.4000, Avg Fitness=0.0003
+2025-04-24 09:30:12 - models.genetic - [92mINFO[0m - Generation 67: Best Fitness=0.4000, Avg Fitness=0.0003
+2025-04-24 09:30:12 - models.genetic - [92mINFO[0m - Generation 68: Best Fitness=0.4000, Avg Fitness=0.0003
+2025-04-24 09:30:12 - models.genetic - [92mINFO[0m - Generation 69: Best Fitness=0.4000, Avg Fitness=0.0003
+2025-04-24 09:30:12 - models.genetic - [92mINFO[0m - Generation 70: Best Fitness=0.4000, Avg Fitness=0.0003
+2025-04-24 09:30:12 - models.genetic - [92mINFO[0m - Generation 71: Best Fitness=0.4000, Avg Fitness=0.0003
+2025-04-24 09:30:12 - models.genetic - [92mINFO[0m - Generation 72: Best Fitness=0.4000, Avg Fitness=0.0003
+2025-04-24 09:30:12 - models.genetic - [92mINFO[0m - Generation 73: Best Fitness=0.4000, Avg Fitness=0.0003
+2025-04-24 09:30:12 - models.genetic - [92mINFO[0m - Generation 74: Best Fitness=0.4000, Avg Fitness=0.0003
+2025-04-24 09:30:12 - models.genetic - [92mINFO[0m - Generation 75: Best Fitness=0.4000, Avg Fitness=0.0003
+2025-04-24 09:30:12 - models.genetic - [92mINFO[0m - Generation 76: Best Fitness=0.4000, Avg Fitness=0.0003
+2025-04-24 09:30:12 - models.genetic - [92mINFO[0m - Generation 77: Best Fitness=0.4000, Avg Fitness=0.0003
+2025-04-24 09:30:12 - models.genetic - [92mINFO[0m - Generation 78: Best Fitness=0.4000, Avg Fitness=0.0003
+2025-04-24 09:30:12 - models.genetic - [92mINFO[0m - Generation 79: Best Fitness=0.4000, Avg Fitness=0.0003
+2025-04-24 09:30:12 - models.genetic - [92mINFO[0m - Generation 80: Best Fitness=0.4000, Avg Fitness=0.0003
+2025-04-24 09:30:12 - models.genetic - [92mINFO[0m - Generation 81: Best Fitness=0.4000, Avg Fitness=0.0003
+2025-04-24 09:30:12 - models.genetic - [92mINFO[0m - Generation 82: Best Fitness=0.4000, Avg Fitness=0.0003
+2025-04-24 09:30:12 - models.genetic - [92mINFO[0m - Generation 83: Best Fitness=0.4000, Avg Fitness=0.0003
+2025-04-24 09:30:12 - models.genetic - [92mINFO[0m - Generation 84: Best Fitness=0.4000, Avg Fitness=0.0003
+2025-04-24 09:30:12 - models.genetic - [92mINFO[0m - Generation 85: Best Fitness=0.4000, Avg Fitness=0.0003
+2025-04-24 09:30:12 - models.genetic - [92mINFO[0m - Generation 86: Best Fitness=0.4000, Avg Fitness=0.0003
+2025-04-24 09:30:12 - models.genetic - [92mINFO[0m - Generation 87: Best Fitness=0.4000, Avg Fitness=0.0003
+2025-04-24 09:30:12 - models.genetic - [92mINFO[0m - Generation 88: Best Fitness=0.4000, Avg Fitness=0.0003
+2025-04-24 09:30:12 - models.genetic - [92mINFO[0m - Generation 89: Best Fitness=0.4000, Avg Fitness=0.0003
+2025-04-24 09:30:12 - models.genetic - [92mINFO[0m - Generation 90: Best Fitness=0.4000, Avg Fitness=0.0003
+2025-04-24 09:30:12 - models.genetic - [92mINFO[0m - Generation 91: Best Fitness=0.4000, Avg Fitness=0.0003
+2025-04-24 09:30:12 - models.genetic - [92mINFO[0m - Generation 92: Best Fitness=0.4000, Avg Fitness=0.0003
+2025-04-24 09:30:12 - models.genetic - [92mINFO[0m - Generation 93: Best Fitness=0.4000, Avg Fitness=0.0003
+2025-04-24 09:30:12 - models.genetic - [92mINFO[0m - Generation 94: Best Fitness=0.4000, Avg Fitness=0.0003
+2025-04-24 09:30:12 - models.genetic - [92mINFO[0m - Generation 95: Best Fitness=0.4000, Avg Fitness=0.0003
+2025-04-24 09:30:12 - models.genetic - [92mINFO[0m - Generation 96: Best Fitness=0.4000, Avg Fitness=0.0003
+2025-04-24 09:30:12 - models.genetic - [92mINFO[0m - Generation 97: Best Fitness=0.4000, Avg Fitness=0.0003
+2025-04-24 09:30:12 - models.genetic - [92mINFO[0m - Generation 98: Best Fitness=0.4000, Avg Fitness=0.0003
+2025-04-24 09:30:12 - models.genetic - [92mINFO[0m - Generation 99: Best Fitness=0.4000, Avg Fitness=0.0003
+2025-04-24 09:30:12 - __main__ - [92mINFO[0m - 
+Best Rule Found:
+2025-04-24 09:30:12 - __main__ - [92mINFO[0m - IF gender equals '{'Male', 'Female'}' AND total_entries less than 163.00 AND genres equals 'set()' AND rank greater than 1640.00 AND favorites greater than 8520.00 THEN rating = high
+2025-04-24 09:30:12 - __main__ - [92mINFO[0m - 
+Fitness: 0.4000
+2025-04-24 09:30:12 - __main__ - [91mERROR[0m - Pipeline failed: unsupported format string passed to numpy.ndarray.__format__
+Traceback (most recent call last):
+  File "c:\Users\PRCAAL\PROYECTOS\anime_dataset_generator\project\genetic_rule_miner\main.py", line 54, in main
+    logger.info(f"Support: {miner.calculate_support(best_rule):.4f}")
+                           ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+TypeError: unsupported format string passed to numpy.ndarray.__format__
+2025-04-24 09:30:12 - genetic_rule_miner.data.database - [92mINFO[0m - PostgreSQL connection pool closed
+2025-04-24 09:33:04 - __main__ - [92mINFO[0m - Starting rule mining pipeline
+2025-04-24 09:33:25 - genetic_rule_miner.data.database - [92mINFO[0m - PostgreSQL connection pool initialized
+2025-04-24 09:33:25 - __main__ - [92mINFO[0m - Loading data from database...
+2025-04-24 09:33:25 - data.manager - [92mINFO[0m - [92mEntering load_data...[0m
+2025-04-24 09:33:25 - data.manager - [92mINFO[0m - [92mload_data completed in 0.2954s[0m
+2025-04-24 09:33:25 - __main__ - [92mINFO[0m - Merging and preprocessing data...
+2025-04-24 09:33:25 - data.manager - [92mINFO[0m - [92mEntering merge_data...[0m
+2025-04-24 09:33:25 - data.manager - [92mINFO[0m - [92mmerge_data completed in 0.0056s[0m
+2025-04-24 09:33:25 - data.preprocessing - [92mINFO[0m - [92mEntering clean_string_columns...[0m
+2025-04-24 09:33:25 - data.preprocessing - [92mINFO[0m - [92mclean_string_columns completed in 0.0126s[0m
+2025-04-24 09:33:25 - data.preprocessing - [92mINFO[0m - [92mEntering preprocess_data...[0m
+2025-04-24 09:33:25 - data.preprocessing - [92mINFO[0m - [92mpreprocess_data completed in 0.0079s[0m
+2025-04-24 09:33:25 - __main__ - [92mINFO[0m - Initializing genetic algorithm...
+2025-04-24 09:33:25 - __main__ - [92mINFO[0m -      gender    birthday  days_watched  mean_score  watching  completed  ...  favorites  scored_by  members  duration_class  episodes_class  rating
+0      Male  1985-03-04         142.3        7.37         1        233  ...        259      27828    56581            long           short    high
+1      Male  1985-03-04         142.3        7.37         1        233  ...        472      55020   114544        standard            long  medium
+2      Male  1985-03-04         142.3        7.37         1        233  ...      14401     539355   910855            long           short     low
+3      Male  1985-03-04         142.3        7.37         1        233  ...         14       6445    17529        standard            long     low
+4      Male  1985-03-04         142.3        7.37         1        233  ...       8823     146093   359083            long            long    high
+..      ...         ...           ...         ...       ...        ...  ...        ...        ...      ...             ...             ...     ...
+222  Female        <NA>          36.4        6.66         4         57  ...       3677      99438   178914        standard            long     low
+223  Female        <NA>          36.4        6.66         4         57  ...     111650    1147758  1919766        standard            long  medium
+224    Male        <NA>          50.5        6.09         1        114  ...      14401     539355   910855            long           short  medium
+225    Male        <NA>          50.5        6.09         1        114  ...       1389     113204   202660            long            long    high
+226    Male        <NA>          50.5        6.09         1        114  ...      82913    2054933  2982943        standard            long    high
+
+[227 rows x 33 columns]
+2025-04-24 09:33:25 - __main__ - [92mINFO[0m - Starting evolution process...
+2025-04-24 09:33:26 - models.genetic - [92mINFO[0m - Generation 0: Best Fitness=0.4000, Avg Fitness=0.0003
+2025-04-24 09:33:26 - models.genetic - [92mINFO[0m - Generation 1: Best Fitness=0.4000, Avg Fitness=0.0003
+2025-04-24 09:33:26 - models.genetic - [92mINFO[0m - Generation 2: Best Fitness=0.4000, Avg Fitness=0.0003
+2025-04-24 09:33:26 - models.genetic - [92mINFO[0m - Generation 3: Best Fitness=0.4000, Avg Fitness=0.0003
+2025-04-24 09:33:26 - models.genetic - [92mINFO[0m - Generation 4: Best Fitness=0.4000, Avg Fitness=0.0003
+2025-04-24 09:33:26 - models.genetic - [92mINFO[0m - Generation 5: Best Fitness=0.4000, Avg Fitness=0.0003
+2025-04-24 09:33:26 - models.genetic - [92mINFO[0m - Generation 6: Best Fitness=0.4000, Avg Fitness=0.0003
+2025-04-24 09:33:26 - models.genetic - [92mINFO[0m - Generation 7: Best Fitness=0.4000, Avg Fitness=0.0003
+2025-04-24 09:33:26 - models.genetic - [92mINFO[0m - Generation 8: Best Fitness=0.4000, Avg Fitness=0.0003
+2025-04-24 09:33:26 - models.genetic - [92mINFO[0m - Generation 9: Best Fitness=0.4000, Avg Fitness=0.0003
+2025-04-24 09:33:26 - models.genetic - [92mINFO[0m - Generation 10: Best Fitness=0.4000, Avg Fitness=0.0003
+2025-04-24 09:33:26 - models.genetic - [92mINFO[0m - Generation 11: Best Fitness=0.4000, Avg Fitness=0.0003
+2025-04-24 09:33:26 - models.genetic - [92mINFO[0m - Generation 12: Best Fitness=0.4000, Avg Fitness=0.0003
+2025-04-24 09:33:26 - models.genetic - [92mINFO[0m - Generation 13: Best Fitness=0.4000, Avg Fitness=0.0003
+2025-04-24 09:33:26 - models.genetic - [92mINFO[0m - Generation 14: Best Fitness=0.4000, Avg Fitness=0.0003
+2025-04-24 09:33:26 - models.genetic - [92mINFO[0m - Generation 15: Best Fitness=0.4000, Avg Fitness=0.0003
+2025-04-24 09:33:26 - models.genetic - [92mINFO[0m - Generation 16: Best Fitness=0.4000, Avg Fitness=0.0003
+2025-04-24 09:33:26 - models.genetic - [92mINFO[0m - Generation 17: Best Fitness=0.4000, Avg Fitness=0.0003
+2025-04-24 09:33:26 - models.genetic - [92mINFO[0m - Generation 18: Best Fitness=0.4000, Avg Fitness=0.0003
+2025-04-24 09:33:26 - models.genetic - [92mINFO[0m - Generation 19: Best Fitness=0.4000, Avg Fitness=0.0003
+2025-04-24 09:33:26 - models.genetic - [92mINFO[0m - Generation 20: Best Fitness=0.4000, Avg Fitness=0.0003
+2025-04-24 09:33:26 - models.genetic - [92mINFO[0m - Generation 21: Best Fitness=0.4000, Avg Fitness=0.0003
+2025-04-24 09:33:26 - models.genetic - [92mINFO[0m - Generation 22: Best Fitness=0.4000, Avg Fitness=0.0003
+2025-04-24 09:33:26 - models.genetic - [92mINFO[0m - Generation 23: Best Fitness=0.4000, Avg Fitness=0.0003
+2025-04-24 09:33:26 - models.genetic - [92mINFO[0m - Generation 24: Best Fitness=0.4000, Avg Fitness=0.0003
+2025-04-24 09:33:26 - models.genetic - [92mINFO[0m - Generation 25: Best Fitness=0.4000, Avg Fitness=0.0003
+2025-04-24 09:33:26 - models.genetic - [92mINFO[0m - Generation 26: Best Fitness=0.4000, Avg Fitness=0.0003
+2025-04-24 09:33:26 - models.genetic - [92mINFO[0m - Generation 27: Best Fitness=0.4000, Avg Fitness=0.0003
+2025-04-24 09:33:26 - models.genetic - [92mINFO[0m - Generation 28: Best Fitness=0.4000, Avg Fitness=0.0003
+2025-04-24 09:33:26 - models.genetic - [92mINFO[0m - Generation 29: Best Fitness=0.4000, Avg Fitness=0.0003
+2025-04-24 09:33:26 - models.genetic - [92mINFO[0m - Generation 30: Best Fitness=0.4000, Avg Fitness=0.0003
+2025-04-24 09:33:26 - models.genetic - [92mINFO[0m - Generation 31: Best Fitness=0.4000, Avg Fitness=0.0003
+2025-04-24 09:33:26 - models.genetic - [92mINFO[0m - Generation 32: Best Fitness=0.4000, Avg Fitness=0.0003
+2025-04-24 09:33:26 - models.genetic - [92mINFO[0m - Generation 33: Best Fitness=0.4000, Avg Fitness=0.0003
+2025-04-24 09:33:26 - models.genetic - [92mINFO[0m - Generation 34: Best Fitness=0.4000, Avg Fitness=0.0003
+2025-04-24 09:33:26 - models.genetic - [92mINFO[0m - Generation 35: Best Fitness=0.4000, Avg Fitness=0.0003
+2025-04-24 09:33:27 - models.genetic - [92mINFO[0m - Generation 36: Best Fitness=0.4000, Avg Fitness=0.0003
+2025-04-24 09:33:27 - models.genetic - [92mINFO[0m - Generation 37: Best Fitness=0.4000, Avg Fitness=0.0003
+2025-04-24 09:33:27 - models.genetic - [92mINFO[0m - Generation 38: Best Fitness=0.4000, Avg Fitness=0.0003
+2025-04-24 09:33:27 - models.genetic - [92mINFO[0m - Generation 39: Best Fitness=0.4000, Avg Fitness=0.0003
+2025-04-24 09:33:27 - models.genetic - [92mINFO[0m - Generation 40: Best Fitness=0.4000, Avg Fitness=0.0003
+2025-04-24 09:33:27 - models.genetic - [92mINFO[0m - Generation 41: Best Fitness=0.4000, Avg Fitness=0.0003
+2025-04-24 09:33:27 - models.genetic - [92mINFO[0m - Generation 42: Best Fitness=0.4000, Avg Fitness=0.0003
+2025-04-24 09:33:27 - models.genetic - [92mINFO[0m - Generation 43: Best Fitness=0.4000, Avg Fitness=0.0003
+2025-04-24 09:33:27 - models.genetic - [92mINFO[0m - Generation 44: Best Fitness=0.4000, Avg Fitness=0.0003
+2025-04-24 09:33:27 - models.genetic - [92mINFO[0m - Generation 45: Best Fitness=0.4000, Avg Fitness=0.0003
+2025-04-24 09:33:27 - models.genetic - [92mINFO[0m - Generation 46: Best Fitness=0.4000, Avg Fitness=0.0003
+2025-04-24 09:33:27 - models.genetic - [92mINFO[0m - Generation 47: Best Fitness=0.4000, Avg Fitness=0.0003
+2025-04-24 09:33:27 - models.genetic - [92mINFO[0m - Generation 48: Best Fitness=0.4000, Avg Fitness=0.0003
+2025-04-24 09:33:27 - models.genetic - [92mINFO[0m - Generation 49: Best Fitness=0.4000, Avg Fitness=0.0003
+2025-04-24 09:33:27 - models.genetic - [92mINFO[0m - Generation 50: Best Fitness=0.4000, Avg Fitness=0.0003
+2025-04-24 09:33:27 - models.genetic - [92mINFO[0m - Generation 51: Best Fitness=0.4000, Avg Fitness=0.0003
+2025-04-24 09:33:27 - models.genetic - [92mINFO[0m - Generation 52: Best Fitness=0.4000, Avg Fitness=0.0003
+2025-04-24 09:33:27 - models.genetic - [92mINFO[0m - Generation 53: Best Fitness=0.4000, Avg Fitness=0.0003
+2025-04-24 09:33:27 - models.genetic - [92mINFO[0m - Generation 54: Best Fitness=0.4000, Avg Fitness=0.0003
+2025-04-24 09:33:27 - models.genetic - [92mINFO[0m - Generation 55: Best Fitness=0.4000, Avg Fitness=0.0003
+2025-04-24 09:33:27 - models.genetic - [92mINFO[0m - Generation 56: Best Fitness=0.4000, Avg Fitness=0.0003
+2025-04-24 09:33:27 - models.genetic - [92mINFO[0m - Generation 57: Best Fitness=0.4000, Avg Fitness=0.0003
+2025-04-24 09:33:27 - models.genetic - [92mINFO[0m - Generation 58: Best Fitness=0.4000, Avg Fitness=0.0003
+2025-04-24 09:33:27 - models.genetic - [92mINFO[0m - Generation 59: Best Fitness=0.4000, Avg Fitness=0.0003
+2025-04-24 09:33:27 - models.genetic - [92mINFO[0m - Generation 60: Best Fitness=0.4000, Avg Fitness=0.0003
+2025-04-24 09:33:27 - models.genetic - [92mINFO[0m - Generation 61: Best Fitness=0.4000, Avg Fitness=0.0003
+2025-04-24 09:33:27 - models.genetic - [92mINFO[0m - Generation 62: Best Fitness=0.4000, Avg Fitness=0.0003
+2025-04-24 09:33:27 - models.genetic - [92mINFO[0m - Generation 63: Best Fitness=0.4000, Avg Fitness=0.0003
+2025-04-24 09:33:27 - models.genetic - [92mINFO[0m - Generation 64: Best Fitness=0.4000, Avg Fitness=0.0003
+2025-04-24 09:33:27 - models.genetic - [92mINFO[0m - Generation 65: Best Fitness=0.4000, Avg Fitness=0.0003
+2025-04-24 09:33:27 - models.genetic - [92mINFO[0m - Generation 66: Best Fitness=0.4000, Avg Fitness=0.0003
+2025-04-24 09:33:27 - models.genetic - [92mINFO[0m - Generation 67: Best Fitness=0.4000, Avg Fitness=0.0003
+2025-04-24 09:33:27 - models.genetic - [92mINFO[0m - Generation 68: Best Fitness=0.4000, Avg Fitness=0.0003
+2025-04-24 09:33:27 - models.genetic - [92mINFO[0m - Generation 69: Best Fitness=0.4000, Avg Fitness=0.0003
+2025-04-24 09:33:27 - models.genetic - [92mINFO[0m - Generation 70: Best Fitness=0.4000, Avg Fitness=0.0003
+2025-04-24 09:33:27 - models.genetic - [92mINFO[0m - Generation 71: Best Fitness=0.4000, Avg Fitness=0.0003
+2025-04-24 09:33:27 - models.genetic - [92mINFO[0m - Generation 72: Best Fitness=0.4000, Avg Fitness=0.0003
+2025-04-24 09:33:27 - models.genetic - [92mINFO[0m - Generation 73: Best Fitness=0.4000, Avg Fitness=0.0003
+2025-04-24 09:33:27 - models.genetic - [92mINFO[0m - Generation 74: Best Fitness=0.4000, Avg Fitness=0.0003
+2025-04-24 09:33:27 - models.genetic - [92mINFO[0m - Generation 75: Best Fitness=0.4000, Avg Fitness=0.0003
+2025-04-24 09:33:27 - models.genetic - [92mINFO[0m - Generation 76: Best Fitness=0.4000, Avg Fitness=0.0003
+2025-04-24 09:33:27 - models.genetic - [92mINFO[0m - Generation 77: Best Fitness=0.4000, Avg Fitness=0.0003
+2025-04-24 09:33:27 - models.genetic - [92mINFO[0m - Generation 78: Best Fitness=0.4000, Avg Fitness=0.0003
+2025-04-24 09:33:27 - models.genetic - [92mINFO[0m - Generation 79: Best Fitness=0.4000, Avg Fitness=0.0003
+2025-04-24 09:33:27 - models.genetic - [92mINFO[0m - Generation 80: Best Fitness=0.4000, Avg Fitness=0.0003
+2025-04-24 09:33:27 - models.genetic - [92mINFO[0m - Generation 81: Best Fitness=0.4000, Avg Fitness=0.0003
+2025-04-24 09:33:27 - models.genetic - [92mINFO[0m - Generation 82: Best Fitness=0.4000, Avg Fitness=0.0003
+2025-04-24 09:33:28 - models.genetic - [92mINFO[0m - Generation 83: Best Fitness=0.4000, Avg Fitness=0.0003
+2025-04-24 09:33:28 - models.genetic - [92mINFO[0m - Generation 84: Best Fitness=0.4000, Avg Fitness=0.0003
+2025-04-24 09:33:28 - models.genetic - [92mINFO[0m - Generation 85: Best Fitness=0.4000, Avg Fitness=0.0003
+2025-04-24 09:33:28 - models.genetic - [92mINFO[0m - Generation 86: Best Fitness=0.4000, Avg Fitness=0.0003
+2025-04-24 09:33:28 - models.genetic - [92mINFO[0m - Generation 87: Best Fitness=0.4000, Avg Fitness=0.0003
+2025-04-24 09:33:28 - models.genetic - [92mINFO[0m - Generation 88: Best Fitness=0.4000, Avg Fitness=0.0003
+2025-04-24 09:33:28 - models.genetic - [92mINFO[0m - Generation 89: Best Fitness=0.4000, Avg Fitness=0.0003
+2025-04-24 09:33:28 - models.genetic - [92mINFO[0m - Generation 90: Best Fitness=0.4000, Avg Fitness=0.0003
+2025-04-24 09:33:28 - models.genetic - [92mINFO[0m - Generation 91: Best Fitness=0.4000, Avg Fitness=0.0003
+2025-04-24 09:33:28 - models.genetic - [92mINFO[0m - Generation 92: Best Fitness=0.4000, Avg Fitness=0.0003
+2025-04-24 09:33:28 - models.genetic - [92mINFO[0m - Generation 93: Best Fitness=0.4000, Avg Fitness=0.0003
+2025-04-24 09:33:28 - models.genetic - [92mINFO[0m - Generation 94: Best Fitness=0.4000, Avg Fitness=0.0003
+2025-04-24 09:33:28 - models.genetic - [92mINFO[0m - Generation 95: Best Fitness=0.4000, Avg Fitness=0.0003
+2025-04-24 09:33:28 - models.genetic - [92mINFO[0m - Generation 96: Best Fitness=0.4000, Avg Fitness=0.0003
+2025-04-24 09:33:28 - models.genetic - [92mINFO[0m - Generation 97: Best Fitness=0.4000, Avg Fitness=0.0003
+2025-04-24 09:33:28 - models.genetic - [92mINFO[0m - Generation 98: Best Fitness=0.4000, Avg Fitness=0.0003
+2025-04-24 09:33:28 - models.genetic - [92mINFO[0m - Generation 99: Best Fitness=0.4000, Avg Fitness=0.0003
+2025-04-24 09:33:28 - __main__ - [92mINFO[0m - 
+Best Rule Found:
+2025-04-24 09:33:28 - __main__ - [92mINFO[0m - IF gender equals '{'Male', 'Female'}' AND total_entries less than 163.00 AND genres equals 'set()' AND rank greater than 1640.00 AND favorites greater than 8520.00 THEN rating = high
+2025-04-24 09:33:28 - __main__ - [92mINFO[0m - 
+Fitness: 0.4000
+2025-04-24 09:33:28 - __main__ - [92mINFO[0m - Support: 0.0000
+2025-04-24 09:33:28 - __main__ - [91mERROR[0m - Pipeline failed: 'int' object is not subscriptable
+Traceback (most recent call last):
+  File "c:\Users\PRCAAL\PROYECTOS\anime_dataset_generator\project\genetic_rule_miner\main.py", line 56, in main
+    f"Confidence: {miner.calculate_confidence(best_rule)[0]:.4f}"
+                   ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~^^^
+TypeError: 'int' object is not subscriptable
+2025-04-24 09:33:28 - genetic_rule_miner.data.database - [92mINFO[0m - PostgreSQL connection pool closed
+2025-04-24 09:34:27 - __main__ - [92mINFO[0m - Starting rule mining pipeline
+2025-04-24 09:34:48 - genetic_rule_miner.data.database - [92mINFO[0m - PostgreSQL connection pool initialized
+2025-04-24 09:34:48 - __main__ - [92mINFO[0m - Loading data from database...
+2025-04-24 09:34:48 - data.manager - [92mINFO[0m - [92mEntering load_data...[0m
+2025-04-24 09:34:48 - data.manager - [92mINFO[0m - [92mload_data completed in 0.2757s[0m
+2025-04-24 09:34:48 - __main__ - [92mINFO[0m - Merging and preprocessing data...
+2025-04-24 09:34:48 - data.manager - [92mINFO[0m - [92mEntering merge_data...[0m
+2025-04-24 09:34:48 - data.manager - [92mINFO[0m - [92mmerge_data completed in 0.0085s[0m
+2025-04-24 09:34:48 - data.preprocessing - [92mINFO[0m - [92mEntering clean_string_columns...[0m
+2025-04-24 09:34:48 - data.preprocessing - [92mINFO[0m - [92mclean_string_columns completed in 0.0161s[0m
+2025-04-24 09:34:48 - data.preprocessing - [92mINFO[0m - [92mEntering preprocess_data...[0m
+2025-04-24 09:34:48 - data.preprocessing - [92mINFO[0m - [92mpreprocess_data completed in 0.0063s[0m
+2025-04-24 09:34:48 - __main__ - [92mINFO[0m - Initializing genetic algorithm...
+2025-04-24 09:34:48 - __main__ - [92mINFO[0m -      gender    birthday  days_watched  mean_score  watching  completed  ...  favorites  scored_by  members  duration_class  episodes_class  rating
+0      Male  1985-03-04         142.3        7.37         1        233  ...        259      27828    56581            long           short    high
+1      Male  1985-03-04         142.3        7.37         1        233  ...        472      55020   114544        standard            long  medium
+2      Male  1985-03-04         142.3        7.37         1        233  ...      14401     539355   910855            long           short     low
+3      Male  1985-03-04         142.3        7.37         1        233  ...         14       6445    17529        standard            long     low
+4      Male  1985-03-04         142.3        7.37         1        233  ...       8823     146093   359083            long            long    high
+..      ...         ...           ...         ...       ...        ...  ...        ...        ...      ...             ...             ...     ...
+222  Female        <NA>          36.4        6.66         4         57  ...       3677      99438   178914        standard            long     low
+223  Female        <NA>          36.4        6.66         4         57  ...     111650    1147758  1919766        standard            long  medium
+224    Male        <NA>          50.5        6.09         1        114  ...      14401     539355   910855            long           short  medium
+225    Male        <NA>          50.5        6.09         1        114  ...       1389     113204   202660            long            long    high
+226    Male        <NA>          50.5        6.09         1        114  ...      82913    2054933  2982943        standard            long    high
+
+[227 rows x 33 columns]
+2025-04-24 09:34:48 - __main__ - [92mINFO[0m - Starting evolution process...
+2025-04-24 09:34:48 - models.genetic - [92mINFO[0m - Generation 0: Best Fitness=0.4000, Avg Fitness=0.0003
+2025-04-24 09:34:48 - models.genetic - [92mINFO[0m - Generation 1: Best Fitness=0.4000, Avg Fitness=0.0003
+2025-04-24 09:34:48 - models.genetic - [92mINFO[0m - Generation 2: Best Fitness=0.4000, Avg Fitness=0.0003
+2025-04-24 09:34:48 - models.genetic - [92mINFO[0m - Generation 3: Best Fitness=0.4000, Avg Fitness=0.0003
+2025-04-24 09:34:48 - models.genetic - [92mINFO[0m - Generation 4: Best Fitness=0.4000, Avg Fitness=0.0003
+2025-04-24 09:34:48 - models.genetic - [92mINFO[0m - Generation 5: Best Fitness=0.4000, Avg Fitness=0.0003
+2025-04-24 09:34:48 - models.genetic - [92mINFO[0m - Generation 6: Best Fitness=0.4000, Avg Fitness=0.0003
+2025-04-24 09:34:48 - models.genetic - [92mINFO[0m - Generation 7: Best Fitness=0.4000, Avg Fitness=0.0003
+2025-04-24 09:34:48 - models.genetic - [92mINFO[0m - Generation 8: Best Fitness=0.4000, Avg Fitness=0.0003
+2025-04-24 09:34:48 - models.genetic - [92mINFO[0m - Generation 9: Best Fitness=0.4000, Avg Fitness=0.0003
+2025-04-24 09:34:48 - models.genetic - [92mINFO[0m - Generation 10: Best Fitness=0.4000, Avg Fitness=0.0003
+2025-04-24 09:34:48 - models.genetic - [92mINFO[0m - Generation 11: Best Fitness=0.4000, Avg Fitness=0.0003
+2025-04-24 09:34:48 - models.genetic - [92mINFO[0m - Generation 12: Best Fitness=0.4000, Avg Fitness=0.0003
+2025-04-24 09:34:49 - models.genetic - [92mINFO[0m - Generation 13: Best Fitness=0.4000, Avg Fitness=0.0003
+2025-04-24 09:34:49 - models.genetic - [92mINFO[0m - Generation 14: Best Fitness=0.4000, Avg Fitness=0.0003
+2025-04-24 09:34:49 - models.genetic - [92mINFO[0m - Generation 15: Best Fitness=0.4000, Avg Fitness=0.0003
+2025-04-24 09:34:49 - models.genetic - [92mINFO[0m - Generation 16: Best Fitness=0.4000, Avg Fitness=0.0003
+2025-04-24 09:34:49 - models.genetic - [92mINFO[0m - Generation 17: Best Fitness=0.4000, Avg Fitness=0.0003
+2025-04-24 09:34:49 - models.genetic - [92mINFO[0m - Generation 18: Best Fitness=0.4000, Avg Fitness=0.0003
+2025-04-24 09:34:49 - models.genetic - [92mINFO[0m - Generation 19: Best Fitness=0.4000, Avg Fitness=0.0003
+2025-04-24 09:34:49 - models.genetic - [92mINFO[0m - Generation 20: Best Fitness=0.4000, Avg Fitness=0.0003
+2025-04-24 09:34:49 - models.genetic - [92mINFO[0m - Generation 21: Best Fitness=0.4000, Avg Fitness=0.0003
+2025-04-24 09:34:49 - models.genetic - [92mINFO[0m - Generation 22: Best Fitness=0.4000, Avg Fitness=0.0003
+2025-04-24 09:34:49 - models.genetic - [92mINFO[0m - Generation 23: Best Fitness=0.4000, Avg Fitness=0.0003
+2025-04-24 09:34:49 - models.genetic - [92mINFO[0m - Generation 24: Best Fitness=0.4000, Avg Fitness=0.0003
+2025-04-24 09:34:49 - models.genetic - [92mINFO[0m - Generation 25: Best Fitness=0.4000, Avg Fitness=0.0003
+2025-04-24 09:34:49 - models.genetic - [92mINFO[0m - Generation 26: Best Fitness=0.4000, Avg Fitness=0.0003
+2025-04-24 09:34:49 - models.genetic - [92mINFO[0m - Generation 27: Best Fitness=0.4000, Avg Fitness=0.0003
+2025-04-24 09:34:49 - models.genetic - [92mINFO[0m - Generation 28: Best Fitness=0.4000, Avg Fitness=0.0003
+2025-04-24 09:34:49 - models.genetic - [92mINFO[0m - Generation 29: Best Fitness=0.4000, Avg Fitness=0.0003
+2025-04-24 09:34:49 - models.genetic - [92mINFO[0m - Generation 30: Best Fitness=0.4000, Avg Fitness=0.0003
+2025-04-24 09:34:49 - models.genetic - [92mINFO[0m - Generation 31: Best Fitness=0.4000, Avg Fitness=0.0003
+2025-04-24 09:34:49 - models.genetic - [92mINFO[0m - Generation 32: Best Fitness=0.4000, Avg Fitness=0.0003
+2025-04-24 09:34:49 - models.genetic - [92mINFO[0m - Generation 33: Best Fitness=0.4000, Avg Fitness=0.0003
+2025-04-24 09:34:49 - models.genetic - [92mINFO[0m - Generation 34: Best Fitness=0.4000, Avg Fitness=0.0003
+2025-04-24 09:34:49 - models.genetic - [92mINFO[0m - Generation 35: Best Fitness=0.4000, Avg Fitness=0.0003
+2025-04-24 09:34:49 - models.genetic - [92mINFO[0m - Generation 36: Best Fitness=0.4000, Avg Fitness=0.0003
+2025-04-24 09:34:49 - models.genetic - [92mINFO[0m - Generation 37: Best Fitness=0.4000, Avg Fitness=0.0003
+2025-04-24 09:34:49 - models.genetic - [92mINFO[0m - Generation 38: Best Fitness=0.4000, Avg Fitness=0.0003
+2025-04-24 09:34:49 - models.genetic - [92mINFO[0m - Generation 39: Best Fitness=0.4000, Avg Fitness=0.0003
+2025-04-24 09:34:49 - models.genetic - [92mINFO[0m - Generation 40: Best Fitness=0.4000, Avg Fitness=0.0003
+2025-04-24 09:34:49 - models.genetic - [92mINFO[0m - Generation 41: Best Fitness=0.4000, Avg Fitness=0.0003
+2025-04-24 09:34:49 - models.genetic - [92mINFO[0m - Generation 42: Best Fitness=0.4000, Avg Fitness=0.0003
+2025-04-24 09:34:49 - models.genetic - [92mINFO[0m - Generation 43: Best Fitness=0.4000, Avg Fitness=0.0003
+2025-04-24 09:34:49 - models.genetic - [92mINFO[0m - Generation 44: Best Fitness=0.4000, Avg Fitness=0.0003
+2025-04-24 09:34:49 - models.genetic - [92mINFO[0m - Generation 45: Best Fitness=0.4000, Avg Fitness=0.0003
+2025-04-24 09:34:49 - models.genetic - [92mINFO[0m - Generation 46: Best Fitness=0.4000, Avg Fitness=0.0003
+2025-04-24 09:34:49 - models.genetic - [92mINFO[0m - Generation 47: Best Fitness=0.4000, Avg Fitness=0.0003
+2025-04-24 09:34:49 - models.genetic - [92mINFO[0m - Generation 48: Best Fitness=0.4000, Avg Fitness=0.0003
+2025-04-24 09:34:49 - models.genetic - [92mINFO[0m - Generation 49: Best Fitness=0.4000, Avg Fitness=0.0003
+2025-04-24 09:34:49 - models.genetic - [92mINFO[0m - Generation 50: Best Fitness=0.4000, Avg Fitness=0.0003
+2025-04-24 09:34:49 - models.genetic - [92mINFO[0m - Generation 51: Best Fitness=0.4000, Avg Fitness=0.0003
+2025-04-24 09:34:49 - models.genetic - [92mINFO[0m - Generation 52: Best Fitness=0.4000, Avg Fitness=0.0003
+2025-04-24 09:34:49 - models.genetic - [92mINFO[0m - Generation 53: Best Fitness=0.4000, Avg Fitness=0.0003
+2025-04-24 09:34:49 - models.genetic - [92mINFO[0m - Generation 54: Best Fitness=0.4000, Avg Fitness=0.0003
+2025-04-24 09:34:49 - models.genetic - [92mINFO[0m - Generation 55: Best Fitness=0.4000, Avg Fitness=0.0003
+2025-04-24 09:34:50 - models.genetic - [92mINFO[0m - Generation 56: Best Fitness=0.4000, Avg Fitness=0.0003
+2025-04-24 09:34:50 - models.genetic - [92mINFO[0m - Generation 57: Best Fitness=0.4000, Avg Fitness=0.0003
+2025-04-24 09:34:50 - models.genetic - [92mINFO[0m - Generation 58: Best Fitness=0.4000, Avg Fitness=0.0003
+2025-04-24 09:34:50 - models.genetic - [92mINFO[0m - Generation 59: Best Fitness=0.4000, Avg Fitness=0.0003
+2025-04-24 09:34:50 - models.genetic - [92mINFO[0m - Generation 60: Best Fitness=0.4000, Avg Fitness=0.0003
+2025-04-24 09:34:50 - models.genetic - [92mINFO[0m - Generation 61: Best Fitness=0.4000, Avg Fitness=0.0003
+2025-04-24 09:34:50 - models.genetic - [92mINFO[0m - Generation 62: Best Fitness=0.4000, Avg Fitness=0.0003
+2025-04-24 09:34:50 - models.genetic - [92mINFO[0m - Generation 63: Best Fitness=0.4000, Avg Fitness=0.0003
+2025-04-24 09:34:50 - models.genetic - [92mINFO[0m - Generation 64: Best Fitness=0.4000, Avg Fitness=0.0003
+2025-04-24 09:34:50 - models.genetic - [92mINFO[0m - Generation 65: Best Fitness=0.4000, Avg Fitness=0.0003
+2025-04-24 09:34:50 - models.genetic - [92mINFO[0m - Generation 66: Best Fitness=0.4000, Avg Fitness=0.0003
+2025-04-24 09:34:50 - models.genetic - [92mINFO[0m - Generation 67: Best Fitness=0.4000, Avg Fitness=0.0003
+2025-04-24 09:34:50 - models.genetic - [92mINFO[0m - Generation 68: Best Fitness=0.4000, Avg Fitness=0.0003
+2025-04-24 09:34:50 - models.genetic - [92mINFO[0m - Generation 69: Best Fitness=0.4000, Avg Fitness=0.0003
+2025-04-24 09:34:50 - models.genetic - [92mINFO[0m - Generation 70: Best Fitness=0.4000, Avg Fitness=0.0003
+2025-04-24 09:34:50 - models.genetic - [92mINFO[0m - Generation 71: Best Fitness=0.4000, Avg Fitness=0.0003
+2025-04-24 09:34:50 - models.genetic - [92mINFO[0m - Generation 72: Best Fitness=0.4000, Avg Fitness=0.0003
+2025-04-24 09:34:50 - models.genetic - [92mINFO[0m - Generation 73: Best Fitness=0.4000, Avg Fitness=0.0003
+2025-04-24 09:34:50 - models.genetic - [92mINFO[0m - Generation 74: Best Fitness=0.4000, Avg Fitness=0.0003
+2025-04-24 09:34:50 - models.genetic - [92mINFO[0m - Generation 75: Best Fitness=0.4000, Avg Fitness=0.0003
+2025-04-24 09:34:50 - models.genetic - [92mINFO[0m - Generation 76: Best Fitness=0.4000, Avg Fitness=0.0003
+2025-04-24 09:34:50 - models.genetic - [92mINFO[0m - Generation 77: Best Fitness=0.4000, Avg Fitness=0.0003
+2025-04-24 09:34:50 - models.genetic - [92mINFO[0m - Generation 78: Best Fitness=0.4000, Avg Fitness=0.0003
+2025-04-24 09:34:50 - models.genetic - [92mINFO[0m - Generation 79: Best Fitness=0.4000, Avg Fitness=0.0003
+2025-04-24 09:34:50 - models.genetic - [92mINFO[0m - Generation 80: Best Fitness=0.4000, Avg Fitness=0.0003
+2025-04-24 09:34:50 - models.genetic - [92mINFO[0m - Generation 81: Best Fitness=0.4000, Avg Fitness=0.0003
+2025-04-24 09:34:50 - models.genetic - [92mINFO[0m - Generation 82: Best Fitness=0.4000, Avg Fitness=0.0003
+2025-04-24 09:34:50 - models.genetic - [92mINFO[0m - Generation 83: Best Fitness=0.4000, Avg Fitness=0.0003
+2025-04-24 09:34:50 - models.genetic - [92mINFO[0m - Generation 84: Best Fitness=0.4000, Avg Fitness=0.0003
+2025-04-24 09:34:50 - models.genetic - [92mINFO[0m - Generation 85: Best Fitness=0.4000, Avg Fitness=0.0003
+2025-04-24 09:34:50 - models.genetic - [92mINFO[0m - Generation 86: Best Fitness=0.4000, Avg Fitness=0.0003
+2025-04-24 09:34:50 - models.genetic - [92mINFO[0m - Generation 87: Best Fitness=0.4000, Avg Fitness=0.0003
+2025-04-24 09:34:50 - models.genetic - [92mINFO[0m - Generation 88: Best Fitness=0.4000, Avg Fitness=0.0003
+2025-04-24 09:34:50 - models.genetic - [92mINFO[0m - Generation 89: Best Fitness=0.4000, Avg Fitness=0.0003
+2025-04-24 09:34:50 - models.genetic - [92mINFO[0m - Generation 90: Best Fitness=0.4000, Avg Fitness=0.0003
+2025-04-24 09:34:50 - models.genetic - [92mINFO[0m - Generation 91: Best Fitness=0.4000, Avg Fitness=0.0003
+2025-04-24 09:34:50 - models.genetic - [92mINFO[0m - Generation 92: Best Fitness=0.4000, Avg Fitness=0.0003
+2025-04-24 09:34:50 - models.genetic - [92mINFO[0m - Generation 93: Best Fitness=0.4000, Avg Fitness=0.0003
+2025-04-24 09:34:50 - models.genetic - [92mINFO[0m - Generation 94: Best Fitness=0.4000, Avg Fitness=0.0003
+2025-04-24 09:34:50 - models.genetic - [92mINFO[0m - Generation 95: Best Fitness=0.4000, Avg Fitness=0.0003
+2025-04-24 09:34:50 - models.genetic - [92mINFO[0m - Generation 96: Best Fitness=0.4000, Avg Fitness=0.0003
+2025-04-24 09:34:50 - models.genetic - [92mINFO[0m - Generation 97: Best Fitness=0.4000, Avg Fitness=0.0003
+2025-04-24 09:34:50 - models.genetic - [92mINFO[0m - Generation 98: Best Fitness=0.4000, Avg Fitness=0.0003
+2025-04-24 09:34:50 - models.genetic - [92mINFO[0m - Generation 99: Best Fitness=0.4000, Avg Fitness=0.0003
+2025-04-24 09:34:50 - __main__ - [92mINFO[0m - 
+Best Rule Found:
+2025-04-24 09:34:50 - __main__ - [92mINFO[0m - IF gender equals '{'Female', 'Male'}' AND total_entries less than 163.00 AND genres equals 'set()' AND rank greater than 1640.00 AND favorites greater than 8520.00 THEN rating = high
+2025-04-24 09:34:50 - __main__ - [92mINFO[0m - 
+Fitness: 0.4000
+2025-04-24 09:34:50 - __main__ - [92mINFO[0m - Support: 0.0000
+2025-04-24 09:34:50 - __main__ - [92mINFO[0m - Confidence: 0.0000
+2025-04-24 09:34:50 - genetic_rule_miner.data.database - [92mINFO[0m - PostgreSQL connection pool closed
+2025-04-24 09:37:27 - __main__ - [92mINFO[0m - Starting rule mining pipeline
+2025-04-24 09:37:48 - genetic_rule_miner.data.database - [92mINFO[0m - PostgreSQL connection pool initialized
+2025-04-24 09:37:48 - __main__ - [92mINFO[0m - Loading data from database...
+2025-04-24 09:37:48 - data.manager - [92mINFO[0m - [92mEntering load_data...[0m
+2025-04-24 09:37:49 - data.manager - [92mINFO[0m - [92mload_data completed in 0.2799s[0m
+2025-04-24 09:37:49 - __main__ - [92mINFO[0m - Merging and preprocessing data...
+2025-04-24 09:37:49 - data.manager - [92mINFO[0m - [92mEntering merge_data...[0m
+2025-04-24 09:37:49 - data.manager - [92mINFO[0m - [92mmerge_data completed in 0.0056s[0m
+2025-04-24 09:37:49 - data.preprocessing - [92mINFO[0m - [92mEntering clean_string_columns...[0m
+2025-04-24 09:37:49 - data.preprocessing - [92mINFO[0m - [92mclean_string_columns completed in 0.0113s[0m
+2025-04-24 09:37:49 - data.preprocessing - [92mINFO[0m - [92mEntering preprocess_data...[0m
+2025-04-24 09:37:49 - data.preprocessing - [92mINFO[0m - [92mpreprocess_data completed in 0.0053s[0m
+2025-04-24 09:37:49 - __main__ - [92mINFO[0m - Initializing genetic algorithm...
+2025-04-24 09:37:49 - __main__ - [92mINFO[0m -      gender    birthday  days_watched  mean_score  watching  completed  ...  favorites  scored_by  members  duration_class  episodes_class  rating
+0      Male  1985-03-04         142.3        7.37         1        233  ...        259      27828    56581            long           short    high
+1      Male  1985-03-04         142.3        7.37         1        233  ...        472      55020   114544        standard            long  medium
+2      Male  1985-03-04         142.3        7.37         1        233  ...      14401     539355   910855            long           short     low
+3      Male  1985-03-04         142.3        7.37         1        233  ...         14       6445    17529        standard            long     low
+4      Male  1985-03-04         142.3        7.37         1        233  ...       8823     146093   359083            long            long    high
+..      ...         ...           ...         ...       ...        ...  ...        ...        ...      ...             ...             ...     ...
+222  Female        <NA>          36.4        6.66         4         57  ...       3677      99438   178914        standard            long     low
+223  Female        <NA>          36.4        6.66         4         57  ...     111650    1147758  1919766        standard            long  medium
+224    Male        <NA>          50.5        6.09         1        114  ...      14401     539355   910855            long           short  medium
+225    Male        <NA>          50.5        6.09         1        114  ...       1389     113204   202660            long            long    high
+226    Male        <NA>          50.5        6.09         1        114  ...      82913    2054933  2982943        standard            long    high
+
+[227 rows x 33 columns]
+2025-04-24 09:37:49 - __main__ - [92mINFO[0m - Starting evolution process...
+2025-04-24 09:37:49 - models.genetic - [92mINFO[0m - Generation 0: Best Fitness=0.4000, Avg Fitness=0.0003
+2025-04-24 09:37:49 - models.genetic - [92mINFO[0m - Generation 1: Best Fitness=0.4000, Avg Fitness=0.0003
+2025-04-24 09:37:49 - models.genetic - [92mINFO[0m - Generation 2: Best Fitness=0.4000, Avg Fitness=0.0003
+2025-04-24 09:37:49 - models.genetic - [92mINFO[0m - Generation 3: Best Fitness=0.4000, Avg Fitness=0.0003
+2025-04-24 09:37:49 - models.genetic - [92mINFO[0m - Generation 4: Best Fitness=0.4000, Avg Fitness=0.0003
+2025-04-24 09:37:49 - models.genetic - [92mINFO[0m - Generation 5: Best Fitness=0.4000, Avg Fitness=0.0003
+2025-04-24 09:37:49 - models.genetic - [92mINFO[0m - Generation 6: Best Fitness=0.4000, Avg Fitness=0.0003
+2025-04-24 09:37:49 - models.genetic - [92mINFO[0m - Generation 7: Best Fitness=0.4000, Avg Fitness=0.0003
+2025-04-24 09:37:49 - models.genetic - [92mINFO[0m - Generation 8: Best Fitness=0.4000, Avg Fitness=0.0003
+2025-04-24 09:37:49 - models.genetic - [92mINFO[0m - Generation 9: Best Fitness=0.4000, Avg Fitness=0.0003
+2025-04-24 09:37:49 - models.genetic - [92mINFO[0m - Generation 10: Best Fitness=0.4000, Avg Fitness=0.0003
+2025-04-24 09:37:49 - models.genetic - [92mINFO[0m - Generation 11: Best Fitness=0.4000, Avg Fitness=0.0003
+2025-04-24 09:37:49 - models.genetic - [92mINFO[0m - Generation 12: Best Fitness=0.4000, Avg Fitness=0.0003
+2025-04-24 09:37:49 - models.genetic - [92mINFO[0m - Generation 13: Best Fitness=0.4000, Avg Fitness=0.0003
+2025-04-24 09:37:49 - models.genetic - [92mINFO[0m - Generation 14: Best Fitness=0.4000, Avg Fitness=0.0003
+2025-04-24 09:37:49 - models.genetic - [92mINFO[0m - Generation 15: Best Fitness=0.4000, Avg Fitness=0.0003
+2025-04-24 09:37:49 - models.genetic - [92mINFO[0m - Generation 16: Best Fitness=0.4000, Avg Fitness=0.0003
+2025-04-24 09:37:49 - models.genetic - [92mINFO[0m - Generation 17: Best Fitness=0.4000, Avg Fitness=0.0003
+2025-04-24 09:37:49 - models.genetic - [92mINFO[0m - Generation 18: Best Fitness=0.4000, Avg Fitness=0.0003
+2025-04-24 09:37:49 - models.genetic - [92mINFO[0m - Generation 19: Best Fitness=0.4000, Avg Fitness=0.0003
+2025-04-24 09:37:49 - models.genetic - [92mINFO[0m - Generation 20: Best Fitness=0.4000, Avg Fitness=0.0003
+2025-04-24 09:37:49 - models.genetic - [92mINFO[0m - Generation 21: Best Fitness=0.4000, Avg Fitness=0.0003
+2025-04-24 09:37:49 - models.genetic - [92mINFO[0m - Generation 22: Best Fitness=0.4000, Avg Fitness=0.0003
+2025-04-24 09:37:49 - models.genetic - [92mINFO[0m - Generation 23: Best Fitness=0.4000, Avg Fitness=0.0003
+2025-04-24 09:37:49 - models.genetic - [92mINFO[0m - Generation 24: Best Fitness=0.4000, Avg Fitness=0.0003
+2025-04-24 09:37:49 - models.genetic - [92mINFO[0m - Generation 25: Best Fitness=0.4000, Avg Fitness=0.0003
+2025-04-24 09:37:49 - models.genetic - [92mINFO[0m - Generation 26: Best Fitness=0.4000, Avg Fitness=0.0003
+2025-04-24 09:37:49 - models.genetic - [92mINFO[0m - Generation 27: Best Fitness=0.4000, Avg Fitness=0.0003
+2025-04-24 09:37:49 - models.genetic - [92mINFO[0m - Generation 28: Best Fitness=0.4000, Avg Fitness=0.0003
+2025-04-24 09:37:49 - models.genetic - [92mINFO[0m - Generation 29: Best Fitness=0.4000, Avg Fitness=0.0003
+2025-04-24 09:37:49 - models.genetic - [92mINFO[0m - Generation 30: Best Fitness=0.4000, Avg Fitness=0.0003
+2025-04-24 09:37:49 - models.genetic - [92mINFO[0m - Generation 31: Best Fitness=0.4000, Avg Fitness=0.0003
+2025-04-24 09:37:49 - models.genetic - [92mINFO[0m - Generation 32: Best Fitness=0.4000, Avg Fitness=0.0003
+2025-04-24 09:37:49 - models.genetic - [92mINFO[0m - Generation 33: Best Fitness=0.4000, Avg Fitness=0.0003
+2025-04-24 09:37:49 - models.genetic - [92mINFO[0m - Generation 34: Best Fitness=0.4000, Avg Fitness=0.0003
+2025-04-24 09:37:49 - models.genetic - [92mINFO[0m - Generation 35: Best Fitness=0.4000, Avg Fitness=0.0003
+2025-04-24 09:37:49 - models.genetic - [92mINFO[0m - Generation 36: Best Fitness=0.4000, Avg Fitness=0.0003
+2025-04-24 09:37:49 - models.genetic - [92mINFO[0m - Generation 37: Best Fitness=0.4000, Avg Fitness=0.0003
+2025-04-24 09:37:49 - models.genetic - [92mINFO[0m - Generation 38: Best Fitness=0.4000, Avg Fitness=0.0003
+2025-04-24 09:37:49 - models.genetic - [92mINFO[0m - Generation 39: Best Fitness=0.4000, Avg Fitness=0.0003
+2025-04-24 09:37:49 - models.genetic - [92mINFO[0m - Generation 40: Best Fitness=0.4000, Avg Fitness=0.0003
+2025-04-24 09:37:49 - models.genetic - [92mINFO[0m - Generation 41: Best Fitness=0.4000, Avg Fitness=0.0003
+2025-04-24 09:37:49 - models.genetic - [92mINFO[0m - Generation 42: Best Fitness=0.4000, Avg Fitness=0.0003
+2025-04-24 09:37:49 - models.genetic - [92mINFO[0m - Generation 43: Best Fitness=0.4000, Avg Fitness=0.0003
+2025-04-24 09:37:50 - models.genetic - [92mINFO[0m - Generation 44: Best Fitness=0.4000, Avg Fitness=0.0003
+2025-04-24 09:37:50 - models.genetic - [92mINFO[0m - Generation 45: Best Fitness=0.4000, Avg Fitness=0.0003
+2025-04-24 09:37:50 - models.genetic - [92mINFO[0m - Generation 46: Best Fitness=0.4000, Avg Fitness=0.0003
+2025-04-24 09:37:50 - models.genetic - [92mINFO[0m - Generation 47: Best Fitness=0.4000, Avg Fitness=0.0003
+2025-04-24 09:37:50 - models.genetic - [92mINFO[0m - Generation 48: Best Fitness=0.4000, Avg Fitness=0.0003
+2025-04-24 09:37:50 - models.genetic - [92mINFO[0m - Generation 49: Best Fitness=0.4000, Avg Fitness=0.0003
+2025-04-24 09:37:50 - models.genetic - [92mINFO[0m - Generation 50: Best Fitness=0.4000, Avg Fitness=0.0003
+2025-04-24 09:37:50 - models.genetic - [92mINFO[0m - Generation 51: Best Fitness=0.4000, Avg Fitness=0.0003
+2025-04-24 09:37:50 - models.genetic - [92mINFO[0m - Generation 52: Best Fitness=0.4000, Avg Fitness=0.0003
+2025-04-24 09:37:50 - models.genetic - [92mINFO[0m - Generation 53: Best Fitness=0.4000, Avg Fitness=0.0003
+2025-04-24 09:37:50 - models.genetic - [92mINFO[0m - Generation 54: Best Fitness=0.4000, Avg Fitness=0.0003
+2025-04-24 09:37:50 - models.genetic - [92mINFO[0m - Generation 55: Best Fitness=0.4000, Avg Fitness=0.0003
+2025-04-24 09:37:50 - models.genetic - [92mINFO[0m - Generation 56: Best Fitness=0.4000, Avg Fitness=0.0003
+2025-04-24 09:37:50 - models.genetic - [92mINFO[0m - Generation 57: Best Fitness=0.4000, Avg Fitness=0.0003
+2025-04-24 09:37:50 - models.genetic - [92mINFO[0m - Generation 58: Best Fitness=0.4000, Avg Fitness=0.0003
+2025-04-24 09:37:50 - models.genetic - [92mINFO[0m - Generation 59: Best Fitness=0.4000, Avg Fitness=0.0003
+2025-04-24 09:37:50 - models.genetic - [92mINFO[0m - Generation 60: Best Fitness=0.4000, Avg Fitness=0.0003
+2025-04-24 09:37:50 - models.genetic - [92mINFO[0m - Generation 61: Best Fitness=0.4000, Avg Fitness=0.0003
+2025-04-24 09:37:50 - models.genetic - [92mINFO[0m - Generation 62: Best Fitness=0.4000, Avg Fitness=0.0003
+2025-04-24 09:37:50 - models.genetic - [92mINFO[0m - Generation 63: Best Fitness=0.4000, Avg Fitness=0.0003
+2025-04-24 09:37:50 - models.genetic - [92mINFO[0m - Generation 64: Best Fitness=0.4000, Avg Fitness=0.0003
+2025-04-24 09:37:50 - models.genetic - [92mINFO[0m - Generation 65: Best Fitness=0.4000, Avg Fitness=0.0003
+2025-04-24 09:37:50 - models.genetic - [92mINFO[0m - Generation 66: Best Fitness=0.4000, Avg Fitness=0.0003
+2025-04-24 09:37:50 - models.genetic - [92mINFO[0m - Generation 67: Best Fitness=0.4000, Avg Fitness=0.0003
+2025-04-24 09:37:50 - models.genetic - [92mINFO[0m - Generation 68: Best Fitness=0.4000, Avg Fitness=0.0003
+2025-04-24 09:37:50 - models.genetic - [92mINFO[0m - Generation 69: Best Fitness=0.4000, Avg Fitness=0.0003
+2025-04-24 09:37:50 - models.genetic - [92mINFO[0m - Generation 70: Best Fitness=0.4000, Avg Fitness=0.0003
+2025-04-24 09:37:50 - models.genetic - [92mINFO[0m - Generation 71: Best Fitness=0.4000, Avg Fitness=0.0003
+2025-04-24 09:37:50 - models.genetic - [92mINFO[0m - Generation 72: Best Fitness=0.4000, Avg Fitness=0.0003
+2025-04-24 09:37:50 - models.genetic - [92mINFO[0m - Generation 73: Best Fitness=0.4000, Avg Fitness=0.0003
+2025-04-24 09:37:50 - models.genetic - [92mINFO[0m - Generation 74: Best Fitness=0.4000, Avg Fitness=0.0003
+2025-04-24 09:37:50 - models.genetic - [92mINFO[0m - Generation 75: Best Fitness=0.4000, Avg Fitness=0.0003
+2025-04-24 09:37:50 - models.genetic - [92mINFO[0m - Generation 76: Best Fitness=0.4000, Avg Fitness=0.0003
+2025-04-24 09:37:50 - models.genetic - [92mINFO[0m - Generation 77: Best Fitness=0.4000, Avg Fitness=0.0003
+2025-04-24 09:37:50 - models.genetic - [92mINFO[0m - Generation 78: Best Fitness=0.4000, Avg Fitness=0.0003
+2025-04-24 09:37:50 - models.genetic - [92mINFO[0m - Generation 79: Best Fitness=0.4000, Avg Fitness=0.0003
+2025-04-24 09:37:50 - models.genetic - [92mINFO[0m - Generation 80: Best Fitness=0.4000, Avg Fitness=0.0003
+2025-04-24 09:37:50 - models.genetic - [92mINFO[0m - Generation 81: Best Fitness=0.4000, Avg Fitness=0.0003
+2025-04-24 09:37:50 - models.genetic - [92mINFO[0m - Generation 82: Best Fitness=0.4000, Avg Fitness=0.0003
+2025-04-24 09:37:50 - models.genetic - [92mINFO[0m - Generation 83: Best Fitness=0.4000, Avg Fitness=0.0003
+2025-04-24 09:37:50 - models.genetic - [92mINFO[0m - Generation 84: Best Fitness=0.4000, Avg Fitness=0.0003
+2025-04-24 09:37:50 - models.genetic - [92mINFO[0m - Generation 85: Best Fitness=0.4000, Avg Fitness=0.0003
+2025-04-24 09:37:50 - models.genetic - [92mINFO[0m - Generation 86: Best Fitness=0.4000, Avg Fitness=0.0003
+2025-04-24 09:37:50 - models.genetic - [92mINFO[0m - Generation 87: Best Fitness=0.4000, Avg Fitness=0.0003
+2025-04-24 09:37:50 - models.genetic - [92mINFO[0m - Generation 88: Best Fitness=0.4000, Avg Fitness=0.0003
+2025-04-24 09:37:50 - models.genetic - [92mINFO[0m - Generation 89: Best Fitness=0.4000, Avg Fitness=0.0003
+2025-04-24 09:37:50 - models.genetic - [92mINFO[0m - Generation 90: Best Fitness=0.4000, Avg Fitness=0.0003
+2025-04-24 09:37:50 - models.genetic - [92mINFO[0m - Generation 91: Best Fitness=0.4000, Avg Fitness=0.0003
+2025-04-24 09:37:51 - models.genetic - [92mINFO[0m - Generation 92: Best Fitness=0.4000, Avg Fitness=0.0003
+2025-04-24 09:37:51 - models.genetic - [92mINFO[0m - Generation 93: Best Fitness=0.4000, Avg Fitness=0.0003
+2025-04-24 09:37:51 - models.genetic - [92mINFO[0m - Generation 94: Best Fitness=0.4000, Avg Fitness=0.0003
+2025-04-24 09:37:51 - models.genetic - [92mINFO[0m - Generation 95: Best Fitness=0.4000, Avg Fitness=0.0003
+2025-04-24 09:37:51 - models.genetic - [92mINFO[0m - Generation 96: Best Fitness=0.4000, Avg Fitness=0.0003
+2025-04-24 09:37:51 - models.genetic - [92mINFO[0m - Generation 97: Best Fitness=0.4000, Avg Fitness=0.0003
+2025-04-24 09:37:51 - models.genetic - [92mINFO[0m - Generation 98: Best Fitness=0.4000, Avg Fitness=0.0003
+2025-04-24 09:37:51 - models.genetic - [92mINFO[0m - Generation 99: Best Fitness=0.4000, Avg Fitness=0.0003
+2025-04-24 09:37:51 - __main__ - [92mINFO[0m - 
+Best Rule Found:
+2025-04-24 09:37:51 - __main__ - [92mINFO[0m - IF gender equals '{'Female', 'Male'}' AND total_entries less than 163.00 AND genres equals 'set()' AND rank greater than 1640.00 AND favorites greater than 8520.00 THEN rating = high
+2025-04-24 09:37:51 - __main__ - [92mINFO[0m - 
+Fitness: 0.4000
+2025-04-24 09:37:51 - __main__ - [91mERROR[0m - Pipeline failed: unsupported format string passed to numpy.ndarray.__format__
+Traceback (most recent call last):
+  File "c:\Users\PRCAAL\PROYECTOS\anime_dataset_generator\project\genetic_rule_miner\main.py", line 54, in main
+    logger.info(f"Support: {results['best_support']:.4f}")
+                           ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+TypeError: unsupported format string passed to numpy.ndarray.__format__
+2025-04-24 09:37:51 - genetic_rule_miner.data.database - [92mINFO[0m - PostgreSQL connection pool closed
+2025-04-24 09:38:19 - __main__ - [92mINFO[0m - Starting rule mining pipeline
+2025-04-24 09:38:40 - genetic_rule_miner.data.database - [92mINFO[0m - PostgreSQL connection pool initialized
+2025-04-24 09:38:40 - __main__ - [92mINFO[0m - Loading data from database...
+2025-04-24 09:38:40 - data.manager - [92mINFO[0m - [92mEntering load_data...[0m
+2025-04-24 09:38:40 - data.manager - [92mINFO[0m - [92mload_data completed in 0.2034s[0m
+2025-04-24 09:38:40 - __main__ - [92mINFO[0m - Merging and preprocessing data...
+2025-04-24 09:38:40 - data.manager - [92mINFO[0m - [92mEntering merge_data...[0m
+2025-04-24 09:38:40 - data.manager - [92mINFO[0m - [92mmerge_data completed in 0.0075s[0m
+2025-04-24 09:38:40 - data.preprocessing - [92mINFO[0m - [92mEntering clean_string_columns...[0m
+2025-04-24 09:38:40 - data.preprocessing - [92mINFO[0m - [92mclean_string_columns completed in 0.0112s[0m
+2025-04-24 09:38:40 - data.preprocessing - [92mINFO[0m - [92mEntering preprocess_data...[0m
+2025-04-24 09:38:40 - data.preprocessing - [92mINFO[0m - [92mpreprocess_data completed in 0.0056s[0m
+2025-04-24 09:38:40 - __main__ - [92mINFO[0m - Initializing genetic algorithm...
+2025-04-24 09:38:40 - __main__ - [92mINFO[0m -      gender    birthday  days_watched  mean_score  watching  completed  ...  favorites  scored_by  members  duration_class  episodes_class  rating
+0      Male  1985-03-04         142.3        7.37         1        233  ...        259      27828    56581            long           short    high
+1      Male  1985-03-04         142.3        7.37         1        233  ...        472      55020   114544        standard            long  medium
+2      Male  1985-03-04         142.3        7.37         1        233  ...      14401     539355   910855            long           short     low
+3      Male  1985-03-04         142.3        7.37         1        233  ...         14       6445    17529        standard            long     low
+4      Male  1985-03-04         142.3        7.37         1        233  ...       8823     146093   359083            long            long    high
+..      ...         ...           ...         ...       ...        ...  ...        ...        ...      ...             ...             ...     ...
+222  Female        <NA>          36.4        6.66         4         57  ...       3677      99438   178914        standard            long     low
+223  Female        <NA>          36.4        6.66         4         57  ...     111650    1147758  1919766        standard            long  medium
+224    Male        <NA>          50.5        6.09         1        114  ...      14401     539355   910855            long           short  medium
+225    Male        <NA>          50.5        6.09         1        114  ...       1389     113204   202660            long            long    high
+226    Male        <NA>          50.5        6.09         1        114  ...      82913    2054933  2982943        standard            long    high
+
+[227 rows x 33 columns]
+2025-04-24 09:38:40 - __main__ - [92mINFO[0m - Starting evolution process...
+2025-04-24 09:38:40 - models.genetic - [92mINFO[0m - Generation 0: Best Fitness=0.4000, Avg Fitness=0.0003
+2025-04-24 09:38:40 - models.genetic - [92mINFO[0m - Generation 1: Best Fitness=0.4000, Avg Fitness=0.0003
+2025-04-24 09:38:40 - models.genetic - [92mINFO[0m - Generation 2: Best Fitness=0.4000, Avg Fitness=0.0003
+2025-04-24 09:38:40 - models.genetic - [92mINFO[0m - Generation 3: Best Fitness=0.4000, Avg Fitness=0.0003
+2025-04-24 09:38:40 - models.genetic - [92mINFO[0m - Generation 4: Best Fitness=0.4000, Avg Fitness=0.0003
+2025-04-24 09:38:40 - models.genetic - [92mINFO[0m - Generation 5: Best Fitness=0.4000, Avg Fitness=0.0003
+2025-04-24 09:38:40 - models.genetic - [92mINFO[0m - Generation 6: Best Fitness=0.4000, Avg Fitness=0.0003
+2025-04-24 09:38:40 - models.genetic - [92mINFO[0m - Generation 7: Best Fitness=0.4000, Avg Fitness=0.0003
+2025-04-24 09:38:40 - models.genetic - [92mINFO[0m - Generation 8: Best Fitness=0.4000, Avg Fitness=0.0003
+2025-04-24 09:38:40 - models.genetic - [92mINFO[0m - Generation 9: Best Fitness=0.4000, Avg Fitness=0.0003
+2025-04-24 09:38:40 - models.genetic - [92mINFO[0m - Generation 10: Best Fitness=0.4000, Avg Fitness=0.0003
+2025-04-24 09:38:40 - models.genetic - [92mINFO[0m - Generation 11: Best Fitness=0.4000, Avg Fitness=0.0003
+2025-04-24 09:38:40 - models.genetic - [92mINFO[0m - Generation 12: Best Fitness=0.4000, Avg Fitness=0.0003
+2025-04-24 09:38:40 - models.genetic - [92mINFO[0m - Generation 13: Best Fitness=0.4000, Avg Fitness=0.0003
+2025-04-24 09:38:40 - models.genetic - [92mINFO[0m - Generation 14: Best Fitness=0.4000, Avg Fitness=0.0003
+2025-04-24 09:38:40 - models.genetic - [92mINFO[0m - Generation 15: Best Fitness=0.4000, Avg Fitness=0.0003
+2025-04-24 09:38:40 - models.genetic - [92mINFO[0m - Generation 16: Best Fitness=0.4000, Avg Fitness=0.0003
+2025-04-24 09:38:40 - models.genetic - [92mINFO[0m - Generation 17: Best Fitness=0.4000, Avg Fitness=0.0003
+2025-04-24 09:38:40 - models.genetic - [92mINFO[0m - Generation 18: Best Fitness=0.4000, Avg Fitness=0.0003
+2025-04-24 09:38:40 - models.genetic - [92mINFO[0m - Generation 19: Best Fitness=0.4000, Avg Fitness=0.0003
+2025-04-24 09:38:40 - models.genetic - [92mINFO[0m - Generation 20: Best Fitness=0.4000, Avg Fitness=0.0003
+2025-04-24 09:38:40 - models.genetic - [92mINFO[0m - Generation 21: Best Fitness=0.4000, Avg Fitness=0.0003
+2025-04-24 09:38:40 - models.genetic - [92mINFO[0m - Generation 22: Best Fitness=0.4000, Avg Fitness=0.0003
+2025-04-24 09:38:40 - models.genetic - [92mINFO[0m - Generation 23: Best Fitness=0.4000, Avg Fitness=0.0003
+2025-04-24 09:38:40 - models.genetic - [92mINFO[0m - Generation 24: Best Fitness=0.4000, Avg Fitness=0.0003
+2025-04-24 09:38:40 - models.genetic - [92mINFO[0m - Generation 25: Best Fitness=0.4000, Avg Fitness=0.0003
+2025-04-24 09:38:40 - models.genetic - [92mINFO[0m - Generation 26: Best Fitness=0.4000, Avg Fitness=0.0003
+2025-04-24 09:38:40 - models.genetic - [92mINFO[0m - Generation 27: Best Fitness=0.4000, Avg Fitness=0.0003
+2025-04-24 09:38:40 - models.genetic - [92mINFO[0m - Generation 28: Best Fitness=0.4000, Avg Fitness=0.0003
+2025-04-24 09:38:41 - models.genetic - [92mINFO[0m - Generation 29: Best Fitness=0.4000, Avg Fitness=0.0003
+2025-04-24 09:38:41 - models.genetic - [92mINFO[0m - Generation 30: Best Fitness=0.4000, Avg Fitness=0.0003
+2025-04-24 09:38:41 - models.genetic - [92mINFO[0m - Generation 31: Best Fitness=0.4000, Avg Fitness=0.0003
+2025-04-24 09:38:41 - models.genetic - [92mINFO[0m - Generation 32: Best Fitness=0.4000, Avg Fitness=0.0003
+2025-04-24 09:38:41 - models.genetic - [92mINFO[0m - Generation 33: Best Fitness=0.4000, Avg Fitness=0.0003
+2025-04-24 09:38:41 - models.genetic - [92mINFO[0m - Generation 34: Best Fitness=0.4000, Avg Fitness=0.0003
+2025-04-24 09:38:41 - models.genetic - [92mINFO[0m - Generation 35: Best Fitness=0.4000, Avg Fitness=0.0003
+2025-04-24 09:38:41 - models.genetic - [92mINFO[0m - Generation 36: Best Fitness=0.4000, Avg Fitness=0.0003
+2025-04-24 09:38:41 - models.genetic - [92mINFO[0m - Generation 37: Best Fitness=0.4000, Avg Fitness=0.0003
+2025-04-24 09:38:41 - models.genetic - [92mINFO[0m - Generation 38: Best Fitness=0.4000, Avg Fitness=0.0003
+2025-04-24 09:38:41 - models.genetic - [92mINFO[0m - Generation 39: Best Fitness=0.4000, Avg Fitness=0.0003
+2025-04-24 09:38:41 - models.genetic - [92mINFO[0m - Generation 40: Best Fitness=0.4000, Avg Fitness=0.0003
+2025-04-24 09:38:41 - models.genetic - [92mINFO[0m - Generation 41: Best Fitness=0.4000, Avg Fitness=0.0003
+2025-04-24 09:38:41 - models.genetic - [92mINFO[0m - Generation 42: Best Fitness=0.4000, Avg Fitness=0.0003
+2025-04-24 09:38:41 - models.genetic - [92mINFO[0m - Generation 43: Best Fitness=0.4000, Avg Fitness=0.0003
+2025-04-24 09:38:41 - models.genetic - [92mINFO[0m - Generation 44: Best Fitness=0.4000, Avg Fitness=0.0003
+2025-04-24 09:38:41 - models.genetic - [92mINFO[0m - Generation 45: Best Fitness=0.4000, Avg Fitness=0.0003
+2025-04-24 09:38:41 - models.genetic - [92mINFO[0m - Generation 46: Best Fitness=0.4000, Avg Fitness=0.0003
+2025-04-24 09:38:41 - models.genetic - [92mINFO[0m - Generation 47: Best Fitness=0.4000, Avg Fitness=0.0003
+2025-04-24 09:38:41 - models.genetic - [92mINFO[0m - Generation 48: Best Fitness=0.4000, Avg Fitness=0.0003
+2025-04-24 09:38:41 - models.genetic - [92mINFO[0m - Generation 49: Best Fitness=0.4000, Avg Fitness=0.0003
+2025-04-24 09:38:41 - models.genetic - [92mINFO[0m - Generation 50: Best Fitness=0.4000, Avg Fitness=0.0003
+2025-04-24 09:38:41 - models.genetic - [92mINFO[0m - Generation 51: Best Fitness=0.4000, Avg Fitness=0.0003
+2025-04-24 09:38:41 - models.genetic - [92mINFO[0m - Generation 52: Best Fitness=0.4000, Avg Fitness=0.0003
+2025-04-24 09:38:41 - models.genetic - [92mINFO[0m - Generation 53: Best Fitness=0.4000, Avg Fitness=0.0003
+2025-04-24 09:38:41 - models.genetic - [92mINFO[0m - Generation 54: Best Fitness=0.4000, Avg Fitness=0.0003
+2025-04-24 09:38:41 - models.genetic - [92mINFO[0m - Generation 55: Best Fitness=0.4000, Avg Fitness=0.0003
+2025-04-24 09:38:41 - models.genetic - [92mINFO[0m - Generation 56: Best Fitness=0.4000, Avg Fitness=0.0003
+2025-04-24 09:38:41 - models.genetic - [92mINFO[0m - Generation 57: Best Fitness=0.4000, Avg Fitness=0.0003
+2025-04-24 09:38:41 - models.genetic - [92mINFO[0m - Generation 58: Best Fitness=0.4000, Avg Fitness=0.0003
+2025-04-24 09:38:41 - models.genetic - [92mINFO[0m - Generation 59: Best Fitness=0.4000, Avg Fitness=0.0003
+2025-04-24 09:38:41 - models.genetic - [92mINFO[0m - Generation 60: Best Fitness=0.4000, Avg Fitness=0.0003
+2025-04-24 09:38:41 - models.genetic - [92mINFO[0m - Generation 61: Best Fitness=0.4000, Avg Fitness=0.0003
+2025-04-24 09:38:41 - models.genetic - [92mINFO[0m - Generation 62: Best Fitness=0.4000, Avg Fitness=0.0003
+2025-04-24 09:38:41 - models.genetic - [92mINFO[0m - Generation 63: Best Fitness=0.4000, Avg Fitness=0.0003
+2025-04-24 09:38:41 - models.genetic - [92mINFO[0m - Generation 64: Best Fitness=0.4000, Avg Fitness=0.0003
+2025-04-24 09:38:41 - models.genetic - [92mINFO[0m - Generation 65: Best Fitness=0.4000, Avg Fitness=0.0003
+2025-04-24 09:38:41 - models.genetic - [92mINFO[0m - Generation 66: Best Fitness=0.4000, Avg Fitness=0.0003
+2025-04-24 09:38:41 - models.genetic - [92mINFO[0m - Generation 67: Best Fitness=0.4000, Avg Fitness=0.0003
+2025-04-24 09:38:41 - models.genetic - [92mINFO[0m - Generation 68: Best Fitness=0.4000, Avg Fitness=0.0003
+2025-04-24 09:38:42 - models.genetic - [92mINFO[0m - Generation 69: Best Fitness=0.4000, Avg Fitness=0.0003
+2025-04-24 09:38:42 - models.genetic - [92mINFO[0m - Generation 70: Best Fitness=0.4000, Avg Fitness=0.0003
+2025-04-24 09:38:42 - models.genetic - [92mINFO[0m - Generation 71: Best Fitness=0.4000, Avg Fitness=0.0003
+2025-04-24 09:38:42 - models.genetic - [92mINFO[0m - Generation 72: Best Fitness=0.4000, Avg Fitness=0.0003
+2025-04-24 09:38:42 - models.genetic - [92mINFO[0m - Generation 73: Best Fitness=0.4000, Avg Fitness=0.0003
+2025-04-24 09:38:42 - models.genetic - [92mINFO[0m - Generation 74: Best Fitness=0.4000, Avg Fitness=0.0003
+2025-04-24 09:38:42 - models.genetic - [92mINFO[0m - Generation 75: Best Fitness=0.4000, Avg Fitness=0.0003
+2025-04-24 09:38:42 - models.genetic - [92mINFO[0m - Generation 76: Best Fitness=0.4000, Avg Fitness=0.0003
+2025-04-24 09:38:42 - models.genetic - [92mINFO[0m - Generation 77: Best Fitness=0.4000, Avg Fitness=0.0003
+2025-04-24 09:38:42 - models.genetic - [92mINFO[0m - Generation 78: Best Fitness=0.4000, Avg Fitness=0.0003
+2025-04-24 09:38:42 - models.genetic - [92mINFO[0m - Generation 79: Best Fitness=0.4000, Avg Fitness=0.0003
+2025-04-24 09:38:42 - models.genetic - [92mINFO[0m - Generation 80: Best Fitness=0.4000, Avg Fitness=0.0003
+2025-04-24 09:38:42 - models.genetic - [92mINFO[0m - Generation 81: Best Fitness=0.4000, Avg Fitness=0.0003
+2025-04-24 09:38:42 - models.genetic - [92mINFO[0m - Generation 82: Best Fitness=0.4000, Avg Fitness=0.0003
+2025-04-24 09:38:42 - models.genetic - [92mINFO[0m - Generation 83: Best Fitness=0.4000, Avg Fitness=0.0003
+2025-04-24 09:38:42 - models.genetic - [92mINFO[0m - Generation 84: Best Fitness=0.4000, Avg Fitness=0.0003
+2025-04-24 09:38:42 - models.genetic - [92mINFO[0m - Generation 85: Best Fitness=0.4000, Avg Fitness=0.0003
+2025-04-24 09:38:42 - models.genetic - [92mINFO[0m - Generation 86: Best Fitness=0.4000, Avg Fitness=0.0003
+2025-04-24 09:38:42 - models.genetic - [92mINFO[0m - Generation 87: Best Fitness=0.4000, Avg Fitness=0.0003
+2025-04-24 09:38:42 - models.genetic - [92mINFO[0m - Generation 88: Best Fitness=0.4000, Avg Fitness=0.0003
+2025-04-24 09:38:42 - models.genetic - [92mINFO[0m - Generation 89: Best Fitness=0.4000, Avg Fitness=0.0003
+2025-04-24 09:38:42 - models.genetic - [92mINFO[0m - Generation 90: Best Fitness=0.4000, Avg Fitness=0.0003
+2025-04-24 09:38:42 - models.genetic - [92mINFO[0m - Generation 91: Best Fitness=0.4000, Avg Fitness=0.0003
+2025-04-24 09:38:42 - models.genetic - [92mINFO[0m - Generation 92: Best Fitness=0.4000, Avg Fitness=0.0003
+2025-04-24 09:38:42 - models.genetic - [92mINFO[0m - Generation 93: Best Fitness=0.4000, Avg Fitness=0.0003
+2025-04-24 09:38:42 - models.genetic - [92mINFO[0m - Generation 94: Best Fitness=0.4000, Avg Fitness=0.0003
+2025-04-24 09:38:42 - models.genetic - [92mINFO[0m - Generation 95: Best Fitness=0.4000, Avg Fitness=0.0003
+2025-04-24 09:38:42 - models.genetic - [92mINFO[0m - Generation 96: Best Fitness=0.4000, Avg Fitness=0.0003
+2025-04-24 09:38:42 - models.genetic - [92mINFO[0m - Generation 97: Best Fitness=0.4000, Avg Fitness=0.0003
+2025-04-24 09:38:42 - models.genetic - [92mINFO[0m - Generation 98: Best Fitness=0.4000, Avg Fitness=0.0003
+2025-04-24 09:38:42 - models.genetic - [92mINFO[0m - Generation 99: Best Fitness=0.4000, Avg Fitness=0.0003
+2025-04-24 09:38:42 - __main__ - [92mINFO[0m - 
+Best Rule Found:
+2025-04-24 09:38:42 - __main__ - [92mINFO[0m - IF gender equals '{'Male', 'Female'}' AND total_entries less than 163.00 AND genres equals 'set()' AND rank greater than 1640.00 AND favorites greater than 8520.00 THEN rating = high
+2025-04-24 09:38:42 - __main__ - [92mINFO[0m - 
+Fitness: 0.4000
+2025-04-24 09:38:42 - __main__ - [92mINFO[0m - Support: [False False False False False False False False False False False False
+ False False False False False False False False False False False False
+ False False False False False False False False False False False False
+ False False False False False False False False False False False False
+ False False False False False False False False False False False False
+ False False False False False False False False False False False False
+ False False False False False False False False False False False False
+ False False False False False False False False False False False False
+ False False False False False False False False False False False False
+ False False False False False False False False False False False False
+ False False False False False False False False False False False False
+ False False False False False False False False False False False False
+ False False False False False False False False False False False False
+ False False False False False False False False False False False False
+ False False False False False False False False False False False False
+ False False False False False False False False False False False False
+ False False False False False False False False False False False False
+ False False False False False False False False False False False False
+ False False False False False False False False False False False]
+2025-04-24 09:38:42 - __main__ - [92mINFO[0m - Confidence: 0
+2025-04-24 09:38:42 - genetic_rule_miner.data.database - [92mINFO[0m - PostgreSQL connection pool closed

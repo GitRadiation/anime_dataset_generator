@@ -7,7 +7,7 @@ packages = [{include = "genetic_rule_miner"}]
 
 [tool.poetry.dependencies]
 python = "^3.10"
-numpy = "^1.23.0"
+numpy = "^2.2.5"
 pandas = "^2.2.3"
 psycopg2-binary = "^2.9.5"
 sqlalchemy = "^2.0.0"
