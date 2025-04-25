@@ -1,14 +1,15 @@
 """Main execution pipeline for genetic rule mining."""
 
 import pandas as pd
-from config import DBConfig
-from data.manager import DataManager
-from data.preprocessing import (
+
+from genetic_rule_miner.config import DBConfig
+from genetic_rule_miner.data.manager import DataManager
+from genetic_rule_miner.data.preprocessing import (
     clean_string_columns,
     preprocess_data,
 )
-from models.genetic import GeneticRuleMiner
-from utils.logging import LogManager, log_execution
+from genetic_rule_miner.models.genetic import GeneticRuleMiner
+from genetic_rule_miner.utils.logging import LogManager, log_execution
 
 
 @log_execution
@@ -53,7 +54,7 @@ def main() -> None:
         )
         save_to_excel(merged_data, "processed_data.xlsx")
         processed_df = preprocess_data(clean_string_columns(merged_data))
-        processed_df.to_csv("datos_limpios.csv", index=False)
+        save_to_excel(processed_df, "datos_limpios.xlsx")
         # Genetic algorithm execution
         logger.info("Initializing genetic algorithm...")
         miner = GeneticRuleMiner(
@@ -64,7 +65,6 @@ def main() -> None:
             generations=100,
             random_seed=42,
         )
-        logger.info(processed_df)
         logger.info("Starting evolution process...")
         results = miner.evolve()
 

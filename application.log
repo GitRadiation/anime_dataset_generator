@@ -1,0 +1,1543 @@
+2025-04-25 09:50:04 - __main__ - [92mINFO[0m - Starting rule mining pipeline
+2025-04-25 09:50:26 - genetic_rule_miner.data.database - [92mINFO[0m - PostgreSQL connection pool initialized
+2025-04-25 09:50:26 - __main__ - [92mINFO[0m - Loading data from database...
+2025-04-25 09:50:26 - data.manager - [92mINFO[0m - [92mEntering load_data...[0m
+2025-04-25 09:50:27 - data.manager - [92mINFO[0m - [92mload_data completed in 0.9933s[0m
+2025-04-25 09:50:27 - __main__ - [92mINFO[0m - Merging and preprocessing data...
+2025-04-25 09:50:27 - data.manager - [92mINFO[0m - [92mEntering merge_data...[0m
+2025-04-25 09:50:27 - data.manager - [92mINFO[0m - [92mmerge_data completed in 0.0174s[0m
+2025-04-25 09:50:27 - __main__ - [92mINFO[0m - [92mEntering save_to_excel...[0m
+2025-04-25 09:50:28 - __main__ - [92mINFO[0m - Data successfully saved to processed_data.xlsx
+2025-04-25 09:50:28 - __main__ - [92mINFO[0m - [92msave_to_excel completed in 1.4226s[0m
+2025-04-25 09:50:28 - data.preprocessing - [92mINFO[0m - [92mEntering clean_string_columns...[0m
+2025-04-25 09:50:28 - data.preprocessing - [92mINFO[0m - [92mclean_string_columns completed in 0.0200s[0m
+2025-04-25 09:50:28 - data.preprocessing - [92mINFO[0m - [92mEntering preprocess_data...[0m
+2025-04-25 09:50:28 - data.preprocessing - [92mINFO[0m - [92mpreprocess_data completed in 0.0122s[0m
+2025-04-25 09:50:28 - __main__ - [92mINFO[0m - Initializing genetic algorithm...
+2025-04-25 09:50:28 - __main__ - [92mINFO[0m -      gender    birthday  days_watched  mean_score  watching  completed  ...  favorites  scored_by  members  duration_class  episodes_class  rating
+0      Male  1985-03-04         142.3        7.37         1        233  ...       1432      86289   189123        standard            long  medium
+1      Male  1985-03-04         142.3        7.37         1        233  ...        185      42381    76310            long           short  medium
+2      Male  1985-03-04         142.3        7.37         1        233  ...         22       7309    18706        standard          medium     low
+3      Male  1985-03-04         142.3        7.37         1        233  ...       1810     131754   277502        standard          medium  medium
+4      Male  1985-03-04         142.3        7.37         1        233  ...        445      31549    85588        standard            long    high
+..      ...         ...           ...         ...       ...        ...  ...        ...        ...      ...             ...             ...     ...
+321  Female        <NA>          36.4        6.66         4         57  ...       4419     246955   514078        standard            long     low
+322  Female        <NA>          36.4        6.66         4         57  ...       3677      99438   178914        standard            long     low
+323    Male        <NA>          50.5        6.09         1        114  ...      14402     539408   910963            long           short  medium
+324    Male        <NA>          50.5        6.09         1        114  ...      57446     465294  1225941        standard            long    high
+325    Male        <NA>          50.5        6.09         1        114  ...     236798    1432316  2519689        standard            long     low
+
+[326 rows x 33 columns]
+2025-04-25 09:50:28 - __main__ - [92mINFO[0m - Starting evolution process...
+2025-04-25 09:50:28 - models.genetic - [92mINFO[0m - Generation 0: Best Fitness=0.6667, Avg Fitness=0.0002
+2025-04-25 09:50:28 - models.genetic - [92mINFO[0m - Generation 1: Best Fitness=0.6667, Avg Fitness=0.0002
+2025-04-25 09:50:28 - models.genetic - [92mINFO[0m - Generation 2: Best Fitness=0.6667, Avg Fitness=0.0002
+2025-04-25 09:50:28 - models.genetic - [92mINFO[0m - Generation 3: Best Fitness=0.6667, Avg Fitness=0.0002
+2025-04-25 09:50:28 - models.genetic - [92mINFO[0m - Generation 4: Best Fitness=0.6667, Avg Fitness=0.0002
+2025-04-25 09:50:28 - models.genetic - [92mINFO[0m - Generation 5: Best Fitness=0.6667, Avg Fitness=0.0002
+2025-04-25 09:50:28 - models.genetic - [92mINFO[0m - Generation 6: Best Fitness=0.6667, Avg Fitness=0.0002
+2025-04-25 09:50:28 - models.genetic - [92mINFO[0m - Generation 7: Best Fitness=0.6667, Avg Fitness=0.0002
+2025-04-25 09:50:28 - models.genetic - [92mINFO[0m - Generation 8: Best Fitness=0.6667, Avg Fitness=0.0002
+2025-04-25 09:50:28 - models.genetic - [92mINFO[0m - Generation 9: Best Fitness=0.6667, Avg Fitness=0.0002
+2025-04-25 09:50:28 - models.genetic - [92mINFO[0m - Generation 10: Best Fitness=0.6667, Avg Fitness=0.0002
+2025-04-25 09:50:28 - models.genetic - [92mINFO[0m - Generation 11: Best Fitness=0.6667, Avg Fitness=0.0002
+2025-04-25 09:50:28 - models.genetic - [92mINFO[0m - Generation 12: Best Fitness=0.6667, Avg Fitness=0.0002
+2025-04-25 09:50:28 - models.genetic - [92mINFO[0m - Generation 13: Best Fitness=0.6667, Avg Fitness=0.0002
+2025-04-25 09:50:28 - models.genetic - [92mINFO[0m - Generation 14: Best Fitness=0.6667, Avg Fitness=0.0002
+2025-04-25 09:50:29 - models.genetic - [92mINFO[0m - Generation 15: Best Fitness=0.6667, Avg Fitness=0.0002
+2025-04-25 09:50:29 - models.genetic - [92mINFO[0m - Generation 16: Best Fitness=0.6667, Avg Fitness=0.0002
+2025-04-25 09:50:29 - models.genetic - [92mINFO[0m - Generation 17: Best Fitness=0.6667, Avg Fitness=0.0002
+2025-04-25 09:50:29 - models.genetic - [92mINFO[0m - Generation 18: Best Fitness=0.6667, Avg Fitness=0.0002
+2025-04-25 09:50:29 - models.genetic - [92mINFO[0m - Generation 19: Best Fitness=0.6667, Avg Fitness=0.0002
+2025-04-25 09:50:29 - models.genetic - [92mINFO[0m - Generation 20: Best Fitness=0.6667, Avg Fitness=0.0002
+2025-04-25 09:50:29 - models.genetic - [92mINFO[0m - Generation 21: Best Fitness=0.6667, Avg Fitness=0.0002
+2025-04-25 09:50:29 - models.genetic - [92mINFO[0m - Generation 22: Best Fitness=0.6667, Avg Fitness=0.0002
+2025-04-25 09:50:29 - models.genetic - [92mINFO[0m - Generation 23: Best Fitness=0.6667, Avg Fitness=0.0002
+2025-04-25 09:50:29 - models.genetic - [92mINFO[0m - Generation 24: Best Fitness=0.6667, Avg Fitness=0.0002
+2025-04-25 09:50:29 - models.genetic - [92mINFO[0m - Generation 25: Best Fitness=0.6667, Avg Fitness=0.0002
+2025-04-25 09:50:29 - models.genetic - [92mINFO[0m - Generation 26: Best Fitness=0.6667, Avg Fitness=0.0002
+2025-04-25 09:50:29 - models.genetic - [92mINFO[0m - Generation 27: Best Fitness=0.6667, Avg Fitness=0.0002
+2025-04-25 09:50:29 - models.genetic - [92mINFO[0m - Generation 28: Best Fitness=0.6667, Avg Fitness=0.0002
+2025-04-25 09:50:29 - models.genetic - [92mINFO[0m - Generation 29: Best Fitness=0.6667, Avg Fitness=0.0002
+2025-04-25 09:50:29 - models.genetic - [92mINFO[0m - Generation 30: Best Fitness=0.6667, Avg Fitness=0.0002
+2025-04-25 09:50:29 - models.genetic - [92mINFO[0m - Generation 31: Best Fitness=0.6667, Avg Fitness=0.0002
+2025-04-25 09:50:29 - models.genetic - [92mINFO[0m - Generation 32: Best Fitness=0.6667, Avg Fitness=0.0002
+2025-04-25 09:50:29 - models.genetic - [92mINFO[0m - Generation 33: Best Fitness=0.6667, Avg Fitness=0.0002
+2025-04-25 09:50:29 - models.genetic - [92mINFO[0m - Generation 34: Best Fitness=0.6667, Avg Fitness=0.0002
+2025-04-25 09:50:29 - models.genetic - [92mINFO[0m - Generation 35: Best Fitness=0.6667, Avg Fitness=0.0002
+2025-04-25 09:50:29 - models.genetic - [92mINFO[0m - Generation 36: Best Fitness=0.6667, Avg Fitness=0.0002
+2025-04-25 09:50:29 - models.genetic - [92mINFO[0m - Generation 37: Best Fitness=0.6667, Avg Fitness=0.0002
+2025-04-25 09:50:29 - models.genetic - [92mINFO[0m - Generation 38: Best Fitness=0.6667, Avg Fitness=0.0002
+2025-04-25 09:50:29 - models.genetic - [92mINFO[0m - Generation 39: Best Fitness=0.6667, Avg Fitness=0.0002
+2025-04-25 09:50:29 - models.genetic - [92mINFO[0m - Generation 40: Best Fitness=0.6667, Avg Fitness=0.0002
+2025-04-25 09:50:29 - models.genetic - [92mINFO[0m - Generation 41: Best Fitness=0.6667, Avg Fitness=0.0002
+2025-04-25 09:50:29 - models.genetic - [92mINFO[0m - Generation 42: Best Fitness=0.6667, Avg Fitness=0.0002
+2025-04-25 09:50:29 - models.genetic - [92mINFO[0m - Generation 43: Best Fitness=0.6667, Avg Fitness=0.0002
+2025-04-25 09:50:29 - models.genetic - [92mINFO[0m - Generation 44: Best Fitness=0.6667, Avg Fitness=0.0002
+2025-04-25 09:50:29 - models.genetic - [92mINFO[0m - Generation 45: Best Fitness=0.6667, Avg Fitness=0.0002
+2025-04-25 09:50:29 - models.genetic - [92mINFO[0m - Generation 46: Best Fitness=0.6667, Avg Fitness=0.0002
+2025-04-25 09:50:29 - models.genetic - [92mINFO[0m - Generation 47: Best Fitness=0.6667, Avg Fitness=0.0002
+2025-04-25 09:50:29 - models.genetic - [92mINFO[0m - Generation 48: Best Fitness=0.6667, Avg Fitness=0.0002
+2025-04-25 09:50:29 - models.genetic - [92mINFO[0m - Generation 49: Best Fitness=0.6667, Avg Fitness=0.0002
+2025-04-25 09:50:29 - models.genetic - [92mINFO[0m - Generation 50: Best Fitness=0.6667, Avg Fitness=0.0002
+2025-04-25 09:50:29 - models.genetic - [92mINFO[0m - Generation 51: Best Fitness=0.6667, Avg Fitness=0.0002
+2025-04-25 09:50:29 - models.genetic - [92mINFO[0m - Generation 52: Best Fitness=0.6667, Avg Fitness=0.0002
+2025-04-25 09:50:29 - models.genetic - [92mINFO[0m - Generation 53: Best Fitness=0.6667, Avg Fitness=0.0002
+2025-04-25 09:50:29 - models.genetic - [92mINFO[0m - Generation 54: Best Fitness=0.6667, Avg Fitness=0.0002
+2025-04-25 09:50:29 - models.genetic - [92mINFO[0m - Generation 55: Best Fitness=0.6667, Avg Fitness=0.0002
+2025-04-25 09:50:29 - models.genetic - [92mINFO[0m - Generation 56: Best Fitness=0.6667, Avg Fitness=0.0002
+2025-04-25 09:50:29 - models.genetic - [92mINFO[0m - Generation 57: Best Fitness=0.6667, Avg Fitness=0.0002
+2025-04-25 09:50:29 - models.genetic - [92mINFO[0m - Generation 58: Best Fitness=0.6667, Avg Fitness=0.0002
+2025-04-25 09:50:29 - models.genetic - [92mINFO[0m - Generation 59: Best Fitness=0.6667, Avg Fitness=0.0002
+2025-04-25 09:50:29 - models.genetic - [92mINFO[0m - Generation 60: Best Fitness=0.6667, Avg Fitness=0.0002
+2025-04-25 09:50:29 - models.genetic - [92mINFO[0m - Generation 61: Best Fitness=0.6667, Avg Fitness=0.0002
+2025-04-25 09:50:29 - models.genetic - [92mINFO[0m - Generation 62: Best Fitness=0.6667, Avg Fitness=0.0002
+2025-04-25 09:50:29 - models.genetic - [92mINFO[0m - Generation 63: Best Fitness=0.6667, Avg Fitness=0.0002
+2025-04-25 09:50:30 - models.genetic - [92mINFO[0m - Generation 64: Best Fitness=0.6667, Avg Fitness=0.0002
+2025-04-25 09:50:30 - models.genetic - [92mINFO[0m - Generation 65: Best Fitness=0.6667, Avg Fitness=0.0002
+2025-04-25 09:50:30 - models.genetic - [92mINFO[0m - Generation 66: Best Fitness=0.6667, Avg Fitness=0.0002
+2025-04-25 09:50:30 - models.genetic - [92mINFO[0m - Generation 67: Best Fitness=0.6667, Avg Fitness=0.0002
+2025-04-25 09:50:30 - models.genetic - [92mINFO[0m - Generation 68: Best Fitness=0.6667, Avg Fitness=0.0002
+2025-04-25 09:50:30 - models.genetic - [92mINFO[0m - Generation 69: Best Fitness=0.6667, Avg Fitness=0.0002
+2025-04-25 09:50:30 - models.genetic - [92mINFO[0m - Generation 70: Best Fitness=0.6667, Avg Fitness=0.0002
+2025-04-25 09:50:30 - models.genetic - [92mINFO[0m - Generation 71: Best Fitness=0.6667, Avg Fitness=0.0002
+2025-04-25 09:50:30 - models.genetic - [92mINFO[0m - Generation 72: Best Fitness=0.6667, Avg Fitness=0.0002
+2025-04-25 09:50:30 - models.genetic - [92mINFO[0m - Generation 73: Best Fitness=0.6667, Avg Fitness=0.0002
+2025-04-25 09:50:30 - models.genetic - [92mINFO[0m - Generation 74: Best Fitness=0.6667, Avg Fitness=0.0002
+2025-04-25 09:50:30 - models.genetic - [92mINFO[0m - Generation 75: Best Fitness=0.6667, Avg Fitness=0.0002
+2025-04-25 09:50:30 - models.genetic - [92mINFO[0m - Generation 76: Best Fitness=0.6667, Avg Fitness=0.0002
+2025-04-25 09:50:30 - models.genetic - [92mINFO[0m - Generation 77: Best Fitness=0.6667, Avg Fitness=0.0002
+2025-04-25 09:50:30 - models.genetic - [92mINFO[0m - Generation 78: Best Fitness=0.6667, Avg Fitness=0.0002
+2025-04-25 09:50:30 - models.genetic - [92mINFO[0m - Generation 79: Best Fitness=0.6667, Avg Fitness=0.0002
+2025-04-25 09:50:30 - models.genetic - [92mINFO[0m - Generation 80: Best Fitness=0.6667, Avg Fitness=0.0002
+2025-04-25 09:50:30 - models.genetic - [92mINFO[0m - Generation 81: Best Fitness=0.6667, Avg Fitness=0.0002
+2025-04-25 09:50:30 - models.genetic - [92mINFO[0m - Generation 82: Best Fitness=0.6667, Avg Fitness=0.0002
+2025-04-25 09:50:30 - models.genetic - [92mINFO[0m - Generation 83: Best Fitness=0.6667, Avg Fitness=0.0002
+2025-04-25 09:50:30 - models.genetic - [92mINFO[0m - Generation 84: Best Fitness=0.6667, Avg Fitness=0.0002
+2025-04-25 09:50:30 - models.genetic - [92mINFO[0m - Generation 85: Best Fitness=0.6667, Avg Fitness=0.0002
+2025-04-25 09:50:30 - models.genetic - [92mINFO[0m - Generation 86: Best Fitness=0.6667, Avg Fitness=0.0002
+2025-04-25 09:50:30 - models.genetic - [92mINFO[0m - Generation 87: Best Fitness=0.6667, Avg Fitness=0.0002
+2025-04-25 09:50:30 - models.genetic - [92mINFO[0m - Generation 88: Best Fitness=0.6667, Avg Fitness=0.0002
+2025-04-25 09:50:30 - models.genetic - [92mINFO[0m - Generation 89: Best Fitness=0.6667, Avg Fitness=0.0002
+2025-04-25 09:50:30 - models.genetic - [92mINFO[0m - Generation 90: Best Fitness=0.6667, Avg Fitness=0.0002
+2025-04-25 09:50:30 - models.genetic - [92mINFO[0m - Generation 91: Best Fitness=0.6667, Avg Fitness=0.0002
+2025-04-25 09:50:30 - models.genetic - [92mINFO[0m - Generation 92: Best Fitness=0.6667, Avg Fitness=0.0002
+2025-04-25 09:50:30 - models.genetic - [92mINFO[0m - Generation 93: Best Fitness=0.6667, Avg Fitness=0.0002
+2025-04-25 09:50:30 - models.genetic - [92mINFO[0m - Generation 94: Best Fitness=0.6667, Avg Fitness=0.0002
+2025-04-25 09:50:30 - models.genetic - [92mINFO[0m - Generation 95: Best Fitness=0.6667, Avg Fitness=0.0002
+2025-04-25 09:50:30 - models.genetic - [92mINFO[0m - Generation 96: Best Fitness=0.6667, Avg Fitness=0.0002
+2025-04-25 09:50:30 - models.genetic - [92mINFO[0m - Generation 97: Best Fitness=0.6667, Avg Fitness=0.0002
+2025-04-25 09:50:30 - models.genetic - [92mINFO[0m - Generation 98: Best Fitness=0.6667, Avg Fitness=0.0002
+2025-04-25 09:50:30 - models.genetic - [92mINFO[0m - Generation 99: Best Fitness=0.6667, Avg Fitness=0.0002
+2025-04-25 09:50:30 - __main__ - [92mINFO[0m - 
+Best Rule Found:
+2025-04-25 09:50:30 - __main__ - [92mINFO[0m - IF gender equals '{'Female', 'Male'}' AND total_entries less than 193.75 AND genres equals '{'Action, Drama, Mystery, Supernatural', 'Comedy, Drama, Romance, Sci-Fi, Ecchi', 'Comedy, Romance, Sci-Fi, Ecchi', 'Action, Comedy, Fantasy, Romance', 'Comedy, Drama, Fantasy', 'Action, Comedy, Romance', 'Action, Award Winning, Sci-Fi', 'Comedy, Drama, Romance', 'Action, Adventure, Fantasy, Horror, Sci-Fi', 'Action', 'Action, Award Winning, Drama, Sci-Fi', 'Action, Award Winning, Drama, Romance, Sci-Fi', 'Action, Adventure, Sci-Fi', 'Action, Fantasy, Sci-Fi', 'Drama', 'Action, Adventure, Comedy, Sci-Fi, Ecchi', 'Action, Drama, Sci-Fi, Suspense', 'Action, Award Winning, Mystery, Sci-Fi, Suspense', 'Action, Horror, Sci-Fi', 'Action, Drama, Romance', 'Comedy, Fantasy, Romance, Ecchi', 'Action, Drama, Supernatural', 'Action, Comedy, Sci-Fi', 'Comedy, Romance, Supernatural', 'Sports', 'Action, Adventure, Drama, Fantasy, Horror', 'Drama, Mystery, Suspense', 'Action, Drama, Sci-Fi', 'Action, Adventure, Fantasy', 'Action, Adventure, Award Winning, Drama, Romance, Sci-Fi', 'Action, Drama, Romance, Supernatural', 'Action, Sci-Fi', 'Action, Comedy, Drama'}' AND rank greater than 2429.00 AND favorites greater than 5299.00 THEN rating = high
+2025-04-25 09:50:30 - __main__ - [92mINFO[0m - 
+Fitness: 0.6667
+2025-04-25 09:50:30 - __main__ - [92mINFO[0m - Support: [False False False False False False False False False False False False
+ False False False False False False False False False False False False
+ False False False False False False False False False False False False
+ False False False False False False False False False False False False
+ False False False False False False False False False False False False
+ False False False False False False False False False False False False
+ False False False False False False False False False False False False
+ False False False False False False False False False False False False
+ False False False False False False False False False False False False
+ False False False False False False False False False False False False
+ False False False False False False False False False False False False
+ False False False False False False False False False False False False
+ False False False False False False False False False False False False
+ False False False False False False False False False False False False
+ False False False False False False False False False False False False
+ False False False False False False False False False False False False
+ False False False False False False False False False False False False
+ False False False False False False False False False False False False
+ False False False False False False False False False False False False
+ False False False False False False False False False False False False
+ False False False False False False False False False False False False
+ False False False False False False False False False False False False
+ False False False False False False False False False False False False
+ False False False False False False False False False False False False
+ False False False False False False False False False False False False
+ False False False False False False False False False False False False
+ False False False False False False False False False False False False
+ False False]
+2025-04-25 09:50:30 - __main__ - [92mINFO[0m - Confidence: 0
+2025-04-25 09:50:30 - genetic_rule_miner.data.database - [92mINFO[0m - PostgreSQL connection pool closed
+2025-04-25 09:54:26 - __main__ - [92mINFO[0m - Starting rule mining pipeline
+2025-04-25 09:54:47 - genetic_rule_miner.data.database - [92mINFO[0m - PostgreSQL connection pool initialized
+2025-04-25 09:54:47 - __main__ - [92mINFO[0m - Loading data from database...
+2025-04-25 09:54:47 - data.manager - [92mINFO[0m - [92mEntering load_data...[0m
+2025-04-25 09:54:47 - data.manager - [92mINFO[0m - [92mload_data completed in 0.2149s[0m
+2025-04-25 09:54:47 - __main__ - [92mINFO[0m - Merging and preprocessing data...
+2025-04-25 09:54:47 - data.manager - [92mINFO[0m - [92mEntering merge_data...[0m
+2025-04-25 09:54:47 - data.manager - [92mINFO[0m - [92mmerge_data completed in 0.0056s[0m
+2025-04-25 09:54:47 - __main__ - [92mINFO[0m - [92mEntering save_to_excel...[0m
+2025-04-25 09:54:48 - __main__ - [91mERROR[0m - Failed to save data to Excel: [Errno 13] Permission denied: 'processed_data.xlsx'
+2025-04-25 09:54:48 - __main__ - [91mERROR[0m - [91msave_to_excel failed after 0.1487s: [Errno 13] Permission denied: 'processed_data.xlsx'[0m
+Traceback (most recent call last):
+  File "c:\Users\PRCAAL\PROYECTOS\anime_dataset_generator\project\genetic_rule_miner\utils\logging.py", line 125, in wrapper
+    result = func(*args, **kwargs)
+  File "c:\Users\PRCAAL\PROYECTOS\anime_dataset_generator\project\genetic_rule_miner\main.py", line 26, in save_to_excel
+    df.to_excel(output_path, index=False)
+    ~~~~~~~~~~~^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "C:\Users\PRCAAL\PROYECTOS\anime_dataset_generator\project\.venv\Lib\site-packages\pandas\util\_decorators.py", line 333, in wrapper
+    return func(*args, **kwargs)
+  File "C:\Users\PRCAAL\PROYECTOS\anime_dataset_generator\project\.venv\Lib\site-packages\pandas\core\generic.py", line 2417, in to_excel
+    formatter.write(
+    ~~~~~~~~~~~~~~~^
+        excel_writer,
+        ^^^^^^^^^^^^^
+    ...<6 lines>...
+        engine_kwargs=engine_kwargs,
+        ^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+    )
+    ^
+  File "C:\Users\PRCAAL\PROYECTOS\anime_dataset_generator\project\.venv\Lib\site-packages\pandas\io\formats\excel.py", line 943, in write
+    writer = ExcelWriter(
+        writer,
+    ...<2 lines>...
+        engine_kwargs=engine_kwargs,
+    )
+  File "C:\Users\PRCAAL\PROYECTOS\anime_dataset_generator\project\.venv\Lib\site-packages\pandas\io\excel\_openpyxl.py", line 61, in __init__
+    super().__init__(
+    ~~~~~~~~~~~~~~~~^
+        path,
+        ^^^^^
+    ...<3 lines>...
+        engine_kwargs=engine_kwargs,
+        ^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+    )
+    ^
+  File "C:\Users\PRCAAL\PROYECTOS\anime_dataset_generator\project\.venv\Lib\site-packages\pandas\io\excel\_base.py", line 1246, in __init__
+    self._handles = get_handle(
+                    ~~~~~~~~~~^
+        path, mode, storage_options=storage_options, is_text=False
+        ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+    )
+    ^
+  File "C:\Users\PRCAAL\PROYECTOS\anime_dataset_generator\project\.venv\Lib\site-packages\pandas\io\common.py", line 882, in get_handle
+    handle = open(handle, ioargs.mode)
+PermissionError: [Errno 13] Permission denied: 'processed_data.xlsx'
+2025-04-25 09:54:48 - __main__ - [91mERROR[0m - Pipeline failed: [Errno 13] Permission denied: 'processed_data.xlsx'
+Traceback (most recent call last):
+  File "c:\Users\PRCAAL\PROYECTOS\anime_dataset_generator\project\genetic_rule_miner\main.py", line 54, in main
+    save_to_excel(merged_data, "processed_data.xlsx")
+    ~~~~~~~~~~~~~^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "c:\Users\PRCAAL\PROYECTOS\anime_dataset_generator\project\genetic_rule_miner\utils\logging.py", line 125, in wrapper
+    result = func(*args, **kwargs)
+  File "c:\Users\PRCAAL\PROYECTOS\anime_dataset_generator\project\genetic_rule_miner\main.py", line 26, in save_to_excel
+    df.to_excel(output_path, index=False)
+    ~~~~~~~~~~~^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "C:\Users\PRCAAL\PROYECTOS\anime_dataset_generator\project\.venv\Lib\site-packages\pandas\util\_decorators.py", line 333, in wrapper
+    return func(*args, **kwargs)
+  File "C:\Users\PRCAAL\PROYECTOS\anime_dataset_generator\project\.venv\Lib\site-packages\pandas\core\generic.py", line 2417, in to_excel
+    formatter.write(
+    ~~~~~~~~~~~~~~~^
+        excel_writer,
+        ^^^^^^^^^^^^^
+    ...<6 lines>...
+        engine_kwargs=engine_kwargs,
+        ^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+    )
+    ^
+  File "C:\Users\PRCAAL\PROYECTOS\anime_dataset_generator\project\.venv\Lib\site-packages\pandas\io\formats\excel.py", line 943, in write
+    writer = ExcelWriter(
+        writer,
+    ...<2 lines>...
+        engine_kwargs=engine_kwargs,
+    )
+  File "C:\Users\PRCAAL\PROYECTOS\anime_dataset_generator\project\.venv\Lib\site-packages\pandas\io\excel\_openpyxl.py", line 61, in __init__
+    super().__init__(
+    ~~~~~~~~~~~~~~~~^
+        path,
+        ^^^^^
+    ...<3 lines>...
+        engine_kwargs=engine_kwargs,
+        ^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+    )
+    ^
+  File "C:\Users\PRCAAL\PROYECTOS\anime_dataset_generator\project\.venv\Lib\site-packages\pandas\io\excel\_base.py", line 1246, in __init__
+    self._handles = get_handle(
+                    ~~~~~~~~~~^
+        path, mode, storage_options=storage_options, is_text=False
+        ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+    )
+    ^
+  File "C:\Users\PRCAAL\PROYECTOS\anime_dataset_generator\project\.venv\Lib\site-packages\pandas\io\common.py", line 882, in get_handle
+    handle = open(handle, ioargs.mode)
+PermissionError: [Errno 13] Permission denied: 'processed_data.xlsx'
+2025-04-25 09:54:48 - genetic_rule_miner.data.database - [92mINFO[0m - PostgreSQL connection pool closed
+2025-04-25 09:54:56 - __main__ - [92mINFO[0m - Starting rule mining pipeline
+2025-04-25 09:55:17 - genetic_rule_miner.data.database - [92mINFO[0m - PostgreSQL connection pool initialized
+2025-04-25 09:55:17 - __main__ - [92mINFO[0m - Loading data from database...
+2025-04-25 09:55:17 - data.manager - [92mINFO[0m - [92mEntering load_data...[0m
+2025-04-25 09:55:17 - data.manager - [92mINFO[0m - [92mload_data completed in 0.2336s[0m
+2025-04-25 09:55:17 - __main__ - [92mINFO[0m - Merging and preprocessing data...
+2025-04-25 09:55:17 - data.manager - [92mINFO[0m - [92mEntering merge_data...[0m
+2025-04-25 09:55:17 - data.manager - [92mINFO[0m - [92mmerge_data completed in 0.0084s[0m
+2025-04-25 09:55:17 - __main__ - [92mINFO[0m - [92mEntering save_to_excel...[0m
+2025-04-25 09:55:17 - __main__ - [92mINFO[0m - Data successfully saved to processed_data.xlsx
+2025-04-25 09:55:17 - __main__ - [92mINFO[0m - [92msave_to_excel completed in 0.2983s[0m
+2025-04-25 09:55:17 - data.preprocessing - [92mINFO[0m - [92mEntering clean_string_columns...[0m
+2025-04-25 09:55:17 - data.preprocessing - [92mINFO[0m - [92mclean_string_columns completed in 0.0144s[0m
+2025-04-25 09:55:17 - data.preprocessing - [92mINFO[0m - [92mEntering preprocess_data...[0m
+2025-04-25 09:55:17 - data.preprocessing - [92mINFO[0m - [92mpreprocess_data completed in 0.0083s[0m
+2025-04-25 09:55:17 - __main__ - [92mINFO[0m - [92mEntering save_to_excel...[0m
+2025-04-25 09:55:18 - __main__ - [92mINFO[0m - Data successfully saved to datos_limpios.xlsx
+2025-04-25 09:55:18 - __main__ - [92mINFO[0m - [92msave_to_excel completed in 0.1402s[0m
+2025-04-25 09:55:18 - __main__ - [92mINFO[0m - Initializing genetic algorithm...
+2025-04-25 09:55:18 - __main__ - [92mINFO[0m - Starting evolution process...
+2025-04-25 09:55:18 - models.genetic - [92mINFO[0m - Generation 0: Best Fitness=0.6667, Avg Fitness=0.0002
+2025-04-25 09:55:18 - models.genetic - [92mINFO[0m - Generation 1: Best Fitness=0.6667, Avg Fitness=0.0002
+2025-04-25 09:55:18 - models.genetic - [92mINFO[0m - Generation 2: Best Fitness=0.6667, Avg Fitness=0.0002
+2025-04-25 09:55:18 - models.genetic - [92mINFO[0m - Generation 3: Best Fitness=0.6667, Avg Fitness=0.0002
+2025-04-25 09:55:18 - models.genetic - [92mINFO[0m - Generation 4: Best Fitness=0.6667, Avg Fitness=0.0002
+2025-04-25 09:55:18 - models.genetic - [92mINFO[0m - Generation 5: Best Fitness=0.6667, Avg Fitness=0.0002
+2025-04-25 09:55:18 - models.genetic - [92mINFO[0m - Generation 6: Best Fitness=0.6667, Avg Fitness=0.0002
+2025-04-25 09:55:18 - models.genetic - [92mINFO[0m - Generation 7: Best Fitness=0.6667, Avg Fitness=0.0002
+2025-04-25 09:55:18 - models.genetic - [92mINFO[0m - Generation 8: Best Fitness=0.6667, Avg Fitness=0.0002
+2025-04-25 09:55:18 - models.genetic - [92mINFO[0m - Generation 9: Best Fitness=0.6667, Avg Fitness=0.0002
+2025-04-25 09:55:18 - models.genetic - [92mINFO[0m - Generation 10: Best Fitness=0.6667, Avg Fitness=0.0002
+2025-04-25 09:55:18 - models.genetic - [92mINFO[0m - Generation 11: Best Fitness=0.6667, Avg Fitness=0.0002
+2025-04-25 09:55:18 - models.genetic - [92mINFO[0m - Generation 12: Best Fitness=0.6667, Avg Fitness=0.0002
+2025-04-25 09:55:18 - models.genetic - [92mINFO[0m - Generation 13: Best Fitness=0.6667, Avg Fitness=0.0002
+2025-04-25 09:55:18 - models.genetic - [92mINFO[0m - Generation 14: Best Fitness=0.6667, Avg Fitness=0.0002
+2025-04-25 09:55:18 - models.genetic - [92mINFO[0m - Generation 15: Best Fitness=0.6667, Avg Fitness=0.0002
+2025-04-25 09:55:18 - models.genetic - [92mINFO[0m - Generation 16: Best Fitness=0.6667, Avg Fitness=0.0002
+2025-04-25 09:55:18 - models.genetic - [92mINFO[0m - Generation 17: Best Fitness=0.6667, Avg Fitness=0.0002
+2025-04-25 09:55:18 - models.genetic - [92mINFO[0m - Generation 18: Best Fitness=0.6667, Avg Fitness=0.0002
+2025-04-25 09:55:18 - models.genetic - [92mINFO[0m - Generation 19: Best Fitness=0.6667, Avg Fitness=0.0002
+2025-04-25 09:55:18 - models.genetic - [92mINFO[0m - Generation 20: Best Fitness=0.6667, Avg Fitness=0.0002
+2025-04-25 09:55:18 - models.genetic - [92mINFO[0m - Generation 21: Best Fitness=0.6667, Avg Fitness=0.0002
+2025-04-25 09:55:18 - models.genetic - [92mINFO[0m - Generation 22: Best Fitness=0.6667, Avg Fitness=0.0002
+2025-04-25 09:55:18 - models.genetic - [92mINFO[0m - Generation 23: Best Fitness=0.6667, Avg Fitness=0.0002
+2025-04-25 09:55:18 - models.genetic - [92mINFO[0m - Generation 24: Best Fitness=0.6667, Avg Fitness=0.0002
+2025-04-25 09:55:18 - models.genetic - [92mINFO[0m - Generation 25: Best Fitness=0.6667, Avg Fitness=0.0002
+2025-04-25 09:55:18 - models.genetic - [92mINFO[0m - Generation 26: Best Fitness=0.6667, Avg Fitness=0.0002
+2025-04-25 09:55:18 - models.genetic - [92mINFO[0m - Generation 27: Best Fitness=0.6667, Avg Fitness=0.0002
+2025-04-25 09:55:18 - models.genetic - [92mINFO[0m - Generation 28: Best Fitness=0.6667, Avg Fitness=0.0002
+2025-04-25 09:55:18 - models.genetic - [92mINFO[0m - Generation 29: Best Fitness=0.6667, Avg Fitness=0.0002
+2025-04-25 09:55:18 - models.genetic - [92mINFO[0m - Generation 30: Best Fitness=0.6667, Avg Fitness=0.0002
+2025-04-25 09:55:18 - models.genetic - [92mINFO[0m - Generation 31: Best Fitness=0.6667, Avg Fitness=0.0002
+2025-04-25 09:55:18 - models.genetic - [92mINFO[0m - Generation 32: Best Fitness=0.6667, Avg Fitness=0.0002
+2025-04-25 09:55:18 - models.genetic - [92mINFO[0m - Generation 33: Best Fitness=0.6667, Avg Fitness=0.0002
+2025-04-25 09:55:18 - models.genetic - [92mINFO[0m - Generation 34: Best Fitness=0.6667, Avg Fitness=0.0002
+2025-04-25 09:55:19 - models.genetic - [92mINFO[0m - Generation 35: Best Fitness=0.6667, Avg Fitness=0.0002
+2025-04-25 09:55:19 - models.genetic - [92mINFO[0m - Generation 36: Best Fitness=0.6667, Avg Fitness=0.0002
+2025-04-25 09:55:19 - models.genetic - [92mINFO[0m - Generation 37: Best Fitness=0.6667, Avg Fitness=0.0002
+2025-04-25 09:55:19 - models.genetic - [92mINFO[0m - Generation 38: Best Fitness=0.6667, Avg Fitness=0.0002
+2025-04-25 09:55:19 - models.genetic - [92mINFO[0m - Generation 39: Best Fitness=0.6667, Avg Fitness=0.0002
+2025-04-25 09:55:19 - models.genetic - [92mINFO[0m - Generation 40: Best Fitness=0.6667, Avg Fitness=0.0002
+2025-04-25 09:55:19 - models.genetic - [92mINFO[0m - Generation 41: Best Fitness=0.6667, Avg Fitness=0.0002
+2025-04-25 09:55:19 - models.genetic - [92mINFO[0m - Generation 42: Best Fitness=0.6667, Avg Fitness=0.0002
+2025-04-25 09:55:19 - models.genetic - [92mINFO[0m - Generation 43: Best Fitness=0.6667, Avg Fitness=0.0002
+2025-04-25 09:55:19 - models.genetic - [92mINFO[0m - Generation 44: Best Fitness=0.6667, Avg Fitness=0.0002
+2025-04-25 09:55:19 - models.genetic - [92mINFO[0m - Generation 45: Best Fitness=0.6667, Avg Fitness=0.0002
+2025-04-25 09:55:19 - models.genetic - [92mINFO[0m - Generation 46: Best Fitness=0.6667, Avg Fitness=0.0002
+2025-04-25 09:55:19 - models.genetic - [92mINFO[0m - Generation 47: Best Fitness=0.6667, Avg Fitness=0.0002
+2025-04-25 09:55:19 - models.genetic - [92mINFO[0m - Generation 48: Best Fitness=0.6667, Avg Fitness=0.0002
+2025-04-25 09:55:19 - models.genetic - [92mINFO[0m - Generation 49: Best Fitness=0.6667, Avg Fitness=0.0002
+2025-04-25 09:55:19 - models.genetic - [92mINFO[0m - Generation 50: Best Fitness=0.6667, Avg Fitness=0.0002
+2025-04-25 09:55:19 - models.genetic - [92mINFO[0m - Generation 51: Best Fitness=0.6667, Avg Fitness=0.0002
+2025-04-25 09:55:19 - models.genetic - [92mINFO[0m - Generation 52: Best Fitness=0.6667, Avg Fitness=0.0002
+2025-04-25 09:55:19 - models.genetic - [92mINFO[0m - Generation 53: Best Fitness=0.6667, Avg Fitness=0.0002
+2025-04-25 09:55:19 - models.genetic - [92mINFO[0m - Generation 54: Best Fitness=0.6667, Avg Fitness=0.0002
+2025-04-25 09:55:19 - models.genetic - [92mINFO[0m - Generation 55: Best Fitness=0.6667, Avg Fitness=0.0002
+2025-04-25 09:55:19 - models.genetic - [92mINFO[0m - Generation 56: Best Fitness=0.6667, Avg Fitness=0.0002
+2025-04-25 09:55:19 - models.genetic - [92mINFO[0m - Generation 57: Best Fitness=0.6667, Avg Fitness=0.0002
+2025-04-25 09:55:19 - models.genetic - [92mINFO[0m - Generation 58: Best Fitness=0.6667, Avg Fitness=0.0002
+2025-04-25 09:55:19 - models.genetic - [92mINFO[0m - Generation 59: Best Fitness=0.6667, Avg Fitness=0.0002
+2025-04-25 09:55:19 - models.genetic - [92mINFO[0m - Generation 60: Best Fitness=0.6667, Avg Fitness=0.0002
+2025-04-25 09:55:19 - models.genetic - [92mINFO[0m - Generation 61: Best Fitness=0.6667, Avg Fitness=0.0002
+2025-04-25 09:55:19 - models.genetic - [92mINFO[0m - Generation 62: Best Fitness=0.6667, Avg Fitness=0.0002
+2025-04-25 09:55:19 - models.genetic - [92mINFO[0m - Generation 63: Best Fitness=0.6667, Avg Fitness=0.0002
+2025-04-25 09:55:19 - models.genetic - [92mINFO[0m - Generation 64: Best Fitness=0.6667, Avg Fitness=0.0002
+2025-04-25 09:55:19 - models.genetic - [92mINFO[0m - Generation 65: Best Fitness=0.6667, Avg Fitness=0.0002
+2025-04-25 09:55:19 - models.genetic - [92mINFO[0m - Generation 66: Best Fitness=0.6667, Avg Fitness=0.0002
+2025-04-25 09:55:19 - models.genetic - [92mINFO[0m - Generation 67: Best Fitness=0.6667, Avg Fitness=0.0002
+2025-04-25 09:55:19 - models.genetic - [92mINFO[0m - Generation 68: Best Fitness=0.6667, Avg Fitness=0.0002
+2025-04-25 09:55:19 - models.genetic - [92mINFO[0m - Generation 69: Best Fitness=0.6667, Avg Fitness=0.0002
+2025-04-25 09:55:19 - models.genetic - [92mINFO[0m - Generation 70: Best Fitness=0.6667, Avg Fitness=0.0002
+2025-04-25 09:55:19 - models.genetic - [92mINFO[0m - Generation 71: Best Fitness=0.6667, Avg Fitness=0.0002
+2025-04-25 09:55:19 - models.genetic - [92mINFO[0m - Generation 72: Best Fitness=0.6667, Avg Fitness=0.0002
+2025-04-25 09:55:19 - models.genetic - [92mINFO[0m - Generation 73: Best Fitness=0.6667, Avg Fitness=0.0002
+2025-04-25 09:55:19 - models.genetic - [92mINFO[0m - Generation 74: Best Fitness=0.6667, Avg Fitness=0.0002
+2025-04-25 09:55:19 - models.genetic - [92mINFO[0m - Generation 75: Best Fitness=0.6667, Avg Fitness=0.0002
+2025-04-25 09:55:19 - models.genetic - [92mINFO[0m - Generation 76: Best Fitness=0.6667, Avg Fitness=0.0002
+2025-04-25 09:55:19 - models.genetic - [92mINFO[0m - Generation 77: Best Fitness=0.6667, Avg Fitness=0.0002
+2025-04-25 09:55:19 - models.genetic - [92mINFO[0m - Generation 78: Best Fitness=0.6667, Avg Fitness=0.0002
+2025-04-25 09:55:20 - models.genetic - [92mINFO[0m - Generation 79: Best Fitness=0.6667, Avg Fitness=0.0002
+2025-04-25 09:55:20 - models.genetic - [92mINFO[0m - Generation 80: Best Fitness=0.6667, Avg Fitness=0.0002
+2025-04-25 09:55:20 - models.genetic - [92mINFO[0m - Generation 81: Best Fitness=0.6667, Avg Fitness=0.0002
+2025-04-25 09:55:20 - models.genetic - [92mINFO[0m - Generation 82: Best Fitness=0.6667, Avg Fitness=0.0002
+2025-04-25 09:55:20 - models.genetic - [92mINFO[0m - Generation 83: Best Fitness=0.6667, Avg Fitness=0.0002
+2025-04-25 09:55:20 - models.genetic - [92mINFO[0m - Generation 84: Best Fitness=0.6667, Avg Fitness=0.0002
+2025-04-25 09:55:20 - models.genetic - [92mINFO[0m - Generation 85: Best Fitness=0.6667, Avg Fitness=0.0002
+2025-04-25 09:55:20 - models.genetic - [92mINFO[0m - Generation 86: Best Fitness=0.6667, Avg Fitness=0.0002
+2025-04-25 09:55:20 - models.genetic - [92mINFO[0m - Generation 87: Best Fitness=0.6667, Avg Fitness=0.0002
+2025-04-25 09:55:20 - models.genetic - [92mINFO[0m - Generation 88: Best Fitness=0.6667, Avg Fitness=0.0002
+2025-04-25 09:55:20 - models.genetic - [92mINFO[0m - Generation 89: Best Fitness=0.6667, Avg Fitness=0.0002
+2025-04-25 09:55:20 - models.genetic - [92mINFO[0m - Generation 90: Best Fitness=0.6667, Avg Fitness=0.0002
+2025-04-25 09:55:20 - models.genetic - [92mINFO[0m - Generation 91: Best Fitness=0.6667, Avg Fitness=0.0002
+2025-04-25 09:55:20 - models.genetic - [92mINFO[0m - Generation 92: Best Fitness=0.6667, Avg Fitness=0.0002
+2025-04-25 09:55:20 - models.genetic - [92mINFO[0m - Generation 93: Best Fitness=0.6667, Avg Fitness=0.0002
+2025-04-25 09:55:20 - models.genetic - [92mINFO[0m - Generation 94: Best Fitness=0.6667, Avg Fitness=0.0002
+2025-04-25 09:55:20 - models.genetic - [92mINFO[0m - Generation 95: Best Fitness=0.6667, Avg Fitness=0.0002
+2025-04-25 09:55:20 - models.genetic - [92mINFO[0m - Generation 96: Best Fitness=0.6667, Avg Fitness=0.0002
+2025-04-25 09:55:20 - models.genetic - [92mINFO[0m - Generation 97: Best Fitness=0.6667, Avg Fitness=0.0002
+2025-04-25 09:55:20 - models.genetic - [92mINFO[0m - Generation 98: Best Fitness=0.6667, Avg Fitness=0.0002
+2025-04-25 09:55:20 - models.genetic - [92mINFO[0m - Generation 99: Best Fitness=0.6667, Avg Fitness=0.0002
+2025-04-25 09:55:20 - __main__ - [92mINFO[0m - 
+Best Rule Found:
+2025-04-25 09:55:20 - __main__ - [92mINFO[0m - IF gender equals '{'Female', 'Male'}' AND total_entries less than 193.75 AND genres equals '{'Action, Drama, Mystery, Supernatural', 'Action, Adventure, Fantasy', 'Action, Adventure, Award Winning, Drama, Romance, Sci-Fi', 'Action, Drama, Sci-Fi', 'Action, Award Winning, Mystery, Sci-Fi, Suspense', 'Action, Adventure, Drama, Fantasy, Horror', 'Action, Comedy, Sci-Fi', 'Action, Sci-Fi', 'Comedy, Drama, Romance', 'Drama, Mystery, Suspense', 'Drama', 'Action', 'Comedy, Drama, Romance, Sci-Fi, Ecchi', 'Comedy, Romance, Supernatural', 'Action, Drama, Supernatural', 'Action, Comedy, Romance', 'Action, Drama, Sci-Fi, Suspense', 'Comedy, Fantasy, Romance, Ecchi', 'Action, Adventure, Sci-Fi', 'Action, Fantasy, Sci-Fi', 'Comedy, Romance, Sci-Fi, Ecchi', 'Action, Comedy, Fantasy, Romance', 'Action, Award Winning, Drama, Romance, Sci-Fi', 'Action, Drama, Romance', 'Action, Award Winning, Drama, Sci-Fi', 'Action, Horror, Sci-Fi', 'Sports', 'Action, Adventure, Comedy, Sci-Fi, Ecchi', 'Action, Comedy, Drama', 'Comedy, Drama, Fantasy', 'Action, Drama, Romance, Supernatural', 'Action, Adventure, Fantasy, Horror, Sci-Fi', 'Action, Award Winning, Sci-Fi'}' AND rank greater than 2429.00 AND favorites greater than 5299.00 THEN rating = high
+2025-04-25 09:55:20 - __main__ - [92mINFO[0m - 
+Fitness: 0.6667
+2025-04-25 09:55:20 - __main__ - [92mINFO[0m - Support: [False False False False False False False False False False False False
+ False False False False False False False False False False False False
+ False False False False False False False False False False False False
+ False False False False False False False False False False False False
+ False False False False False False False False False False False False
+ False False False False False False False False False False False False
+ False False False False False False False False False False False False
+ False False False False False False False False False False False False
+ False False False False False False False False False False False False
+ False False False False False False False False False False False False
+ False False False False False False False False False False False False
+ False False False False False False False False False False False False
+ False False False False False False False False False False False False
+ False False False False False False False False False False False False
+ False False False False False False False False False False False False
+ False False False False False False False False False False False False
+ False False False False False False False False False False False False
+ False False False False False False False False False False False False
+ False False False False False False False False False False False False
+ False False False False False False False False False False False False
+ False False False False False False False False False False False False
+ False False False False False False False False False False False False
+ False False False False False False False False False False False False
+ False False False False False False False False False False False False
+ False False False False False False False False False False False False
+ False False False False False False False False False False False False
+ False False False False False False False False False False False False
+ False False]
+2025-04-25 09:55:20 - __main__ - [92mINFO[0m - Confidence: 0
+2025-04-25 09:55:20 - genetic_rule_miner.data.database - [92mINFO[0m - PostgreSQL connection pool closed
+2025-04-25 10:03:10 - __main__ - [92mINFO[0m - Starting rule mining pipeline
+2025-04-25 10:03:31 - genetic_rule_miner.data.database - [92mINFO[0m - PostgreSQL connection pool initialized
+2025-04-25 10:03:31 - __main__ - [92mINFO[0m - Loading data from database...
+2025-04-25 10:03:31 - genetic_rule_miner.data.manager - [92mINFO[0m - [92mEntering load_data...[0m
+2025-04-25 10:03:32 - genetic_rule_miner.data.manager - [92mINFO[0m - [92mload_data completed in 0.3609s[0m
+2025-04-25 10:03:32 - __main__ - [92mINFO[0m - Merging and preprocessing data...
+2025-04-25 10:03:32 - genetic_rule_miner.data.manager - [92mINFO[0m - [92mEntering merge_data...[0m
+2025-04-25 10:03:32 - genetic_rule_miner.data.manager - [92mINFO[0m - [92mmerge_data completed in 0.0256s[0m
+2025-04-25 10:03:32 - __main__ - [92mINFO[0m - [92mEntering save_to_excel...[0m
+2025-04-25 10:03:32 - __main__ - [92mINFO[0m - Data successfully saved to processed_data.xlsx
+2025-04-25 10:03:32 - __main__ - [92mINFO[0m - [92msave_to_excel completed in 0.3611s[0m
+2025-04-25 10:03:32 - genetic_rule_miner.data.preprocessing - [92mINFO[0m - [92mEntering clean_string_columns...[0m
+2025-04-25 10:03:32 - genetic_rule_miner.data.preprocessing - [92mINFO[0m - [92mclean_string_columns completed in 0.0162s[0m
+2025-04-25 10:03:32 - genetic_rule_miner.data.preprocessing - [92mINFO[0m - [92mEntering preprocess_data...[0m
+2025-04-25 10:03:32 - genetic_rule_miner.data.preprocessing - [92mINFO[0m - [92mpreprocess_data completed in 0.0403s[0m
+2025-04-25 10:03:32 - __main__ - [92mINFO[0m - [92mEntering save_to_excel...[0m
+2025-04-25 10:03:32 - __main__ - [92mINFO[0m - Data successfully saved to datos_limpios.xlsx
+2025-04-25 10:03:32 - __main__ - [92mINFO[0m - [92msave_to_excel completed in 0.1403s[0m
+2025-04-25 10:03:32 - __main__ - [92mINFO[0m - Initializing genetic algorithm...
+2025-04-25 10:03:32 - __main__ - [91mERROR[0m - Pipeline failed: unhashable type: 'list'
+Traceback (most recent call last):
+  File "c:\Users\PRCAAL\PROYECTOS\anime_dataset_generator\project\genetic_rule_miner\main.py", line 60, in main
+    miner = GeneticRuleMiner(
+        df=processed_df,
+    ...<4 lines>...
+        random_seed=42,
+    )
+  File "C:\Users\PRCAAL\PROYECTOS\anime_dataset_generator\project\genetic_rule_miner\models\genetic.py", line 44, in __init__
+    self._initialize_data_structures()
+    ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~^^
+  File "C:\Users\PRCAAL\PROYECTOS\anime_dataset_generator\project\genetic_rule_miner\models\genetic.py", line 58, in _initialize_data_structures
+    self.population = self._init_population()
+                      ~~~~~~~~~~~~~~~~~~~~~^^
+  File "C:\Users\PRCAAL\PROYECTOS\anime_dataset_generator\project\genetic_rule_miner\models\genetic.py", line 89, in _init_population
+    population.append(create_rule())
+                      ~~~~~~~~~~~^^
+  File "C:\Users\PRCAAL\PROYECTOS\anime_dataset_generator\project\genetic_rule_miner\models\genetic.py", line 113, in _create_rule
+    conditions.extend(
+    ~~~~~~~~~~~~~~~~~^
+        self._create_condition(col)
+        ^^^^^^^^^^^^^^^^^^^^^^^^^^^
+    ...<2 lines>...
+        )
+        ^
+    )
+    ^
+  File "C:\Users\PRCAAL\PROYECTOS\anime_dataset_generator\project\genetic_rule_miner\models\genetic.py", line 114, in <genexpr>
+    self._create_condition(col)
+    ~~~~~~~~~~~~~~~~~~~~~~^^^^^
+  File "C:\Users\PRCAAL\PROYECTOS\anime_dataset_generator\project\genetic_rule_miner\models\genetic.py", line 133, in _create_condition
+    set(self.df[col].dropna())
+    ~~~^^^^^^^^^^^^^^^^^^^^^^^
+TypeError: unhashable type: 'list'
+2025-04-25 10:03:32 - genetic_rule_miner.data.database - [92mINFO[0m - PostgreSQL connection pool closed
+2025-04-25 10:07:29 - __main__ - [92mINFO[0m - Starting rule mining pipeline
+2025-04-25 10:07:50 - genetic_rule_miner.data.database - [92mINFO[0m - PostgreSQL connection pool initialized
+2025-04-25 10:07:50 - __main__ - [92mINFO[0m - Loading data from database...
+2025-04-25 10:07:50 - genetic_rule_miner.data.manager - [92mINFO[0m - [92mEntering load_data...[0m
+2025-04-25 10:07:50 - genetic_rule_miner.data.manager - [92mINFO[0m - [92mload_data completed in 0.2449s[0m
+2025-04-25 10:07:50 - __main__ - [92mINFO[0m - Merging and preprocessing data...
+2025-04-25 10:07:50 - genetic_rule_miner.data.manager - [92mINFO[0m - [92mEntering merge_data...[0m
+2025-04-25 10:07:50 - genetic_rule_miner.data.manager - [92mINFO[0m - [92mmerge_data completed in 0.0078s[0m
+2025-04-25 10:07:50 - __main__ - [92mINFO[0m - [92mEntering save_to_excel...[0m
+2025-04-25 10:07:51 - __main__ - [92mINFO[0m - Data successfully saved to processed_data.xlsx
+2025-04-25 10:07:51 - __main__ - [92mINFO[0m - [92msave_to_excel completed in 0.3548s[0m
+2025-04-25 10:07:51 - genetic_rule_miner.data.preprocessing - [92mINFO[0m - [92mEntering clean_string_columns...[0m
+2025-04-25 10:07:51 - genetic_rule_miner.data.preprocessing - [92mINFO[0m - [92mclean_string_columns completed in 0.0128s[0m
+2025-04-25 10:07:51 - genetic_rule_miner.data.preprocessing - [92mINFO[0m - [92mEntering preprocess_data...[0m
+2025-04-25 10:07:51 - genetic_rule_miner.data.preprocessing - [92mINFO[0m - [92mpreprocess_data completed in 0.0200s[0m
+2025-04-25 10:07:51 - __main__ - [92mINFO[0m - [92mEntering save_to_excel...[0m
+2025-04-25 10:07:51 - __main__ - [92mINFO[0m - Data successfully saved to datos_limpios.xlsx
+2025-04-25 10:07:51 - __main__ - [92mINFO[0m - [92msave_to_excel completed in 0.1684s[0m
+2025-04-25 10:07:51 - __main__ - [92mINFO[0m - Initializing genetic algorithm...
+2025-04-25 10:07:51 - __main__ - [91mERROR[0m - Pipeline failed: unhashable type: 'list'
+Traceback (most recent call last):
+  File "c:\Users\PRCAAL\PROYECTOS\anime_dataset_generator\project\genetic_rule_miner\main.py", line 60, in main
+    miner = GeneticRuleMiner(
+        df=processed_df,
+    ...<4 lines>...
+        random_seed=42,
+    )
+  File "C:\Users\PRCAAL\PROYECTOS\anime_dataset_generator\project\genetic_rule_miner\models\genetic.py", line 44, in __init__
+    self._initialize_data_structures()
+    ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~^^
+  File "C:\Users\PRCAAL\PROYECTOS\anime_dataset_generator\project\genetic_rule_miner\models\genetic.py", line 58, in _initialize_data_structures
+    self.population = self._init_population()
+                      ~~~~~~~~~~~~~~~~~~~~~^^
+  File "C:\Users\PRCAAL\PROYECTOS\anime_dataset_generator\project\genetic_rule_miner\models\genetic.py", line 89, in _init_population
+    population.append(create_rule())
+                      ~~~~~~~~~~~^^
+  File "C:\Users\PRCAAL\PROYECTOS\anime_dataset_generator\project\genetic_rule_miner\models\genetic.py", line 113, in _create_rule
+    conditions.extend(
+    ~~~~~~~~~~~~~~~~~^
+        self._create_condition(col)
+        ^^^^^^^^^^^^^^^^^^^^^^^^^^^
+    ...<2 lines>...
+        )
+        ^
+    )
+    ^
+  File "C:\Users\PRCAAL\PROYECTOS\anime_dataset_generator\project\genetic_rule_miner\models\genetic.py", line 114, in <genexpr>
+    self._create_condition(col)
+    ~~~~~~~~~~~~~~~~~~~~~~^^^^^
+  File "C:\Users\PRCAAL\PROYECTOS\anime_dataset_generator\project\genetic_rule_miner\models\genetic.py", line 133, in _create_condition
+    set(self.df[col].dropna())
+    ~~~^^^^^^^^^^^^^^^^^^^^^^^
+TypeError: unhashable type: 'list'
+2025-04-25 10:07:51 - genetic_rule_miner.data.database - [92mINFO[0m - PostgreSQL connection pool closed
+2025-04-25 10:54:53 - __main__ - [92mINFO[0m - Starting rule mining pipeline
+2025-04-25 10:55:14 - genetic_rule_miner.data.database - [92mINFO[0m - PostgreSQL connection pool initialized
+2025-04-25 10:55:14 - __main__ - [92mINFO[0m - Loading data from database...
+2025-04-25 10:55:14 - genetic_rule_miner.data.manager - [92mINFO[0m - [92mEntering load_data...[0m
+2025-04-25 10:55:14 - genetic_rule_miner.data.manager - [92mINFO[0m - [92mload_data completed in 0.2903s[0m
+2025-04-25 10:55:14 - __main__ - [92mINFO[0m - Merging and preprocessing data...
+2025-04-25 10:55:14 - genetic_rule_miner.data.manager - [92mINFO[0m - [92mEntering merge_data...[0m
+2025-04-25 10:55:14 - genetic_rule_miner.data.manager - [92mINFO[0m - [92mmerge_data completed in 0.0263s[0m
+2025-04-25 10:55:14 - __main__ - [92mINFO[0m - [92mEntering save_to_excel...[0m
+2025-04-25 10:55:15 - __main__ - [92mINFO[0m - Data successfully saved to processed_data.xlsx
+2025-04-25 10:55:15 - __main__ - [92mINFO[0m - [92msave_to_excel completed in 0.3763s[0m
+2025-04-25 10:55:15 - genetic_rule_miner.data.preprocessing - [92mINFO[0m - [92mEntering clean_string_columns...[0m
+2025-04-25 10:55:15 - genetic_rule_miner.data.preprocessing - [92mINFO[0m - [92mclean_string_columns completed in 0.0172s[0m
+2025-04-25 10:55:15 - genetic_rule_miner.data.preprocessing - [92mINFO[0m - [92mEntering preprocess_data...[0m
+2025-04-25 10:55:15 - genetic_rule_miner.data.preprocessing - [92mINFO[0m - [92mpreprocess_data completed in 0.0403s[0m
+2025-04-25 10:55:15 - __main__ - [92mINFO[0m - [92mEntering save_to_excel...[0m
+2025-04-25 10:55:15 - __main__ - [92mINFO[0m - Data successfully saved to datos_limpios.xlsx
+2025-04-25 10:55:15 - __main__ - [92mINFO[0m - [92msave_to_excel completed in 0.1338s[0m
+2025-04-25 10:55:15 - __main__ - [92mINFO[0m - Initializing genetic algorithm...
+2025-04-25 10:55:15 - __main__ - [91mERROR[0m - Pipeline failed: unhashable type: 'list'
+Traceback (most recent call last):
+  File "c:\Users\PRCAAL\PROYECTOS\anime_dataset_generator\project\genetic_rule_miner\main.py", line 60, in main
+    miner = GeneticRuleMiner(
+        df=processed_df,
+    ...<4 lines>...
+        random_seed=42,
+    )
+  File "C:\Users\PRCAAL\PROYECTOS\anime_dataset_generator\project\genetic_rule_miner\models\genetic.py", line 44, in __init__
+    self._initialize_data_structures()
+    ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~^^
+  File "C:\Users\PRCAAL\PROYECTOS\anime_dataset_generator\project\genetic_rule_miner\models\genetic.py", line 58, in _initialize_data_structures
+    self.population = self._init_population()
+                      ~~~~~~~~~~~~~~~~~~~~~^^
+  File "C:\Users\PRCAAL\PROYECTOS\anime_dataset_generator\project\genetic_rule_miner\models\genetic.py", line 89, in _init_population
+    population.append(create_rule())
+                      ~~~~~~~~~~~^^
+  File "C:\Users\PRCAAL\PROYECTOS\anime_dataset_generator\project\genetic_rule_miner\models\genetic.py", line 113, in _create_rule
+    conditions.extend(
+    ~~~~~~~~~~~~~~~~~^
+        self._create_condition(col)
+        ^^^^^^^^^^^^^^^^^^^^^^^^^^^
+    ...<2 lines>...
+        )
+        ^
+    )
+    ^
+  File "C:\Users\PRCAAL\PROYECTOS\anime_dataset_generator\project\genetic_rule_miner\models\genetic.py", line 114, in <genexpr>
+    self._create_condition(col)
+    ~~~~~~~~~~~~~~~~~~~~~~^^^^^
+  File "C:\Users\PRCAAL\PROYECTOS\anime_dataset_generator\project\genetic_rule_miner\models\genetic.py", line 133, in _create_condition
+    set(self.df[col].dropna())
+    ~~~^^^^^^^^^^^^^^^^^^^^^^^
+TypeError: unhashable type: 'list'
+2025-04-25 10:55:15 - genetic_rule_miner.data.database - [92mINFO[0m - PostgreSQL connection pool closed
+2025-04-25 10:56:07 - __main__ - [92mINFO[0m - Starting rule mining pipeline
+2025-04-25 10:56:28 - genetic_rule_miner.data.database - [92mINFO[0m - PostgreSQL connection pool initialized
+2025-04-25 10:56:28 - __main__ - [92mINFO[0m - Loading data from database...
+2025-04-25 10:56:28 - genetic_rule_miner.data.manager - [92mINFO[0m - [92mEntering load_data...[0m
+2025-04-25 10:56:28 - genetic_rule_miner.data.manager - [92mINFO[0m - [92mload_data completed in 0.2931s[0m
+2025-04-25 10:56:28 - __main__ - [92mINFO[0m - Merging and preprocessing data...
+2025-04-25 10:56:28 - genetic_rule_miner.data.manager - [92mINFO[0m - [92mEntering merge_data...[0m
+2025-04-25 10:56:28 - genetic_rule_miner.data.manager - [92mINFO[0m - [92mmerge_data completed in 0.0048s[0m
+2025-04-25 10:56:28 - __main__ - [92mINFO[0m - [92mEntering save_to_excel...[0m
+2025-04-25 10:56:29 - __main__ - [92mINFO[0m - Data successfully saved to processed_data.xlsx
+2025-04-25 10:56:29 - __main__ - [92mINFO[0m - [92msave_to_excel completed in 0.2747s[0m
+2025-04-25 10:56:29 - genetic_rule_miner.data.preprocessing - [92mINFO[0m - [92mEntering clean_string_columns...[0m
+2025-04-25 10:56:29 - genetic_rule_miner.data.preprocessing - [92mINFO[0m - [92mclean_string_columns completed in 0.0098s[0m
+2025-04-25 10:56:29 - genetic_rule_miner.data.preprocessing - [92mINFO[0m - [92mEntering preprocess_data...[0m
+2025-04-25 10:56:29 - genetic_rule_miner.data.preprocessing - [92mINFO[0m - [92mpreprocess_data completed in 0.0167s[0m
+2025-04-25 10:56:29 - __main__ - [92mINFO[0m - [92mEntering save_to_excel...[0m
+2025-04-25 10:56:29 - __main__ - [92mINFO[0m - Data successfully saved to datos_limpios.xlsx
+2025-04-25 10:56:29 - __main__ - [92mINFO[0m - [92msave_to_excel completed in 0.1448s[0m
+2025-04-25 10:56:29 - __main__ - [92mINFO[0m - Initializing genetic algorithm...
+2025-04-25 10:56:29 - __main__ - [91mERROR[0m - Pipeline failed: unhashable type: 'list'
+Traceback (most recent call last):
+  File "c:\Users\PRCAAL\PROYECTOS\anime_dataset_generator\project\genetic_rule_miner\main.py", line 60, in main
+    miner = GeneticRuleMiner(
+        df=processed_df,
+    ...<4 lines>...
+        random_seed=42,
+    )
+  File "C:\Users\PRCAAL\PROYECTOS\anime_dataset_generator\project\genetic_rule_miner\models\genetic.py", line 44, in __init__
+    self._initialize_data_structures()
+    ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~^^
+  File "C:\Users\PRCAAL\PROYECTOS\anime_dataset_generator\project\genetic_rule_miner\models\genetic.py", line 58, in _initialize_data_structures
+    self.population = self._init_population()
+                      ~~~~~~~~~~~~~~~~~~~~~^^
+  File "C:\Users\PRCAAL\PROYECTOS\anime_dataset_generator\project\genetic_rule_miner\models\genetic.py", line 89, in _init_population
+    population.append(create_rule())
+                      ~~~~~~~~~~~^^
+  File "C:\Users\PRCAAL\PROYECTOS\anime_dataset_generator\project\genetic_rule_miner\models\genetic.py", line 113, in _create_rule
+    conditions.extend(
+    ~~~~~~~~~~~~~~~~~^
+        self._create_condition(col)
+        ^^^^^^^^^^^^^^^^^^^^^^^^^^^
+    ...<2 lines>...
+        )
+        ^
+    )
+    ^
+  File "C:\Users\PRCAAL\PROYECTOS\anime_dataset_generator\project\genetic_rule_miner\models\genetic.py", line 114, in <genexpr>
+    self._create_condition(col)
+    ~~~~~~~~~~~~~~~~~~~~~~^^^^^
+  File "C:\Users\PRCAAL\PROYECTOS\anime_dataset_generator\project\genetic_rule_miner\models\genetic.py", line 132, in _create_condition
+    unique_vals = list(self.df[col].dropna().unique())
+                       ~~~~~~~~~~~~~~~~~~~~~~~~~~~~^^
+  File "C:\Users\PRCAAL\PROYECTOS\anime_dataset_generator\project\.venv\Lib\site-packages\pandas\core\series.py", line 2407, in unique
+    return super().unique()
+           ~~~~~~~~~~~~~~^^
+  File "C:\Users\PRCAAL\PROYECTOS\anime_dataset_generator\project\.venv\Lib\site-packages\pandas\core\base.py", line 1025, in unique
+    result = algorithms.unique1d(values)
+  File "C:\Users\PRCAAL\PROYECTOS\anime_dataset_generator\project\.venv\Lib\site-packages\pandas\core\algorithms.py", line 401, in unique
+    return unique_with_mask(values)
+  File "C:\Users\PRCAAL\PROYECTOS\anime_dataset_generator\project\.venv\Lib\site-packages\pandas\core\algorithms.py", line 440, in unique_with_mask
+    uniques = table.unique(values)
+  File "pandas\\_libs\\hashtable_class_helper.pxi", line 7248, in pandas._libs.hashtable.PyObjectHashTable.unique
+  File "pandas\\_libs\\hashtable_class_helper.pxi", line 7195, in pandas._libs.hashtable.PyObjectHashTable._unique
+TypeError: unhashable type: 'list'
+2025-04-25 10:56:29 - genetic_rule_miner.data.database - [92mINFO[0m - PostgreSQL connection pool closed
+2025-04-25 10:57:31 - __main__ - [92mINFO[0m - Starting rule mining pipeline
+2025-04-25 10:57:52 - genetic_rule_miner.data.database - [92mINFO[0m - PostgreSQL connection pool initialized
+2025-04-25 10:57:52 - __main__ - [92mINFO[0m - Loading data from database...
+2025-04-25 10:57:52 - genetic_rule_miner.data.manager - [92mINFO[0m - [92mEntering load_data...[0m
+2025-04-25 10:57:53 - genetic_rule_miner.data.manager - [92mINFO[0m - [92mload_data completed in 0.2567s[0m
+2025-04-25 10:57:53 - __main__ - [92mINFO[0m - Merging and preprocessing data...
+2025-04-25 10:57:53 - genetic_rule_miner.data.manager - [92mINFO[0m - [92mEntering merge_data...[0m
+2025-04-25 10:57:53 - genetic_rule_miner.data.manager - [92mINFO[0m - [92mmerge_data completed in 0.0060s[0m
+2025-04-25 10:57:53 - __main__ - [92mINFO[0m - [92mEntering save_to_excel...[0m
+2025-04-25 10:57:53 - __main__ - [92mINFO[0m - Data successfully saved to processed_data.xlsx
+2025-04-25 10:57:53 - __main__ - [92mINFO[0m - [92msave_to_excel completed in 0.3204s[0m
+2025-04-25 10:57:53 - genetic_rule_miner.data.preprocessing - [92mINFO[0m - [92mEntering clean_string_columns...[0m
+2025-04-25 10:57:53 - genetic_rule_miner.data.preprocessing - [92mINFO[0m - [92mclean_string_columns completed in 0.0144s[0m
+2025-04-25 10:57:53 - genetic_rule_miner.data.preprocessing - [92mINFO[0m - [92mEntering preprocess_data...[0m
+2025-04-25 10:57:53 - genetic_rule_miner.data.preprocessing - [92mINFO[0m - [92mpreprocess_data completed in 0.0167s[0m
+2025-04-25 10:57:53 - __main__ - [92mINFO[0m - [92mEntering save_to_excel...[0m
+2025-04-25 10:57:53 - __main__ - [92mINFO[0m - Data successfully saved to datos_limpios.xlsx
+2025-04-25 10:57:53 - __main__ - [92mINFO[0m - [92msave_to_excel completed in 0.1575s[0m
+2025-04-25 10:57:53 - __main__ - [92mINFO[0m - Initializing genetic algorithm...
+2025-04-25 10:57:53 - __main__ - [91mERROR[0m - Pipeline failed: 'Timestamp' object is not iterable
+Traceback (most recent call last):
+  File "c:\Users\PRCAAL\PROYECTOS\anime_dataset_generator\project\genetic_rule_miner\main.py", line 60, in main
+    miner = GeneticRuleMiner(
+        df=processed_df,
+    ...<4 lines>...
+        random_seed=42,
+    )
+  File "C:\Users\PRCAAL\PROYECTOS\anime_dataset_generator\project\genetic_rule_miner\models\genetic.py", line 44, in __init__
+    self._initialize_data_structures()
+    ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~^^
+  File "C:\Users\PRCAAL\PROYECTOS\anime_dataset_generator\project\genetic_rule_miner\models\genetic.py", line 58, in _initialize_data_structures
+    self.population = self._init_population()
+                      ~~~~~~~~~~~~~~~~~~~~~^^
+  File "C:\Users\PRCAAL\PROYECTOS\anime_dataset_generator\project\genetic_rule_miner\models\genetic.py", line 89, in _init_population
+    population.append(create_rule())
+                      ~~~~~~~~~~~^^
+  File "C:\Users\PRCAAL\PROYECTOS\anime_dataset_generator\project\genetic_rule_miner\models\genetic.py", line 103, in _create_rule
+    conditions.extend(self._create_condition(col) for col in user_conds)
+    ~~~~~~~~~~~~~~~~~^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "C:\Users\PRCAAL\PROYECTOS\anime_dataset_generator\project\genetic_rule_miner\models\genetic.py", line 103, in <genexpr>
+    conditions.extend(self._create_condition(col) for col in user_conds)
+                      ~~~~~~~~~~~~~~~~~~~~~~^^^^^
+  File "C:\Users\PRCAAL\PROYECTOS\anime_dataset_generator\project\genetic_rule_miner\models\genetic.py", line 136, in _create_condition
+    set(itertools.chain.from_iterable(self.df[col].dropna()))
+    ~~~^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+TypeError: 'Timestamp' object is not iterable
+2025-04-25 10:57:53 - genetic_rule_miner.data.database - [92mINFO[0m - PostgreSQL connection pool closed
+2025-04-25 11:03:44 - __main__ - [92mINFO[0m - Starting rule mining pipeline
+2025-04-25 11:04:05 - genetic_rule_miner.data.database - [92mINFO[0m - PostgreSQL connection pool initialized
+2025-04-25 11:04:05 - __main__ - [92mINFO[0m - Loading data from database...
+2025-04-25 11:04:05 - genetic_rule_miner.data.manager - [92mINFO[0m - [92mEntering load_data...[0m
+2025-04-25 11:04:06 - genetic_rule_miner.data.manager - [92mINFO[0m - [92mload_data completed in 0.2251s[0m
+2025-04-25 11:04:06 - __main__ - [92mINFO[0m - Merging and preprocessing data...
+2025-04-25 11:04:06 - genetic_rule_miner.data.manager - [92mINFO[0m - [92mEntering merge_data...[0m
+2025-04-25 11:04:06 - genetic_rule_miner.data.manager - [92mINFO[0m - [92mmerge_data completed in 0.0056s[0m
+2025-04-25 11:04:06 - __main__ - [92mINFO[0m - [92mEntering save_to_excel...[0m
+2025-04-25 11:04:06 - __main__ - [92mINFO[0m - Data successfully saved to processed_data.xlsx
+2025-04-25 11:04:06 - __main__ - [92mINFO[0m - [92msave_to_excel completed in 0.2822s[0m
+2025-04-25 11:04:06 - genetic_rule_miner.data.preprocessing - [92mINFO[0m - [92mEntering clean_string_columns...[0m
+2025-04-25 11:04:06 - genetic_rule_miner.data.preprocessing - [92mINFO[0m - [92mclean_string_columns completed in 0.0137s[0m
+2025-04-25 11:04:06 - genetic_rule_miner.data.preprocessing - [92mINFO[0m - [92mEntering preprocess_data...[0m
+2025-04-25 11:04:06 - genetic_rule_miner.data.preprocessing - [92mINFO[0m - [92mpreprocess_data completed in 0.0169s[0m
+2025-04-25 11:04:06 - __main__ - [92mINFO[0m - [92mEntering save_to_excel...[0m
+2025-04-25 11:04:06 - __main__ - [92mINFO[0m - Data successfully saved to datos_limpios.xlsx
+2025-04-25 11:04:06 - __main__ - [92mINFO[0m - [92msave_to_excel completed in 0.1433s[0m
+2025-04-25 11:04:06 - __main__ - [92mINFO[0m - Initializing genetic algorithm...
+2025-04-25 11:04:06 - __main__ - [92mINFO[0m - Starting evolution process...
+2025-04-25 11:04:06 - __main__ - [91mERROR[0m - Pipeline failed: index 790 is out of bounds for axis 0 with size 3
+Traceback (most recent call last):
+  File "c:\Users\PRCAAL\PROYECTOS\anime_dataset_generator\project\genetic_rule_miner\main.py", line 69, in main
+    results = miner.evolve()
+  File "C:\Users\PRCAAL\PROYECTOS\anime_dataset_generator\project\genetic_rule_miner\models\genetic.py", line 284, in evolve
+    parents = self._select_parents()
+  File "C:\Users\PRCAAL\PROYECTOS\anime_dataset_generator\project\genetic_rule_miner\models\genetic.py", line 248, in _select_parents
+    selected.append(tournament[np.argmax(fitnesses)])
+                    ~~~~~~~~~~^^^^^^^^^^^^^^^^^^^^^^
+IndexError: index 790 is out of bounds for axis 0 with size 3
+2025-04-25 11:04:06 - genetic_rule_miner.data.database - [92mINFO[0m - PostgreSQL connection pool closed
+2025-04-25 11:04:50 - __main__ - [92mINFO[0m - Starting rule mining pipeline
+2025-04-25 11:05:11 - genetic_rule_miner.data.database - [92mINFO[0m - PostgreSQL connection pool initialized
+2025-04-25 11:05:11 - __main__ - [92mINFO[0m - Loading data from database...
+2025-04-25 11:05:11 - genetic_rule_miner.data.manager - [92mINFO[0m - [92mEntering load_data...[0m
+2025-04-25 11:05:11 - genetic_rule_miner.data.manager - [92mINFO[0m - [92mload_data completed in 0.2046s[0m
+2025-04-25 11:05:11 - __main__ - [92mINFO[0m - Merging and preprocessing data...
+2025-04-25 11:05:11 - genetic_rule_miner.data.manager - [92mINFO[0m - [92mEntering merge_data...[0m
+2025-04-25 11:05:11 - genetic_rule_miner.data.manager - [92mINFO[0m - [92mmerge_data completed in 0.0046s[0m
+2025-04-25 11:05:11 - __main__ - [92mINFO[0m - [92mEntering save_to_excel...[0m
+2025-04-25 11:05:12 - __main__ - [92mINFO[0m - Data successfully saved to processed_data.xlsx
+2025-04-25 11:05:12 - __main__ - [92mINFO[0m - [92msave_to_excel completed in 0.2704s[0m
+2025-04-25 11:05:12 - genetic_rule_miner.data.preprocessing - [92mINFO[0m - [92mEntering clean_string_columns...[0m
+2025-04-25 11:05:12 - genetic_rule_miner.data.preprocessing - [92mINFO[0m - [92mclean_string_columns completed in 0.0129s[0m
+2025-04-25 11:05:12 - genetic_rule_miner.data.preprocessing - [92mINFO[0m - [92mEntering preprocess_data...[0m
+2025-04-25 11:05:12 - genetic_rule_miner.data.preprocessing - [92mINFO[0m - [92mpreprocess_data completed in 0.0188s[0m
+2025-04-25 11:05:12 - __main__ - [92mINFO[0m - [92mEntering save_to_excel...[0m
+2025-04-25 11:05:12 - __main__ - [92mINFO[0m - Data successfully saved to datos_limpios.xlsx
+2025-04-25 11:05:12 - __main__ - [92mINFO[0m - [92msave_to_excel completed in 0.1550s[0m
+2025-04-25 11:05:12 - __main__ - [92mINFO[0m - Initializing genetic algorithm...
+2025-04-25 11:05:12 - __main__ - [92mINFO[0m - Starting evolution process...
+2025-04-25 11:05:12 - __main__ - [91mERROR[0m - Pipeline failed: The truth value of an array with more than one element is ambiguous. Use a.any() or a.all()
+Traceback (most recent call last):
+  File "c:\Users\PRCAAL\PROYECTOS\anime_dataset_generator\project\genetic_rule_miner\main.py", line 69, in main
+    results = miner.evolve()
+  File "C:\Users\PRCAAL\PROYECTOS\anime_dataset_generator\project\genetic_rule_miner\models\genetic.py", line 284, in evolve
+    parents = self._select_parents()
+  File "C:\Users\PRCAAL\PROYECTOS\anime_dataset_generator\project\genetic_rule_miner\models\genetic.py", line 247, in _select_parents
+    best = max(tournament, key=self.fitness)
+ValueError: The truth value of an array with more than one element is ambiguous. Use a.any() or a.all()
+2025-04-25 11:05:12 - genetic_rule_miner.data.database - [92mINFO[0m - PostgreSQL connection pool closed
+2025-04-25 11:06:06 - __main__ - [92mINFO[0m - Starting rule mining pipeline
+2025-04-25 11:06:27 - genetic_rule_miner.data.database - [92mINFO[0m - PostgreSQL connection pool initialized
+2025-04-25 11:06:27 - __main__ - [92mINFO[0m - Loading data from database...
+2025-04-25 11:06:27 - genetic_rule_miner.data.manager - [92mINFO[0m - [92mEntering load_data...[0m
+2025-04-25 11:06:27 - genetic_rule_miner.data.manager - [92mINFO[0m - [92mload_data completed in 0.2492s[0m
+2025-04-25 11:06:27 - __main__ - [92mINFO[0m - Merging and preprocessing data...
+2025-04-25 11:06:27 - genetic_rule_miner.data.manager - [92mINFO[0m - [92mEntering merge_data...[0m
+2025-04-25 11:06:27 - genetic_rule_miner.data.manager - [92mINFO[0m - [92mmerge_data completed in 0.0058s[0m
+2025-04-25 11:06:27 - __main__ - [92mINFO[0m - [92mEntering save_to_excel...[0m
+2025-04-25 11:06:27 - __main__ - [92mINFO[0m - Data successfully saved to processed_data.xlsx
+2025-04-25 11:06:27 - __main__ - [92mINFO[0m - [92msave_to_excel completed in 0.2726s[0m
+2025-04-25 11:06:27 - genetic_rule_miner.data.preprocessing - [92mINFO[0m - [92mEntering clean_string_columns...[0m
+2025-04-25 11:06:27 - genetic_rule_miner.data.preprocessing - [92mINFO[0m - [92mclean_string_columns completed in 0.0133s[0m
+2025-04-25 11:06:27 - genetic_rule_miner.data.preprocessing - [92mINFO[0m - [92mEntering preprocess_data...[0m
+2025-04-25 11:06:27 - genetic_rule_miner.data.preprocessing - [92mINFO[0m - [92mpreprocess_data completed in 0.0155s[0m
+2025-04-25 11:06:27 - __main__ - [92mINFO[0m - [92mEntering save_to_excel...[0m
+2025-04-25 11:06:28 - __main__ - [92mINFO[0m - Data successfully saved to datos_limpios.xlsx
+2025-04-25 11:06:28 - __main__ - [92mINFO[0m - [92msave_to_excel completed in 0.1345s[0m
+2025-04-25 11:06:28 - __main__ - [92mINFO[0m - Initializing genetic algorithm...
+2025-04-25 11:06:28 - __main__ - [92mINFO[0m - Starting evolution process...
+2025-04-25 11:06:28 - __main__ - [91mERROR[0m - Pipeline failed: The truth value of an array with more than one element is ambiguous. Use a.any() or a.all()
+Traceback (most recent call last):
+  File "c:\Users\PRCAAL\PROYECTOS\anime_dataset_generator\project\genetic_rule_miner\main.py", line 69, in main
+    results = miner.evolve()
+  File "C:\Users\PRCAAL\PROYECTOS\anime_dataset_generator\project\genetic_rule_miner\models\genetic.py", line 285, in evolve
+    parents = self._select_parents()
+  File "C:\Users\PRCAAL\PROYECTOS\anime_dataset_generator\project\genetic_rule_miner\models\genetic.py", line 248, in _select_parents
+    best = max(tournament, key=self.fitness)
+ValueError: The truth value of an array with more than one element is ambiguous. Use a.any() or a.all()
+2025-04-25 11:06:28 - genetic_rule_miner.data.database - [92mINFO[0m - PostgreSQL connection pool closed
+2025-04-25 11:06:42 - __main__ - [92mINFO[0m - Starting rule mining pipeline
+2025-04-25 11:07:03 - genetic_rule_miner.data.database - [92mINFO[0m - PostgreSQL connection pool initialized
+2025-04-25 11:07:03 - __main__ - [92mINFO[0m - Loading data from database...
+2025-04-25 11:07:03 - genetic_rule_miner.data.manager - [92mINFO[0m - [92mEntering load_data...[0m
+2025-04-25 11:07:03 - genetic_rule_miner.data.manager - [92mINFO[0m - [92mload_data completed in 0.2275s[0m
+2025-04-25 11:07:03 - __main__ - [92mINFO[0m - Merging and preprocessing data...
+2025-04-25 11:07:03 - genetic_rule_miner.data.manager - [92mINFO[0m - [92mEntering merge_data...[0m
+2025-04-25 11:07:03 - genetic_rule_miner.data.manager - [92mINFO[0m - [92mmerge_data completed in 0.0065s[0m
+2025-04-25 11:07:03 - __main__ - [92mINFO[0m - [92mEntering save_to_excel...[0m
+2025-04-25 11:07:04 - __main__ - [92mINFO[0m - Data successfully saved to processed_data.xlsx
+2025-04-25 11:07:04 - __main__ - [92mINFO[0m - [92msave_to_excel completed in 0.3346s[0m
+2025-04-25 11:07:04 - genetic_rule_miner.data.preprocessing - [92mINFO[0m - [92mEntering clean_string_columns...[0m
+2025-04-25 11:07:04 - genetic_rule_miner.data.preprocessing - [92mINFO[0m - [92mclean_string_columns completed in 0.0143s[0m
+2025-04-25 11:07:04 - genetic_rule_miner.data.preprocessing - [92mINFO[0m - [92mEntering preprocess_data...[0m
+2025-04-25 11:07:04 - genetic_rule_miner.data.preprocessing - [92mINFO[0m - [92mpreprocess_data completed in 0.0197s[0m
+2025-04-25 11:07:04 - __main__ - [92mINFO[0m - [92mEntering save_to_excel...[0m
+2025-04-25 11:07:04 - __main__ - [92mINFO[0m - Data successfully saved to datos_limpios.xlsx
+2025-04-25 11:07:04 - __main__ - [92mINFO[0m - [92msave_to_excel completed in 0.1533s[0m
+2025-04-25 11:07:04 - __main__ - [92mINFO[0m - Initializing genetic algorithm...
+2025-04-25 11:07:04 - __main__ - [92mINFO[0m - Starting evolution process...
+2025-04-25 11:07:04 - __main__ - [91mERROR[0m - Pipeline failed: only integers, slices (`:`), ellipsis (`...`), numpy.newaxis (`None`) and integer or boolean arrays are valid indices
+Traceback (most recent call last):
+  File "c:\Users\PRCAAL\PROYECTOS\anime_dataset_generator\project\genetic_rule_miner\main.py", line 69, in main
+    results = miner.evolve()
+  File "C:\Users\PRCAAL\PROYECTOS\anime_dataset_generator\project\genetic_rule_miner\models\genetic.py", line 278, in evolve
+  File "C:\Users\PRCAAL\PROYECTOS\anime_dataset_generator\project\genetic_rule_miner\models\genetic.py", line 241, in _select_parents
+    return selected
+               ^^^^
+  File "C:\Users\PRCAAL\PROYECTOS\anime_dataset_generator\project\genetic_rule_miner\models\genetic.py", line 126, in fitness
+    confidence = self._vectorized_confidence(rule)
+  File "C:\Users\PRCAAL\PROYECTOS\anime_dataset_generator\project\genetic_rule_miner\models\genetic.py", line 157, in _vectorized_confidence
+IndexError: only integers, slices (`:`), ellipsis (`...`), numpy.newaxis (`None`) and integer or boolean arrays are valid indices
+2025-04-25 11:07:04 - genetic_rule_miner.data.database - [92mINFO[0m - PostgreSQL connection pool closed
+2025-04-25 11:07:47 - __main__ - [92mINFO[0m - Starting rule mining pipeline
+2025-04-25 11:08:08 - genetic_rule_miner.data.database - [92mINFO[0m - PostgreSQL connection pool initialized
+2025-04-25 11:08:08 - __main__ - [92mINFO[0m - Loading data from database...
+2025-04-25 11:08:08 - genetic_rule_miner.data.manager - [92mINFO[0m - [92mEntering load_data...[0m
+2025-04-25 11:08:08 - genetic_rule_miner.data.manager - [92mINFO[0m - [92mload_data completed in 0.2104s[0m
+2025-04-25 11:08:08 - __main__ - [92mINFO[0m - Merging and preprocessing data...
+2025-04-25 11:08:08 - genetic_rule_miner.data.manager - [92mINFO[0m - [92mEntering merge_data...[0m
+2025-04-25 11:08:08 - genetic_rule_miner.data.manager - [92mINFO[0m - [92mmerge_data completed in 0.0077s[0m
+2025-04-25 11:08:08 - __main__ - [92mINFO[0m - [92mEntering save_to_excel...[0m
+2025-04-25 11:08:08 - __main__ - [92mINFO[0m - Data successfully saved to processed_data.xlsx
+2025-04-25 11:08:08 - __main__ - [92mINFO[0m - [92msave_to_excel completed in 0.2696s[0m
+2025-04-25 11:08:08 - genetic_rule_miner.data.preprocessing - [92mINFO[0m - [92mEntering clean_string_columns...[0m
+2025-04-25 11:08:08 - genetic_rule_miner.data.preprocessing - [92mINFO[0m - [92mclean_string_columns completed in 0.0099s[0m
+2025-04-25 11:08:08 - genetic_rule_miner.data.preprocessing - [92mINFO[0m - [92mEntering preprocess_data...[0m
+2025-04-25 11:08:08 - genetic_rule_miner.data.preprocessing - [92mINFO[0m - [92mpreprocess_data completed in 0.0236s[0m
+2025-04-25 11:08:08 - __main__ - [92mINFO[0m - [92mEntering save_to_excel...[0m
+2025-04-25 11:08:08 - __main__ - [92mINFO[0m - Data successfully saved to datos_limpios.xlsx
+2025-04-25 11:08:08 - __main__ - [92mINFO[0m - [92msave_to_excel completed in 0.1348s[0m
+2025-04-25 11:08:08 - __main__ - [92mINFO[0m - Initializing genetic algorithm...
+2025-04-25 11:08:08 - __main__ - [92mINFO[0m - Starting evolution process...
+2025-04-25 11:08:08 - __main__ - [91mERROR[0m - Pipeline failed: only integers, slices (`:`), ellipsis (`...`), numpy.newaxis (`None`) and integer or boolean arrays are valid indices
+Traceback (most recent call last):
+  File "c:\Users\PRCAAL\PROYECTOS\anime_dataset_generator\project\genetic_rule_miner\main.py", line 69, in main
+    results = miner.evolve()
+  File "C:\Users\PRCAAL\PROYECTOS\anime_dataset_generator\project\genetic_rule_miner\models\genetic.py", line 281, in evolve
+    parents = self._select_parents()
+  File "C:\Users\PRCAAL\PROYECTOS\anime_dataset_generator\project\genetic_rule_miner\models\genetic.py", line 244, in _select_parents
+    best = max(tournament, key=self.fitness)
+  File "C:\Users\PRCAAL\PROYECTOS\anime_dataset_generator\project\genetic_rule_miner\models\genetic.py", line 126, in fitness
+    confidence = self._vectorized_confidence(rule)
+  File "C:\Users\PRCAAL\PROYECTOS\anime_dataset_generator\project\genetic_rule_miner\models\genetic.py", line 161, in _vectorized_confidence
+    return np.mean(target_mask[conditions_mask])  # Indexar correctamente
+                   ~~~~~~~~~~~^^^^^^^^^^^^^^^^^
+IndexError: only integers, slices (`:`), ellipsis (`...`), numpy.newaxis (`None`) and integer or boolean arrays are valid indices
+2025-04-25 11:08:08 - genetic_rule_miner.data.database - [92mINFO[0m - PostgreSQL connection pool closed
+2025-04-25 11:41:43 - __main__ - [92mINFO[0m - Starting rule mining pipeline
+2025-04-25 11:42:05 - genetic_rule_miner.data.database - [92mINFO[0m - PostgreSQL connection pool initialized
+2025-04-25 11:42:05 - __main__ - [92mINFO[0m - Loading data from database...
+2025-04-25 11:42:05 - genetic_rule_miner.data.manager - [92mINFO[0m - [92mEntering load_data...[0m
+2025-04-25 11:42:05 - genetic_rule_miner.data.manager - [92mINFO[0m - [92mload_data completed in 0.8857s[0m
+2025-04-25 11:42:05 - __main__ - [92mINFO[0m - Merging and preprocessing data...
+2025-04-25 11:42:05 - genetic_rule_miner.data.manager - [92mINFO[0m - [92mEntering merge_data...[0m
+2025-04-25 11:42:05 - genetic_rule_miner.data.manager - [92mINFO[0m - [92mmerge_data completed in 0.0285s[0m
+2025-04-25 11:42:05 - __main__ - [92mINFO[0m - [92mEntering save_to_excel...[0m
+2025-04-25 11:42:07 - __main__ - [92mINFO[0m - Data successfully saved to processed_data.xlsx
+2025-04-25 11:42:07 - __main__ - [92mINFO[0m - [92msave_to_excel completed in 1.1165s[0m
+2025-04-25 11:42:07 - genetic_rule_miner.data.preprocessing - [92mINFO[0m - [92mEntering clean_string_columns...[0m
+2025-04-25 11:42:07 - genetic_rule_miner.data.preprocessing - [92mINFO[0m - [92mclean_string_columns completed in 0.0223s[0m
+2025-04-25 11:42:07 - genetic_rule_miner.data.preprocessing - [92mINFO[0m - [92mEntering preprocess_data...[0m
+2025-04-25 11:42:07 - genetic_rule_miner.data.preprocessing - [92mINFO[0m - [92mpreprocess_data completed in 0.0344s[0m
+2025-04-25 11:42:07 - __main__ - [92mINFO[0m - [92mEntering save_to_excel...[0m
+2025-04-25 11:42:07 - __main__ - [92mINFO[0m - Data successfully saved to datos_limpios.xlsx
+2025-04-25 11:42:07 - __main__ - [92mINFO[0m - [92msave_to_excel completed in 0.1384s[0m
+2025-04-25 11:42:07 - __main__ - [92mINFO[0m - Initializing genetic algorithm...
+2025-04-25 11:42:07 - __main__ - [92mINFO[0m - Starting evolution process...
+2025-04-25 11:42:07 - __main__ - [91mERROR[0m - Pipeline failed: object of type 'numpy.float64' has no len()
+Traceback (most recent call last):
+  File "c:\Users\PRCAAL\PROYECTOS\anime_dataset_generator\project\genetic_rule_miner\main.py", line 69, in main
+    results = miner.evolve()
+  File "C:\Users\PRCAAL\PROYECTOS\anime_dataset_generator\project\genetic_rule_miner\models\genetic.py", line 291, in evolve
+    parents = self._select_parents()
+  File "C:\Users\PRCAAL\PROYECTOS\anime_dataset_generator\project\genetic_rule_miner\models\genetic.py", line 254, in _select_parents
+    best = max(tournament, key=self.fitness)
+  File "C:\Users\PRCAAL\PROYECTOS\anime_dataset_generator\project\genetic_rule_miner\models\genetic.py", line 126, in fitness
+    confidence = self._vectorized_confidence(rule)
+  File "C:\Users\PRCAAL\PROYECTOS\anime_dataset_generator\project\genetic_rule_miner\models\genetic.py", line 161, in _vectorized_confidence
+    if len(target_mask) != len(conditions_mask):
+                           ~~~^^^^^^^^^^^^^^^^^
+TypeError: object of type 'numpy.float64' has no len()
+2025-04-25 11:42:07 - genetic_rule_miner.data.database - [92mINFO[0m - PostgreSQL connection pool closed
+2025-04-25 11:42:42 - __main__ - [92mINFO[0m - Starting rule mining pipeline
+2025-04-25 11:43:03 - genetic_rule_miner.data.database - [92mINFO[0m - PostgreSQL connection pool initialized
+2025-04-25 11:43:03 - __main__ - [92mINFO[0m - Loading data from database...
+2025-04-25 11:43:03 - genetic_rule_miner.data.manager - [92mINFO[0m - [92mEntering load_data...[0m
+2025-04-25 11:43:03 - genetic_rule_miner.data.manager - [92mINFO[0m - [92mload_data completed in 0.2259s[0m
+2025-04-25 11:43:03 - __main__ - [92mINFO[0m - Merging and preprocessing data...
+2025-04-25 11:43:03 - genetic_rule_miner.data.manager - [92mINFO[0m - [92mEntering merge_data...[0m
+2025-04-25 11:43:03 - genetic_rule_miner.data.manager - [92mINFO[0m - [92mmerge_data completed in 0.0060s[0m
+2025-04-25 11:43:03 - __main__ - [92mINFO[0m - [92mEntering save_to_excel...[0m
+2025-04-25 11:43:03 - __main__ - [92mINFO[0m - Data successfully saved to processed_data.xlsx
+2025-04-25 11:43:03 - __main__ - [92mINFO[0m - [92msave_to_excel completed in 0.2979s[0m
+2025-04-25 11:43:03 - genetic_rule_miner.data.preprocessing - [92mINFO[0m - [92mEntering clean_string_columns...[0m
+2025-04-25 11:43:03 - genetic_rule_miner.data.preprocessing - [92mINFO[0m - [92mclean_string_columns completed in 0.0148s[0m
+2025-04-25 11:43:03 - genetic_rule_miner.data.preprocessing - [92mINFO[0m - [92mEntering preprocess_data...[0m
+2025-04-25 11:43:03 - genetic_rule_miner.data.preprocessing - [92mINFO[0m - [92mpreprocess_data completed in 0.0226s[0m
+2025-04-25 11:43:03 - __main__ - [92mINFO[0m - [92mEntering save_to_excel...[0m
+2025-04-25 11:43:03 - __main__ - [92mINFO[0m - Data successfully saved to datos_limpios.xlsx
+2025-04-25 11:43:03 - __main__ - [92mINFO[0m - [92msave_to_excel completed in 0.1453s[0m
+2025-04-25 11:43:03 - __main__ - [92mINFO[0m - Initializing genetic algorithm...
+2025-04-25 11:43:03 - __main__ - [92mINFO[0m - Starting evolution process...
+2025-04-25 11:43:03 - __main__ - [91mERROR[0m - Pipeline failed: Se esperaba un array de numpy para conditions_mask, pero se obtuvo <class 'numpy.float64'>
+Traceback (most recent call last):
+  File "c:\Users\PRCAAL\PROYECTOS\anime_dataset_generator\project\genetic_rule_miner\main.py", line 69, in main
+    results = miner.evolve()
+  File "C:\Users\PRCAAL\PROYECTOS\anime_dataset_generator\project\genetic_rule_miner\models\genetic.py", line 301, in evolve
+    parents = self._select_parents()
+  File "C:\Users\PRCAAL\PROYECTOS\anime_dataset_generator\project\genetic_rule_miner\models\genetic.py", line 264, in _select_parents
+    best = max(tournament, key=self.fitness)
+  File "C:\Users\PRCAAL\PROYECTOS\anime_dataset_generator\project\genetic_rule_miner\models\genetic.py", line 126, in fitness
+    confidence = self._vectorized_confidence(rule)
+  File "C:\Users\PRCAAL\PROYECTOS\anime_dataset_generator\project\genetic_rule_miner\models\genetic.py", line 166, in _vectorized_confidence
+    raise TypeError(
+        f"Se esperaba un array de numpy para conditions_mask, pero se obtuvo {type(conditions_mask)}"
+    )
+TypeError: Se esperaba un array de numpy para conditions_mask, pero se obtuvo <class 'numpy.float64'>
+2025-04-25 11:43:03 - genetic_rule_miner.data.database - [92mINFO[0m - PostgreSQL connection pool closed
+2025-04-25 11:43:21 - __main__ - [92mINFO[0m - Starting rule mining pipeline
+2025-04-25 11:43:42 - genetic_rule_miner.data.database - [92mINFO[0m - PostgreSQL connection pool initialized
+2025-04-25 11:43:42 - __main__ - [92mINFO[0m - Loading data from database...
+2025-04-25 11:43:42 - genetic_rule_miner.data.manager - [92mINFO[0m - [92mEntering load_data...[0m
+2025-04-25 11:43:42 - genetic_rule_miner.data.manager - [92mINFO[0m - [92mload_data completed in 0.1919s[0m
+2025-04-25 11:43:42 - __main__ - [92mINFO[0m - Merging and preprocessing data...
+2025-04-25 11:43:42 - genetic_rule_miner.data.manager - [92mINFO[0m - [92mEntering merge_data...[0m
+2025-04-25 11:43:42 - genetic_rule_miner.data.manager - [92mINFO[0m - [92mmerge_data completed in 0.0054s[0m
+2025-04-25 11:43:42 - __main__ - [92mINFO[0m - [92mEntering save_to_excel...[0m
+2025-04-25 11:43:42 - __main__ - [92mINFO[0m - Data successfully saved to processed_data.xlsx
+2025-04-25 11:43:42 - __main__ - [92mINFO[0m - [92msave_to_excel completed in 0.2680s[0m
+2025-04-25 11:43:42 - genetic_rule_miner.data.preprocessing - [92mINFO[0m - [92mEntering clean_string_columns...[0m
+2025-04-25 11:43:42 - genetic_rule_miner.data.preprocessing - [92mINFO[0m - [92mclean_string_columns completed in 0.0112s[0m
+2025-04-25 11:43:42 - genetic_rule_miner.data.preprocessing - [92mINFO[0m - [92mEntering preprocess_data...[0m
+2025-04-25 11:43:42 - genetic_rule_miner.data.preprocessing - [92mINFO[0m - [92mpreprocess_data completed in 0.0152s[0m
+2025-04-25 11:43:42 - __main__ - [92mINFO[0m - [92mEntering save_to_excel...[0m
+2025-04-25 11:43:42 - __main__ - [92mINFO[0m - Data successfully saved to datos_limpios.xlsx
+2025-04-25 11:43:42 - __main__ - [92mINFO[0m - [92msave_to_excel completed in 0.1350s[0m
+2025-04-25 11:43:42 - __main__ - [92mINFO[0m - Initializing genetic algorithm...
+2025-04-25 11:43:42 - __main__ - [92mINFO[0m - Starting evolution process...
+2025-04-25 11:43:42 - __main__ - [91mERROR[0m - Pipeline failed: Se esperaba un array de numpy para conditions_mask, pero se obtuvo <class 'numpy.float64'>
+Traceback (most recent call last):
+  File "c:\Users\PRCAAL\PROYECTOS\anime_dataset_generator\project\genetic_rule_miner\main.py", line 69, in main
+    results = miner.evolve()
+  File "C:\Users\PRCAAL\PROYECTOS\anime_dataset_generator\project\genetic_rule_miner\models\genetic.py", line 301, in evolve
+    parents = self._select_parents()
+  File "C:\Users\PRCAAL\PROYECTOS\anime_dataset_generator\project\genetic_rule_miner\models\genetic.py", line 264, in _select_parents
+    best = max(tournament, key=self.fitness)
+  File "C:\Users\PRCAAL\PROYECTOS\anime_dataset_generator\project\genetic_rule_miner\models\genetic.py", line 126, in fitness
+    confidence = self._vectorized_confidence(rule)
+  File "C:\Users\PRCAAL\PROYECTOS\anime_dataset_generator\project\genetic_rule_miner\models\genetic.py", line 166, in _vectorized_confidence
+    raise TypeError(
+        f"Se esperaba un array de numpy para conditions_mask, pero se obtuvo {type(conditions_mask)}"
+    )
+TypeError: Se esperaba un array de numpy para conditions_mask, pero se obtuvo <class 'numpy.float64'>
+2025-04-25 11:43:42 - genetic_rule_miner.data.database - [92mINFO[0m - PostgreSQL connection pool closed
+2025-04-25 11:44:41 - __main__ - [92mINFO[0m - Starting rule mining pipeline
+2025-04-25 11:45:02 - genetic_rule_miner.data.database - [92mINFO[0m - PostgreSQL connection pool initialized
+2025-04-25 11:45:02 - __main__ - [92mINFO[0m - Loading data from database...
+2025-04-25 11:45:02 - genetic_rule_miner.data.manager - [92mINFO[0m - [92mEntering load_data...[0m
+2025-04-25 11:45:02 - genetic_rule_miner.data.manager - [92mINFO[0m - [92mload_data completed in 0.2004s[0m
+2025-04-25 11:45:02 - __main__ - [92mINFO[0m - Merging and preprocessing data...
+2025-04-25 11:45:02 - genetic_rule_miner.data.manager - [92mINFO[0m - [92mEntering merge_data...[0m
+2025-04-25 11:45:02 - genetic_rule_miner.data.manager - [92mINFO[0m - [92mmerge_data completed in 0.0048s[0m
+2025-04-25 11:45:02 - __main__ - [92mINFO[0m - [92mEntering save_to_excel...[0m
+2025-04-25 11:45:02 - __main__ - [92mINFO[0m - Data successfully saved to processed_data.xlsx
+2025-04-25 11:45:02 - __main__ - [92mINFO[0m - [92msave_to_excel completed in 0.2763s[0m
+2025-04-25 11:45:02 - genetic_rule_miner.data.preprocessing - [92mINFO[0m - [92mEntering clean_string_columns...[0m
+2025-04-25 11:45:02 - genetic_rule_miner.data.preprocessing - [92mINFO[0m - [92mclean_string_columns completed in 0.0106s[0m
+2025-04-25 11:45:02 - genetic_rule_miner.data.preprocessing - [92mINFO[0m - [92mEntering preprocess_data...[0m
+2025-04-25 11:45:02 - genetic_rule_miner.data.preprocessing - [92mINFO[0m - [92mpreprocess_data completed in 0.0223s[0m
+2025-04-25 11:45:02 - __main__ - [92mINFO[0m - [92mEntering save_to_excel...[0m
+2025-04-25 11:45:03 - __main__ - [92mINFO[0m - Data successfully saved to datos_limpios.xlsx
+2025-04-25 11:45:03 - __main__ - [92mINFO[0m - [92msave_to_excel completed in 0.1331s[0m
+2025-04-25 11:45:03 - __main__ - [92mINFO[0m - Initializing genetic algorithm...
+2025-04-25 11:45:03 - __main__ - [92mINFO[0m - Starting evolution process...
+2025-04-25 11:45:03 - __main__ - [91mERROR[0m - Pipeline failed: The truth value of an array with more than one element is ambiguous. Use a.any() or a.all()
+Traceback (most recent call last):
+  File "c:\Users\PRCAAL\PROYECTOS\anime_dataset_generator\project\genetic_rule_miner\main.py", line 69, in main
+    results = miner.evolve()
+  File "C:\Users\PRCAAL\PROYECTOS\anime_dataset_generator\project\genetic_rule_miner\models\genetic.py", line 301, in evolve
+    new_population = self._create_new_generation(parents)
+              ^^^^^^^^^^^^^^^^^^^^^^
+  File "C:\Users\PRCAAL\PROYECTOS\anime_dataset_generator\project\genetic_rule_miner\models\genetic.py", line 264, in _select_parents
+    selected.append(best)
+           ~~~~~~~~^^^^^^
+ValueError: The truth value of an array with more than one element is ambiguous. Use a.any() or a.all()
+2025-04-25 11:45:03 - genetic_rule_miner.data.database - [92mINFO[0m - PostgreSQL connection pool closed
+2025-04-25 11:45:55 - __main__ - [92mINFO[0m - Starting rule mining pipeline
+2025-04-25 11:46:16 - genetic_rule_miner.data.database - [92mINFO[0m - PostgreSQL connection pool initialized
+2025-04-25 11:46:16 - __main__ - [92mINFO[0m - Loading data from database...
+2025-04-25 11:46:16 - genetic_rule_miner.data.manager - [92mINFO[0m - [92mEntering load_data...[0m
+2025-04-25 11:46:16 - genetic_rule_miner.data.manager - [92mINFO[0m - [92mload_data completed in 0.2299s[0m
+2025-04-25 11:46:16 - __main__ - [92mINFO[0m - Merging and preprocessing data...
+2025-04-25 11:46:16 - genetic_rule_miner.data.manager - [92mINFO[0m - [92mEntering merge_data...[0m
+2025-04-25 11:46:16 - genetic_rule_miner.data.manager - [92mINFO[0m - [92mmerge_data completed in 0.0074s[0m
+2025-04-25 11:46:16 - __main__ - [92mINFO[0m - [92mEntering save_to_excel...[0m
+2025-04-25 11:46:16 - __main__ - [92mINFO[0m - Data successfully saved to processed_data.xlsx
+2025-04-25 11:46:16 - __main__ - [92mINFO[0m - [92msave_to_excel completed in 0.3582s[0m
+2025-04-25 11:46:16 - genetic_rule_miner.data.preprocessing - [92mINFO[0m - [92mEntering clean_string_columns...[0m
+2025-04-25 11:46:16 - genetic_rule_miner.data.preprocessing - [92mINFO[0m - [92mclean_string_columns completed in 0.0177s[0m
+2025-04-25 11:46:16 - genetic_rule_miner.data.preprocessing - [92mINFO[0m - [92mEntering preprocess_data...[0m
+2025-04-25 11:46:16 - genetic_rule_miner.data.preprocessing - [92mINFO[0m - [92mpreprocess_data completed in 0.0292s[0m
+2025-04-25 11:46:16 - __main__ - [92mINFO[0m - [92mEntering save_to_excel...[0m
+2025-04-25 11:46:16 - __main__ - [92mINFO[0m - Data successfully saved to datos_limpios.xlsx
+2025-04-25 11:46:16 - __main__ - [92mINFO[0m - [92msave_to_excel completed in 0.2194s[0m
+2025-04-25 11:46:16 - __main__ - [92mINFO[0m - Initializing genetic algorithm...
+2025-04-25 11:46:16 - __main__ - [92mINFO[0m - Starting evolution process...
+2025-04-25 11:46:16 - __main__ - [91mERROR[0m - Pipeline failed: The truth value of an array with more than one element is ambiguous. Use a.any() or a.all()
+Traceback (most recent call last):
+  File "c:\Users\PRCAAL\PROYECTOS\anime_dataset_generator\project\genetic_rule_miner\main.py", line 69, in main
+    results = miner.evolve()
+  File "C:\Users\PRCAAL\PROYECTOS\anime_dataset_generator\project\genetic_rule_miner\models\genetic.py", line 286, in evolve
+    parents = self._select_parents()
+  File "C:\Users\PRCAAL\PROYECTOS\anime_dataset_generator\project\genetic_rule_miner\models\genetic.py", line 249, in _select_parents
+    best = max(tournament, key=self.fitness)
+ValueError: The truth value of an array with more than one element is ambiguous. Use a.any() or a.all()
+2025-04-25 11:46:17 - genetic_rule_miner.data.database - [92mINFO[0m - PostgreSQL connection pool closed
+2025-04-25 11:51:07 - __main__ - [92mINFO[0m - Starting rule mining pipeline
+2025-04-25 11:51:28 - genetic_rule_miner.data.database - [92mINFO[0m - PostgreSQL connection pool initialized
+2025-04-25 11:51:28 - __main__ - [92mINFO[0m - Loading data from database...
+2025-04-25 11:51:28 - genetic_rule_miner.data.manager - [92mINFO[0m - [92mEntering load_data...[0m
+2025-04-25 11:51:28 - genetic_rule_miner.data.manager - [92mINFO[0m - [92mload_data completed in 0.2302s[0m
+2025-04-25 11:51:28 - __main__ - [92mINFO[0m - Merging and preprocessing data...
+2025-04-25 11:51:28 - genetic_rule_miner.data.manager - [92mINFO[0m - [92mEntering merge_data...[0m
+2025-04-25 11:51:28 - genetic_rule_miner.data.manager - [92mINFO[0m - [92mmerge_data completed in 0.0071s[0m
+2025-04-25 11:51:28 - __main__ - [92mINFO[0m - [92mEntering save_to_excel...[0m
+2025-04-25 11:51:29 - __main__ - [92mINFO[0m - Data successfully saved to processed_data.xlsx
+2025-04-25 11:51:29 - __main__ - [92mINFO[0m - [92msave_to_excel completed in 0.2763s[0m
+2025-04-25 11:51:29 - genetic_rule_miner.data.preprocessing - [92mINFO[0m - [92mEntering clean_string_columns...[0m
+2025-04-25 11:51:29 - genetic_rule_miner.data.preprocessing - [92mINFO[0m - [92mclean_string_columns completed in 0.0097s[0m
+2025-04-25 11:51:29 - genetic_rule_miner.data.preprocessing - [92mINFO[0m - [92mEntering preprocess_data...[0m
+2025-04-25 11:51:29 - genetic_rule_miner.data.preprocessing - [92mINFO[0m - [92mpreprocess_data completed in 0.0144s[0m
+2025-04-25 11:51:29 - __main__ - [92mINFO[0m - [92mEntering save_to_excel...[0m
+2025-04-25 11:51:29 - __main__ - [92mINFO[0m - Data successfully saved to datos_limpios.xlsx
+2025-04-25 11:51:29 - __main__ - [92mINFO[0m - [92msave_to_excel completed in 0.1298s[0m
+2025-04-25 11:51:29 - __main__ - [92mINFO[0m - Initializing genetic algorithm...
+2025-04-25 11:51:29 - __main__ - [92mINFO[0m - Starting evolution process...
+2025-04-25 11:51:29 - genetic_rule_miner.models.genetic - [92mINFO[0m - Generation 0: Best Fitness=0.1661, Avg Fitness=0.0105
+2025-04-25 11:51:29 - genetic_rule_miner.models.genetic - [92mINFO[0m - Generation 1: Best Fitness=0.1661, Avg Fitness=0.0211
+2025-04-25 11:51:29 - genetic_rule_miner.models.genetic - [92mINFO[0m - Generation 2: Best Fitness=0.1661, Avg Fitness=0.0443
+2025-04-25 11:51:29 - genetic_rule_miner.models.genetic - [92mINFO[0m - Generation 3: Best Fitness=0.1661, Avg Fitness=0.0595
+2025-04-25 11:51:30 - genetic_rule_miner.models.genetic - [92mINFO[0m - Generation 4: Best Fitness=0.2339, Avg Fitness=0.0887
+2025-04-25 11:51:30 - genetic_rule_miner.models.genetic - [92mINFO[0m - Generation 5: Best Fitness=0.2339, Avg Fitness=0.1243
+2025-04-25 11:51:30 - genetic_rule_miner.models.genetic - [92mINFO[0m - Generation 6: Best Fitness=0.2915, Avg Fitness=0.1793
+2025-04-25 11:51:30 - genetic_rule_miner.models.genetic - [92mINFO[0m - Generation 7: Best Fitness=0.3153, Avg Fitness=0.2176
+2025-04-25 11:51:30 - genetic_rule_miner.models.genetic - [92mINFO[0m - Generation 8: Best Fitness=0.3153, Avg Fitness=0.2437
+2025-04-25 11:51:30 - genetic_rule_miner.models.genetic - [92mINFO[0m - Generation 9: Best Fitness=0.3153, Avg Fitness=0.2640
+2025-04-25 11:51:30 - genetic_rule_miner.models.genetic - [92mINFO[0m - Generation 10: Best Fitness=0.3153, Avg Fitness=0.2856
+2025-04-25 11:51:30 - genetic_rule_miner.models.genetic - [92mINFO[0m - Generation 11: Best Fitness=0.3153, Avg Fitness=0.3052
+2025-04-25 11:51:31 - genetic_rule_miner.models.genetic - [92mINFO[0m - Generation 12: Best Fitness=0.3153, Avg Fitness=0.2948
+2025-04-25 11:51:31 - genetic_rule_miner.models.genetic - [92mINFO[0m - Generation 13: Best Fitness=0.3153, Avg Fitness=0.3034
+2025-04-25 11:51:31 - genetic_rule_miner.models.genetic - [92mINFO[0m - Generation 14: Best Fitness=0.3153, Avg Fitness=0.3043
+2025-04-25 11:51:31 - genetic_rule_miner.models.genetic - [92mINFO[0m - Generation 15: Best Fitness=0.3153, Avg Fitness=0.2881
+2025-04-25 11:51:31 - genetic_rule_miner.models.genetic - [92mINFO[0m - Generation 16: Best Fitness=0.3153, Avg Fitness=0.3027
+2025-04-25 11:51:31 - genetic_rule_miner.models.genetic - [92mINFO[0m - Generation 17: Best Fitness=0.3153, Avg Fitness=0.3000
+2025-04-25 11:51:31 - genetic_rule_miner.models.genetic - [92mINFO[0m - Generation 18: Best Fitness=0.3153, Avg Fitness=0.3153
+2025-04-25 11:51:31 - genetic_rule_miner.models.genetic - [92mINFO[0m - Generation 19: Best Fitness=0.3153, Avg Fitness=0.2950
+2025-04-25 11:51:31 - genetic_rule_miner.models.genetic - [92mINFO[0m - Generation 20: Best Fitness=0.3153, Avg Fitness=0.2894
+2025-04-25 11:51:31 - genetic_rule_miner.models.genetic - [92mINFO[0m - Generation 21: Best Fitness=0.3153, Avg Fitness=0.3130
+2025-04-25 11:51:31 - genetic_rule_miner.models.genetic - [92mINFO[0m - Generation 22: Best Fitness=0.3153, Avg Fitness=0.3087
+2025-04-25 11:51:32 - genetic_rule_miner.models.genetic - [92mINFO[0m - Generation 23: Best Fitness=0.3153, Avg Fitness=0.2997
+2025-04-25 11:51:32 - genetic_rule_miner.models.genetic - [92mINFO[0m - Generation 24: Best Fitness=0.3153, Avg Fitness=0.2951
+2025-04-25 11:51:32 - genetic_rule_miner.models.genetic - [92mINFO[0m - Generation 25: Best Fitness=0.3153, Avg Fitness=0.2939
+2025-04-25 11:51:32 - genetic_rule_miner.models.genetic - [92mINFO[0m - Generation 26: Best Fitness=0.3153, Avg Fitness=0.2919
+2025-04-25 11:51:32 - genetic_rule_miner.models.genetic - [92mINFO[0m - Generation 27: Best Fitness=0.3153, Avg Fitness=0.2905
+2025-04-25 11:51:32 - genetic_rule_miner.models.genetic - [92mINFO[0m - Generation 28: Best Fitness=0.3153, Avg Fitness=0.2868
+2025-04-25 11:51:32 - genetic_rule_miner.models.genetic - [92mINFO[0m - Generation 29: Best Fitness=0.3153, Avg Fitness=0.2958
+2025-04-25 11:51:32 - genetic_rule_miner.models.genetic - [92mINFO[0m - Generation 30: Best Fitness=0.3153, Avg Fitness=0.3153
+2025-04-25 11:51:32 - genetic_rule_miner.models.genetic - [92mINFO[0m - Generation 31: Best Fitness=0.3153, Avg Fitness=0.3012
+2025-04-25 11:51:32 - genetic_rule_miner.models.genetic - [92mINFO[0m - Generation 32: Best Fitness=0.3153, Avg Fitness=0.3049
+2025-04-25 11:51:33 - genetic_rule_miner.models.genetic - [92mINFO[0m - Generation 33: Best Fitness=0.3153, Avg Fitness=0.3089
+2025-04-25 11:51:33 - genetic_rule_miner.models.genetic - [92mINFO[0m - Generation 34: Best Fitness=0.3153, Avg Fitness=0.3017
+2025-04-25 11:51:33 - genetic_rule_miner.models.genetic - [92mINFO[0m - Generation 35: Best Fitness=0.3153, Avg Fitness=0.3058
+2025-04-25 11:51:33 - genetic_rule_miner.models.genetic - [92mINFO[0m - Generation 36: Best Fitness=0.3153, Avg Fitness=0.3027
+2025-04-25 11:51:33 - genetic_rule_miner.models.genetic - [92mINFO[0m - Generation 37: Best Fitness=0.3153, Avg Fitness=0.2979
+2025-04-25 11:51:33 - genetic_rule_miner.models.genetic - [92mINFO[0m - Generation 38: Best Fitness=0.3153, Avg Fitness=0.2898
+2025-04-25 11:51:33 - genetic_rule_miner.models.genetic - [92mINFO[0m - Generation 39: Best Fitness=0.3153, Avg Fitness=0.2945
+2025-04-25 11:51:33 - genetic_rule_miner.models.genetic - [92mINFO[0m - Generation 40: Best Fitness=0.3153, Avg Fitness=0.3066
+2025-04-25 11:51:33 - genetic_rule_miner.models.genetic - [92mINFO[0m - Generation 41: Best Fitness=0.3153, Avg Fitness=0.3060
+2025-04-25 11:51:34 - genetic_rule_miner.models.genetic - [92mINFO[0m - Generation 42: Best Fitness=0.3153, Avg Fitness=0.3026
+2025-04-25 11:51:34 - genetic_rule_miner.models.genetic - [92mINFO[0m - Generation 43: Best Fitness=0.3153, Avg Fitness=0.2986
+2025-04-25 11:51:34 - genetic_rule_miner.models.genetic - [92mINFO[0m - Generation 44: Best Fitness=0.3153, Avg Fitness=0.3037
+2025-04-25 11:51:34 - genetic_rule_miner.models.genetic - [92mINFO[0m - Generation 45: Best Fitness=0.3153, Avg Fitness=0.3005
+2025-04-25 11:51:34 - genetic_rule_miner.models.genetic - [92mINFO[0m - Generation 46: Best Fitness=0.3153, Avg Fitness=0.3111
+2025-04-25 11:51:34 - genetic_rule_miner.models.genetic - [92mINFO[0m - Generation 47: Best Fitness=0.3153, Avg Fitness=0.2892
+2025-04-25 11:51:34 - genetic_rule_miner.models.genetic - [92mINFO[0m - Generation 48: Best Fitness=0.3153, Avg Fitness=0.2845
+2025-04-25 11:51:34 - genetic_rule_miner.models.genetic - [92mINFO[0m - Generation 49: Best Fitness=0.3153, Avg Fitness=0.3127
+2025-04-25 11:51:34 - genetic_rule_miner.models.genetic - [92mINFO[0m - Generation 50: Best Fitness=0.3153, Avg Fitness=0.2956
+2025-04-25 11:51:34 - genetic_rule_miner.models.genetic - [92mINFO[0m - Generation 51: Best Fitness=0.3153, Avg Fitness=0.2968
+2025-04-25 11:51:34 - genetic_rule_miner.models.genetic - [92mINFO[0m - Generation 52: Best Fitness=0.3153, Avg Fitness=0.3035
+2025-04-25 11:51:35 - genetic_rule_miner.models.genetic - [92mINFO[0m - Generation 53: Best Fitness=0.3153, Avg Fitness=0.3097
+2025-04-25 11:51:35 - genetic_rule_miner.models.genetic - [92mINFO[0m - Generation 54: Best Fitness=0.3153, Avg Fitness=0.3089
+2025-04-25 11:51:35 - genetic_rule_miner.models.genetic - [92mINFO[0m - Generation 55: Best Fitness=0.3153, Avg Fitness=0.2892
+2025-04-25 11:51:35 - genetic_rule_miner.models.genetic - [92mINFO[0m - Generation 56: Best Fitness=0.3153, Avg Fitness=0.3089
+2025-04-25 11:51:35 - genetic_rule_miner.models.genetic - [92mINFO[0m - Generation 57: Best Fitness=0.3153, Avg Fitness=0.3089
+2025-04-25 11:51:35 - genetic_rule_miner.models.genetic - [92mINFO[0m - Generation 58: Best Fitness=0.3153, Avg Fitness=0.3031
+2025-04-25 11:51:35 - genetic_rule_miner.models.genetic - [92mINFO[0m - Generation 59: Best Fitness=0.3153, Avg Fitness=0.3153
+2025-04-25 11:51:35 - genetic_rule_miner.models.genetic - [92mINFO[0m - Generation 60: Best Fitness=0.3153, Avg Fitness=0.3041
+2025-04-25 11:51:35 - genetic_rule_miner.models.genetic - [92mINFO[0m - Generation 61: Best Fitness=0.3153, Avg Fitness=0.3119
+2025-04-25 11:51:35 - genetic_rule_miner.models.genetic - [92mINFO[0m - Generation 62: Best Fitness=0.3153, Avg Fitness=0.2920
+2025-04-25 11:51:35 - genetic_rule_miner.models.genetic - [92mINFO[0m - Generation 63: Best Fitness=0.3153, Avg Fitness=0.3031
+2025-04-25 11:51:36 - genetic_rule_miner.models.genetic - [92mINFO[0m - Generation 64: Best Fitness=0.3153, Avg Fitness=0.3035
+2025-04-25 11:51:36 - genetic_rule_miner.models.genetic - [92mINFO[0m - Generation 65: Best Fitness=0.3153, Avg Fitness=0.3010
+2025-04-25 11:51:36 - genetic_rule_miner.models.genetic - [92mINFO[0m - Generation 66: Best Fitness=0.3153, Avg Fitness=0.2971
+2025-04-25 11:51:36 - genetic_rule_miner.models.genetic - [92mINFO[0m - Generation 67: Best Fitness=0.3153, Avg Fitness=0.3035
+2025-04-25 11:51:36 - genetic_rule_miner.models.genetic - [92mINFO[0m - Generation 68: Best Fitness=0.3153, Avg Fitness=0.3048
+2025-04-25 11:51:36 - genetic_rule_miner.models.genetic - [92mINFO[0m - Generation 69: Best Fitness=0.3153, Avg Fitness=0.3153
+2025-04-25 11:51:36 - genetic_rule_miner.models.genetic - [92mINFO[0m - Generation 70: Best Fitness=0.3153, Avg Fitness=0.2951
+2025-04-25 11:51:36 - genetic_rule_miner.models.genetic - [92mINFO[0m - Generation 71: Best Fitness=0.3153, Avg Fitness=0.3023
+2025-04-25 11:51:36 - genetic_rule_miner.models.genetic - [92mINFO[0m - Generation 72: Best Fitness=0.3153, Avg Fitness=0.3026
+2025-04-25 11:51:36 - genetic_rule_miner.models.genetic - [92mINFO[0m - Generation 73: Best Fitness=0.3153, Avg Fitness=0.2971
+2025-04-25 11:51:36 - genetic_rule_miner.models.genetic - [92mINFO[0m - Generation 74: Best Fitness=0.3153, Avg Fitness=0.2935
+2025-04-25 11:51:37 - genetic_rule_miner.models.genetic - [92mINFO[0m - Generation 75: Best Fitness=0.3153, Avg Fitness=0.2994
+2025-04-25 11:51:37 - genetic_rule_miner.models.genetic - [92mINFO[0m - Generation 76: Best Fitness=0.3153, Avg Fitness=0.2925
+2025-04-25 11:51:37 - genetic_rule_miner.models.genetic - [92mINFO[0m - Generation 77: Best Fitness=0.3153, Avg Fitness=0.3044
+2025-04-25 11:51:37 - genetic_rule_miner.models.genetic - [92mINFO[0m - Generation 78: Best Fitness=0.3153, Avg Fitness=0.3018
+2025-04-25 11:51:37 - genetic_rule_miner.models.genetic - [92mINFO[0m - Generation 79: Best Fitness=0.3153, Avg Fitness=0.2932
+2025-04-25 11:51:37 - genetic_rule_miner.models.genetic - [92mINFO[0m - Generation 80: Best Fitness=0.3153, Avg Fitness=0.2994
+2025-04-25 11:51:37 - genetic_rule_miner.models.genetic - [92mINFO[0m - Generation 81: Best Fitness=0.3153, Avg Fitness=0.2858
+2025-04-25 11:51:37 - genetic_rule_miner.models.genetic - [92mINFO[0m - Generation 82: Best Fitness=0.3153, Avg Fitness=0.3104
+2025-04-25 11:51:37 - genetic_rule_miner.models.genetic - [92mINFO[0m - Generation 83: Best Fitness=0.3153, Avg Fitness=0.2789
+2025-04-25 11:51:37 - genetic_rule_miner.models.genetic - [92mINFO[0m - Generation 84: Best Fitness=0.3153, Avg Fitness=0.2935
+2025-04-25 11:51:37 - genetic_rule_miner.models.genetic - [92mINFO[0m - Generation 85: Best Fitness=0.3153, Avg Fitness=0.2978
+2025-04-25 11:51:38 - genetic_rule_miner.models.genetic - [92mINFO[0m - Generation 86: Best Fitness=0.3153, Avg Fitness=0.2864
+2025-04-25 11:51:38 - genetic_rule_miner.models.genetic - [92mINFO[0m - Generation 87: Best Fitness=0.3153, Avg Fitness=0.3067
+2025-04-25 11:51:38 - genetic_rule_miner.models.genetic - [92mINFO[0m - Generation 88: Best Fitness=0.3153, Avg Fitness=0.3031
+2025-04-25 11:51:38 - genetic_rule_miner.models.genetic - [92mINFO[0m - Generation 89: Best Fitness=0.3153, Avg Fitness=0.3026
+2025-04-25 11:51:38 - genetic_rule_miner.models.genetic - [92mINFO[0m - Generation 90: Best Fitness=0.3153, Avg Fitness=0.3052
+2025-04-25 11:51:38 - genetic_rule_miner.models.genetic - [92mINFO[0m - Generation 91: Best Fitness=0.3153, Avg Fitness=0.3049
+2025-04-25 11:51:38 - genetic_rule_miner.models.genetic - [92mINFO[0m - Generation 92: Best Fitness=0.3153, Avg Fitness=0.2954
+2025-04-25 11:51:38 - genetic_rule_miner.models.genetic - [92mINFO[0m - Generation 93: Best Fitness=0.3153, Avg Fitness=0.2972
+2025-04-25 11:51:38 - genetic_rule_miner.models.genetic - [92mINFO[0m - Generation 94: Best Fitness=0.3153, Avg Fitness=0.3089
+2025-04-25 11:51:38 - genetic_rule_miner.models.genetic - [92mINFO[0m - Generation 95: Best Fitness=0.3153, Avg Fitness=0.2799
+2025-04-25 11:51:38 - genetic_rule_miner.models.genetic - [92mINFO[0m - Generation 96: Best Fitness=0.3153, Avg Fitness=0.3039
+2025-04-25 11:51:38 - genetic_rule_miner.models.genetic - [92mINFO[0m - Generation 97: Best Fitness=0.3153, Avg Fitness=0.2885
+2025-04-25 11:51:39 - genetic_rule_miner.models.genetic - [92mINFO[0m - Generation 98: Best Fitness=0.3153, Avg Fitness=0.3030
+2025-04-25 11:51:39 - genetic_rule_miner.models.genetic - [92mINFO[0m - Generation 99: Best Fitness=0.3153, Avg Fitness=0.3045
+2025-04-25 11:51:39 - __main__ - [91mERROR[0m - Pipeline failed: 'GeneticRuleMiner' object has no attribute 'calculate_confidence'
+Traceback (most recent call last):
+  File "c:\Users\PRCAAL\PROYECTOS\anime_dataset_generator\project\genetic_rule_miner\main.py", line 69, in main
+    results = miner.evolve()
+  File "C:\Users\PRCAAL\PROYECTOS\anime_dataset_generator\project\genetic_rule_miner\models\genetic.py", line 301, in evolve
+    return self._compile_results()
+           ~~~~~~~~~~~~~~~~~~~~~^^
+  File "C:\Users\PRCAAL\PROYECTOS\anime_dataset_generator\project\genetic_rule_miner\models\genetic.py", line 307, in _compile_results
+    best_confidence = self.calculate_confidence(best_rule)
+                      ^^^^^^^^^^^^^^^^^^^^^^^^^
+AttributeError: 'GeneticRuleMiner' object has no attribute 'calculate_confidence'
+2025-04-25 11:51:39 - genetic_rule_miner.data.database - [92mINFO[0m - PostgreSQL connection pool closed
+2025-04-25 11:52:30 - __main__ - [92mINFO[0m - Starting rule mining pipeline
+2025-04-25 11:52:51 - genetic_rule_miner.data.database - [92mINFO[0m - PostgreSQL connection pool initialized
+2025-04-25 11:52:51 - __main__ - [92mINFO[0m - Loading data from database...
+2025-04-25 11:52:51 - genetic_rule_miner.data.manager - [92mINFO[0m - [92mEntering load_data...[0m
+2025-04-25 11:52:52 - genetic_rule_miner.data.manager - [92mINFO[0m - [92mload_data completed in 0.2089s[0m
+2025-04-25 11:52:52 - __main__ - [92mINFO[0m - Merging and preprocessing data...
+2025-04-25 11:52:52 - genetic_rule_miner.data.manager - [92mINFO[0m - [92mEntering merge_data...[0m
+2025-04-25 11:52:52 - genetic_rule_miner.data.manager - [92mINFO[0m - [92mmerge_data completed in 0.0066s[0m
+2025-04-25 11:52:52 - __main__ - [92mINFO[0m - [92mEntering save_to_excel...[0m
+2025-04-25 11:52:52 - __main__ - [92mINFO[0m - Data successfully saved to processed_data.xlsx
+2025-04-25 11:52:52 - __main__ - [92mINFO[0m - [92msave_to_excel completed in 0.2857s[0m
+2025-04-25 11:52:52 - genetic_rule_miner.data.preprocessing - [92mINFO[0m - [92mEntering clean_string_columns...[0m
+2025-04-25 11:52:52 - genetic_rule_miner.data.preprocessing - [92mINFO[0m - [92mclean_string_columns completed in 0.0099s[0m
+2025-04-25 11:52:52 - genetic_rule_miner.data.preprocessing - [92mINFO[0m - [92mEntering preprocess_data...[0m
+2025-04-25 11:52:52 - genetic_rule_miner.data.preprocessing - [92mINFO[0m - [92mpreprocess_data completed in 0.0160s[0m
+2025-04-25 11:52:52 - __main__ - [92mINFO[0m - [92mEntering save_to_excel...[0m
+2025-04-25 11:52:52 - __main__ - [92mINFO[0m - Data successfully saved to datos_limpios.xlsx
+2025-04-25 11:52:52 - __main__ - [92mINFO[0m - [92msave_to_excel completed in 0.1300s[0m
+2025-04-25 11:52:52 - __main__ - [92mINFO[0m - Initializing genetic algorithm...
+2025-04-25 11:52:52 - __main__ - [92mINFO[0m - Starting evolution process...
+2025-04-25 11:52:52 - genetic_rule_miner.models.genetic - [92mINFO[0m - Generation 0: Best Fitness=0.1661, Avg Fitness=0.0105
+2025-04-25 11:52:52 - genetic_rule_miner.models.genetic - [92mINFO[0m - Generation 1: Best Fitness=0.1661, Avg Fitness=0.0211
+2025-04-25 11:52:52 - genetic_rule_miner.models.genetic - [92mINFO[0m - Generation 2: Best Fitness=0.1661, Avg Fitness=0.0443
+2025-04-25 11:52:53 - genetic_rule_miner.models.genetic - [92mINFO[0m - Generation 3: Best Fitness=0.1661, Avg Fitness=0.0595
+2025-04-25 11:52:53 - genetic_rule_miner.models.genetic - [92mINFO[0m - Generation 4: Best Fitness=0.2339, Avg Fitness=0.0887
+2025-04-25 11:52:53 - genetic_rule_miner.models.genetic - [92mINFO[0m - Generation 5: Best Fitness=0.2339, Avg Fitness=0.1243
+2025-04-25 11:52:53 - genetic_rule_miner.models.genetic - [92mINFO[0m - Generation 6: Best Fitness=0.2915, Avg Fitness=0.1793
+2025-04-25 11:52:53 - genetic_rule_miner.models.genetic - [92mINFO[0m - Generation 7: Best Fitness=0.3153, Avg Fitness=0.2176
+2025-04-25 11:52:53 - genetic_rule_miner.models.genetic - [92mINFO[0m - Generation 8: Best Fitness=0.3153, Avg Fitness=0.2437
+2025-04-25 11:52:53 - genetic_rule_miner.models.genetic - [92mINFO[0m - Generation 9: Best Fitness=0.3153, Avg Fitness=0.2640
+2025-04-25 11:52:53 - genetic_rule_miner.models.genetic - [92mINFO[0m - Generation 10: Best Fitness=0.3153, Avg Fitness=0.2856
+2025-04-25 11:52:54 - genetic_rule_miner.models.genetic - [92mINFO[0m - Generation 11: Best Fitness=0.3153, Avg Fitness=0.3052
+2025-04-25 11:52:54 - genetic_rule_miner.models.genetic - [92mINFO[0m - Generation 12: Best Fitness=0.3153, Avg Fitness=0.2948
+2025-04-25 11:52:54 - genetic_rule_miner.models.genetic - [92mINFO[0m - Generation 13: Best Fitness=0.3153, Avg Fitness=0.3034
+2025-04-25 11:52:54 - genetic_rule_miner.models.genetic - [92mINFO[0m - Generation 14: Best Fitness=0.3153, Avg Fitness=0.3043
+2025-04-25 11:52:54 - genetic_rule_miner.models.genetic - [92mINFO[0m - Generation 15: Best Fitness=0.3153, Avg Fitness=0.2881
+2025-04-25 11:52:54 - genetic_rule_miner.models.genetic - [92mINFO[0m - Generation 16: Best Fitness=0.3153, Avg Fitness=0.3027
+2025-04-25 11:52:54 - genetic_rule_miner.models.genetic - [92mINFO[0m - Generation 17: Best Fitness=0.3153, Avg Fitness=0.3000
+2025-04-25 11:52:54 - genetic_rule_miner.models.genetic - [92mINFO[0m - Generation 18: Best Fitness=0.3153, Avg Fitness=0.3153
+2025-04-25 11:52:54 - genetic_rule_miner.models.genetic - [92mINFO[0m - Generation 19: Best Fitness=0.3153, Avg Fitness=0.2950
+2025-04-25 11:52:54 - genetic_rule_miner.models.genetic - [92mINFO[0m - Generation 20: Best Fitness=0.3153, Avg Fitness=0.2894
+2025-04-25 11:52:54 - genetic_rule_miner.models.genetic - [92mINFO[0m - Generation 21: Best Fitness=0.3153, Avg Fitness=0.3130
+2025-04-25 11:52:55 - genetic_rule_miner.models.genetic - [92mINFO[0m - Generation 22: Best Fitness=0.3153, Avg Fitness=0.3087
+2025-04-25 11:52:55 - genetic_rule_miner.models.genetic - [92mINFO[0m - Generation 23: Best Fitness=0.3153, Avg Fitness=0.2997
+2025-04-25 11:52:55 - genetic_rule_miner.models.genetic - [92mINFO[0m - Generation 24: Best Fitness=0.3153, Avg Fitness=0.2951
+2025-04-25 11:52:55 - genetic_rule_miner.models.genetic - [92mINFO[0m - Generation 25: Best Fitness=0.3153, Avg Fitness=0.2939
+2025-04-25 11:52:55 - genetic_rule_miner.models.genetic - [92mINFO[0m - Generation 26: Best Fitness=0.3153, Avg Fitness=0.2919
+2025-04-25 11:52:55 - genetic_rule_miner.models.genetic - [92mINFO[0m - Generation 27: Best Fitness=0.3153, Avg Fitness=0.2905
+2025-04-25 11:52:55 - genetic_rule_miner.models.genetic - [92mINFO[0m - Generation 28: Best Fitness=0.3153, Avg Fitness=0.2868
+2025-04-25 11:52:55 - genetic_rule_miner.models.genetic - [92mINFO[0m - Generation 29: Best Fitness=0.3153, Avg Fitness=0.2958
+2025-04-25 11:52:55 - genetic_rule_miner.models.genetic - [92mINFO[0m - Generation 30: Best Fitness=0.3153, Avg Fitness=0.3153
+2025-04-25 11:52:55 - genetic_rule_miner.models.genetic - [92mINFO[0m - Generation 31: Best Fitness=0.3153, Avg Fitness=0.3012
+2025-04-25 11:52:56 - genetic_rule_miner.models.genetic - [92mINFO[0m - Generation 32: Best Fitness=0.3153, Avg Fitness=0.3049
+2025-04-25 11:52:56 - genetic_rule_miner.models.genetic - [92mINFO[0m - Generation 33: Best Fitness=0.3153, Avg Fitness=0.3089
+2025-04-25 11:52:56 - genetic_rule_miner.models.genetic - [92mINFO[0m - Generation 34: Best Fitness=0.3153, Avg Fitness=0.3017
+2025-04-25 11:52:56 - genetic_rule_miner.models.genetic - [92mINFO[0m - Generation 35: Best Fitness=0.3153, Avg Fitness=0.3058
+2025-04-25 11:52:56 - genetic_rule_miner.models.genetic - [92mINFO[0m - Generation 36: Best Fitness=0.3153, Avg Fitness=0.3027
+2025-04-25 11:52:56 - genetic_rule_miner.models.genetic - [92mINFO[0m - Generation 37: Best Fitness=0.3153, Avg Fitness=0.2979
+2025-04-25 11:52:56 - genetic_rule_miner.models.genetic - [92mINFO[0m - Generation 38: Best Fitness=0.3153, Avg Fitness=0.2898
+2025-04-25 11:52:56 - genetic_rule_miner.models.genetic - [92mINFO[0m - Generation 39: Best Fitness=0.3153, Avg Fitness=0.2945
+2025-04-25 11:52:56 - genetic_rule_miner.models.genetic - [92mINFO[0m - Generation 40: Best Fitness=0.3153, Avg Fitness=0.3066
+2025-04-25 11:52:57 - genetic_rule_miner.models.genetic - [92mINFO[0m - Generation 41: Best Fitness=0.3153, Avg Fitness=0.3060
+2025-04-25 11:52:57 - genetic_rule_miner.models.genetic - [92mINFO[0m - Generation 42: Best Fitness=0.3153, Avg Fitness=0.3026
+2025-04-25 11:52:57 - genetic_rule_miner.models.genetic - [92mINFO[0m - Generation 43: Best Fitness=0.3153, Avg Fitness=0.2986
+2025-04-25 11:52:57 - genetic_rule_miner.models.genetic - [92mINFO[0m - Generation 44: Best Fitness=0.3153, Avg Fitness=0.3037
+2025-04-25 11:52:57 - genetic_rule_miner.models.genetic - [92mINFO[0m - Generation 45: Best Fitness=0.3153, Avg Fitness=0.3005
+2025-04-25 11:52:57 - genetic_rule_miner.models.genetic - [92mINFO[0m - Generation 46: Best Fitness=0.3153, Avg Fitness=0.3111
+2025-04-25 11:52:57 - genetic_rule_miner.models.genetic - [92mINFO[0m - Generation 47: Best Fitness=0.3153, Avg Fitness=0.2892
+2025-04-25 11:52:57 - genetic_rule_miner.models.genetic - [92mINFO[0m - Generation 48: Best Fitness=0.3153, Avg Fitness=0.2845
+2025-04-25 11:52:57 - genetic_rule_miner.models.genetic - [92mINFO[0m - Generation 49: Best Fitness=0.3153, Avg Fitness=0.3127
+2025-04-25 11:52:57 - genetic_rule_miner.models.genetic - [92mINFO[0m - Generation 50: Best Fitness=0.3153, Avg Fitness=0.2956
+2025-04-25 11:52:58 - genetic_rule_miner.models.genetic - [92mINFO[0m - Generation 51: Best Fitness=0.3153, Avg Fitness=0.2968
+2025-04-25 11:52:58 - genetic_rule_miner.models.genetic - [92mINFO[0m - Generation 52: Best Fitness=0.3153, Avg Fitness=0.3035
+2025-04-25 11:52:58 - genetic_rule_miner.models.genetic - [92mINFO[0m - Generation 53: Best Fitness=0.3153, Avg Fitness=0.3097
+2025-04-25 11:52:58 - genetic_rule_miner.models.genetic - [92mINFO[0m - Generation 54: Best Fitness=0.3153, Avg Fitness=0.3089
+2025-04-25 11:52:58 - genetic_rule_miner.models.genetic - [92mINFO[0m - Generation 55: Best Fitness=0.3153, Avg Fitness=0.2892
+2025-04-25 11:52:58 - genetic_rule_miner.models.genetic - [92mINFO[0m - Generation 56: Best Fitness=0.3153, Avg Fitness=0.3089
+2025-04-25 11:52:58 - genetic_rule_miner.models.genetic - [92mINFO[0m - Generation 57: Best Fitness=0.3153, Avg Fitness=0.3089
+2025-04-25 11:52:58 - genetic_rule_miner.models.genetic - [92mINFO[0m - Generation 58: Best Fitness=0.3153, Avg Fitness=0.3031
+2025-04-25 11:52:58 - genetic_rule_miner.models.genetic - [92mINFO[0m - Generation 59: Best Fitness=0.3153, Avg Fitness=0.3153
+2025-04-25 11:52:58 - genetic_rule_miner.models.genetic - [92mINFO[0m - Generation 60: Best Fitness=0.3153, Avg Fitness=0.3041
+2025-04-25 11:52:58 - genetic_rule_miner.models.genetic - [92mINFO[0m - Generation 61: Best Fitness=0.3153, Avg Fitness=0.3119
+2025-04-25 11:52:59 - genetic_rule_miner.models.genetic - [92mINFO[0m - Generation 62: Best Fitness=0.3153, Avg Fitness=0.2920
+2025-04-25 11:52:59 - genetic_rule_miner.models.genetic - [92mINFO[0m - Generation 63: Best Fitness=0.3153, Avg Fitness=0.3031
+2025-04-25 11:52:59 - genetic_rule_miner.models.genetic - [92mINFO[0m - Generation 64: Best Fitness=0.3153, Avg Fitness=0.3035
+2025-04-25 11:52:59 - genetic_rule_miner.models.genetic - [92mINFO[0m - Generation 65: Best Fitness=0.3153, Avg Fitness=0.3010
+2025-04-25 11:52:59 - genetic_rule_miner.models.genetic - [92mINFO[0m - Generation 66: Best Fitness=0.3153, Avg Fitness=0.2971
+2025-04-25 11:52:59 - genetic_rule_miner.models.genetic - [92mINFO[0m - Generation 67: Best Fitness=0.3153, Avg Fitness=0.3035
+2025-04-25 11:52:59 - genetic_rule_miner.models.genetic - [92mINFO[0m - Generation 68: Best Fitness=0.3153, Avg Fitness=0.3048
+2025-04-25 11:52:59 - genetic_rule_miner.models.genetic - [92mINFO[0m - Generation 69: Best Fitness=0.3153, Avg Fitness=0.3153
+2025-04-25 11:52:59 - genetic_rule_miner.models.genetic - [92mINFO[0m - Generation 70: Best Fitness=0.3153, Avg Fitness=0.2951
+2025-04-25 11:52:59 - genetic_rule_miner.models.genetic - [92mINFO[0m - Generation 71: Best Fitness=0.3153, Avg Fitness=0.3023
+2025-04-25 11:52:59 - genetic_rule_miner.models.genetic - [92mINFO[0m - Generation 72: Best Fitness=0.3153, Avg Fitness=0.3026
+2025-04-25 11:53:00 - genetic_rule_miner.models.genetic - [92mINFO[0m - Generation 73: Best Fitness=0.3153, Avg Fitness=0.2971
+2025-04-25 11:53:00 - genetic_rule_miner.models.genetic - [92mINFO[0m - Generation 74: Best Fitness=0.3153, Avg Fitness=0.2935
+2025-04-25 11:53:00 - genetic_rule_miner.models.genetic - [92mINFO[0m - Generation 75: Best Fitness=0.3153, Avg Fitness=0.2994
+2025-04-25 11:53:00 - genetic_rule_miner.models.genetic - [92mINFO[0m - Generation 76: Best Fitness=0.3153, Avg Fitness=0.2925
+2025-04-25 11:53:00 - genetic_rule_miner.models.genetic - [92mINFO[0m - Generation 77: Best Fitness=0.3153, Avg Fitness=0.3044
+2025-04-25 11:53:00 - genetic_rule_miner.models.genetic - [92mINFO[0m - Generation 78: Best Fitness=0.3153, Avg Fitness=0.3018
+2025-04-25 11:53:00 - genetic_rule_miner.models.genetic - [92mINFO[0m - Generation 79: Best Fitness=0.3153, Avg Fitness=0.2932
+2025-04-25 11:53:00 - genetic_rule_miner.models.genetic - [92mINFO[0m - Generation 80: Best Fitness=0.3153, Avg Fitness=0.2994
+2025-04-25 11:53:00 - genetic_rule_miner.models.genetic - [92mINFO[0m - Generation 81: Best Fitness=0.3153, Avg Fitness=0.2858
+2025-04-25 11:53:00 - genetic_rule_miner.models.genetic - [92mINFO[0m - Generation 82: Best Fitness=0.3153, Avg Fitness=0.3104
+2025-04-25 11:53:00 - genetic_rule_miner.models.genetic - [92mINFO[0m - Generation 83: Best Fitness=0.3153, Avg Fitness=0.2789
+2025-04-25 11:53:01 - genetic_rule_miner.models.genetic - [92mINFO[0m - Generation 84: Best Fitness=0.3153, Avg Fitness=0.2935
+2025-04-25 11:53:01 - genetic_rule_miner.models.genetic - [92mINFO[0m - Generation 85: Best Fitness=0.3153, Avg Fitness=0.2978
+2025-04-25 11:53:01 - genetic_rule_miner.models.genetic - [92mINFO[0m - Generation 86: Best Fitness=0.3153, Avg Fitness=0.2864
+2025-04-25 11:53:01 - genetic_rule_miner.models.genetic - [92mINFO[0m - Generation 87: Best Fitness=0.3153, Avg Fitness=0.3067
+2025-04-25 11:53:01 - genetic_rule_miner.models.genetic - [92mINFO[0m - Generation 88: Best Fitness=0.3153, Avg Fitness=0.3031
+2025-04-25 11:53:01 - genetic_rule_miner.models.genetic - [92mINFO[0m - Generation 89: Best Fitness=0.3153, Avg Fitness=0.3026
+2025-04-25 11:53:01 - genetic_rule_miner.models.genetic - [92mINFO[0m - Generation 90: Best Fitness=0.3153, Avg Fitness=0.3052
+2025-04-25 11:53:01 - genetic_rule_miner.models.genetic - [92mINFO[0m - Generation 91: Best Fitness=0.3153, Avg Fitness=0.3049
+2025-04-25 11:53:01 - genetic_rule_miner.models.genetic - [92mINFO[0m - Generation 92: Best Fitness=0.3153, Avg Fitness=0.2954
+2025-04-25 11:53:01 - genetic_rule_miner.models.genetic - [92mINFO[0m - Generation 93: Best Fitness=0.3153, Avg Fitness=0.2972
+2025-04-25 11:53:01 - genetic_rule_miner.models.genetic - [92mINFO[0m - Generation 94: Best Fitness=0.3153, Avg Fitness=0.3089
+2025-04-25 11:53:02 - genetic_rule_miner.models.genetic - [92mINFO[0m - Generation 95: Best Fitness=0.3153, Avg Fitness=0.2799
+2025-04-25 11:53:02 - genetic_rule_miner.models.genetic - [92mINFO[0m - Generation 96: Best Fitness=0.3153, Avg Fitness=0.3039
+2025-04-25 11:53:02 - genetic_rule_miner.models.genetic - [92mINFO[0m - Generation 97: Best Fitness=0.3153, Avg Fitness=0.2885
+2025-04-25 11:53:02 - genetic_rule_miner.models.genetic - [92mINFO[0m - Generation 98: Best Fitness=0.3153, Avg Fitness=0.3030
+2025-04-25 11:53:02 - genetic_rule_miner.models.genetic - [92mINFO[0m - Generation 99: Best Fitness=0.3153, Avg Fitness=0.3045
+2025-04-25 11:53:02 - __main__ - [92mINFO[0m - 
+Best Rule Found:
+2025-04-25 11:53:02 - __main__ - [92mINFO[0m - IF episodes_watched less than 8481.00 AND total_entries less than 392.00 AND status equals 'Finished Airing' AND type equals 'TV' AND status equals 'Finished Airing' THEN rating = high
+2025-04-25 11:53:02 - __main__ - [92mINFO[0m - 
+Fitness: 0.3153
+2025-04-25 11:53:02 - __main__ - [92mINFO[0m - Support: 0.511864406779661
+2025-04-25 11:53:02 - __main__ - [92mINFO[0m - Confidence: 0.6158940397350994
+2025-04-25 11:53:02 - genetic_rule_miner.data.database - [92mINFO[0m - PostgreSQL connection pool closed
+2025-04-25 11:53:21 - __main__ - [92mINFO[0m - Starting rule mining pipeline
+2025-04-25 11:53:42 - genetic_rule_miner.data.database - [92mINFO[0m - PostgreSQL connection pool initialized
+2025-04-25 11:53:42 - __main__ - [92mINFO[0m - Loading data from database...
+2025-04-25 11:53:42 - genetic_rule_miner.data.manager - [92mINFO[0m - [92mEntering load_data...[0m
+2025-04-25 11:53:42 - genetic_rule_miner.data.manager - [92mINFO[0m - [92mload_data completed in 0.1954s[0m
+2025-04-25 11:53:42 - __main__ - [92mINFO[0m - Merging and preprocessing data...
+2025-04-25 11:53:42 - genetic_rule_miner.data.manager - [92mINFO[0m - [92mEntering merge_data...[0m
+2025-04-25 11:53:42 - genetic_rule_miner.data.manager - [92mINFO[0m - [92mmerge_data completed in 0.0060s[0m
+2025-04-25 11:53:42 - __main__ - [92mINFO[0m - [92mEntering save_to_excel...[0m
+2025-04-25 11:53:42 - __main__ - [92mINFO[0m - Data successfully saved to processed_data.xlsx
+2025-04-25 11:53:42 - __main__ - [92mINFO[0m - [92msave_to_excel completed in 0.2829s[0m
+2025-04-25 11:53:42 - genetic_rule_miner.data.preprocessing - [92mINFO[0m - [92mEntering clean_string_columns...[0m
+2025-04-25 11:53:42 - genetic_rule_miner.data.preprocessing - [92mINFO[0m - [92mclean_string_columns completed in 0.0098s[0m
+2025-04-25 11:53:42 - genetic_rule_miner.data.preprocessing - [92mINFO[0m - [92mEntering preprocess_data...[0m
+2025-04-25 11:53:42 - genetic_rule_miner.data.preprocessing - [92mINFO[0m - [92mpreprocess_data completed in 0.0166s[0m
+2025-04-25 11:53:42 - __main__ - [92mINFO[0m - [92mEntering save_to_excel...[0m
+2025-04-25 11:53:42 - __main__ - [92mINFO[0m - Data successfully saved to datos_limpios.xlsx
+2025-04-25 11:53:42 - __main__ - [92mINFO[0m - [92msave_to_excel completed in 0.1308s[0m
+2025-04-25 11:53:42 - __main__ - [92mINFO[0m - Initializing genetic algorithm...
+2025-04-25 11:53:42 - __main__ - [92mINFO[0m - Starting evolution process...
+2025-04-25 11:53:42 - genetic_rule_miner.models.genetic - [92mINFO[0m - Generation 0: Best Fitness=0.1661, Avg Fitness=0.0105
+2025-04-25 11:53:43 - genetic_rule_miner.models.genetic - [92mINFO[0m - Generation 1: Best Fitness=0.1661, Avg Fitness=0.0211
+2025-04-25 11:53:43 - genetic_rule_miner.models.genetic - [92mINFO[0m - Generation 2: Best Fitness=0.1661, Avg Fitness=0.0443
+2025-04-25 11:53:43 - genetic_rule_miner.models.genetic - [92mINFO[0m - Generation 3: Best Fitness=0.1661, Avg Fitness=0.0595
+2025-04-25 11:53:43 - genetic_rule_miner.models.genetic - [92mINFO[0m - Generation 4: Best Fitness=0.2339, Avg Fitness=0.0887
+2025-04-25 11:53:43 - genetic_rule_miner.models.genetic - [92mINFO[0m - Generation 5: Best Fitness=0.2339, Avg Fitness=0.1243
+2025-04-25 11:53:43 - genetic_rule_miner.models.genetic - [92mINFO[0m - Generation 6: Best Fitness=0.2915, Avg Fitness=0.1793
+2025-04-25 11:53:43 - genetic_rule_miner.models.genetic - [92mINFO[0m - Generation 7: Best Fitness=0.3153, Avg Fitness=0.2176
+2025-04-25 11:53:44 - genetic_rule_miner.models.genetic - [92mINFO[0m - Generation 8: Best Fitness=0.3153, Avg Fitness=0.2437
+2025-04-25 11:53:44 - genetic_rule_miner.models.genetic - [92mINFO[0m - Generation 9: Best Fitness=0.3153, Avg Fitness=0.2640
+2025-04-25 11:53:44 - genetic_rule_miner.models.genetic - [92mINFO[0m - Generation 10: Best Fitness=0.3153, Avg Fitness=0.2856
+2025-04-25 11:53:44 - genetic_rule_miner.models.genetic - [92mINFO[0m - Generation 11: Best Fitness=0.3153, Avg Fitness=0.3052
+2025-04-25 11:53:44 - genetic_rule_miner.models.genetic - [92mINFO[0m - Generation 12: Best Fitness=0.3153, Avg Fitness=0.2948
+2025-04-25 11:53:44 - genetic_rule_miner.models.genetic - [92mINFO[0m - Generation 13: Best Fitness=0.3153, Avg Fitness=0.3034
+2025-04-25 11:53:44 - genetic_rule_miner.models.genetic - [92mINFO[0m - Generation 14: Best Fitness=0.3153, Avg Fitness=0.3043
+2025-04-25 11:53:44 - genetic_rule_miner.models.genetic - [92mINFO[0m - Generation 15: Best Fitness=0.3153, Avg Fitness=0.2881
+2025-04-25 11:53:45 - genetic_rule_miner.models.genetic - [92mINFO[0m - Generation 16: Best Fitness=0.3153, Avg Fitness=0.3027
+2025-04-25 11:53:45 - genetic_rule_miner.models.genetic - [92mINFO[0m - Generation 17: Best Fitness=0.3153, Avg Fitness=0.3000
+2025-04-25 11:53:45 - genetic_rule_miner.models.genetic - [92mINFO[0m - Generation 18: Best Fitness=0.3153, Avg Fitness=0.3153
+2025-04-25 11:53:45 - genetic_rule_miner.models.genetic - [92mINFO[0m - Generation 19: Best Fitness=0.3153, Avg Fitness=0.2950
+2025-04-25 11:53:45 - genetic_rule_miner.models.genetic - [92mINFO[0m - Generation 20: Best Fitness=0.3153, Avg Fitness=0.2894
+2025-04-25 11:53:45 - genetic_rule_miner.models.genetic - [92mINFO[0m - Generation 21: Best Fitness=0.3153, Avg Fitness=0.3130
+2025-04-25 11:53:45 - genetic_rule_miner.models.genetic - [92mINFO[0m - Generation 22: Best Fitness=0.3153, Avg Fitness=0.3087
+2025-04-25 11:53:45 - genetic_rule_miner.models.genetic - [92mINFO[0m - Generation 23: Best Fitness=0.3153, Avg Fitness=0.2997
+2025-04-25 11:53:45 - genetic_rule_miner.models.genetic - [92mINFO[0m - Generation 24: Best Fitness=0.3153, Avg Fitness=0.2951
+2025-04-25 11:53:46 - genetic_rule_miner.models.genetic - [92mINFO[0m - Generation 25: Best Fitness=0.3153, Avg Fitness=0.2939
+2025-04-25 11:53:46 - genetic_rule_miner.models.genetic - [92mINFO[0m - Generation 26: Best Fitness=0.3153, Avg Fitness=0.2919
+2025-04-25 11:53:46 - genetic_rule_miner.models.genetic - [92mINFO[0m - Generation 27: Best Fitness=0.3153, Avg Fitness=0.2905
+2025-04-25 11:53:46 - genetic_rule_miner.models.genetic - [92mINFO[0m - Generation 28: Best Fitness=0.3153, Avg Fitness=0.2868
+2025-04-25 11:53:46 - genetic_rule_miner.models.genetic - [92mINFO[0m - Generation 29: Best Fitness=0.3153, Avg Fitness=0.2958
+2025-04-25 11:53:46 - genetic_rule_miner.models.genetic - [92mINFO[0m - Generation 30: Best Fitness=0.3153, Avg Fitness=0.3153
+2025-04-25 11:53:46 - genetic_rule_miner.models.genetic - [92mINFO[0m - Generation 31: Best Fitness=0.3153, Avg Fitness=0.3012
+2025-04-25 11:53:46 - genetic_rule_miner.models.genetic - [92mINFO[0m - Generation 32: Best Fitness=0.3153, Avg Fitness=0.3049
+2025-04-25 11:53:46 - genetic_rule_miner.models.genetic - [92mINFO[0m - Generation 33: Best Fitness=0.3153, Avg Fitness=0.3089
+2025-04-25 11:53:46 - genetic_rule_miner.models.genetic - [92mINFO[0m - Generation 34: Best Fitness=0.3153, Avg Fitness=0.3017
+2025-04-25 11:53:46 - genetic_rule_miner.models.genetic - [92mINFO[0m - Generation 35: Best Fitness=0.3153, Avg Fitness=0.3058
+2025-04-25 11:53:47 - genetic_rule_miner.models.genetic - [92mINFO[0m - Generation 36: Best Fitness=0.3153, Avg Fitness=0.3027
+2025-04-25 11:53:47 - genetic_rule_miner.models.genetic - [92mINFO[0m - Generation 37: Best Fitness=0.3153, Avg Fitness=0.2979
+2025-04-25 11:53:47 - genetic_rule_miner.models.genetic - [92mINFO[0m - Generation 38: Best Fitness=0.3153, Avg Fitness=0.2898
+2025-04-25 11:53:47 - genetic_rule_miner.models.genetic - [92mINFO[0m - Generation 39: Best Fitness=0.3153, Avg Fitness=0.2945
+2025-04-25 11:53:47 - genetic_rule_miner.models.genetic - [92mINFO[0m - Generation 40: Best Fitness=0.3153, Avg Fitness=0.3066
+2025-04-25 11:53:47 - genetic_rule_miner.models.genetic - [92mINFO[0m - Generation 41: Best Fitness=0.3153, Avg Fitness=0.3060
+2025-04-25 11:53:47 - genetic_rule_miner.models.genetic - [92mINFO[0m - Generation 42: Best Fitness=0.3153, Avg Fitness=0.3026
+2025-04-25 11:53:47 - genetic_rule_miner.models.genetic - [92mINFO[0m - Generation 43: Best Fitness=0.3153, Avg Fitness=0.2986
+2025-04-25 11:53:47 - genetic_rule_miner.models.genetic - [92mINFO[0m - Generation 44: Best Fitness=0.3153, Avg Fitness=0.3037
+2025-04-25 11:53:47 - genetic_rule_miner.models.genetic - [92mINFO[0m - Generation 45: Best Fitness=0.3153, Avg Fitness=0.3005
+2025-04-25 11:53:47 - genetic_rule_miner.models.genetic - [92mINFO[0m - Generation 46: Best Fitness=0.3153, Avg Fitness=0.3111
+2025-04-25 11:53:48 - genetic_rule_miner.models.genetic - [92mINFO[0m - Generation 47: Best Fitness=0.3153, Avg Fitness=0.2892
+2025-04-25 11:53:48 - genetic_rule_miner.models.genetic - [92mINFO[0m - Generation 48: Best Fitness=0.3153, Avg Fitness=0.2845
+2025-04-25 11:53:48 - genetic_rule_miner.models.genetic - [92mINFO[0m - Generation 49: Best Fitness=0.3153, Avg Fitness=0.3127
+2025-04-25 11:53:48 - genetic_rule_miner.models.genetic - [92mINFO[0m - Generation 50: Best Fitness=0.3153, Avg Fitness=0.2956
+2025-04-25 11:53:48 - genetic_rule_miner.models.genetic - [92mINFO[0m - Generation 51: Best Fitness=0.3153, Avg Fitness=0.2968
+2025-04-25 11:53:48 - genetic_rule_miner.models.genetic - [92mINFO[0m - Generation 52: Best Fitness=0.3153, Avg Fitness=0.3035
+2025-04-25 11:53:48 - genetic_rule_miner.models.genetic - [92mINFO[0m - Generation 53: Best Fitness=0.3153, Avg Fitness=0.3097
+2025-04-25 11:53:48 - genetic_rule_miner.models.genetic - [92mINFO[0m - Generation 54: Best Fitness=0.3153, Avg Fitness=0.3089
+2025-04-25 11:53:48 - genetic_rule_miner.models.genetic - [92mINFO[0m - Generation 55: Best Fitness=0.3153, Avg Fitness=0.2892
+2025-04-25 11:53:48 - genetic_rule_miner.models.genetic - [92mINFO[0m - Generation 56: Best Fitness=0.3153, Avg Fitness=0.3089
+2025-04-25 11:53:48 - genetic_rule_miner.models.genetic - [92mINFO[0m - Generation 57: Best Fitness=0.3153, Avg Fitness=0.3089
+2025-04-25 11:53:49 - genetic_rule_miner.models.genetic - [92mINFO[0m - Generation 58: Best Fitness=0.3153, Avg Fitness=0.3031
+2025-04-25 11:53:49 - genetic_rule_miner.models.genetic - [92mINFO[0m - Generation 59: Best Fitness=0.3153, Avg Fitness=0.3153
+2025-04-25 11:53:49 - genetic_rule_miner.models.genetic - [92mINFO[0m - Generation 60: Best Fitness=0.3153, Avg Fitness=0.3041
+2025-04-25 11:53:49 - genetic_rule_miner.models.genetic - [92mINFO[0m - Generation 61: Best Fitness=0.3153, Avg Fitness=0.3119
+2025-04-25 11:53:49 - genetic_rule_miner.models.genetic - [92mINFO[0m - Generation 62: Best Fitness=0.3153, Avg Fitness=0.2920
+2025-04-25 11:53:49 - genetic_rule_miner.models.genetic - [92mINFO[0m - Generation 63: Best Fitness=0.3153, Avg Fitness=0.3031
+2025-04-25 11:53:49 - genetic_rule_miner.models.genetic - [92mINFO[0m - Generation 64: Best Fitness=0.3153, Avg Fitness=0.3035
+2025-04-25 11:53:49 - genetic_rule_miner.models.genetic - [92mINFO[0m - Generation 65: Best Fitness=0.3153, Avg Fitness=0.3010
+2025-04-25 11:53:49 - genetic_rule_miner.models.genetic - [92mINFO[0m - Generation 66: Best Fitness=0.3153, Avg Fitness=0.2971
+2025-04-25 11:53:49 - genetic_rule_miner.models.genetic - [92mINFO[0m - Generation 67: Best Fitness=0.3153, Avg Fitness=0.3035
+2025-04-25 11:53:49 - genetic_rule_miner.models.genetic - [92mINFO[0m - Generation 68: Best Fitness=0.3153, Avg Fitness=0.3048
+2025-04-25 11:53:50 - genetic_rule_miner.models.genetic - [92mINFO[0m - Generation 69: Best Fitness=0.3153, Avg Fitness=0.3153
+2025-04-25 11:53:50 - genetic_rule_miner.models.genetic - [92mINFO[0m - Generation 70: Best Fitness=0.3153, Avg Fitness=0.2951
+2025-04-25 11:53:50 - genetic_rule_miner.models.genetic - [92mINFO[0m - Generation 71: Best Fitness=0.3153, Avg Fitness=0.3023
+2025-04-25 11:53:50 - genetic_rule_miner.models.genetic - [92mINFO[0m - Generation 72: Best Fitness=0.3153, Avg Fitness=0.3026
+2025-04-25 11:53:50 - genetic_rule_miner.models.genetic - [92mINFO[0m - Generation 73: Best Fitness=0.3153, Avg Fitness=0.2971
+2025-04-25 11:53:50 - genetic_rule_miner.models.genetic - [92mINFO[0m - Generation 74: Best Fitness=0.3153, Avg Fitness=0.2935
+2025-04-25 11:53:50 - genetic_rule_miner.models.genetic - [92mINFO[0m - Generation 75: Best Fitness=0.3153, Avg Fitness=0.2994
+2025-04-25 11:53:50 - genetic_rule_miner.models.genetic - [92mINFO[0m - Generation 76: Best Fitness=0.3153, Avg Fitness=0.2925
+2025-04-25 11:53:50 - genetic_rule_miner.models.genetic - [92mINFO[0m - Generation 77: Best Fitness=0.3153, Avg Fitness=0.3044
+2025-04-25 11:53:50 - genetic_rule_miner.models.genetic - [92mINFO[0m - Generation 78: Best Fitness=0.3153, Avg Fitness=0.3018
+2025-04-25 11:53:50 - genetic_rule_miner.models.genetic - [92mINFO[0m - Generation 79: Best Fitness=0.3153, Avg Fitness=0.2932
+2025-04-25 11:53:51 - genetic_rule_miner.models.genetic - [92mINFO[0m - Generation 80: Best Fitness=0.3153, Avg Fitness=0.2994
+2025-04-25 11:53:51 - genetic_rule_miner.models.genetic - [92mINFO[0m - Generation 81: Best Fitness=0.3153, Avg Fitness=0.2858
+2025-04-25 11:53:51 - genetic_rule_miner.models.genetic - [92mINFO[0m - Generation 82: Best Fitness=0.3153, Avg Fitness=0.3104
+2025-04-25 11:53:51 - genetic_rule_miner.models.genetic - [92mINFO[0m - Generation 83: Best Fitness=0.3153, Avg Fitness=0.2789
+2025-04-25 11:53:51 - genetic_rule_miner.models.genetic - [92mINFO[0m - Generation 84: Best Fitness=0.3153, Avg Fitness=0.2935
+2025-04-25 11:53:51 - genetic_rule_miner.models.genetic - [92mINFO[0m - Generation 85: Best Fitness=0.3153, Avg Fitness=0.2978
+2025-04-25 11:53:51 - genetic_rule_miner.models.genetic - [92mINFO[0m - Generation 86: Best Fitness=0.3153, Avg Fitness=0.2864
+2025-04-25 11:53:51 - genetic_rule_miner.models.genetic - [92mINFO[0m - Generation 87: Best Fitness=0.3153, Avg Fitness=0.3067
+2025-04-25 11:53:52 - genetic_rule_miner.models.genetic - [92mINFO[0m - Generation 88: Best Fitness=0.3153, Avg Fitness=0.3031
+2025-04-25 11:53:52 - genetic_rule_miner.models.genetic - [92mINFO[0m - Generation 89: Best Fitness=0.3153, Avg Fitness=0.3026
+2025-04-25 11:53:52 - genetic_rule_miner.models.genetic - [92mINFO[0m - Generation 90: Best Fitness=0.3153, Avg Fitness=0.3052
+2025-04-25 11:53:52 - genetic_rule_miner.models.genetic - [92mINFO[0m - Generation 91: Best Fitness=0.3153, Avg Fitness=0.3049
+2025-04-25 11:53:52 - genetic_rule_miner.models.genetic - [92mINFO[0m - Generation 92: Best Fitness=0.3153, Avg Fitness=0.2954
+2025-04-25 11:53:52 - genetic_rule_miner.models.genetic - [92mINFO[0m - Generation 93: Best Fitness=0.3153, Avg Fitness=0.2972
+2025-04-25 11:53:52 - genetic_rule_miner.models.genetic - [92mINFO[0m - Generation 94: Best Fitness=0.3153, Avg Fitness=0.3089
+2025-04-25 11:53:52 - genetic_rule_miner.models.genetic - [92mINFO[0m - Generation 95: Best Fitness=0.3153, Avg Fitness=0.2799
+2025-04-25 11:53:52 - genetic_rule_miner.models.genetic - [92mINFO[0m - Generation 96: Best Fitness=0.3153, Avg Fitness=0.3039
+2025-04-25 11:53:52 - genetic_rule_miner.models.genetic - [92mINFO[0m - Generation 97: Best Fitness=0.3153, Avg Fitness=0.2885
+2025-04-25 11:53:53 - genetic_rule_miner.models.genetic - [92mINFO[0m - Generation 98: Best Fitness=0.3153, Avg Fitness=0.3030
+2025-04-25 11:53:53 - genetic_rule_miner.models.genetic - [92mINFO[0m - Generation 99: Best Fitness=0.3153, Avg Fitness=0.3045
+2025-04-25 11:53:53 - __main__ - [92mINFO[0m - 
+Best Rule Found:
+2025-04-25 11:53:53 - __main__ - [92mINFO[0m - IF episodes_watched less than 8481.00 AND total_entries less than 392.00 AND status equals 'Finished Airing' AND type equals 'TV' AND status equals 'Finished Airing' THEN rating = high
+2025-04-25 11:53:53 - __main__ - [92mINFO[0m - 
+Fitness: 0.3153
+2025-04-25 11:53:53 - __main__ - [92mINFO[0m - Support: 0.511864406779661
+2025-04-25 11:53:53 - __main__ - [92mINFO[0m - Confidence: 0.6158940397350994
+2025-04-25 11:53:53 - genetic_rule_miner.data.database - [92mINFO[0m - PostgreSQL connection pool closed
+2025-04-25 11:54:35 - __main__ - [92mINFO[0m - Starting rule mining pipeline
+2025-04-25 11:54:56 - genetic_rule_miner.data.database - [92mINFO[0m - PostgreSQL connection pool initialized
+2025-04-25 11:54:56 - __main__ - [92mINFO[0m - Loading data from database...
+2025-04-25 11:54:56 - genetic_rule_miner.data.manager - [92mINFO[0m - [92mEntering load_data...[0m
+2025-04-25 11:54:56 - genetic_rule_miner.data.manager - [92mINFO[0m - [92mload_data completed in 0.2111s[0m
+2025-04-25 11:54:56 - __main__ - [92mINFO[0m - Merging and preprocessing data...
+2025-04-25 11:54:56 - genetic_rule_miner.data.manager - [92mINFO[0m - [92mEntering merge_data...[0m
+2025-04-25 11:54:56 - genetic_rule_miner.data.manager - [92mINFO[0m - [92mmerge_data completed in 0.0053s[0m
+2025-04-25 11:54:56 - __main__ - [92mINFO[0m - [92mEntering save_to_excel...[0m
+2025-04-25 11:54:57 - __main__ - [92mINFO[0m - Data successfully saved to processed_data.xlsx
+2025-04-25 11:54:57 - __main__ - [92mINFO[0m - [92msave_to_excel completed in 0.2667s[0m
+2025-04-25 11:54:57 - genetic_rule_miner.data.preprocessing - [92mINFO[0m - [92mEntering clean_string_columns...[0m
+2025-04-25 11:54:57 - genetic_rule_miner.data.preprocessing - [92mINFO[0m - [92mclean_string_columns completed in 0.0099s[0m
+2025-04-25 11:54:57 - genetic_rule_miner.data.preprocessing - [92mINFO[0m - [92mEntering preprocess_data...[0m
+2025-04-25 11:54:57 - genetic_rule_miner.data.preprocessing - [92mINFO[0m - [92mpreprocess_data completed in 0.0152s[0m
+2025-04-25 11:54:57 - __main__ - [92mINFO[0m - [92mEntering save_to_excel...[0m
+2025-04-25 11:54:57 - __main__ - [92mINFO[0m - Data successfully saved to datos_limpios.xlsx
+2025-04-25 11:54:57 - __main__ - [92mINFO[0m - [92msave_to_excel completed in 0.1304s[0m
+2025-04-25 11:54:57 - __main__ - [92mINFO[0m - Initializing genetic algorithm...
+2025-04-25 11:54:57 - __main__ - [92mINFO[0m - Starting evolution process...
+2025-04-25 11:54:57 - genetic_rule_miner.models.genetic - [92mINFO[0m - Generation 0: Best Fitness=0.1661, Support=0.2610, Confidence=0.6364, Rule: IF gender equals 'Male' AND total_entries less than 392.00 AND duration_class equals 'standard' AND episodes_class equals 'long' AND status equals 'Finished Airing' THEN rating = high
+2025-04-25 11:54:57 - genetic_rule_miner.models.genetic - [92mINFO[0m - Generation 1: Best Fitness=0.1661, Support=0.2610, Confidence=0.6364, Rule: IF gender equals 'Male' AND total_entries less than 392.00 AND duration_class equals 'standard' AND episodes_class equals 'long' AND status equals 'Finished Airing' THEN rating = high
+2025-04-25 11:54:57 - genetic_rule_miner.models.genetic - [92mINFO[0m - Generation 2: Best Fitness=0.1661, Support=0.2610, Confidence=0.6364, Rule: IF gender equals 'Male' AND total_entries less than 392.00 AND duration_class equals 'standard' AND episodes_class equals 'long' AND status equals 'Finished Airing' THEN rating = high
+2025-04-25 11:54:57 - genetic_rule_miner.models.genetic - [92mINFO[0m - Generation 3: Best Fitness=0.1661, Support=0.2610, Confidence=0.6364, Rule: IF gender equals 'Male' AND total_entries less than 392.00 AND duration_class equals 'standard' AND episodes_class equals 'long' AND status equals 'Finished Airing' THEN rating = high
+2025-04-25 11:54:57 - genetic_rule_miner.models.genetic - [92mINFO[0m - Generation 4: Best Fitness=0.2339, Support=0.3831, Confidence=0.6106, Rule: IF episodes_watched less than 8481.00 AND total_entries less than 392.00 AND duration_class equals 'standard' AND episodes_class equals 'long' AND status equals 'Finished Airing' THEN rating = high
+2025-04-25 11:54:57 - genetic_rule_miner.models.genetic - [92mINFO[0m - Generation 5: Best Fitness=0.2339, Support=0.3831, Confidence=0.6106, Rule: IF episodes_watched less than 8481.00 AND total_entries less than 392.00 AND duration_class equals 'standard' AND episodes_class equals 'long' AND status equals 'Finished Airing' THEN rating = high
+2025-04-25 11:54:58 - genetic_rule_miner.models.genetic - [92mINFO[0m - Generation 6: Best Fitness=0.2915, Support=0.4508, Confidence=0.6466, Rule: IF episodes_watched less than 8481.00 AND total_entries less than 392.00 AND status equals 'Finished Airing' AND score greater than 7.39 AND status equals 'Finished Airing' THEN rating = high
+2025-04-25 11:54:58 - genetic_rule_miner.models.genetic - [92mINFO[0m - Generation 7: Best Fitness=0.3153, Support=0.5119, Confidence=0.6159, Rule: IF episodes_watched less than 8481.00 AND total_entries less than 392.00 AND status equals 'Finished Airing' AND type equals 'TV' AND status equals 'Finished Airing' THEN rating = high
+2025-04-25 11:54:58 - genetic_rule_miner.models.genetic - [92mINFO[0m - Generation 8: Best Fitness=0.3153, Support=0.5119, Confidence=0.6159, Rule: IF episodes_watched less than 8481.00 AND total_entries less than 392.00 AND status equals 'Finished Airing' AND type equals 'TV' AND status equals 'Finished Airing' THEN rating = high
+2025-04-25 11:54:58 - genetic_rule_miner.models.genetic - [92mINFO[0m - Generation 9: Best Fitness=0.3153, Support=0.5119, Confidence=0.6159, Rule: IF episodes_watched less than 8481.00 AND total_entries less than 392.00 AND status equals 'Finished Airing' AND type equals 'TV' AND status equals 'Finished Airing' THEN rating = high
+2025-04-25 11:54:58 - genetic_rule_miner.models.genetic - [92mINFO[0m - Generation 10: Best Fitness=0.3153, Support=0.5119, Confidence=0.6159, Rule: IF episodes_watched less than 8481.00 AND total_entries less than 392.00 AND status equals 'Finished Airing' AND type equals 'TV' AND status equals 'Finished Airing' THEN rating = high
+2025-04-25 11:54:58 - genetic_rule_miner.models.genetic - [92mINFO[0m - Generation 11: Best Fitness=0.3153, Support=0.5119, Confidence=0.6159, Rule: IF episodes_watched less than 8481.00 AND total_entries less than 392.00 AND status equals 'Finished Airing' AND type equals 'TV' AND status equals 'Finished Airing' THEN rating = high
+2025-04-25 11:54:58 - genetic_rule_miner.models.genetic - [92mINFO[0m - Generation 12: Best Fitness=0.3153, Support=0.5119, Confidence=0.6159, Rule: IF episodes_watched less than 8481.00 AND total_entries less than 392.00 AND status equals 'Finished Airing' AND type equals 'TV' AND status equals 'Finished Airing' THEN rating = high
+2025-04-25 11:54:58 - genetic_rule_miner.models.genetic - [92mINFO[0m - Generation 13: Best Fitness=0.3153, Support=0.5119, Confidence=0.6159, Rule: IF episodes_watched less than 8481.00 AND total_entries less than 392.00 AND status equals 'Finished Airing' AND type equals 'TV' AND status equals 'Finished Airing' THEN rating = high
+2025-04-25 11:54:58 - genetic_rule_miner.models.genetic - [92mINFO[0m - Generation 14: Best Fitness=0.3153, Support=0.5119, Confidence=0.6159, Rule: IF episodes_watched less than 8481.00 AND total_entries less than 392.00 AND status equals 'Finished Airing' AND type equals 'TV' AND status equals 'Finished Airing' THEN rating = high
+2025-04-25 11:54:59 - genetic_rule_miner.models.genetic - [92mINFO[0m - Generation 15: Best Fitness=0.3153, Support=0.5119, Confidence=0.6159, Rule: IF episodes_watched less than 8481.00 AND total_entries less than 392.00 AND status equals 'Finished Airing' AND type equals 'TV' AND status equals 'Finished Airing' THEN rating = high
+2025-04-25 11:54:59 - genetic_rule_miner.models.genetic - [92mINFO[0m - Generation 16: Best Fitness=0.3153, Support=0.5119, Confidence=0.6159, Rule: IF episodes_watched less than 8481.00 AND total_entries less than 392.00 AND status equals 'Finished Airing' AND type equals 'TV' AND status equals 'Finished Airing' THEN rating = high
+2025-04-25 11:54:59 - genetic_rule_miner.models.genetic - [92mINFO[0m - Generation 17: Best Fitness=0.3153, Support=0.5119, Confidence=0.6159, Rule: IF episodes_watched less than 8481.00 AND total_entries less than 392.00 AND status equals 'Finished Airing' AND type equals 'TV' AND status equals 'Finished Airing' THEN rating = high
+2025-04-25 11:54:59 - genetic_rule_miner.models.genetic - [92mINFO[0m - Generation 18: Best Fitness=0.3153, Support=0.5119, Confidence=0.6159, Rule: IF episodes_watched less than 8481.00 AND total_entries less than 392.00 AND status equals 'Finished Airing' AND type equals 'TV' AND status equals 'Finished Airing' THEN rating = high
+2025-04-25 11:54:59 - genetic_rule_miner.models.genetic - [92mINFO[0m - Generation 19: Best Fitness=0.3153, Support=0.5119, Confidence=0.6159, Rule: IF episodes_watched less than 8481.00 AND total_entries less than 392.00 AND status equals 'Finished Airing' AND type equals 'TV' AND status equals 'Finished Airing' THEN rating = high
+2025-04-25 11:54:59 - genetic_rule_miner.models.genetic - [92mINFO[0m - Generation 20: Best Fitness=0.3153, Support=0.5119, Confidence=0.6159, Rule: IF episodes_watched less than 8481.00 AND total_entries less than 392.00 AND status equals 'Finished Airing' AND type equals 'TV' AND status equals 'Finished Airing' THEN rating = high
+2025-04-25 11:54:59 - genetic_rule_miner.models.genetic - [92mINFO[0m - Generation 21: Best Fitness=0.3153, Support=0.5119, Confidence=0.6159, Rule: IF episodes_watched less than 8481.00 AND total_entries less than 392.00 AND status equals 'Finished Airing' AND type equals 'TV' AND status equals 'Finished Airing' THEN rating = high
+2025-04-25 11:54:59 - genetic_rule_miner.models.genetic - [92mINFO[0m - Generation 22: Best Fitness=0.3153, Support=0.5119, Confidence=0.6159, Rule: IF episodes_watched less than 8481.00 AND total_entries less than 392.00 AND status equals 'Finished Airing' AND type equals 'TV' AND status equals 'Finished Airing' THEN rating = high
+2025-04-25 11:54:59 - genetic_rule_miner.models.genetic - [92mINFO[0m - Generation 23: Best Fitness=0.3153, Support=0.5119, Confidence=0.6159, Rule: IF episodes_watched less than 8481.00 AND total_entries less than 392.00 AND status equals 'Finished Airing' AND type equals 'TV' AND status equals 'Finished Airing' THEN rating = high
+2025-04-25 11:54:59 - genetic_rule_miner.models.genetic - [92mINFO[0m - Generation 24: Best Fitness=0.3153, Support=0.5119, Confidence=0.6159, Rule: IF episodes_watched less than 8481.00 AND total_entries less than 392.00 AND status equals 'Finished Airing' AND type equals 'TV' AND status equals 'Finished Airing' THEN rating = high
+2025-04-25 11:54:59 - genetic_rule_miner.models.genetic - [92mINFO[0m - Generation 25: Best Fitness=0.3153, Support=0.5119, Confidence=0.6159, Rule: IF episodes_watched less than 8481.00 AND total_entries less than 392.00 AND status equals 'Finished Airing' AND type equals 'TV' AND status equals 'Finished Airing' THEN rating = high
+2025-04-25 11:55:00 - genetic_rule_miner.models.genetic - [92mINFO[0m - Generation 26: Best Fitness=0.3153, Support=0.5119, Confidence=0.6159, Rule: IF episodes_watched less than 8481.00 AND total_entries less than 392.00 AND status equals 'Finished Airing' AND type equals 'TV' AND status equals 'Finished Airing' THEN rating = high
+2025-04-25 11:55:00 - genetic_rule_miner.models.genetic - [92mINFO[0m - Generation 27: Best Fitness=0.3153, Support=0.5119, Confidence=0.6159, Rule: IF episodes_watched less than 8481.00 AND total_entries less than 392.00 AND status equals 'Finished Airing' AND type equals 'TV' AND status equals 'Finished Airing' THEN rating = high
+2025-04-25 11:55:00 - genetic_rule_miner.models.genetic - [92mINFO[0m - Generation 28: Best Fitness=0.3153, Support=0.5119, Confidence=0.6159, Rule: IF episodes_watched less than 8481.00 AND total_entries less than 392.00 AND status equals 'Finished Airing' AND type equals 'TV' AND status equals 'Finished Airing' THEN rating = high
+2025-04-25 11:55:00 - genetic_rule_miner.models.genetic - [92mINFO[0m - Generation 29: Best Fitness=0.3153, Support=0.5119, Confidence=0.6159, Rule: IF episodes_watched less than 8481.00 AND total_entries less than 392.00 AND status equals 'Finished Airing' AND type equals 'TV' AND status equals 'Finished Airing' THEN rating = high
+2025-04-25 11:55:00 - genetic_rule_miner.models.genetic - [92mINFO[0m - Generation 30: Best Fitness=0.3153, Support=0.5119, Confidence=0.6159, Rule: IF episodes_watched less than 8481.00 AND total_entries less than 392.00 AND status equals 'Finished Airing' AND type equals 'TV' AND status equals 'Finished Airing' THEN rating = high
+2025-04-25 11:55:00 - genetic_rule_miner.models.genetic - [92mINFO[0m - Generation 31: Best Fitness=0.3153, Support=0.5119, Confidence=0.6159, Rule: IF episodes_watched less than 8481.00 AND total_entries less than 392.00 AND status equals 'Finished Airing' AND type equals 'TV' AND status equals 'Finished Airing' THEN rating = high
+2025-04-25 11:55:00 - genetic_rule_miner.models.genetic - [92mINFO[0m - Generation 32: Best Fitness=0.3153, Support=0.5119, Confidence=0.6159, Rule: IF episodes_watched less than 8481.00 AND total_entries less than 392.00 AND status equals 'Finished Airing' AND type equals 'TV' AND status equals 'Finished Airing' THEN rating = high
+2025-04-25 11:55:00 - genetic_rule_miner.models.genetic - [92mINFO[0m - Generation 33: Best Fitness=0.3153, Support=0.5119, Confidence=0.6159, Rule: IF episodes_watched less than 8481.00 AND total_entries less than 392.00 AND status equals 'Finished Airing' AND type equals 'TV' AND status equals 'Finished Airing' THEN rating = high
+2025-04-25 11:55:00 - genetic_rule_miner.models.genetic - [92mINFO[0m - Generation 34: Best Fitness=0.3153, Support=0.5119, Confidence=0.6159, Rule: IF episodes_watched less than 8481.00 AND total_entries less than 392.00 AND status equals 'Finished Airing' AND type equals 'TV' AND status equals 'Finished Airing' THEN rating = high
+2025-04-25 11:55:01 - genetic_rule_miner.models.genetic - [92mINFO[0m - Generation 35: Best Fitness=0.3153, Support=0.5119, Confidence=0.6159, Rule: IF episodes_watched less than 8481.00 AND total_entries less than 392.00 AND status equals 'Finished Airing' AND type equals 'TV' AND status equals 'Finished Airing' THEN rating = high
+2025-04-25 11:55:01 - genetic_rule_miner.models.genetic - [92mINFO[0m - Generation 36: Best Fitness=0.3153, Support=0.5119, Confidence=0.6159, Rule: IF episodes_watched less than 8481.00 AND total_entries less than 392.00 AND status equals 'Finished Airing' AND type equals 'TV' AND status equals 'Finished Airing' THEN rating = high
+2025-04-25 11:55:01 - genetic_rule_miner.models.genetic - [92mINFO[0m - Generation 37: Best Fitness=0.3153, Support=0.5119, Confidence=0.6159, Rule: IF episodes_watched less than 8481.00 AND total_entries less than 392.00 AND status equals 'Finished Airing' AND type equals 'TV' AND status equals 'Finished Airing' THEN rating = high
+2025-04-25 11:55:01 - genetic_rule_miner.models.genetic - [92mINFO[0m - Generation 38: Best Fitness=0.3153, Support=0.5119, Confidence=0.6159, Rule: IF episodes_watched less than 8481.00 AND total_entries less than 392.00 AND status equals 'Finished Airing' AND type equals 'TV' AND status equals 'Finished Airing' THEN rating = high
+2025-04-25 11:55:01 - genetic_rule_miner.models.genetic - [92mINFO[0m - Generation 39: Best Fitness=0.3153, Support=0.5119, Confidence=0.6159, Rule: IF episodes_watched less than 8481.00 AND total_entries less than 392.00 AND status equals 'Finished Airing' AND type equals 'TV' AND status equals 'Finished Airing' THEN rating = high
+2025-04-25 11:55:01 - genetic_rule_miner.models.genetic - [92mINFO[0m - Generation 40: Best Fitness=0.3153, Support=0.5119, Confidence=0.6159, Rule: IF episodes_watched less than 8481.00 AND total_entries less than 392.00 AND status equals 'Finished Airing' AND type equals 'TV' AND status equals 'Finished Airing' THEN rating = high
+2025-04-25 11:55:01 - genetic_rule_miner.models.genetic - [92mINFO[0m - Generation 41: Best Fitness=0.3153, Support=0.5119, Confidence=0.6159, Rule: IF episodes_watched less than 8481.00 AND total_entries less than 392.00 AND status equals 'Finished Airing' AND type equals 'TV' AND status equals 'Finished Airing' THEN rating = high
+2025-04-25 11:55:01 - genetic_rule_miner.models.genetic - [92mINFO[0m - Generation 42: Best Fitness=0.3153, Support=0.5119, Confidence=0.6159, Rule: IF episodes_watched less than 8481.00 AND total_entries less than 392.00 AND status equals 'Finished Airing' AND type equals 'TV' AND status equals 'Finished Airing' THEN rating = high
+2025-04-25 11:55:01 - genetic_rule_miner.models.genetic - [92mINFO[0m - Generation 43: Best Fitness=0.3153, Support=0.5119, Confidence=0.6159, Rule: IF episodes_watched less than 8481.00 AND total_entries less than 392.00 AND status equals 'Finished Airing' AND type equals 'TV' AND status equals 'Finished Airing' THEN rating = high
+2025-04-25 11:55:02 - genetic_rule_miner.models.genetic - [92mINFO[0m - Generation 44: Best Fitness=0.3153, Support=0.5119, Confidence=0.6159, Rule: IF episodes_watched less than 8481.00 AND total_entries less than 392.00 AND status equals 'Finished Airing' AND type equals 'TV' AND status equals 'Finished Airing' THEN rating = high
+2025-04-25 11:55:02 - genetic_rule_miner.models.genetic - [92mINFO[0m - Generation 45: Best Fitness=0.3153, Support=0.5119, Confidence=0.6159, Rule: IF episodes_watched less than 8481.00 AND total_entries less than 392.00 AND status equals 'Finished Airing' AND type equals 'TV' AND status equals 'Finished Airing' THEN rating = high
+2025-04-25 11:55:02 - genetic_rule_miner.models.genetic - [92mINFO[0m - Generation 46: Best Fitness=0.3153, Support=0.5119, Confidence=0.6159, Rule: IF episodes_watched less than 8481.00 AND total_entries less than 392.00 AND status equals 'Finished Airing' AND type equals 'TV' AND status equals 'Finished Airing' THEN rating = high
+2025-04-25 11:55:02 - genetic_rule_miner.models.genetic - [92mINFO[0m - Generation 47: Best Fitness=0.3153, Support=0.5119, Confidence=0.6159, Rule: IF episodes_watched less than 8481.00 AND total_entries less than 392.00 AND status equals 'Finished Airing' AND type equals 'TV' AND status equals 'Finished Airing' THEN rating = high
+2025-04-25 11:55:02 - genetic_rule_miner.models.genetic - [92mINFO[0m - Generation 48: Best Fitness=0.3153, Support=0.5119, Confidence=0.6159, Rule: IF episodes_watched less than 8481.00 AND total_entries less than 392.00 AND status equals 'Finished Airing' AND type equals 'TV' AND status equals 'Finished Airing' THEN rating = high
+2025-04-25 11:55:02 - genetic_rule_miner.models.genetic - [92mINFO[0m - Generation 49: Best Fitness=0.3153, Support=0.5119, Confidence=0.6159, Rule: IF episodes_watched less than 8481.00 AND total_entries less than 392.00 AND status equals 'Finished Airing' AND type equals 'TV' AND status equals 'Finished Airing' THEN rating = high
+2025-04-25 11:55:02 - genetic_rule_miner.models.genetic - [92mINFO[0m - Generation 50: Best Fitness=0.3153, Support=0.5119, Confidence=0.6159, Rule: IF episodes_watched less than 8481.00 AND total_entries less than 392.00 AND status equals 'Finished Airing' AND type equals 'TV' AND status equals 'Finished Airing' THEN rating = high
+2025-04-25 11:55:02 - genetic_rule_miner.models.genetic - [92mINFO[0m - Generation 51: Best Fitness=0.3153, Support=0.5119, Confidence=0.6159, Rule: IF episodes_watched less than 8481.00 AND total_entries less than 392.00 AND status equals 'Finished Airing' AND type equals 'TV' AND status equals 'Finished Airing' THEN rating = high
+2025-04-25 11:55:02 - genetic_rule_miner.models.genetic - [92mINFO[0m - Generation 52: Best Fitness=0.3153, Support=0.5119, Confidence=0.6159, Rule: IF episodes_watched less than 8481.00 AND total_entries less than 392.00 AND status equals 'Finished Airing' AND type equals 'TV' AND status equals 'Finished Airing' THEN rating = high
+2025-04-25 11:55:02 - genetic_rule_miner.models.genetic - [92mINFO[0m - Generation 53: Best Fitness=0.3153, Support=0.5119, Confidence=0.6159, Rule: IF episodes_watched less than 8481.00 AND total_entries less than 392.00 AND status equals 'Finished Airing' AND type equals 'TV' AND status equals 'Finished Airing' THEN rating = high
+2025-04-25 11:55:03 - genetic_rule_miner.models.genetic - [92mINFO[0m - Generation 54: Best Fitness=0.3153, Support=0.5119, Confidence=0.6159, Rule: IF episodes_watched less than 8481.00 AND total_entries less than 392.00 AND status equals 'Finished Airing' AND type equals 'TV' AND status equals 'Finished Airing' THEN rating = high
+2025-04-25 11:55:03 - genetic_rule_miner.models.genetic - [92mINFO[0m - Generation 55: Best Fitness=0.3153, Support=0.5119, Confidence=0.6159, Rule: IF episodes_watched less than 8481.00 AND total_entries less than 392.00 AND status equals 'Finished Airing' AND type equals 'TV' AND status equals 'Finished Airing' THEN rating = high
+2025-04-25 11:55:03 - genetic_rule_miner.models.genetic - [92mINFO[0m - Generation 56: Best Fitness=0.3153, Support=0.5119, Confidence=0.6159, Rule: IF episodes_watched less than 8481.00 AND total_entries less than 392.00 AND status equals 'Finished Airing' AND type equals 'TV' AND status equals 'Finished Airing' THEN rating = high
+2025-04-25 11:55:03 - genetic_rule_miner.models.genetic - [92mINFO[0m - Generation 57: Best Fitness=0.3153, Support=0.5119, Confidence=0.6159, Rule: IF episodes_watched less than 8481.00 AND total_entries less than 392.00 AND status equals 'Finished Airing' AND type equals 'TV' AND status equals 'Finished Airing' THEN rating = high
+2025-04-25 11:55:03 - genetic_rule_miner.models.genetic - [92mINFO[0m - Generation 58: Best Fitness=0.3153, Support=0.5119, Confidence=0.6159, Rule: IF episodes_watched less than 8481.00 AND total_entries less than 392.00 AND status equals 'Finished Airing' AND type equals 'TV' AND status equals 'Finished Airing' THEN rating = high
+2025-04-25 11:55:03 - genetic_rule_miner.models.genetic - [92mINFO[0m - Generation 59: Best Fitness=0.3153, Support=0.5119, Confidence=0.6159, Rule: IF episodes_watched less than 8481.00 AND total_entries less than 392.00 AND status equals 'Finished Airing' AND type equals 'TV' AND status equals 'Finished Airing' THEN rating = high
+2025-04-25 11:55:03 - genetic_rule_miner.models.genetic - [92mINFO[0m - Generation 60: Best Fitness=0.3153, Support=0.5119, Confidence=0.6159, Rule: IF episodes_watched less than 8481.00 AND total_entries less than 392.00 AND status equals 'Finished Airing' AND type equals 'TV' AND status equals 'Finished Airing' THEN rating = high
+2025-04-25 11:55:03 - genetic_rule_miner.models.genetic - [92mINFO[0m - Generation 61: Best Fitness=0.3153, Support=0.5119, Confidence=0.6159, Rule: IF episodes_watched less than 8481.00 AND total_entries less than 392.00 AND status equals 'Finished Airing' AND type equals 'TV' AND status equals 'Finished Airing' THEN rating = high
+2025-04-25 11:55:03 - genetic_rule_miner.models.genetic - [92mINFO[0m - Generation 62: Best Fitness=0.3153, Support=0.5119, Confidence=0.6159, Rule: IF episodes_watched less than 8481.00 AND total_entries less than 392.00 AND status equals 'Finished Airing' AND type equals 'TV' AND status equals 'Finished Airing' THEN rating = high
+2025-04-25 11:55:03 - genetic_rule_miner.models.genetic - [92mINFO[0m - Generation 63: Best Fitness=0.3153, Support=0.5119, Confidence=0.6159, Rule: IF episodes_watched less than 8481.00 AND total_entries less than 392.00 AND status equals 'Finished Airing' AND type equals 'TV' AND status equals 'Finished Airing' THEN rating = high
+2025-04-25 11:55:03 - genetic_rule_miner.models.genetic - [92mINFO[0m - Generation 64: Best Fitness=0.3153, Support=0.5119, Confidence=0.6159, Rule: IF episodes_watched less than 8481.00 AND total_entries less than 392.00 AND status equals 'Finished Airing' AND type equals 'TV' AND status equals 'Finished Airing' THEN rating = high
+2025-04-25 11:55:04 - genetic_rule_miner.models.genetic - [92mINFO[0m - Generation 65: Best Fitness=0.3153, Support=0.5119, Confidence=0.6159, Rule: IF episodes_watched less than 8481.00 AND total_entries less than 392.00 AND status equals 'Finished Airing' AND type equals 'TV' AND status equals 'Finished Airing' THEN rating = high
+2025-04-25 11:55:04 - genetic_rule_miner.models.genetic - [92mINFO[0m - Generation 66: Best Fitness=0.3153, Support=0.5119, Confidence=0.6159, Rule: IF episodes_watched less than 8481.00 AND total_entries less than 392.00 AND status equals 'Finished Airing' AND type equals 'TV' AND status equals 'Finished Airing' THEN rating = high
+2025-04-25 11:55:04 - genetic_rule_miner.models.genetic - [92mINFO[0m - Generation 67: Best Fitness=0.3153, Support=0.5119, Confidence=0.6159, Rule: IF episodes_watched less than 8481.00 AND total_entries less than 392.00 AND status equals 'Finished Airing' AND type equals 'TV' AND status equals 'Finished Airing' THEN rating = high
+2025-04-25 11:55:04 - genetic_rule_miner.models.genetic - [92mINFO[0m - Generation 68: Best Fitness=0.3153, Support=0.5119, Confidence=0.6159, Rule: IF episodes_watched less than 8481.00 AND total_entries less than 392.00 AND status equals 'Finished Airing' AND type equals 'TV' AND status equals 'Finished Airing' THEN rating = high
+2025-04-25 11:55:04 - genetic_rule_miner.models.genetic - [92mINFO[0m - Generation 69: Best Fitness=0.3153, Support=0.5119, Confidence=0.6159, Rule: IF episodes_watched less than 8481.00 AND total_entries less than 392.00 AND status equals 'Finished Airing' AND type equals 'TV' AND status equals 'Finished Airing' THEN rating = high
+2025-04-25 11:55:04 - genetic_rule_miner.models.genetic - [92mINFO[0m - Generation 70: Best Fitness=0.3153, Support=0.5119, Confidence=0.6159, Rule: IF episodes_watched less than 8481.00 AND total_entries less than 392.00 AND status equals 'Finished Airing' AND type equals 'TV' AND status equals 'Finished Airing' THEN rating = high
+2025-04-25 11:55:04 - genetic_rule_miner.models.genetic - [92mINFO[0m - Generation 71: Best Fitness=0.3153, Support=0.5119, Confidence=0.6159, Rule: IF episodes_watched less than 8481.00 AND total_entries less than 392.00 AND status equals 'Finished Airing' AND type equals 'TV' AND status equals 'Finished Airing' THEN rating = high
+2025-04-25 11:55:04 - genetic_rule_miner.models.genetic - [92mINFO[0m - Generation 72: Best Fitness=0.3153, Support=0.5119, Confidence=0.6159, Rule: IF episodes_watched less than 8481.00 AND total_entries less than 392.00 AND status equals 'Finished Airing' AND type equals 'TV' AND status equals 'Finished Airing' THEN rating = high
+2025-04-25 11:55:04 - genetic_rule_miner.models.genetic - [92mINFO[0m - Generation 73: Best Fitness=0.3153, Support=0.5119, Confidence=0.6159, Rule: IF episodes_watched less than 8481.00 AND total_entries less than 392.00 AND status equals 'Finished Airing' AND type equals 'TV' AND status equals 'Finished Airing' THEN rating = high
+2025-04-25 11:55:04 - genetic_rule_miner.models.genetic - [92mINFO[0m - Generation 74: Best Fitness=0.3153, Support=0.5119, Confidence=0.6159, Rule: IF episodes_watched less than 8481.00 AND total_entries less than 392.00 AND status equals 'Finished Airing' AND type equals 'TV' AND status equals 'Finished Airing' THEN rating = high
+2025-04-25 11:55:04 - genetic_rule_miner.models.genetic - [92mINFO[0m - Generation 75: Best Fitness=0.3153, Support=0.5119, Confidence=0.6159, Rule: IF episodes_watched less than 8481.00 AND total_entries less than 392.00 AND status equals 'Finished Airing' AND type equals 'TV' AND status equals 'Finished Airing' THEN rating = high
+2025-04-25 11:55:04 - genetic_rule_miner.models.genetic - [92mINFO[0m - Generation 76: Best Fitness=0.3153, Support=0.5119, Confidence=0.6159, Rule: IF episodes_watched less than 8481.00 AND total_entries less than 392.00 AND status equals 'Finished Airing' AND type equals 'TV' AND status equals 'Finished Airing' THEN rating = high
+2025-04-25 11:55:05 - genetic_rule_miner.models.genetic - [92mINFO[0m - Generation 77: Best Fitness=0.3153, Support=0.5119, Confidence=0.6159, Rule: IF episodes_watched less than 8481.00 AND total_entries less than 392.00 AND status equals 'Finished Airing' AND type equals 'TV' AND status equals 'Finished Airing' THEN rating = high
+2025-04-25 11:55:05 - genetic_rule_miner.models.genetic - [92mINFO[0m - Generation 78: Best Fitness=0.3153, Support=0.5119, Confidence=0.6159, Rule: IF episodes_watched less than 8481.00 AND total_entries less than 392.00 AND status equals 'Finished Airing' AND type equals 'TV' AND status equals 'Finished Airing' THEN rating = high
+2025-04-25 11:55:05 - genetic_rule_miner.models.genetic - [92mINFO[0m - Generation 79: Best Fitness=0.3153, Support=0.5119, Confidence=0.6159, Rule: IF episodes_watched less than 8481.00 AND total_entries less than 392.00 AND status equals 'Finished Airing' AND type equals 'TV' AND status equals 'Finished Airing' THEN rating = high
+2025-04-25 11:55:05 - genetic_rule_miner.models.genetic - [92mINFO[0m - Generation 80: Best Fitness=0.3153, Support=0.5119, Confidence=0.6159, Rule: IF episodes_watched less than 8481.00 AND total_entries less than 392.00 AND status equals 'Finished Airing' AND type equals 'TV' AND status equals 'Finished Airing' THEN rating = high
+2025-04-25 11:55:05 - genetic_rule_miner.models.genetic - [92mINFO[0m - Generation 81: Best Fitness=0.3153, Support=0.5119, Confidence=0.6159, Rule: IF episodes_watched less than 8481.00 AND total_entries less than 392.00 AND status equals 'Finished Airing' AND type equals 'TV' AND status equals 'Finished Airing' THEN rating = high
+2025-04-25 11:55:05 - genetic_rule_miner.models.genetic - [92mINFO[0m - Generation 82: Best Fitness=0.3153, Support=0.5119, Confidence=0.6159, Rule: IF episodes_watched less than 8481.00 AND total_entries less than 392.00 AND status equals 'Finished Airing' AND type equals 'TV' AND status equals 'Finished Airing' THEN rating = high
+2025-04-25 11:55:05 - genetic_rule_miner.models.genetic - [92mINFO[0m - Generation 83: Best Fitness=0.3153, Support=0.5119, Confidence=0.6159, Rule: IF episodes_watched less than 8481.00 AND total_entries less than 392.00 AND status equals 'Finished Airing' AND type equals 'TV' AND status equals 'Finished Airing' THEN rating = high
+2025-04-25 11:55:05 - genetic_rule_miner.models.genetic - [92mINFO[0m - Generation 84: Best Fitness=0.3153, Support=0.5119, Confidence=0.6159, Rule: IF episodes_watched less than 8481.00 AND total_entries less than 392.00 AND status equals 'Finished Airing' AND type equals 'TV' AND status equals 'Finished Airing' THEN rating = high
+2025-04-25 11:55:05 - genetic_rule_miner.models.genetic - [92mINFO[0m - Generation 85: Best Fitness=0.3153, Support=0.5119, Confidence=0.6159, Rule: IF episodes_watched less than 8481.00 AND total_entries less than 392.00 AND status equals 'Finished Airing' AND type equals 'TV' AND status equals 'Finished Airing' THEN rating = high
+2025-04-25 11:55:05 - genetic_rule_miner.models.genetic - [92mINFO[0m - Generation 86: Best Fitness=0.3153, Support=0.5119, Confidence=0.6159, Rule: IF episodes_watched less than 8481.00 AND total_entries less than 392.00 AND status equals 'Finished Airing' AND type equals 'TV' AND status equals 'Finished Airing' THEN rating = high
+2025-04-25 11:55:05 - genetic_rule_miner.models.genetic - [92mINFO[0m - Generation 87: Best Fitness=0.3153, Support=0.5119, Confidence=0.6159, Rule: IF episodes_watched less than 8481.00 AND total_entries less than 392.00 AND status equals 'Finished Airing' AND type equals 'TV' AND status equals 'Finished Airing' THEN rating = high
+2025-04-25 11:55:06 - genetic_rule_miner.models.genetic - [92mINFO[0m - Generation 88: Best Fitness=0.3153, Support=0.5119, Confidence=0.6159, Rule: IF episodes_watched less than 8481.00 AND total_entries less than 392.00 AND status equals 'Finished Airing' AND type equals 'TV' AND status equals 'Finished Airing' THEN rating = high
+2025-04-25 11:55:06 - genetic_rule_miner.models.genetic - [92mINFO[0m - Generation 89: Best Fitness=0.3153, Support=0.5119, Confidence=0.6159, Rule: IF episodes_watched less than 8481.00 AND total_entries less than 392.00 AND status equals 'Finished Airing' AND type equals 'TV' AND status equals 'Finished Airing' THEN rating = high
+2025-04-25 11:55:06 - genetic_rule_miner.models.genetic - [92mINFO[0m - Generation 90: Best Fitness=0.3153, Support=0.5119, Confidence=0.6159, Rule: IF episodes_watched less than 8481.00 AND total_entries less than 392.00 AND status equals 'Finished Airing' AND type equals 'TV' AND status equals 'Finished Airing' THEN rating = high
+2025-04-25 11:55:06 - genetic_rule_miner.models.genetic - [92mINFO[0m - Generation 91: Best Fitness=0.3153, Support=0.5119, Confidence=0.6159, Rule: IF episodes_watched less than 8481.00 AND total_entries less than 392.00 AND status equals 'Finished Airing' AND type equals 'TV' AND status equals 'Finished Airing' THEN rating = high
+2025-04-25 11:55:06 - genetic_rule_miner.models.genetic - [92mINFO[0m - Generation 92: Best Fitness=0.3153, Support=0.5119, Confidence=0.6159, Rule: IF episodes_watched less than 8481.00 AND total_entries less than 392.00 AND status equals 'Finished Airing' AND type equals 'TV' AND status equals 'Finished Airing' THEN rating = high
+2025-04-25 11:55:06 - genetic_rule_miner.models.genetic - [92mINFO[0m - Generation 93: Best Fitness=0.3153, Support=0.5119, Confidence=0.6159, Rule: IF episodes_watched less than 8481.00 AND total_entries less than 392.00 AND status equals 'Finished Airing' AND type equals 'TV' AND status equals 'Finished Airing' THEN rating = high
+2025-04-25 11:55:06 - genetic_rule_miner.models.genetic - [92mINFO[0m - Generation 94: Best Fitness=0.3153, Support=0.5119, Confidence=0.6159, Rule: IF episodes_watched less than 8481.00 AND total_entries less than 392.00 AND status equals 'Finished Airing' AND type equals 'TV' AND status equals 'Finished Airing' THEN rating = high
+2025-04-25 11:55:06 - genetic_rule_miner.models.genetic - [92mINFO[0m - Generation 95: Best Fitness=0.3153, Support=0.5119, Confidence=0.6159, Rule: IF episodes_watched less than 8481.00 AND total_entries less than 392.00 AND status equals 'Finished Airing' AND type equals 'TV' AND status equals 'Finished Airing' THEN rating = high
+2025-04-25 11:55:06 - genetic_rule_miner.models.genetic - [92mINFO[0m - Generation 96: Best Fitness=0.3153, Support=0.5119, Confidence=0.6159, Rule: IF episodes_watched less than 8481.00 AND total_entries less than 392.00 AND status equals 'Finished Airing' AND type equals 'TV' AND status equals 'Finished Airing' THEN rating = high
+2025-04-25 11:55:06 - genetic_rule_miner.models.genetic - [92mINFO[0m - Generation 97: Best Fitness=0.3153, Support=0.5119, Confidence=0.6159, Rule: IF episodes_watched less than 8481.00 AND total_entries less than 392.00 AND status equals 'Finished Airing' AND type equals 'TV' AND status equals 'Finished Airing' THEN rating = high
+2025-04-25 11:55:06 - genetic_rule_miner.models.genetic - [92mINFO[0m - Generation 98: Best Fitness=0.3153, Support=0.5119, Confidence=0.6159, Rule: IF episodes_watched less than 8481.00 AND total_entries less than 392.00 AND status equals 'Finished Airing' AND type equals 'TV' AND status equals 'Finished Airing' THEN rating = high
+2025-04-25 11:55:07 - genetic_rule_miner.models.genetic - [92mINFO[0m - Generation 99: Best Fitness=0.3153, Support=0.5119, Confidence=0.6159, Rule: IF episodes_watched less than 8481.00 AND total_entries less than 392.00 AND status equals 'Finished Airing' AND type equals 'TV' AND status equals 'Finished Airing' THEN rating = high
+2025-04-25 11:55:07 - __main__ - [92mINFO[0m - 
+Best Rule Found:
+2025-04-25 11:55:07 - __main__ - [92mINFO[0m - IF episodes_watched less than 8481.00 AND total_entries less than 392.00 AND status equals 'Finished Airing' AND type equals 'TV' AND status equals 'Finished Airing' THEN rating = high
+2025-04-25 11:55:07 - __main__ - [92mINFO[0m - 
+Fitness: 0.3153
+2025-04-25 11:55:07 - __main__ - [92mINFO[0m - Support: 0.511864406779661
+2025-04-25 11:55:07 - __main__ - [92mINFO[0m - Confidence: 0.6158940397350994
+2025-04-25 11:55:07 - genetic_rule_miner.data.database - [92mINFO[0m - PostgreSQL connection pool closed

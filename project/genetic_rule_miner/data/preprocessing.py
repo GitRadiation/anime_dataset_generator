@@ -44,24 +44,24 @@ def clean_string_columns(df: pd.DataFrame) -> pd.DataFrame:
 @log_execution
 @validate_dataframe("duration", "episodes")
 def preprocess_data(df: pd.DataFrame) -> pd.DataFrame:
-    """Preprocess data with robust handling of edge cases."""
+    """Preprocess data with robust handling of edge cases and domain-specific enhancements."""
     df = df.copy()
 
     try:
+        # Duration cleaning
         if "duration" in df.columns:
             df["duration"] = (
                 df["duration"]
                 .astype(str)
-                .str.extract(r"(\d+)")[0]  # Extract numeric part
+                .str.extract(r"(\d+)")[0]
                 .replace(["", "nan", "None", "Unknown", "N/A"], np.nan)
                 .astype(float)
             )
 
-            # Fallback to alternative duration column if available
             if df["duration"].isna().all() and "episode_length" in df.columns:
                 df["duration"] = df["episode_length"]
 
-        # 2. Enhanced episodes handling
+        # Episodes cleaning
         if "episodes" in df.columns:
             df["episodes"] = (
                 df["episodes"]
@@ -70,36 +70,28 @@ def preprocess_data(df: pd.DataFrame) -> pd.DataFrame:
                 .astype(float)
             )
 
-        # 3. Handle completely missing data with defaults
-        if "duration" in df.columns and df["duration"].isna().all():
+        # Fallback defaults
+        if df["duration"].isna().all():
             logger.warning("All duration values missing - using default 23.0")
             df["duration"] = 23.0
 
-        if "episodes" in df.columns and df["episodes"].isna().all():
+        if df["episodes"].isna().all():
             logger.warning("All episodes values missing - using default 12.0")
             df["episodes"] = 12.0
 
-        # 4. Fill NA values with sensible defaults
-        duration_fill = (
+        # Fill NA with medians
+        df["duration"] = df["duration"].fillna(
             df["duration"].median() if df["duration"].notna().any() else 20
         )
-        episodes_fill = (
+        df["episodes"] = df["episodes"].fillna(
             df["episodes"].median() if df["episodes"].notna().any() else 12
         )
 
-        df["duration"] = df["duration"].fillna(duration_fill)
-        df["episodes"] = df["episodes"].fillna(episodes_fill)
-
-        # 5. Validate finite values
+        # Validity check
         if not np.isfinite(df[["duration", "episodes"]].values).all():
-            invalid_duration = df.loc[~np.isfinite(df["duration"]), "duration"]
-            invalid_episodes = df.loc[~np.isfinite(df["episodes"]), "episodes"]
-            logger.warning(
-                f"Found non-finite values - Duration: {invalid_duration}, Episodes: {invalid_episodes}"
-            )
             raise ValueError("Non-finite values detected after cleaning")
 
-        # 6. Create bins with safe bounds
+        # Binning duration and episodes
         duration_bins = [0, 20, 25, max(30, df["duration"].max() + 1)]
         episodes_bins = [0, 12, 24, max(26, df["episodes"].max() + 1)]
 
@@ -109,7 +101,6 @@ def preprocess_data(df: pd.DataFrame) -> pd.DataFrame:
             labels=["short", "standard", "long"],
             right=False,
         )
-
         df["episodes_class"] = pd.cut(
             df["episodes"],
             bins=episodes_bins,
@@ -117,7 +108,7 @@ def preprocess_data(df: pd.DataFrame) -> pd.DataFrame:
             right=False,
         )
 
-        # 7. Handle rating if present
+        # Binning rating_x
         if "rating_x" in df.columns:
             df["rating"] = (
                 pd.cut(
@@ -130,7 +121,52 @@ def preprocess_data(df: pd.DataFrame) -> pd.DataFrame:
                 .fillna("unknown")
             )
 
-        return df.drop(columns=["rating_x"], errors="ignore")
+        # Parse birthday into age groups
+        if "birthday" in df.columns:
+            today = pd.Timestamp("now").normalize()
+            df["birthday"] = pd.to_datetime(df["birthday"], errors="coerce")
+            df["age"] = (today - df["birthday"]).dt.days // 365
+
+            df["age_group"] = pd.cut(
+                df["age"],
+                bins=[0, 25, 40, 100],
+                labels=["young", "adult", "senior"],
+                include_lowest=True,
+            )
+
+        # Extract year from aired
+        if "aired" in df.columns:
+            df["aired_start_year"] = (
+                df["aired"]
+                .astype(str)
+                .str.extract(r"(\d{4})")[0]
+                .astype(float)
+                .fillna(0)
+                .astype(int)
+            )
+
+        # Convert producers, genres, keywords to lists
+        for col in ["producers", "genres", "keywords"]:
+            if col in df.columns:
+                df[col] = (
+                    df[col]
+                    .fillna("")
+                    .astype(str)
+                    .str.split(r",\s*")
+                    .apply(
+                        lambda x: (
+                            [i.strip() for i in x if i.strip()]
+                            if isinstance(x, list)
+                            else []
+                        )
+                    )
+                )
+
+        # Drop rows with unknown rating
+        if "rating" in df.columns:
+            df = df[df["rating"] != "unknown"]
+
+        return df.drop(columns=["rating_x", "age"], errors="ignore")
 
     except Exception as e:
         logger.error(
