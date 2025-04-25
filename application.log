@@ -1541,3 +1541,547 @@ Fitness: 0.3153
 2025-04-25 11:55:07 - __main__ - [92mINFO[0m - Support: 0.511864406779661
 2025-04-25 11:55:07 - __main__ - [92mINFO[0m - Confidence: 0.6158940397350994
 2025-04-25 11:55:07 - genetic_rule_miner.data.database - [92mINFO[0m - PostgreSQL connection pool closed
+2025-04-25 13:25:32 - __main__ - [92mINFO[0m - Starting rule mining pipeline
+2025-04-25 13:25:53 - genetic_rule_miner.data.database - [92mINFO[0m - PostgreSQL connection pool initialized
+2025-04-25 13:25:53 - __main__ - [92mINFO[0m - Loading and preprocessing data...
+2025-04-25 13:25:53 - genetic_rule_miner.data.manager - [92mINFO[0m - [92mEntering load_and_preprocess_data...[0m
+2025-04-25 13:25:54 - genetic_rule_miner.data.preprocessing - [92mINFO[0m - [92mEntering clean_string_columns...[0m
+2025-04-25 13:25:54 - genetic_rule_miner.data.preprocessing - [92mINFO[0m - [92mclean_string_columns completed in 0.0080s[0m
+2025-04-25 13:25:54 - genetic_rule_miner.data.preprocessing - [92mINFO[0m - [92mEntering preprocess_data...[0m
+2025-04-25 13:25:54 - genetic_rule_miner.data.preprocessing - [91mERROR[0m - [91mpreprocess_data failed after 0.0002s: Missing required columns: ['duration', 'episodes'][0m
+Traceback (most recent call last):
+  File "C:\Users\PRCAAL\PROYECTOS\anime_dataset_generator\project\genetic_rule_miner\utils\logging.py", line 125, in wrapper
+    result = func(*args, **kwargs)
+  File "C:\Users\PRCAAL\PROYECTOS\anime_dataset_generator\project\genetic_rule_miner\utils\decorators.py", line 16, in wrapper
+    raise ValueError(f"Missing required columns: {missing}")
+ValueError: Missing required columns: ['duration', 'episodes']
+2025-04-25 13:25:54 - genetic_rule_miner.data.manager - [91mERROR[0m - [91mload_and_preprocess_data failed after 0.3116s: Data loading failed: Missing required columns: ['duration', 'episodes'][0m
+Traceback (most recent call last):
+  File "C:\Users\PRCAAL\PROYECTOS\anime_dataset_generator\project\genetic_rule_miner\data\manager.py", line 44, in load_and_preprocess_data
+    user_details_cleaned = preprocess_data(
+        clean_string_columns(user_details)
+    )
+  File "C:\Users\PRCAAL\PROYECTOS\anime_dataset_generator\project\genetic_rule_miner\utils\logging.py", line 125, in wrapper
+    result = func(*args, **kwargs)
+  File "C:\Users\PRCAAL\PROYECTOS\anime_dataset_generator\project\genetic_rule_miner\utils\decorators.py", line 16, in wrapper
+    raise ValueError(f"Missing required columns: {missing}")
+ValueError: Missing required columns: ['duration', 'episodes']
+
+During handling of the above exception, another exception occurred:
+
+Traceback (most recent call last):
+  File "C:\Users\PRCAAL\PROYECTOS\anime_dataset_generator\project\genetic_rule_miner\utils\logging.py", line 125, in wrapper
+    result = func(*args, **kwargs)
+  File "C:\Users\PRCAAL\PROYECTOS\anime_dataset_generator\project\genetic_rule_miner\data\manager.py", line 60, in load_and_preprocess_data
+    raise DataValidationError(f"Data loading failed: {str(e)}")
+genetic_rule_miner.utils.exceptions.DataValidationError: Data loading failed: Missing required columns: ['duration', 'episodes']
+2025-04-25 13:25:54 - __main__ - [91mERROR[0m - Pipeline failed: Data loading failed: Missing required columns: ['duration', 'episodes']
+Traceback (most recent call last):
+  File "C:\Users\PRCAAL\PROYECTOS\anime_dataset_generator\project\genetic_rule_miner\data\manager.py", line 44, in load_and_preprocess_data
+    user_details_cleaned = preprocess_data(
+        clean_string_columns(user_details)
+    )
+  File "C:\Users\PRCAAL\PROYECTOS\anime_dataset_generator\project\genetic_rule_miner\utils\logging.py", line 125, in wrapper
+    result = func(*args, **kwargs)
+  File "C:\Users\PRCAAL\PROYECTOS\anime_dataset_generator\project\genetic_rule_miner\utils\decorators.py", line 16, in wrapper
+    raise ValueError(f"Missing required columns: {missing}")
+ValueError: Missing required columns: ['duration', 'episodes']
+
+During handling of the above exception, another exception occurred:
+
+Traceback (most recent call last):
+  File "c:\Users\PRCAAL\PROYECTOS\anime_dataset_generator\project\genetic_rule_miner\main.py", line 50, in main
+    data_manager.load_and_preprocess_data()
+    ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~^^
+  File "C:\Users\PRCAAL\PROYECTOS\anime_dataset_generator\project\genetic_rule_miner\utils\logging.py", line 125, in wrapper
+    result = func(*args, **kwargs)
+  File "C:\Users\PRCAAL\PROYECTOS\anime_dataset_generator\project\genetic_rule_miner\data\manager.py", line 60, in load_and_preprocess_data
+    raise DataValidationError(f"Data loading failed: {str(e)}")
+genetic_rule_miner.utils.exceptions.DataValidationError: Data loading failed: Missing required columns: ['duration', 'episodes']
+2025-04-25 13:25:54 - genetic_rule_miner.data.database - [92mINFO[0m - PostgreSQL connection pool closed
+2025-04-25 13:27:38 - __main__ - [92mINFO[0m - Starting rule mining pipeline
+2025-04-25 13:27:59 - genetic_rule_miner.data.database - [92mINFO[0m - PostgreSQL connection pool initialized
+2025-04-25 13:27:59 - __main__ - [92mINFO[0m - Loading and preprocessing data...
+2025-04-25 13:27:59 - genetic_rule_miner.data.manager - [92mINFO[0m - [92mEntering load_and_preprocess_data...[0m
+2025-04-25 13:27:59 - genetic_rule_miner.data.preprocessing - [92mINFO[0m - [92mEntering clean_string_columns...[0m
+2025-04-25 13:27:59 - genetic_rule_miner.data.preprocessing - [92mINFO[0m - [92mclean_string_columns completed in 0.0033s[0m
+2025-04-25 13:27:59 - genetic_rule_miner.data.preprocessing - [92mINFO[0m - [92mEntering preprocess_data...[0m
+2025-04-25 13:27:59 - genetic_rule_miner.data.preprocessing - [91mERROR[0m - [91mpreprocess_data failed after 0.0002s: Missing required columns: ['duration', 'episodes'][0m
+Traceback (most recent call last):
+  File "C:\Users\PRCAAL\PROYECTOS\anime_dataset_generator\project\genetic_rule_miner\utils\logging.py", line 125, in wrapper
+    result = func(*args, **kwargs)
+  File "C:\Users\PRCAAL\PROYECTOS\anime_dataset_generator\project\genetic_rule_miner\utils\decorators.py", line 16, in wrapper
+    raise ValueError(f"Missing required columns: {missing}")
+ValueError: Missing required columns: ['duration', 'episodes']
+2025-04-25 13:27:59 - genetic_rule_miner.data.manager - [91mERROR[0m - [91mload_and_preprocess_data failed after 0.2067s: Data loading failed: Missing required columns: ['duration', 'episodes'][0m
+Traceback (most recent call last):
+  File "C:\Users\PRCAAL\PROYECTOS\anime_dataset_generator\project\genetic_rule_miner\data\manager.py", line 44, in load_and_preprocess_data
+    user_details_cleaned = preprocess_data(
+        clean_string_columns(user_details)
+    )
+  File "C:\Users\PRCAAL\PROYECTOS\anime_dataset_generator\project\genetic_rule_miner\utils\logging.py", line 125, in wrapper
+    result = func(*args, **kwargs)
+  File "C:\Users\PRCAAL\PROYECTOS\anime_dataset_generator\project\genetic_rule_miner\utils\decorators.py", line 16, in wrapper
+    raise ValueError(f"Missing required columns: {missing}")
+ValueError: Missing required columns: ['duration', 'episodes']
+
+During handling of the above exception, another exception occurred:
+
+Traceback (most recent call last):
+  File "C:\Users\PRCAAL\PROYECTOS\anime_dataset_generator\project\genetic_rule_miner\utils\logging.py", line 125, in wrapper
+    result = func(*args, **kwargs)
+  File "C:\Users\PRCAAL\PROYECTOS\anime_dataset_generator\project\genetic_rule_miner\data\manager.py", line 60, in load_and_preprocess_data
+    raise DataValidationError(f"Data loading failed: {str(e)}")
+genetic_rule_miner.utils.exceptions.DataValidationError: Data loading failed: Missing required columns: ['duration', 'episodes']
+2025-04-25 13:27:59 - __main__ - [91mERROR[0m - Pipeline failed: Data loading failed: Missing required columns: ['duration', 'episodes']
+Traceback (most recent call last):
+  File "C:\Users\PRCAAL\PROYECTOS\anime_dataset_generator\project\genetic_rule_miner\data\manager.py", line 44, in load_and_preprocess_data
+    user_details_cleaned = preprocess_data(
+        clean_string_columns(user_details)
+    )
+  File "C:\Users\PRCAAL\PROYECTOS\anime_dataset_generator\project\genetic_rule_miner\utils\logging.py", line 125, in wrapper
+    result = func(*args, **kwargs)
+  File "C:\Users\PRCAAL\PROYECTOS\anime_dataset_generator\project\genetic_rule_miner\utils\decorators.py", line 16, in wrapper
+    raise ValueError(f"Missing required columns: {missing}")
+ValueError: Missing required columns: ['duration', 'episodes']
+
+During handling of the above exception, another exception occurred:
+
+Traceback (most recent call last):
+  File "c:\Users\PRCAAL\PROYECTOS\anime_dataset_generator\project\genetic_rule_miner\main.py", line 50, in main
+    data_manager.load_and_preprocess_data()
+    ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~^^
+  File "C:\Users\PRCAAL\PROYECTOS\anime_dataset_generator\project\genetic_rule_miner\utils\logging.py", line 125, in wrapper
+    result = func(*args, **kwargs)
+  File "C:\Users\PRCAAL\PROYECTOS\anime_dataset_generator\project\genetic_rule_miner\data\manager.py", line 60, in load_and_preprocess_data
+    raise DataValidationError(f"Data loading failed: {str(e)}")
+genetic_rule_miner.utils.exceptions.DataValidationError: Data loading failed: Missing required columns: ['duration', 'episodes']
+2025-04-25 13:27:59 - genetic_rule_miner.data.database - [92mINFO[0m - PostgreSQL connection pool closed
+2025-04-25 13:30:19 - __main__ - [92mINFO[0m - Starting rule mining pipeline
+2025-04-25 13:30:40 - genetic_rule_miner.data.database - [92mINFO[0m - PostgreSQL connection pool initialized
+2025-04-25 13:30:40 - __main__ - [92mINFO[0m - Loading and preprocessing data...
+2025-04-25 13:30:40 - genetic_rule_miner.data.manager - [92mINFO[0m - [92mEntering load_and_preprocess_data...[0m
+2025-04-25 13:30:40 - genetic_rule_miner.data.preprocessing - [92mINFO[0m - [92mEntering clean_string_columns...[0m
+2025-04-25 13:30:40 - genetic_rule_miner.data.preprocessing - [92mINFO[0m - [92mclean_string_columns completed in 0.0032s[0m
+2025-04-25 13:30:40 - genetic_rule_miner.data.preprocessing - [92mINFO[0m - [92mEntering preprocess_data...[0m
+2025-04-25 13:30:40 - genetic_rule_miner.data.preprocessing - [91mERROR[0m - [91mpreprocess_data failed after 0.0002s: Missing required columns: ['duration', 'episodes'][0m
+Traceback (most recent call last):
+  File "C:\Users\PRCAAL\PROYECTOS\anime_dataset_generator\project\genetic_rule_miner\utils\logging.py", line 125, in wrapper
+    result = func(*args, **kwargs)
+  File "C:\Users\PRCAAL\PROYECTOS\anime_dataset_generator\project\genetic_rule_miner\utils\decorators.py", line 16, in wrapper
+    raise ValueError(f"Missing required columns: {missing}")
+ValueError: Missing required columns: ['duration', 'episodes']
+2025-04-25 13:30:40 - genetic_rule_miner.data.manager - [91mERROR[0m - [91mload_and_preprocess_data failed after 0.3488s: Data loading failed: Missing required columns: ['duration', 'episodes'][0m
+Traceback (most recent call last):
+  File "C:\Users\PRCAAL\PROYECTOS\anime_dataset_generator\project\genetic_rule_miner\data\manager.py", line 48, in load_and_preprocess_data
+    user_details_cleaned = preprocess_data(
+        clean_string_columns(user_details)
+    )
+  File "C:\Users\PRCAAL\PROYECTOS\anime_dataset_generator\project\genetic_rule_miner\utils\logging.py", line 125, in wrapper
+    result = func(*args, **kwargs)
+  File "C:\Users\PRCAAL\PROYECTOS\anime_dataset_generator\project\genetic_rule_miner\utils\decorators.py", line 16, in wrapper
+    raise ValueError(f"Missing required columns: {missing}")
+ValueError: Missing required columns: ['duration', 'episodes']
+
+During handling of the above exception, another exception occurred:
+
+Traceback (most recent call last):
+  File "C:\Users\PRCAAL\PROYECTOS\anime_dataset_generator\project\genetic_rule_miner\utils\logging.py", line 125, in wrapper
+    result = func(*args, **kwargs)
+  File "C:\Users\PRCAAL\PROYECTOS\anime_dataset_generator\project\genetic_rule_miner\data\manager.py", line 64, in load_and_preprocess_data
+    raise DataValidationError(f"Data loading failed: {str(e)}")
+genetic_rule_miner.utils.exceptions.DataValidationError: Data loading failed: Missing required columns: ['duration', 'episodes']
+2025-04-25 13:30:40 - __main__ - [91mERROR[0m - Pipeline failed: Data loading failed: Missing required columns: ['duration', 'episodes']
+Traceback (most recent call last):
+  File "C:\Users\PRCAAL\PROYECTOS\anime_dataset_generator\project\genetic_rule_miner\data\manager.py", line 48, in load_and_preprocess_data
+    user_details_cleaned = preprocess_data(
+        clean_string_columns(user_details)
+    )
+  File "C:\Users\PRCAAL\PROYECTOS\anime_dataset_generator\project\genetic_rule_miner\utils\logging.py", line 125, in wrapper
+    result = func(*args, **kwargs)
+  File "C:\Users\PRCAAL\PROYECTOS\anime_dataset_generator\project\genetic_rule_miner\utils\decorators.py", line 16, in wrapper
+    raise ValueError(f"Missing required columns: {missing}")
+ValueError: Missing required columns: ['duration', 'episodes']
+
+During handling of the above exception, another exception occurred:
+
+Traceback (most recent call last):
+  File "c:\Users\PRCAAL\PROYECTOS\anime_dataset_generator\project\genetic_rule_miner\main.py", line 50, in main
+    data_manager.load_and_preprocess_data()
+    ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~^^
+  File "C:\Users\PRCAAL\PROYECTOS\anime_dataset_generator\project\genetic_rule_miner\utils\logging.py", line 125, in wrapper
+    result = func(*args, **kwargs)
+  File "C:\Users\PRCAAL\PROYECTOS\anime_dataset_generator\project\genetic_rule_miner\data\manager.py", line 64, in load_and_preprocess_data
+    raise DataValidationError(f"Data loading failed: {str(e)}")
+genetic_rule_miner.utils.exceptions.DataValidationError: Data loading failed: Missing required columns: ['duration', 'episodes']
+2025-04-25 13:30:40 - genetic_rule_miner.data.database - [92mINFO[0m - PostgreSQL connection pool closed
+2025-04-25 13:31:16 - __main__ - [92mINFO[0m - Starting rule mining pipeline
+2025-04-25 13:31:37 - genetic_rule_miner.data.database - [92mINFO[0m - PostgreSQL connection pool initialized
+2025-04-25 13:31:37 - __main__ - [92mINFO[0m - Loading and preprocessing data...
+2025-04-25 13:31:37 - genetic_rule_miner.data.manager - [92mINFO[0m - [92mEntering load_and_preprocess_data...[0m
+2025-04-25 13:31:37 - genetic_rule_miner.data.manager - [91mERROR[0m - [91mload_and_preprocess_data failed after 0.1921s: Data loading failed: 'Index' object is not callable[0m
+Traceback (most recent call last):
+  File "C:\Users\PRCAAL\PROYECTOS\anime_dataset_generator\project\genetic_rule_miner\data\manager.py", line 44, in load_and_preprocess_data
+    print(user_details.columns())
+          ~~~~~~~~~~~~~~~~~~~~^^
+TypeError: 'Index' object is not callable
+
+During handling of the above exception, another exception occurred:
+
+Traceback (most recent call last):
+  File "C:\Users\PRCAAL\PROYECTOS\anime_dataset_generator\project\genetic_rule_miner\utils\logging.py", line 125, in wrapper
+    result = func(*args, **kwargs)
+  File "C:\Users\PRCAAL\PROYECTOS\anime_dataset_generator\project\genetic_rule_miner\data\manager.py", line 64, in load_and_preprocess_data
+    raise DataValidationError(f"Data loading failed: {str(e)}")
+genetic_rule_miner.utils.exceptions.DataValidationError: Data loading failed: 'Index' object is not callable
+2025-04-25 13:31:37 - __main__ - [91mERROR[0m - Pipeline failed: Data loading failed: 'Index' object is not callable
+Traceback (most recent call last):
+  File "C:\Users\PRCAAL\PROYECTOS\anime_dataset_generator\project\genetic_rule_miner\data\manager.py", line 44, in load_and_preprocess_data
+    print(user_details.columns())
+          ~~~~~~~~~~~~~~~~~~~~^^
+TypeError: 'Index' object is not callable
+
+During handling of the above exception, another exception occurred:
+
+Traceback (most recent call last):
+  File "c:\Users\PRCAAL\PROYECTOS\anime_dataset_generator\project\genetic_rule_miner\main.py", line 50, in main
+    data_manager.load_and_preprocess_data()
+    ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~^^
+  File "C:\Users\PRCAAL\PROYECTOS\anime_dataset_generator\project\genetic_rule_miner\utils\logging.py", line 125, in wrapper
+    result = func(*args, **kwargs)
+  File "C:\Users\PRCAAL\PROYECTOS\anime_dataset_generator\project\genetic_rule_miner\data\manager.py", line 64, in load_and_preprocess_data
+    raise DataValidationError(f"Data loading failed: {str(e)}")
+genetic_rule_miner.utils.exceptions.DataValidationError: Data loading failed: 'Index' object is not callable
+2025-04-25 13:31:37 - genetic_rule_miner.data.database - [92mINFO[0m - PostgreSQL connection pool closed
+2025-04-25 13:32:50 - __main__ - [92mINFO[0m - Starting rule mining pipeline
+2025-04-25 13:33:12 - genetic_rule_miner.data.database - [92mINFO[0m - PostgreSQL connection pool initialized
+2025-04-25 13:33:12 - __main__ - [92mINFO[0m - Loading and preprocessing data...
+2025-04-25 13:33:12 - genetic_rule_miner.data.manager - [92mINFO[0m - [92mEntering load_and_preprocess_data...[0m
+2025-04-25 13:33:12 - genetic_rule_miner.data.preprocessing - [92mINFO[0m - [92mEntering clean_string_columns...[0m
+2025-04-25 13:33:12 - genetic_rule_miner.data.preprocessing - [92mINFO[0m - [92mclean_string_columns completed in 0.0043s[0m
+2025-04-25 13:33:12 - genetic_rule_miner.data.preprocessing - [92mINFO[0m - [92mEntering preprocess_data...[0m
+2025-04-25 13:33:12 - genetic_rule_miner.data.preprocessing - [91mERROR[0m - [91mpreprocess_data failed after 0.0003s: Missing required columns: ['duration', 'episodes'][0m
+Traceback (most recent call last):
+  File "C:\Users\PRCAAL\PROYECTOS\anime_dataset_generator\project\genetic_rule_miner\utils\logging.py", line 125, in wrapper
+    result = func(*args, **kwargs)
+  File "C:\Users\PRCAAL\PROYECTOS\anime_dataset_generator\project\genetic_rule_miner\utils\decorators.py", line 16, in wrapper
+    raise ValueError(f"Missing required columns: {missing}")
+ValueError: Missing required columns: ['duration', 'episodes']
+2025-04-25 13:33:12 - genetic_rule_miner.data.manager - [91mERROR[0m - [91mload_and_preprocess_data failed after 0.3197s: Data loading failed: Missing required columns: ['duration', 'episodes'][0m
+Traceback (most recent call last):
+  File "C:\Users\PRCAAL\PROYECTOS\anime_dataset_generator\project\genetic_rule_miner\data\manager.py", line 48, in load_and_preprocess_data
+    user_details_cleaned = preprocess_data(
+        clean_string_columns(user_details)
+    )
+  File "C:\Users\PRCAAL\PROYECTOS\anime_dataset_generator\project\genetic_rule_miner\utils\logging.py", line 125, in wrapper
+    result = func(*args, **kwargs)
+  File "C:\Users\PRCAAL\PROYECTOS\anime_dataset_generator\project\genetic_rule_miner\utils\decorators.py", line 16, in wrapper
+    raise ValueError(f"Missing required columns: {missing}")
+ValueError: Missing required columns: ['duration', 'episodes']
+
+During handling of the above exception, another exception occurred:
+
+Traceback (most recent call last):
+  File "C:\Users\PRCAAL\PROYECTOS\anime_dataset_generator\project\genetic_rule_miner\utils\logging.py", line 125, in wrapper
+    result = func(*args, **kwargs)
+  File "C:\Users\PRCAAL\PROYECTOS\anime_dataset_generator\project\genetic_rule_miner\data\manager.py", line 64, in load_and_preprocess_data
+    raise DataValidationError(f"Data loading failed: {str(e)}")
+genetic_rule_miner.utils.exceptions.DataValidationError: Data loading failed: Missing required columns: ['duration', 'episodes']
+2025-04-25 13:33:12 - __main__ - [91mERROR[0m - Pipeline failed: Data loading failed: Missing required columns: ['duration', 'episodes']
+Traceback (most recent call last):
+  File "C:\Users\PRCAAL\PROYECTOS\anime_dataset_generator\project\genetic_rule_miner\data\manager.py", line 48, in load_and_preprocess_data
+    user_details_cleaned = preprocess_data(
+        clean_string_columns(user_details)
+    )
+  File "C:\Users\PRCAAL\PROYECTOS\anime_dataset_generator\project\genetic_rule_miner\utils\logging.py", line 125, in wrapper
+    result = func(*args, **kwargs)
+  File "C:\Users\PRCAAL\PROYECTOS\anime_dataset_generator\project\genetic_rule_miner\utils\decorators.py", line 16, in wrapper
+    raise ValueError(f"Missing required columns: {missing}")
+ValueError: Missing required columns: ['duration', 'episodes']
+
+During handling of the above exception, another exception occurred:
+
+Traceback (most recent call last):
+  File "c:\Users\PRCAAL\PROYECTOS\anime_dataset_generator\project\genetic_rule_miner\main.py", line 50, in main
+    data_manager.load_and_preprocess_data()
+    ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~^^
+  File "C:\Users\PRCAAL\PROYECTOS\anime_dataset_generator\project\genetic_rule_miner\utils\logging.py", line 125, in wrapper
+    result = func(*args, **kwargs)
+  File "C:\Users\PRCAAL\PROYECTOS\anime_dataset_generator\project\genetic_rule_miner\data\manager.py", line 64, in load_and_preprocess_data
+    raise DataValidationError(f"Data loading failed: {str(e)}")
+genetic_rule_miner.utils.exceptions.DataValidationError: Data loading failed: Missing required columns: ['duration', 'episodes']
+2025-04-25 13:33:12 - genetic_rule_miner.data.database - [92mINFO[0m - PostgreSQL connection pool closed
+2025-04-25 13:34:27 - __main__ - [92mINFO[0m - Starting rule mining pipeline
+2025-04-25 13:34:48 - genetic_rule_miner.data.database - [92mINFO[0m - PostgreSQL connection pool initialized
+2025-04-25 13:34:48 - __main__ - [92mINFO[0m - Loading and preprocessing data...
+2025-04-25 13:34:48 - genetic_rule_miner.data.manager - [92mINFO[0m - [92mEntering load_and_preprocess_data...[0m
+2025-04-25 13:34:48 - genetic_rule_miner.data.preprocessing - [92mINFO[0m - [92mEntering clean_string_columns...[0m
+2025-04-25 13:34:48 - genetic_rule_miner.data.preprocessing - [92mINFO[0m - [92mclean_string_columns completed in 0.0035s[0m
+2025-04-25 13:34:48 - genetic_rule_miner.data.preprocessing - [92mINFO[0m - [92mEntering preprocess_data...[0m
+2025-04-25 13:34:48 - genetic_rule_miner.data.preprocessing - [91mERROR[0m - Preprocessing failed. Current data state:
+   mal_id  gender    birthday  days_watched  mean_score  watching  completed  on_hold  dropped  plan_to_watch  total_entries  rewatched  episodes_watched
+0       1    Male  1985-03-04         142.3        7.37         1        233        8       93             64            399         60              8481
+1       3    Male        <NA>          69.5        7.36        29        139       99       44             43            354         15              4121
+2       4  Female        <NA>         212.8        6.68        16        636      303        0             45           1000         10             12781
+3       9    <NA>        <NA>          30.0        7.71         5         54        4        3              0             66          0              1817
+4      18    <NA>        <NA>          51.9        6.27         1        114       10        5             23            153         42              3038
+2025-04-25 13:34:48 - genetic_rule_miner.data.preprocessing - [91mERROR[0m - [91mpreprocess_data failed after 0.0045s: Data preprocessing failed: 'duration'[0m
+Traceback (most recent call last):
+  File "C:\Users\PRCAAL\PROYECTOS\anime_dataset_generator\project\.venv\Lib\site-packages\pandas\core\indexes\base.py", line 3805, in get_loc
+    return self._engine.get_loc(casted_key)
+           ~~~~~~~~~~~~~~~~~~~~^^^^^^^^^^^^
+  File "index.pyx", line 167, in pandas._libs.index.IndexEngine.get_loc
+  File "index.pyx", line 196, in pandas._libs.index.IndexEngine.get_loc
+  File "pandas\\_libs\\hashtable_class_helper.pxi", line 7081, in pandas._libs.hashtable.PyObjectHashTable.get_item
+  File "pandas\\_libs\\hashtable_class_helper.pxi", line 7089, in pandas._libs.hashtable.PyObjectHashTable.get_item
+KeyError: 'duration'
+
+The above exception was the direct cause of the following exception:
+
+Traceback (most recent call last):
+  File "C:\Users\PRCAAL\PROYECTOS\anime_dataset_generator\project\genetic_rule_miner\data\preprocessing.py", line 73, in preprocess_data
+    logger.warning("All duration values missing - using default 23.0")
+    ^^^^^^^^^^^^^
+  File "C:\Users\PRCAAL\PROYECTOS\anime_dataset_generator\project\.venv\Lib\site-packages\pandas\core\frame.py", line 4102, in __getitem__
+    indexer = self.columns.get_loc(key)
+  File "C:\Users\PRCAAL\PROYECTOS\anime_dataset_generator\project\.venv\Lib\site-packages\pandas\core\indexes\base.py", line 3812, in get_loc
+    raise KeyError(key) from err
+KeyError: 'duration'
+
+The above exception was the direct cause of the following exception:
+
+Traceback (most recent call last):
+  File "C:\Users\PRCAAL\PROYECTOS\anime_dataset_generator\project\genetic_rule_miner\utils\logging.py", line 125, in wrapper
+    result = func(*args, **kwargs)
+  File "C:\Users\PRCAAL\PROYECTOS\anime_dataset_generator\project\genetic_rule_miner\data\preprocessing.py", line 174, in preprocess_data
+ValueError: Data preprocessing failed: 'duration'
+2025-04-25 13:34:48 - genetic_rule_miner.data.manager - [91mERROR[0m - [91mload_and_preprocess_data failed after 0.2792s: Data loading failed: Data preprocessing failed: 'duration'[0m
+Traceback (most recent call last):
+  File "C:\Users\PRCAAL\PROYECTOS\anime_dataset_generator\project\.venv\Lib\site-packages\pandas\core\indexes\base.py", line 3805, in get_loc
+    return self._engine.get_loc(casted_key)
+           ~~~~~~~~~~~~~~~~~~~~^^^^^^^^^^^^
+  File "index.pyx", line 167, in pandas._libs.index.IndexEngine.get_loc
+  File "index.pyx", line 196, in pandas._libs.index.IndexEngine.get_loc
+  File "pandas\\_libs\\hashtable_class_helper.pxi", line 7081, in pandas._libs.hashtable.PyObjectHashTable.get_item
+  File "pandas\\_libs\\hashtable_class_helper.pxi", line 7089, in pandas._libs.hashtable.PyObjectHashTable.get_item
+KeyError: 'duration'
+
+The above exception was the direct cause of the following exception:
+
+Traceback (most recent call last):
+  File "C:\Users\PRCAAL\PROYECTOS\anime_dataset_generator\project\genetic_rule_miner\data\preprocessing.py", line 73, in preprocess_data
+    logger.warning("All duration values missing - using default 23.0")
+    ^^^^^^^^^^^^^
+  File "C:\Users\PRCAAL\PROYECTOS\anime_dataset_generator\project\.venv\Lib\site-packages\pandas\core\frame.py", line 4102, in __getitem__
+    indexer = self.columns.get_loc(key)
+  File "C:\Users\PRCAAL\PROYECTOS\anime_dataset_generator\project\.venv\Lib\site-packages\pandas\core\indexes\base.py", line 3812, in get_loc
+    raise KeyError(key) from err
+KeyError: 'duration'
+
+The above exception was the direct cause of the following exception:
+
+Traceback (most recent call last):
+  File "C:\Users\PRCAAL\PROYECTOS\anime_dataset_generator\project\genetic_rule_miner\data\manager.py", line 48, in load_and_preprocess_data
+    user_details_cleaned = preprocess_data(
+        clean_string_columns(user_details)
+    )
+  File "C:\Users\PRCAAL\PROYECTOS\anime_dataset_generator\project\genetic_rule_miner\utils\logging.py", line 125, in wrapper
+    result = func(*args, **kwargs)
+  File "C:\Users\PRCAAL\PROYECTOS\anime_dataset_generator\project\genetic_rule_miner\data\preprocessing.py", line 174, in preprocess_data
+ValueError: Data preprocessing failed: 'duration'
+
+During handling of the above exception, another exception occurred:
+
+Traceback (most recent call last):
+  File "C:\Users\PRCAAL\PROYECTOS\anime_dataset_generator\project\genetic_rule_miner\utils\logging.py", line 125, in wrapper
+    result = func(*args, **kwargs)
+  File "C:\Users\PRCAAL\PROYECTOS\anime_dataset_generator\project\genetic_rule_miner\data\manager.py", line 64, in load_and_preprocess_data
+    raise DataValidationError(f"Data loading failed: {str(e)}")
+genetic_rule_miner.utils.exceptions.DataValidationError: Data loading failed: Data preprocessing failed: 'duration'
+2025-04-25 13:34:48 - __main__ - [91mERROR[0m - Pipeline failed: Data loading failed: Data preprocessing failed: 'duration'
+Traceback (most recent call last):
+  File "C:\Users\PRCAAL\PROYECTOS\anime_dataset_generator\project\.venv\Lib\site-packages\pandas\core\indexes\base.py", line 3805, in get_loc
+    return self._engine.get_loc(casted_key)
+           ~~~~~~~~~~~~~~~~~~~~^^^^^^^^^^^^
+  File "index.pyx", line 167, in pandas._libs.index.IndexEngine.get_loc
+  File "index.pyx", line 196, in pandas._libs.index.IndexEngine.get_loc
+  File "pandas\\_libs\\hashtable_class_helper.pxi", line 7081, in pandas._libs.hashtable.PyObjectHashTable.get_item
+  File "pandas\\_libs\\hashtable_class_helper.pxi", line 7089, in pandas._libs.hashtable.PyObjectHashTable.get_item
+KeyError: 'duration'
+
+The above exception was the direct cause of the following exception:
+
+Traceback (most recent call last):
+  File "C:\Users\PRCAAL\PROYECTOS\anime_dataset_generator\project\genetic_rule_miner\data\preprocessing.py", line 73, in preprocess_data
+    logger.warning("All duration values missing - using default 23.0")
+    ^^^^^^^^^^^^^
+  File "C:\Users\PRCAAL\PROYECTOS\anime_dataset_generator\project\.venv\Lib\site-packages\pandas\core\frame.py", line 4102, in __getitem__
+    indexer = self.columns.get_loc(key)
+  File "C:\Users\PRCAAL\PROYECTOS\anime_dataset_generator\project\.venv\Lib\site-packages\pandas\core\indexes\base.py", line 3812, in get_loc
+    raise KeyError(key) from err
+KeyError: 'duration'
+
+The above exception was the direct cause of the following exception:
+
+Traceback (most recent call last):
+  File "C:\Users\PRCAAL\PROYECTOS\anime_dataset_generator\project\genetic_rule_miner\data\manager.py", line 48, in load_and_preprocess_data
+    user_details_cleaned = preprocess_data(
+        clean_string_columns(user_details)
+    )
+  File "C:\Users\PRCAAL\PROYECTOS\anime_dataset_generator\project\genetic_rule_miner\utils\logging.py", line 125, in wrapper
+    result = func(*args, **kwargs)
+  File "C:\Users\PRCAAL\PROYECTOS\anime_dataset_generator\project\genetic_rule_miner\data\preprocessing.py", line 174, in preprocess_data
+ValueError: Data preprocessing failed: 'duration'
+
+During handling of the above exception, another exception occurred:
+
+Traceback (most recent call last):
+  File "c:\Users\PRCAAL\PROYECTOS\anime_dataset_generator\project\genetic_rule_miner\main.py", line 50, in main
+    data_manager.load_and_preprocess_data()
+    ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~^^
+  File "C:\Users\PRCAAL\PROYECTOS\anime_dataset_generator\project\genetic_rule_miner\utils\logging.py", line 125, in wrapper
+    result = func(*args, **kwargs)
+  File "C:\Users\PRCAAL\PROYECTOS\anime_dataset_generator\project\genetic_rule_miner\data\manager.py", line 64, in load_and_preprocess_data
+    raise DataValidationError(f"Data loading failed: {str(e)}")
+genetic_rule_miner.utils.exceptions.DataValidationError: Data loading failed: Data preprocessing failed: 'duration'
+2025-04-25 13:34:48 - genetic_rule_miner.data.database - [92mINFO[0m - PostgreSQL connection pool closed
+2025-04-25 13:40:47 - __main__ - [92mINFO[0m - Starting rule mining pipeline
+2025-04-25 13:41:08 - genetic_rule_miner.data.database - [92mINFO[0m - PostgreSQL connection pool initialized
+2025-04-25 13:41:08 - __main__ - [92mINFO[0m - Loading and preprocessing data...
+2025-04-25 13:41:08 - genetic_rule_miner.data.manager - [92mINFO[0m - [92mEntering load_and_preprocess_data...[0m
+2025-04-25 13:41:08 - genetic_rule_miner.data.preprocessing - [92mINFO[0m - [92mEntering clean_string_columns...[0m
+2025-04-25 13:41:08 - genetic_rule_miner.data.preprocessing - [92mINFO[0m - [92mclean_string_columns completed in 0.0033s[0m
+2025-04-25 13:41:08 - genetic_rule_miner.data.preprocessing - [92mINFO[0m - [92mEntering preprocess_data...[0m
+2025-04-25 13:41:08 - genetic_rule_miner.data.preprocessing - [92mINFO[0m - [92mpreprocess_data completed in 0.0160s[0m
+2025-04-25 13:41:08 - genetic_rule_miner.data.preprocessing - [92mINFO[0m - [92mEntering clean_string_columns...[0m
+2025-04-25 13:41:08 - genetic_rule_miner.data.preprocessing - [92mINFO[0m - [92mclean_string_columns completed in 0.0096s[0m
+2025-04-25 13:41:08 - genetic_rule_miner.data.preprocessing - [92mINFO[0m - [92mEntering preprocess_data...[0m
+2025-04-25 13:41:08 - genetic_rule_miner.data.preprocessing - [92mINFO[0m - [92mpreprocess_data completed in 0.0122s[0m
+2025-04-25 13:41:08 - genetic_rule_miner.data.preprocessing - [92mINFO[0m - [92mEntering clean_string_columns...[0m
+2025-04-25 13:41:08 - genetic_rule_miner.data.preprocessing - [92mINFO[0m - [92mclean_string_columns completed in 0.0006s[0m
+2025-04-25 13:41:08 - genetic_rule_miner.data.preprocessing - [92mINFO[0m - [92mEntering preprocess_data...[0m
+2025-04-25 13:41:08 - genetic_rule_miner.data.preprocessing - [92mINFO[0m - [92mpreprocess_data completed in 0.0008s[0m
+2025-04-25 13:41:08 - genetic_rule_miner.data.manager - [92mINFO[0m - [92mload_and_preprocess_data completed in 0.2823s[0m
+2025-04-25 13:41:08 - __main__ - [92mINFO[0m - Merging preprocessed data...
+2025-04-25 13:41:08 - genetic_rule_miner.data.manager - [92mINFO[0m - [92mEntering merge_data...[0m
+2025-04-25 13:41:08 - genetic_rule_miner.data.manager - [92mINFO[0m - [92mmerge_data completed in 0.0102s[0m
+2025-04-25 13:41:08 - __main__ - [92mINFO[0m - [92mEntering save_to_excel...[0m
+2025-04-25 13:41:08 - __main__ - [92mINFO[0m - Data successfully saved to processed_data.xlsx
+2025-04-25 13:41:08 - __main__ - [92mINFO[0m - [92msave_to_excel completed in 0.3967s[0m
+2025-04-25 13:41:08 - __main__ - [92mINFO[0m - Initializing genetic algorithm...
+2025-04-25 13:41:08 - genetic_rule_miner.data.preprocessing - [92mINFO[0m - [92mEntering clean_string_columns...[0m
+2025-04-25 13:41:08 - genetic_rule_miner.data.preprocessing - [92mINFO[0m - [92mclean_string_columns completed in 0.0089s[0m
+2025-04-25 13:41:08 - genetic_rule_miner.data.preprocessing - [92mINFO[0m - [92mEntering preprocess_data...[0m
+2025-04-25 13:41:08 - genetic_rule_miner.data.preprocessing - [92mINFO[0m - [92mpreprocess_data completed in 0.0177s[0m
+2025-04-25 13:41:08 - __main__ - [92mINFO[0m - [92mEntering save_to_excel...[0m
+2025-04-25 13:41:08 - __main__ - [92mINFO[0m - Data successfully saved to datos_limpios.xlsx
+2025-04-25 13:41:08 - __main__ - [92mINFO[0m - [92msave_to_excel completed in 0.1341s[0m
+2025-04-25 13:41:09 - __main__ - [92mINFO[0m - Starting evolution process...
+2025-04-25 13:41:09 - genetic_rule_miner.models.genetic - [92mINFO[0m - Generation 0: Best Fitness=0.0137, Support=0.0206, Confidence=0.6667, Rule: IF mean_score less than 7.37 AND episodes_watched greater than 3948.00 AND duration_class equals 'standard' AND source equals 'Original' AND favorites less than 3677.00 THEN rating = high
+2025-04-25 13:41:09 - genetic_rule_miner.models.genetic - [92mINFO[0m - Generation 1: Best Fitness=0.0722, Support=0.1271, Confidence=0.5676, Rule: IF watching less than 16.00 AND plan_to_watch greater than 10.00 AND favorites greater than 1979.00 AND duration_class equals 'standard' AND score greater than 7.59 THEN rating = high
+2025-04-25 13:41:09 - genetic_rule_miner.models.genetic - [92mINFO[0m - Generation 2: Best Fitness=0.0722, Support=0.1271, Confidence=0.5676, Rule: IF watching less than 16.00 AND plan_to_watch greater than 10.00 AND favorites greater than 1979.00 AND duration_class equals 'standard' AND score greater than 7.59 THEN rating = high
+2025-04-25 13:41:09 - genetic_rule_miner.models.genetic - [92mINFO[0m - Generation 3: Best Fitness=0.0722, Support=0.1271, Confidence=0.5676, Rule: IF watching less than 16.00 AND plan_to_watch greater than 10.00 AND favorites greater than 1979.00 AND duration_class equals 'standard' AND score greater than 7.59 THEN rating = high
+2025-04-25 13:41:09 - genetic_rule_miner.models.genetic - [92mINFO[0m - Generation 4: Best Fitness=0.0962, Support=0.1512, Confidence=0.6364, Rule: IF watching less than 16.00 AND rewatched less than 20.40 AND favorites greater than 1979.00 AND duration_class equals 'standard' AND score greater than 7.59 THEN rating = high
+2025-04-25 13:41:10 - genetic_rule_miner.models.genetic - [92mINFO[0m - Generation 5: Best Fitness=0.1100, Support=0.1546, Confidence=0.7111, Rule: IF watching less than 16.00 AND mean_score greater than 7.18 AND favorites greater than 1979.00 AND duration_class equals 'standard' AND duration_class equals 'standard' THEN rating = high
+2025-04-25 13:41:10 - genetic_rule_miner.models.genetic - [92mINFO[0m - Generation 6: Best Fitness=0.1271, Support=0.1856, Confidence=0.6852, Rule: IF watching less than 16.00 AND rewatched less than 20.40 AND duration_class equals 'standard' AND duration_class equals 'standard' AND score greater than 7.59 THEN rating = high
+2025-04-25 13:41:10 - genetic_rule_miner.models.genetic - [92mINFO[0m - Generation 7: Best Fitness=0.1821, Support=0.2818, Confidence=0.6463, Rule: IF watching less than 16.00 AND mean_score greater than 7.18 AND duration_class equals 'standard' AND duration_class equals 'standard' AND duration_class equals 'standard' THEN rating = high
+2025-04-25 13:41:10 - genetic_rule_miner.models.genetic - [92mINFO[0m - Generation 8: Best Fitness=0.1856, Support=0.3265, Confidence=0.5684, Rule: IF watching less than 16.00 AND rewatched less than 20.40 AND duration_class equals 'standard' AND duration_class equals 'standard' AND duration_class equals 'standard' THEN rating = high
+2025-04-25 13:41:10 - genetic_rule_miner.models.genetic - [92mINFO[0m - Generation 9: Best Fitness=0.1856, Support=0.3265, Confidence=0.5684, Rule: IF watching less than 16.00 AND rewatched less than 20.40 AND duration_class equals 'standard' AND duration_class equals 'standard' AND duration_class equals 'standard' THEN rating = high
+2025-04-25 13:41:10 - genetic_rule_miner.models.genetic - [92mINFO[0m - Generation 10: Best Fitness=0.1856, Support=0.3265, Confidence=0.5684, Rule: IF watching less than 16.00 AND rewatched less than 20.40 AND duration_class equals 'standard' AND duration_class equals 'standard' AND duration_class equals 'standard' THEN rating = high
+2025-04-25 13:41:10 - genetic_rule_miner.models.genetic - [92mINFO[0m - Generation 11: Best Fitness=0.1856, Support=0.3265, Confidence=0.5684, Rule: IF watching less than 16.00 AND rewatched less than 20.40 AND duration_class equals 'standard' AND duration_class equals 'standard' AND duration_class equals 'standard' THEN rating = high
+2025-04-25 13:41:10 - genetic_rule_miner.models.genetic - [92mINFO[0m - Generation 12: Best Fitness=0.1856, Support=0.3265, Confidence=0.5684, Rule: IF watching less than 16.00 AND rewatched less than 20.40 AND duration_class equals 'standard' AND duration_class equals 'standard' AND duration_class equals 'standard' THEN rating = high
+2025-04-25 13:41:11 - genetic_rule_miner.models.genetic - [92mINFO[0m - Generation 13: Best Fitness=0.1856, Support=0.3265, Confidence=0.5684, Rule: IF watching less than 16.00 AND rewatched less than 20.40 AND duration_class equals 'standard' AND duration_class equals 'standard' AND duration_class equals 'standard' THEN rating = high
+2025-04-25 13:41:11 - genetic_rule_miner.models.genetic - [92mINFO[0m - Generation 14: Best Fitness=0.1856, Support=0.3265, Confidence=0.5684, Rule: IF watching less than 16.00 AND rewatched less than 20.40 AND duration_class equals 'standard' AND duration_class equals 'standard' AND duration_class equals 'standard' THEN rating = high
+2025-04-25 13:41:11 - genetic_rule_miner.models.genetic - [92mINFO[0m - Generation 15: Best Fitness=0.1856, Support=0.3265, Confidence=0.5684, Rule: IF watching less than 16.00 AND rewatched less than 20.40 AND duration_class equals 'standard' AND duration_class equals 'standard' AND duration_class equals 'standard' THEN rating = high
+2025-04-25 13:41:11 - genetic_rule_miner.models.genetic - [92mINFO[0m - Generation 16: Best Fitness=0.1856, Support=0.3265, Confidence=0.5684, Rule: IF watching less than 16.00 AND rewatched less than 20.40 AND duration_class equals 'standard' AND duration_class equals 'standard' AND duration_class equals 'standard' THEN rating = high
+2025-04-25 13:41:11 - genetic_rule_miner.models.genetic - [92mINFO[0m - Generation 17: Best Fitness=0.1856, Support=0.3265, Confidence=0.5684, Rule: IF watching less than 16.00 AND rewatched less than 20.40 AND duration_class equals 'standard' AND duration_class equals 'standard' AND duration_class equals 'standard' THEN rating = high
+2025-04-25 13:41:11 - genetic_rule_miner.models.genetic - [92mINFO[0m - Generation 18: Best Fitness=0.1856, Support=0.3265, Confidence=0.5684, Rule: IF watching less than 16.00 AND rewatched less than 20.40 AND duration_class equals 'standard' AND duration_class equals 'standard' AND duration_class equals 'standard' THEN rating = high
+2025-04-25 13:41:11 - genetic_rule_miner.models.genetic - [92mINFO[0m - Generation 19: Best Fitness=0.1856, Support=0.3265, Confidence=0.5684, Rule: IF watching less than 16.00 AND rewatched less than 20.40 AND duration_class equals 'standard' AND duration_class equals 'standard' AND duration_class equals 'standard' THEN rating = high
+2025-04-25 13:41:12 - genetic_rule_miner.models.genetic - [92mINFO[0m - Generation 20: Best Fitness=0.1856, Support=0.3265, Confidence=0.5684, Rule: IF watching less than 16.00 AND rewatched less than 20.40 AND duration_class equals 'standard' AND duration_class equals 'standard' AND duration_class equals 'standard' THEN rating = high
+2025-04-25 13:41:12 - genetic_rule_miner.models.genetic - [92mINFO[0m - Generation 21: Best Fitness=0.1856, Support=0.3265, Confidence=0.5684, Rule: IF watching less than 16.00 AND rewatched less than 20.40 AND duration_class equals 'standard' AND duration_class equals 'standard' AND duration_class equals 'standard' THEN rating = high
+2025-04-25 13:41:12 - genetic_rule_miner.models.genetic - [92mINFO[0m - Generation 22: Best Fitness=0.1856, Support=0.3265, Confidence=0.5684, Rule: IF watching less than 16.00 AND rewatched less than 20.40 AND duration_class equals 'standard' AND duration_class equals 'standard' AND duration_class equals 'standard' THEN rating = high
+2025-04-25 13:41:12 - genetic_rule_miner.models.genetic - [92mINFO[0m - Generation 23: Best Fitness=0.1856, Support=0.3265, Confidence=0.5684, Rule: IF watching less than 16.00 AND rewatched less than 20.40 AND duration_class equals 'standard' AND duration_class equals 'standard' AND duration_class equals 'standard' THEN rating = high
+2025-04-25 13:41:12 - genetic_rule_miner.models.genetic - [92mINFO[0m - Generation 24: Best Fitness=0.1856, Support=0.3265, Confidence=0.5684, Rule: IF watching less than 16.00 AND rewatched less than 20.40 AND duration_class equals 'standard' AND duration_class equals 'standard' AND duration_class equals 'standard' THEN rating = high
+2025-04-25 13:41:12 - genetic_rule_miner.models.genetic - [92mINFO[0m - Generation 25: Best Fitness=0.1856, Support=0.3265, Confidence=0.5684, Rule: IF watching less than 16.00 AND rewatched less than 20.40 AND duration_class equals 'standard' AND duration_class equals 'standard' AND duration_class equals 'standard' THEN rating = high
+2025-04-25 13:41:13 - genetic_rule_miner.models.genetic - [92mINFO[0m - Generation 26: Best Fitness=0.1856, Support=0.3265, Confidence=0.5684, Rule: IF watching less than 16.00 AND rewatched less than 20.40 AND duration_class equals 'standard' AND duration_class equals 'standard' AND duration_class equals 'standard' THEN rating = high
+2025-04-25 13:41:13 - genetic_rule_miner.models.genetic - [92mINFO[0m - Generation 27: Best Fitness=0.1856, Support=0.3265, Confidence=0.5684, Rule: IF watching less than 16.00 AND rewatched less than 20.40 AND duration_class equals 'standard' AND duration_class equals 'standard' AND duration_class equals 'standard' THEN rating = high
+2025-04-25 13:41:13 - genetic_rule_miner.models.genetic - [92mINFO[0m - Generation 28: Best Fitness=0.1856, Support=0.3265, Confidence=0.5684, Rule: IF watching less than 16.00 AND rewatched less than 20.40 AND duration_class equals 'standard' AND duration_class equals 'standard' AND duration_class equals 'standard' THEN rating = high
+2025-04-25 13:41:13 - genetic_rule_miner.models.genetic - [92mINFO[0m - Generation 29: Best Fitness=0.1856, Support=0.3265, Confidence=0.5684, Rule: IF watching less than 16.00 AND rewatched less than 20.40 AND duration_class equals 'standard' AND duration_class equals 'standard' AND duration_class equals 'standard' THEN rating = high
+2025-04-25 13:41:13 - genetic_rule_miner.models.genetic - [92mINFO[0m - Generation 30: Best Fitness=0.1856, Support=0.3265, Confidence=0.5684, Rule: IF watching less than 16.00 AND rewatched less than 20.40 AND duration_class equals 'standard' AND duration_class equals 'standard' AND duration_class equals 'standard' THEN rating = high
+2025-04-25 13:41:13 - genetic_rule_miner.models.genetic - [92mINFO[0m - Generation 31: Best Fitness=0.1856, Support=0.3265, Confidence=0.5684, Rule: IF watching less than 16.00 AND rewatched less than 20.40 AND duration_class equals 'standard' AND duration_class equals 'standard' AND duration_class equals 'standard' THEN rating = high
+2025-04-25 13:41:14 - genetic_rule_miner.models.genetic - [92mINFO[0m - Generation 32: Best Fitness=0.1856, Support=0.3265, Confidence=0.5684, Rule: IF watching less than 16.00 AND rewatched less than 20.40 AND duration_class equals 'standard' AND duration_class equals 'standard' AND duration_class equals 'standard' THEN rating = high
+2025-04-25 13:41:14 - genetic_rule_miner.models.genetic - [92mINFO[0m - Generation 33: Best Fitness=0.1856, Support=0.3265, Confidence=0.5684, Rule: IF watching less than 16.00 AND rewatched less than 20.40 AND duration_class equals 'standard' AND duration_class equals 'standard' AND duration_class equals 'standard' THEN rating = high
+2025-04-25 13:41:14 - genetic_rule_miner.models.genetic - [92mINFO[0m - Generation 34: Best Fitness=0.1856, Support=0.3265, Confidence=0.5684, Rule: IF watching less than 16.00 AND rewatched less than 20.40 AND duration_class equals 'standard' AND duration_class equals 'standard' AND duration_class equals 'standard' THEN rating = high
+2025-04-25 13:41:15 - genetic_rule_miner.models.genetic - [92mINFO[0m - Generation 35: Best Fitness=0.1856, Support=0.3265, Confidence=0.5684, Rule: IF watching less than 16.00 AND rewatched less than 20.40 AND duration_class equals 'standard' AND duration_class equals 'standard' AND duration_class equals 'standard' THEN rating = high
+2025-04-25 13:41:15 - genetic_rule_miner.models.genetic - [92mINFO[0m - Generation 36: Best Fitness=0.1856, Support=0.3265, Confidence=0.5684, Rule: IF watching less than 16.00 AND rewatched less than 20.40 AND duration_class equals 'standard' AND duration_class equals 'standard' AND duration_class equals 'standard' THEN rating = high
+2025-04-25 13:41:15 - genetic_rule_miner.models.genetic - [92mINFO[0m - Generation 37: Best Fitness=0.1856, Support=0.3265, Confidence=0.5684, Rule: IF watching less than 16.00 AND rewatched less than 20.40 AND duration_class equals 'standard' AND duration_class equals 'standard' AND duration_class equals 'standard' THEN rating = high
+2025-04-25 13:41:15 - genetic_rule_miner.models.genetic - [92mINFO[0m - Generation 38: Best Fitness=0.1856, Support=0.3265, Confidence=0.5684, Rule: IF watching less than 16.00 AND rewatched less than 20.40 AND duration_class equals 'standard' AND duration_class equals 'standard' AND duration_class equals 'standard' THEN rating = high
+2025-04-25 13:41:16 - genetic_rule_miner.models.genetic - [92mINFO[0m - Generation 39: Best Fitness=0.1856, Support=0.3265, Confidence=0.5684, Rule: IF watching less than 16.00 AND rewatched less than 20.40 AND duration_class equals 'standard' AND duration_class equals 'standard' AND duration_class equals 'standard' THEN rating = high
+2025-04-25 13:41:16 - genetic_rule_miner.models.genetic - [92mINFO[0m - Generation 40: Best Fitness=0.1856, Support=0.3265, Confidence=0.5684, Rule: IF watching less than 16.00 AND rewatched less than 20.40 AND duration_class equals 'standard' AND duration_class equals 'standard' AND duration_class equals 'standard' THEN rating = high
+2025-04-25 13:41:16 - genetic_rule_miner.models.genetic - [92mINFO[0m - Generation 41: Best Fitness=0.1856, Support=0.3265, Confidence=0.5684, Rule: IF watching less than 16.00 AND rewatched less than 20.40 AND duration_class equals 'standard' AND duration_class equals 'standard' AND duration_class equals 'standard' THEN rating = high
+2025-04-25 13:41:16 - genetic_rule_miner.models.genetic - [92mINFO[0m - Generation 42: Best Fitness=0.1856, Support=0.3265, Confidence=0.5684, Rule: IF watching less than 16.00 AND rewatched less than 20.40 AND duration_class equals 'standard' AND duration_class equals 'standard' AND duration_class equals 'standard' THEN rating = high
+2025-04-25 13:41:16 - genetic_rule_miner.models.genetic - [92mINFO[0m - Generation 43: Best Fitness=0.1856, Support=0.3265, Confidence=0.5684, Rule: IF watching less than 16.00 AND rewatched less than 20.40 AND duration_class equals 'standard' AND duration_class equals 'standard' AND duration_class equals 'standard' THEN rating = high
+2025-04-25 13:41:17 - genetic_rule_miner.models.genetic - [92mINFO[0m - Generation 44: Best Fitness=0.1856, Support=0.3265, Confidence=0.5684, Rule: IF watching less than 16.00 AND rewatched less than 20.40 AND duration_class equals 'standard' AND duration_class equals 'standard' AND duration_class equals 'standard' THEN rating = high
+2025-04-25 13:41:17 - genetic_rule_miner.models.genetic - [92mINFO[0m - Generation 45: Best Fitness=0.1856, Support=0.3265, Confidence=0.5684, Rule: IF watching less than 16.00 AND rewatched less than 20.40 AND duration_class equals 'standard' AND duration_class equals 'standard' AND duration_class equals 'standard' THEN rating = high
+2025-04-25 13:41:17 - genetic_rule_miner.models.genetic - [92mINFO[0m - Generation 46: Best Fitness=0.1856, Support=0.3265, Confidence=0.5684, Rule: IF watching less than 16.00 AND rewatched less than 20.40 AND duration_class equals 'standard' AND duration_class equals 'standard' AND duration_class equals 'standard' THEN rating = high
+2025-04-25 13:41:17 - genetic_rule_miner.models.genetic - [92mINFO[0m - Generation 47: Best Fitness=0.1856, Support=0.3265, Confidence=0.5684, Rule: IF watching less than 16.00 AND rewatched less than 20.40 AND duration_class equals 'standard' AND duration_class equals 'standard' AND duration_class equals 'standard' THEN rating = high
+2025-04-25 13:41:17 - genetic_rule_miner.models.genetic - [92mINFO[0m - Generation 48: Best Fitness=0.1924, Support=0.3368, Confidence=0.5714, Rule: IF watching less than 16.00 AND rewatched less than 50.00 AND duration_class equals 'standard' AND duration_class equals 'standard' AND duration_class equals 'standard' THEN rating = high
+2025-04-25 13:41:17 - genetic_rule_miner.models.genetic - [92mINFO[0m - Generation 49: Best Fitness=0.1924, Support=0.3368, Confidence=0.5714, Rule: IF watching less than 16.00 AND rewatched less than 50.00 AND duration_class equals 'standard' AND duration_class equals 'standard' AND duration_class equals 'standard' THEN rating = high
+2025-04-25 13:41:18 - genetic_rule_miner.models.genetic - [92mINFO[0m - Generation 50: Best Fitness=0.1924, Support=0.3368, Confidence=0.5714, Rule: IF watching less than 16.00 AND rewatched less than 50.00 AND duration_class equals 'standard' AND duration_class equals 'standard' AND duration_class equals 'standard' THEN rating = high
+2025-04-25 13:41:18 - genetic_rule_miner.models.genetic - [92mINFO[0m - Generation 51: Best Fitness=0.1924, Support=0.3368, Confidence=0.5714, Rule: IF watching less than 16.00 AND rewatched less than 50.00 AND duration_class equals 'standard' AND duration_class equals 'standard' AND duration_class equals 'standard' THEN rating = high
+2025-04-25 13:41:18 - genetic_rule_miner.models.genetic - [92mINFO[0m - Generation 52: Best Fitness=0.1924, Support=0.3368, Confidence=0.5714, Rule: IF watching less than 16.00 AND rewatched less than 50.00 AND duration_class equals 'standard' AND duration_class equals 'standard' AND duration_class equals 'standard' THEN rating = high
+2025-04-25 13:41:18 - genetic_rule_miner.models.genetic - [92mINFO[0m - Generation 53: Best Fitness=0.1924, Support=0.3368, Confidence=0.5714, Rule: IF watching less than 16.00 AND rewatched less than 50.00 AND duration_class equals 'standard' AND duration_class equals 'standard' AND duration_class equals 'standard' THEN rating = high
+2025-04-25 13:41:18 - genetic_rule_miner.models.genetic - [92mINFO[0m - Generation 54: Best Fitness=0.1924, Support=0.3368, Confidence=0.5714, Rule: IF watching less than 16.00 AND rewatched less than 50.00 AND duration_class equals 'standard' AND duration_class equals 'standard' AND duration_class equals 'standard' THEN rating = high
+2025-04-25 13:41:19 - genetic_rule_miner.models.genetic - [92mINFO[0m - Generation 55: Best Fitness=0.1924, Support=0.3368, Confidence=0.5714, Rule: IF watching less than 16.00 AND rewatched less than 50.00 AND duration_class equals 'standard' AND duration_class equals 'standard' AND duration_class equals 'standard' THEN rating = high
+2025-04-25 13:41:19 - genetic_rule_miner.models.genetic - [92mINFO[0m - Generation 56: Best Fitness=0.1924, Support=0.3368, Confidence=0.5714, Rule: IF watching less than 16.00 AND rewatched less than 50.00 AND duration_class equals 'standard' AND duration_class equals 'standard' AND duration_class equals 'standard' THEN rating = high
+2025-04-25 13:41:19 - genetic_rule_miner.models.genetic - [92mINFO[0m - Generation 57: Best Fitness=0.1924, Support=0.3368, Confidence=0.5714, Rule: IF watching less than 16.00 AND rewatched less than 50.00 AND duration_class equals 'standard' AND duration_class equals 'standard' AND duration_class equals 'standard' THEN rating = high
+2025-04-25 13:41:19 - genetic_rule_miner.models.genetic - [92mINFO[0m - Generation 58: Best Fitness=0.1924, Support=0.3368, Confidence=0.5714, Rule: IF watching less than 16.00 AND rewatched less than 50.00 AND duration_class equals 'standard' AND duration_class equals 'standard' AND duration_class equals 'standard' THEN rating = high
+2025-04-25 13:41:19 - genetic_rule_miner.models.genetic - [92mINFO[0m - Generation 59: Best Fitness=0.1924, Support=0.3368, Confidence=0.5714, Rule: IF watching less than 16.00 AND rewatched less than 50.00 AND duration_class equals 'standard' AND duration_class equals 'standard' AND duration_class equals 'standard' THEN rating = high
+2025-04-25 13:41:19 - genetic_rule_miner.models.genetic - [92mINFO[0m - Generation 60: Best Fitness=0.1924, Support=0.3368, Confidence=0.5714, Rule: IF watching less than 16.00 AND rewatched less than 50.00 AND duration_class equals 'standard' AND duration_class equals 'standard' AND duration_class equals 'standard' THEN rating = high
+2025-04-25 13:41:20 - genetic_rule_miner.models.genetic - [92mINFO[0m - Generation 61: Best Fitness=0.1924, Support=0.3368, Confidence=0.5714, Rule: IF watching less than 16.00 AND rewatched less than 50.00 AND duration_class equals 'standard' AND duration_class equals 'standard' AND duration_class equals 'standard' THEN rating = high
+2025-04-25 13:41:20 - genetic_rule_miner.models.genetic - [92mINFO[0m - Generation 62: Best Fitness=0.1924, Support=0.3368, Confidence=0.5714, Rule: IF watching less than 16.00 AND rewatched less than 50.00 AND duration_class equals 'standard' AND duration_class equals 'standard' AND duration_class equals 'standard' THEN rating = high
+2025-04-25 13:41:20 - genetic_rule_miner.models.genetic - [92mINFO[0m - Generation 63: Best Fitness=0.1924, Support=0.3368, Confidence=0.5714, Rule: IF watching less than 16.00 AND rewatched less than 50.00 AND duration_class equals 'standard' AND duration_class equals 'standard' AND duration_class equals 'standard' THEN rating = high
+2025-04-25 13:41:20 - genetic_rule_miner.models.genetic - [92mINFO[0m - Generation 64: Best Fitness=0.1924, Support=0.3368, Confidence=0.5714, Rule: IF watching less than 16.00 AND rewatched less than 50.00 AND duration_class equals 'standard' AND duration_class equals 'standard' AND duration_class equals 'standard' THEN rating = high
+2025-04-25 13:41:20 - genetic_rule_miner.models.genetic - [92mINFO[0m - Generation 65: Best Fitness=0.1924, Support=0.3368, Confidence=0.5714, Rule: IF watching less than 16.00 AND rewatched less than 50.00 AND duration_class equals 'standard' AND duration_class equals 'standard' AND duration_class equals 'standard' THEN rating = high
+2025-04-25 13:41:20 - genetic_rule_miner.models.genetic - [92mINFO[0m - Generation 66: Best Fitness=0.1924, Support=0.3368, Confidence=0.5714, Rule: IF watching less than 16.00 AND rewatched less than 50.00 AND duration_class equals 'standard' AND duration_class equals 'standard' AND duration_class equals 'standard' THEN rating = high
+2025-04-25 13:41:21 - genetic_rule_miner.models.genetic - [92mINFO[0m - Generation 67: Best Fitness=0.1924, Support=0.3368, Confidence=0.5714, Rule: IF watching less than 16.00 AND rewatched less than 50.00 AND duration_class equals 'standard' AND duration_class equals 'standard' AND duration_class equals 'standard' THEN rating = high
+2025-04-25 13:41:21 - genetic_rule_miner.models.genetic - [92mINFO[0m - Generation 68: Best Fitness=0.1924, Support=0.3368, Confidence=0.5714, Rule: IF watching less than 16.00 AND rewatched less than 50.00 AND duration_class equals 'standard' AND duration_class equals 'standard' AND duration_class equals 'standard' THEN rating = high
+2025-04-25 13:41:21 - genetic_rule_miner.models.genetic - [92mINFO[0m - Generation 69: Best Fitness=0.1924, Support=0.3368, Confidence=0.5714, Rule: IF watching less than 16.00 AND rewatched less than 50.00 AND duration_class equals 'standard' AND duration_class equals 'standard' AND duration_class equals 'standard' THEN rating = high
+2025-04-25 13:41:21 - genetic_rule_miner.models.genetic - [92mINFO[0m - Generation 70: Best Fitness=0.1924, Support=0.3368, Confidence=0.5714, Rule: IF watching less than 16.00 AND rewatched less than 50.00 AND duration_class equals 'standard' AND duration_class equals 'standard' AND duration_class equals 'standard' THEN rating = high
+2025-04-25 13:41:21 - genetic_rule_miner.models.genetic - [92mINFO[0m - Generation 71: Best Fitness=0.1924, Support=0.3368, Confidence=0.5714, Rule: IF watching less than 16.00 AND rewatched less than 50.00 AND duration_class equals 'standard' AND duration_class equals 'standard' AND duration_class equals 'standard' THEN rating = high
+2025-04-25 13:41:22 - genetic_rule_miner.models.genetic - [92mINFO[0m - Generation 72: Best Fitness=0.1924, Support=0.3368, Confidence=0.5714, Rule: IF watching less than 16.00 AND rewatched less than 50.00 AND duration_class equals 'standard' AND duration_class equals 'standard' AND duration_class equals 'standard' THEN rating = high
+2025-04-25 13:41:22 - genetic_rule_miner.models.genetic - [92mINFO[0m - Generation 73: Best Fitness=0.1924, Support=0.3368, Confidence=0.5714, Rule: IF watching less than 16.00 AND rewatched less than 50.00 AND duration_class equals 'standard' AND duration_class equals 'standard' AND duration_class equals 'standard' THEN rating = high
+2025-04-25 13:41:22 - genetic_rule_miner.models.genetic - [92mINFO[0m - Generation 74: Best Fitness=0.1924, Support=0.3368, Confidence=0.5714, Rule: IF watching less than 16.00 AND rewatched less than 50.00 AND duration_class equals 'standard' AND duration_class equals 'standard' AND duration_class equals 'standard' THEN rating = high
+2025-04-25 13:41:23 - genetic_rule_miner.models.genetic - [92mINFO[0m - Generation 75: Best Fitness=0.1924, Support=0.3368, Confidence=0.5714, Rule: IF watching less than 16.00 AND rewatched less than 50.00 AND duration_class equals 'standard' AND duration_class equals 'standard' AND duration_class equals 'standard' THEN rating = high
+2025-04-25 13:41:23 - genetic_rule_miner.models.genetic - [92mINFO[0m - Generation 76: Best Fitness=0.1924, Support=0.3368, Confidence=0.5714, Rule: IF watching less than 16.00 AND rewatched less than 50.00 AND duration_class equals 'standard' AND duration_class equals 'standard' AND duration_class equals 'standard' THEN rating = high
+2025-04-25 13:41:23 - genetic_rule_miner.models.genetic - [92mINFO[0m - Generation 77: Best Fitness=0.1924, Support=0.3368, Confidence=0.5714, Rule: IF watching less than 16.00 AND rewatched less than 50.00 AND duration_class equals 'standard' AND duration_class equals 'standard' AND duration_class equals 'standard' THEN rating = high
+2025-04-25 13:41:23 - genetic_rule_miner.models.genetic - [92mINFO[0m - Generation 78: Best Fitness=0.1924, Support=0.3368, Confidence=0.5714, Rule: IF watching less than 16.00 AND rewatched less than 50.00 AND duration_class equals 'standard' AND duration_class equals 'standard' AND duration_class equals 'standard' THEN rating = high
+2025-04-25 13:41:24 - genetic_rule_miner.models.genetic - [92mINFO[0m - Generation 79: Best Fitness=0.1924, Support=0.3368, Confidence=0.5714, Rule: IF watching less than 16.00 AND rewatched less than 50.00 AND duration_class equals 'standard' AND duration_class equals 'standard' AND duration_class equals 'standard' THEN rating = high
+2025-04-25 13:41:24 - genetic_rule_miner.models.genetic - [92mINFO[0m - Generation 80: Best Fitness=0.1924, Support=0.3368, Confidence=0.5714, Rule: IF watching less than 16.00 AND rewatched less than 50.00 AND duration_class equals 'standard' AND duration_class equals 'standard' AND duration_class equals 'standard' THEN rating = high
+2025-04-25 13:41:24 - genetic_rule_miner.models.genetic - [92mINFO[0m - Generation 81: Best Fitness=0.1924, Support=0.3368, Confidence=0.5714, Rule: IF watching less than 16.00 AND rewatched less than 50.00 AND duration_class equals 'standard' AND duration_class equals 'standard' AND duration_class equals 'standard' THEN rating = high
+2025-04-25 13:41:24 - genetic_rule_miner.models.genetic - [92mINFO[0m - Generation 82: Best Fitness=0.1924, Support=0.3368, Confidence=0.5714, Rule: IF watching less than 16.00 AND rewatched less than 50.00 AND duration_class equals 'standard' AND duration_class equals 'standard' AND duration_class equals 'standard' THEN rating = high
+2025-04-25 13:41:24 - genetic_rule_miner.models.genetic - [92mINFO[0m - Generation 83: Best Fitness=0.1924, Support=0.3368, Confidence=0.5714, Rule: IF watching less than 16.00 AND rewatched less than 50.00 AND duration_class equals 'standard' AND duration_class equals 'standard' AND duration_class equals 'standard' THEN rating = high
+2025-04-25 13:41:24 - genetic_rule_miner.models.genetic - [92mINFO[0m - Generation 84: Best Fitness=0.1924, Support=0.3368, Confidence=0.5714, Rule: IF watching less than 16.00 AND rewatched less than 50.00 AND duration_class equals 'standard' AND duration_class equals 'standard' AND duration_class equals 'standard' THEN rating = high
+2025-04-25 13:41:25 - genetic_rule_miner.models.genetic - [92mINFO[0m - Generation 85: Best Fitness=0.1924, Support=0.3368, Confidence=0.5714, Rule: IF watching less than 16.00 AND rewatched less than 50.00 AND duration_class equals 'standard' AND duration_class equals 'standard' AND duration_class equals 'standard' THEN rating = high
+2025-04-25 13:41:25 - genetic_rule_miner.models.genetic - [92mINFO[0m - Generation 86: Best Fitness=0.1924, Support=0.3368, Confidence=0.5714, Rule: IF watching less than 16.00 AND rewatched less than 50.00 AND duration_class equals 'standard' AND duration_class equals 'standard' AND duration_class equals 'standard' THEN rating = high
+2025-04-25 13:41:25 - genetic_rule_miner.models.genetic - [92mINFO[0m - Generation 87: Best Fitness=0.1924, Support=0.3368, Confidence=0.5714, Rule: IF watching less than 16.00 AND rewatched less than 50.00 AND duration_class equals 'standard' AND duration_class equals 'standard' AND duration_class equals 'standard' THEN rating = high
+2025-04-25 13:41:25 - genetic_rule_miner.models.genetic - [92mINFO[0m - Generation 88: Best Fitness=0.1924, Support=0.3368, Confidence=0.5714, Rule: IF watching less than 16.00 AND rewatched less than 50.00 AND duration_class equals 'standard' AND duration_class equals 'standard' AND duration_class equals 'standard' THEN rating = high
+2025-04-25 13:41:25 - genetic_rule_miner.models.genetic - [92mINFO[0m - Generation 89: Best Fitness=0.1924, Support=0.3368, Confidence=0.5714, Rule: IF watching less than 16.00 AND rewatched less than 50.00 AND duration_class equals 'standard' AND duration_class equals 'standard' AND duration_class equals 'standard' THEN rating = high
+2025-04-25 13:41:25 - genetic_rule_miner.models.genetic - [92mINFO[0m - Generation 90: Best Fitness=0.1924, Support=0.3368, Confidence=0.5714, Rule: IF watching less than 16.00 AND rewatched less than 50.00 AND duration_class equals 'standard' AND duration_class equals 'standard' AND duration_class equals 'standard' THEN rating = high
+2025-04-25 13:41:26 - genetic_rule_miner.models.genetic - [92mINFO[0m - Generation 91: Best Fitness=0.1924, Support=0.3368, Confidence=0.5714, Rule: IF watching less than 16.00 AND rewatched less than 50.00 AND duration_class equals 'standard' AND duration_class equals 'standard' AND duration_class equals 'standard' THEN rating = high
+2025-04-25 13:41:26 - genetic_rule_miner.models.genetic - [92mINFO[0m - Generation 92: Best Fitness=0.1924, Support=0.3368, Confidence=0.5714, Rule: IF watching less than 16.00 AND rewatched less than 50.00 AND duration_class equals 'standard' AND duration_class equals 'standard' AND duration_class equals 'standard' THEN rating = high
+2025-04-25 13:41:26 - genetic_rule_miner.models.genetic - [92mINFO[0m - Generation 93: Best Fitness=0.1924, Support=0.3368, Confidence=0.5714, Rule: IF watching less than 16.00 AND rewatched less than 50.00 AND duration_class equals 'standard' AND duration_class equals 'standard' AND duration_class equals 'standard' THEN rating = high
+2025-04-25 13:41:26 - genetic_rule_miner.models.genetic - [92mINFO[0m - Generation 94: Best Fitness=0.1924, Support=0.3368, Confidence=0.5714, Rule: IF watching less than 16.00 AND rewatched less than 50.00 AND duration_class equals 'standard' AND duration_class equals 'standard' AND duration_class equals 'standard' THEN rating = high
+2025-04-25 13:41:26 - genetic_rule_miner.models.genetic - [92mINFO[0m - Generation 95: Best Fitness=0.1924, Support=0.3368, Confidence=0.5714, Rule: IF watching less than 16.00 AND rewatched less than 50.00 AND duration_class equals 'standard' AND duration_class equals 'standard' AND duration_class equals 'standard' THEN rating = high
+2025-04-25 13:41:26 - genetic_rule_miner.models.genetic - [92mINFO[0m - Generation 96: Best Fitness=0.1924, Support=0.3368, Confidence=0.5714, Rule: IF watching less than 16.00 AND rewatched less than 50.00 AND duration_class equals 'standard' AND duration_class equals 'standard' AND duration_class equals 'standard' THEN rating = high
+2025-04-25 13:41:27 - genetic_rule_miner.models.genetic - [92mINFO[0m - Generation 97: Best Fitness=0.1924, Support=0.3368, Confidence=0.5714, Rule: IF watching less than 16.00 AND rewatched less than 50.00 AND duration_class equals 'standard' AND duration_class equals 'standard' AND duration_class equals 'standard' THEN rating = high
+2025-04-25 13:41:27 - genetic_rule_miner.models.genetic - [92mINFO[0m - Generation 98: Best Fitness=0.1924, Support=0.3368, Confidence=0.5714, Rule: IF watching less than 16.00 AND rewatched less than 50.00 AND duration_class equals 'standard' AND duration_class equals 'standard' AND duration_class equals 'standard' THEN rating = high
+2025-04-25 13:41:27 - genetic_rule_miner.models.genetic - [92mINFO[0m - Generation 99: Best Fitness=0.1924, Support=0.3368, Confidence=0.5714, Rule: IF watching less than 16.00 AND rewatched less than 50.00 AND duration_class equals 'standard' AND duration_class equals 'standard' AND duration_class equals 'standard' THEN rating = high
+2025-04-25 13:41:27 - __main__ - [92mINFO[0m - 
+Best Rule Found:
+2025-04-25 13:41:27 - __main__ - [92mINFO[0m - IF watching less than 16.00 AND rewatched less than 50.00 AND duration_class equals 'standard' AND duration_class equals 'standard' AND duration_class equals 'standard' THEN rating = high
+2025-04-25 13:41:27 - __main__ - [92mINFO[0m - 
+Fitness: 0.1924
+2025-04-25 13:41:27 - __main__ - [92mINFO[0m - Support: 0.33676975945017185
+2025-04-25 13:41:27 - __main__ - [92mINFO[0m - Confidence: 0.5714285714285714
+2025-04-25 13:41:27 - genetic_rule_miner.data.database - [92mINFO[0m - PostgreSQL connection pool closed

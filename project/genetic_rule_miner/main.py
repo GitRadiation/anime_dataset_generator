@@ -45,18 +45,22 @@ def main() -> None:
         data_manager = DataManager(db_config)
 
         # Data loading and preparation
-        logger.info("Loading data from database...")
-        user_details, anime_data, user_scores = data_manager.load_data()
+        logger.info("Loading and preprocessing data...")
+        user_details, anime_data, user_scores = (
+            data_manager.load_and_preprocess_data()
+        )
 
-        logger.info("Merging and preprocessing data...")
+        logger.info("Merging preprocessed data...")
         merged_data = DataManager.merge_data(
             user_scores, user_details, anime_data
         )
         save_to_excel(merged_data, "processed_data.xlsx")
-        processed_df = preprocess_data(clean_string_columns(merged_data))
-        save_to_excel(processed_df, "datos_limpios.xlsx")
+
         # Genetic algorithm execution
         logger.info("Initializing genetic algorithm...")
+        processed_df = preprocess_data(clean_string_columns(merged_data))
+        save_to_excel(processed_df, "datos_limpios.xlsx")
+
         miner = GeneticRuleMiner(
             df=processed_df,
             target="rating",

@@ -7,6 +7,10 @@ import pandas as pd
 
 from genetic_rule_miner.config import DBConfig
 from genetic_rule_miner.data.database import DatabaseManager
+from genetic_rule_miner.data.preprocessing import (
+    clean_string_columns,
+    preprocess_data,
+)
 from genetic_rule_miner.utils.exceptions import DataValidationError
 from genetic_rule_miner.utils.logging import log_execution
 
@@ -20,20 +24,41 @@ class DataManager:
         self.db_manager.initialize()
 
     @log_execution
-    def load_data(self) -> Tuple[pd.DataFrame, pd.DataFrame, pd.DataFrame]:
-        """Load core datasets with optimized queries."""
+    def load_and_preprocess_data(
+        self,
+    ) -> Tuple[pd.DataFrame, pd.DataFrame, pd.DataFrame]:
+        """Load core datasets and preprocess each one separately."""
         tables = ["user_details", "anime_dataset", "user_score"]
         try:
             with self.db_manager.connection() as conn:
-                return tuple(
-                    pd.read_sql(
-                        f"SELECT * FROM {table}",
-                        conn,
-                        parse_dates=(
-                            ["timestamp"] if table == "user_score" else None
-                        ),
-                    )
-                    for table in tables
+                # Load data
+                user_details = pd.read_sql(f"SELECT * FROM {tables[0]}", conn)
+                anime_data = pd.read_sql(f"SELECT * FROM {tables[1]}", conn)
+                user_scores = pd.read_sql(
+                    f"SELECT * FROM {tables[2]}",
+                    conn,
+                    parse_dates=["timestamp"],
+                )
+
+                # Preprocess each dataset
+                print(user_details.columns)
+                print(anime_data.columns)
+                print(user_scores.columns)
+                # Clean and preprocess data
+                user_details_cleaned = preprocess_data(
+                    clean_string_columns(user_details)
+                )
+                anime_data_cleaned = preprocess_data(
+                    clean_string_columns(anime_data)
+                )
+                user_scores_cleaned = preprocess_data(
+                    clean_string_columns(user_scores)
+                )
+
+                return (
+                    user_details_cleaned,
+                    anime_data_cleaned,
+                    user_scores_cleaned,
                 )
         except Exception as e:
             raise DataValidationError(f"Data loading failed: {str(e)}")
