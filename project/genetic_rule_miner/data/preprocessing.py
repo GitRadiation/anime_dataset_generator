@@ -125,7 +125,7 @@ def preprocess_data(df: pd.DataFrame) -> pd.DataFrame:
 
             df["age_group"] = pd.cut(
                 df["age"],
-                bins=[0, 25, 40, 100],
+                bins=[0, 25, 40, 200],
                 labels=["young", "adult", "senior"],
                 include_lowest=True,
             )

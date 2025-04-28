@@ -14,17 +14,19 @@ from genetic_rule_miner.utils.logging import LogManager, log_execution
 
 @log_execution
 def save_to_excel(
-    df: pd.DataFrame, output_path: str = "processed_data.xlsx"
+    df_dict: dict, output_path: str = "processed_data.xlsx"
 ) -> None:
-    """Save the DataFrame to an Excel file.
+    """Save the DataFrames to an Excel file with different sheets.
 
     Args:
-        df: DataFrame to save.
+        df_dict: Dictionary where keys are sheet names and values are DataFrames to save.
         output_path: Path to save the Excel file.
     """
     try:
-        # Save the DataFrame to an Excel file
-        df.to_excel(output_path, index=False)
+        # Save the dictionary of DataFrames to an Excel file with each DataFrame in a separate sheet
+        with pd.ExcelWriter(output_path) as writer:
+            for sheet_name, df in df_dict.items():
+                df.to_excel(writer, sheet_name=sheet_name, index=False)
         logger.info(f"Data successfully saved to {output_path}")
     except Exception as e:
         logger.error(f"Failed to save data to Excel: {str(e)}")
@@ -49,17 +51,24 @@ def main() -> None:
         user_details, anime_data, user_scores = (
             data_manager.load_and_preprocess_data()
         )
-
+        save_to_excel(
+            {
+                "user_details": user_details,
+                "anime_data": anime_data,
+                "user_scores": user_scores,
+            },
+            "raw_data.xlsx",
+        )
         logger.info("Merging preprocessed data...")
         merged_data = DataManager.merge_data(
             user_scores, user_details, anime_data
         )
-        save_to_excel(merged_data, "processed_data.xlsx")
+        save_to_excel({"merged_data": merged_data}, "processed_data.xlsx")
 
         # Genetic algorithm execution
         logger.info("Initializing genetic algorithm...")
         processed_df = preprocess_data(clean_string_columns(merged_data))
-        save_to_excel(processed_df, "datos_limpios.xlsx")
+        save_to_excel({"processed_data": processed_df}, "datos_limpios.xlsx")
 
         miner = GeneticRuleMiner(
             df=processed_df,
