@@ -21,7 +21,6 @@ class DataManager:
     def __init__(self, db_config: DBConfig) -> None:
         """Initialize with database configuration."""
         self.db_manager = DatabaseManager(db_config)
-        self.db_manager.initialize()
 
     @log_execution
     def load_and_preprocess_data(

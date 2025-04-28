@@ -1,54 +1,79 @@
-import json
 import logging
-from datetime import datetime
 from io import BytesIO
 from typing import Optional
 
 import pandas as pd
 import requests
-from config import APIConfig, LogConfig
+from genetic_rule_miner.config import APIConfig
+from genetic_rule_miner.utils.logging import LogManager
 from rake_nltk import Rake
 
-LogConfig.setup()
+LogManager.configure()
 logger = logging.getLogger(__name__)
 
 
 class AnimeService:
     def __init__(self, config: APIConfig = APIConfig()):
         self.config = config
+        logger.info("AnimeService initialized with config: %s", self.config)
 
     def _fetch_anime(self, anime_id: int) -> Optional[dict]:
         """Obtiene los datos del anime desde la API."""
         for attempt in range(self.config.max_retries):
             try:
+                logger.debug(
+                    "Fetching anime with ID %d (Attempt %d)",
+                    anime_id,
+                    attempt + 1,
+                )
                 response = requests.get(
                     f"{self.config.base_url}anime/{anime_id}",
                     timeout=self.config.timeout,
                 )
                 response.raise_for_status()
+                logger.debug("Successfully fetched anime with ID %d", anime_id)
                 return response.json().get("data")
-            except (requests.RequestException, KeyError):
-                continue
+            except (requests.RequestException, KeyError) as e:
+                logger.warning(
+                    "Failed to fetch anime with ID %d on attempt %d: %s",
+                    anime_id,
+                    attempt + 1,
+                    e,
+                )
+        logger.error(
+            "Failed to fetch anime with ID %d after %d attempts",
+            anime_id,
+            self.config.max_retries,
+        )
         return None
 
     def get_anime_data(self, start_id: int, end_id: int) -> BytesIO:
+        logger.info(
+            "Starting to fetch anime data from ID %d to %d", start_id, end_id
+        )
         buffer = BytesIO()
         records = []
         r = Rake()  # Inicializar RAKE una sola vez
 
         for anime_id in range(start_id, end_id + 1):
-            # Hacer solicitud
+            logger.debug("Processing anime with ID %d", anime_id)
             data = self._fetch_anime(anime_id)
             if data:
-                # Procesar sinopsis para keywords
                 synopsis = data.get("synopsis", "")
                 keywords = ""
                 if synopsis:
                     try:
                         r.extract_keywords_from_text(synopsis)
                         keywords = ", ".join(r.get_ranked_phrases())
+                        logger.debug(
+                            "Extracted keywords for anime ID %d", anime_id
+                        )
                     except Exception as e:
-                        logger.error(f"Error extrayendo keywords: {e}")
+                        logger.error(
+                            "Error extracting keywords for anime ID %d: %s",
+                            anime_id,
+                            e,
+                        )
 
                 records.append(
                     {
@@ -82,8 +107,14 @@ class AnimeService:
                         "members": data.get("members"),
                     }
                 )
+            else:
+                logger.info("No data found for anime ID %d", anime_id)
 
+        logger.info(
+            "Finished fetching anime data. Total records: %d", len(records)
+        )
         df = pd.DataFrame(records)
         df.to_csv(buffer, index=False)
         buffer.seek(0)
+        logger.info("Anime data written to buffer")
         return buffer

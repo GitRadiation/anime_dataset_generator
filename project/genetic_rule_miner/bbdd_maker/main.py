@@ -5,15 +5,16 @@ from io import BytesIO, StringIO
 
 import nltk
 import pandas as pd
-from anime_service import AnimeService
-from config import APIConfig, DBConfig, LogConfig
-from database import DatabaseManager
-from details_service import DetailsService
-from score_service import ScoreService
-from user_service import UserService
+from genetic_rule_miner.bbdd_maker.anime_service import AnimeService
+from genetic_rule_miner.bbdd_maker.details_service import DetailsService
+from genetic_rule_miner.bbdd_maker.score_service import ScoreService
+from genetic_rule_miner.bbdd_maker.user_service import UserService
+from genetic_rule_miner.config import APIConfig, DBConfig
+from genetic_rule_miner.data.database import DatabaseManager
+from genetic_rule_miner.utils.logging import LogManager
 
 # Configurar el logging
-LogConfig.setup()
+LogManager.configure()
 logger = logging.getLogger(__name__)
 
 
@@ -150,6 +151,7 @@ def main():
     # Fase 1: Inicialización
     # ==========================
     # Inicializar configuraciones
+    logger.info("🔧 Fase 1: Inicialización")
     db_config = DBConfig()
     api_config = APIConfig()
 
@@ -160,19 +162,23 @@ def main():
     # ==========================
     # Fase 2: Obtención de datos
     # ==========================
+    logger.info("📡 Fase 2: Obtención de datos")
     for attempt in range(1, max_retries + 1):
         logger.info(f"🤔 Intento {attempt} de obtener datos base...")
 
         # 1. Obtener datos de anime
+        logger.info("📡 Obteniendo datos de anime...")
         anime_buffer = AnimeService(api_config).get_anime_data(1, 100)
 
         # 2. Generar lista de usuarios
+        logger.info("📡 Generando lista de usuarios...")
         user_service = UserService(api_config)
         userlist_buffer = user_service.generate_userlist(
             start_id=1, end_id=100
         )
 
         # 3. Preparar datos para ScoreService
+        logger.info("📡 Preparando datos de usuarios...")
         userlist_df = pd.read_csv(userlist_buffer)
         userlist_df.rename(columns={"user_id": "mal_id"}, inplace=True)
         modified_userlist_buffer = BytesIO()
@@ -180,11 +186,13 @@ def main():
         modified_userlist_buffer.seek(0)
 
         # 4. Obtener detalles de usuarios
+        logger.info("📡 Obteniendo detalles de usuarios...")
         usernames = userlist_df["username"].dropna().tolist()
         details_service = DetailsService(api_config)
         details_buffer = details_service.get_user_details(usernames)
 
         # 5. Obtener puntuaciones
+        logger.info("📡 Obteniendo puntuaciones de usuarios...")
         score_service = ScoreService(api_config)
         scores_buffer = score_service.get_scores(modified_userlist_buffer)
 
@@ -206,6 +214,8 @@ def main():
     # Fase 3: Preprocesamiento y Carga de datos
     # ==========================
     # Inicializar conexión a la base de datos
+    logger.info("🔧 Fase 3: Preprocesamiento y Carga de datos")
+    logger.info("🔗 Conectando a la base de datos...")
     db = DatabaseManager(db_config)
     logger.info("✅ DatabaseManager cargado correctamente")
 
@@ -223,21 +233,6 @@ def main():
             scores_df = pd.read_csv(
                 StringIO(scores_buffer.getvalue().decode("utf-8"))
             )
-
-            """ # Guardar datos originales a Excel
-            with pd.ExcelWriter(
-                "datos_antes_del_procesamiento.xlsx"
-            ) as writer:
-                anime_df.to_excel(
-                    writer, sheet_name="anime_dataset_raw", index=False
-                )
-                details_df.to_excel(
-                    writer, sheet_name="user_details_raw", index=False
-                )
-                scores_df.to_excel(
-                    writer, sheet_name="user_scores_raw", index=False
-                )"""
-
             # Procesamiento
             anime_df["premiered"] = anime_df["premiered"].apply(
                 clean_premiered
