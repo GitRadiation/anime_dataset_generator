@@ -40,10 +40,6 @@ class DataManager:
                     parse_dates=["timestamp"],
                 )
 
-                # Preprocess each dataset
-                print(user_details.columns)
-                print(anime_data.columns)
-                print(user_scores.columns)
                 # Clean and preprocess data
                 user_details_cleaned = preprocess_data(
                     clean_string_columns(user_details)

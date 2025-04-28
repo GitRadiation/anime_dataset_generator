@@ -15,6 +15,7 @@ tqdm = "^4.65.0"
 python-dotenv = "^1.0.0"
 typing-extensions = "^4.5.0"  # For better type hints
 openpyxl = "^3.1.5"
+psycopg2 = "^2.9.10"
 
 [tool.poetry.group.dev.dependencies]
 pytest = "^7.3.0"
