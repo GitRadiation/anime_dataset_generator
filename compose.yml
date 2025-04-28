@@ -1,6 +1,6 @@
 services:
   postgres:
-    image: docker.io/bitnami/postgresql:latest
+    image: bitnami/postgresql:latest
     environment:
       - POSTGRESQL_USERNAME=${DB_USER:-postgres}
       - POSTGRESQL_PASSWORD=${DB_PASS:-postgres}
@@ -12,14 +12,14 @@ services:
       - "5432:5432"
 
   pgadmin:
-    image: docker.io/bitnami/pgadmin4:latest
+    image: dpage/pgadmin4:latest  # Imagen corregida
     environment:
       - PGADMIN_DEFAULT_EMAIL=admin@example.com
       - PGADMIN_DEFAULT_PASSWORD=admin
     volumes:
       - pgadmin-data:/var/lib/pgadmin
     ports:
-      - "80:80"
+      - "8080:80"  # Usualmente se expone por el puerto 80, aquí en 8080 para evitar conflictos
 
 volumes:
   postgres-data:

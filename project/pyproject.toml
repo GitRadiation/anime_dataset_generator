@@ -7,13 +7,15 @@ packages = [{include = "genetic_rule_miner"}]
 
 [tool.poetry.dependencies]
 python = "^3.10"
-numpy = "^1.23.0"
+numpy = "^2.2.5"
 pandas = "^2.2.3"
 psycopg2-binary = "^2.9.5"
 sqlalchemy = "^2.0.0"
 tqdm = "^4.65.0"
 python-dotenv = "^1.0.0"
 typing-extensions = "^4.5.0"  # For better type hints
+openpyxl = "^3.1.5"
+psycopg2 = "^2.9.10"
 
 [tool.poetry.group.dev.dependencies]
 pytest = "^7.3.0"
