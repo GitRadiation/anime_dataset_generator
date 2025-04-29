@@ -1,28 +1,28 @@
 services:
-  postgres:
-    image: bitnami/postgresql:latest
-    environment:
-      - POSTGRESQL_USERNAME=${DB_USER:-postgres}
-      - POSTGRESQL_PASSWORD=${DB_PASS:-postgres}
-      - POSTGRESQL_DATABASE=${DB_NAME:-mydatabase}
-      - POSTGRESQL_PORT_NUMBER=${DB_PORT:-5432}
-    volumes:
-      - postgres-data:/bitnami/postgresql
-    ports:
-      - "5432:5432"
+    postgres:
+        image: bitnami/postgresql:latest
+        environment:
+        - POSTGRESQL_USERNAME=${DB_USER:-postgres}
+        - POSTGRESQL_PASSWORD=${DB_PASS:-postgres}
+        - POSTGRESQL_DATABASE=${DB_NAME:-mydatabase}
+        - POSTGRESQL_PORT_NUMBER=${DB_PORT:-5432}
+        volumes:
+        - postgres-data:/bitnami/postgresql
+        ports:
+        - "5432:5432"
 
-  pgadmin:
-    image: dpage/pgadmin4:latest  # Imagen corregida
-    environment:
-      - PGADMIN_DEFAULT_EMAIL=admin@example.com
-      - PGADMIN_DEFAULT_PASSWORD=admin
-    volumes:
-      - pgadmin-data:/var/lib/pgadmin
-    ports:
-      - "8080:80"  # Usualmente se expone por el puerto 80, aquí en 8080 para evitar conflictos
+    pgadmin:
+        image: dpage/pgadmin4:latest  # Imagen corregida
+        environment:
+        - PGADMIN_DEFAULT_EMAIL=admin@example.com
+        - PGADMIN_DEFAULT_PASSWORD=admin
+        volumes:
+        - pgadmin-data:/var/lib/pgadmin
+        ports:
+        - "8080:80"  # Usualmente se expone por el puerto 80, aquí en 8080 para evitar conflictos
 
 volumes:
-  postgres-data:
-    driver: local
-  pgadmin-data:
-    driver: local
+    postgres-data:
+        driver: local
+    pgadmin-data:
+        driver: local

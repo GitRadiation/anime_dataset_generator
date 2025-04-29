@@ -1,0 +1,64 @@
+[tool.poetry]
+name = "genetic-rule-miner"
+version = "1.0.0"
+description = "Advanced genetic algorithm for association rule mining with database support"
+license = "MIT"
+packages = [{include = "genetic_rule_miner"}]
+
+[tool.poetry.dependencies]
+python = "^3.10"
+numpy = "^2.2.5"
+pandas = "^2.2.3"
+psycopg2-binary = "^2.9.5"
+sqlalchemy = "^2.0.0"
+tqdm = "^4.65.0"
+python-dotenv = "^1.0.0"
+typing-extensions = "^4.5.0"  # For better type hints
+openpyxl = "^3.1.5"
+psycopg2 = "^2.9.10"
+requests = "^2.32.3"
+rake-nltk = "^1.0.6"
+beautifulsoup4 = "^4.13.4"
+
+[tool.poetry.group.dev.dependencies]
+pytest = "^7.3.0"
+pytest-cov = "^4.0.0"
+mypy = "^1.3.0"
+black = "^23.3.0"
+flake8 = "^6.0.0"
+isort = "^5.12.0"
+ipython = "^8.12.0"
+
+[tool.poetry.scripts]
+genetic-miner = "genetic_rule_miner.main:main"
+
+[tool.black]
+line-length = 88
+target-version = ['py39']
+include = '\.pyi?$'
+exclude = '''
+/(
+    \.git
+    | \.hg
+    | \.mypy_cache
+    | \.tox
+    | \.venv
+    | _build
+    | buck-out
+    | build
+    | dist
+)/
+'''
+
+[tool.isort]
+profile = "black"
+multi_line_output = 3
+include_trailing_comma = true
+force_grid_wrap = 0
+use_parentheses = true
+ensure_newline_before_comments = true
+line_length = 88
+
+[build-system]
+requires = ["poetry-core>=1.0.0"]
+build-backend = "poetry.core.masonry.api"
