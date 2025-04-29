@@ -13638,3 +13638,492 @@ DETAIL:  Key (user_id)=(1) is not present in table "user_details".
 2025-04-29 13:21:31 - __main__ - [92mINFO[0m - ✅ Data loading completed successfully
 2025-04-29 13:21:31 - __main__ - [92mINFO[0m - 🔗 Database connection closed
 2025-04-29 13:21:31 - genetic_rule_miner.data.database - [92mINFO[0m - SQLAlchemy engine closed
+2025-04-29 13:22:14 - __main__ - [92mINFO[0m - Starting rule mining pipeline
+2025-04-29 13:22:14 - genetic_rule_miner.data.database - [92mINFO[0m - SQLAlchemy engine initialized
+2025-04-29 13:22:14 - __main__ - [92mINFO[0m - Loading and preprocessing data...
+2025-04-29 13:22:14 - genetic_rule_miner.data.manager - [92mINFO[0m - [92mEntering load_and_preprocess_data...[0m
+2025-04-29 13:22:35 - genetic_rule_miner.data.preprocessing - [92mINFO[0m - [92mEntering preprocess_data...[0m
+2025-04-29 13:22:35 - genetic_rule_miner.data.preprocessing - [91mERROR[0m - Preprocessing failed. Current data state:
+   mal_id  gender    birthday  days_watched  mean_score  watching  completed  on_hold  dropped  plan_to_watch  total_entries  rewatched  episodes_watched
+0       1    Male  1985-03-04         142.3        7.37         1        233        8       93             64            399         60              8481
+1       3    Male        <NA>          69.5        7.36        29        139       99       44             43            354         15              4121
+2       4  Female        <NA>         212.8        6.68        16        636      303        0             45           1000         10             12781
+3       9    <NA>        <NA>          30.0        7.71         5         54        4        3              0             66          0              1817
+4      18    <NA>        <NA>          51.9        6.27         1        114       10        5             23            153         42              3038
+2025-04-29 13:22:35 - genetic_rule_miner.data.preprocessing - [91mERROR[0m - [91mpreprocess_data failed after 0.0143s: Data preprocessing failed: 'duration'[0m
+Traceback (most recent call last):
+  File "C:\Users\PRCAAL\PROYECTOS\anime_dataset_generator\project\.venv\Lib\site-packages\pandas\core\indexes\base.py", line 3805, in get_loc
+    return self._engine.get_loc(casted_key)
+           ~~~~~~~~~~~~~~~~~~~~^^^^^^^^^^^^
+  File "index.pyx", line 167, in pandas._libs.index.IndexEngine.get_loc
+  File "index.pyx", line 196, in pandas._libs.index.IndexEngine.get_loc
+  File "pandas\\_libs\\hashtable_class_helper.pxi", line 7081, in pandas._libs.hashtable.PyObjectHashTable.get_item
+  File "pandas\\_libs\\hashtable_class_helper.pxi", line 7089, in pandas._libs.hashtable.PyObjectHashTable.get_item
+KeyError: 'duration'
+
+The above exception was the direct cause of the following exception:
+
+Traceback (most recent call last):
+  File "C:\Users\PRCAAL\PROYECTOS\anime_dataset_generator\project\genetic_rule_miner\data\preprocessing.py", line 93, in preprocess_data
+    [0, 20, 25, max(30, df["duration"].max() + 1)],
+                        ~~^^^^^^^^^^^^
+  File "C:\Users\PRCAAL\PROYECTOS\anime_dataset_generator\project\.venv\Lib\site-packages\pandas\core\frame.py", line 4102, in __getitem__
+    indexer = self.columns.get_loc(key)
+  File "C:\Users\PRCAAL\PROYECTOS\anime_dataset_generator\project\.venv\Lib\site-packages\pandas\core\indexes\base.py", line 3812, in get_loc
+    raise KeyError(key) from err
+KeyError: 'duration'
+
+The above exception was the direct cause of the following exception:
+
+Traceback (most recent call last):
+  File "C:\Users\PRCAAL\PROYECTOS\anime_dataset_generator\project\genetic_rule_miner\utils\logging.py", line 125, in wrapper
+    result = func(*args, **kwargs)
+  File "C:\Users\PRCAAL\PROYECTOS\anime_dataset_generator\project\genetic_rule_miner\data\preprocessing.py", line 172, in preprocess_data
+    raise ValueError(f"Data preprocessing failed: {str(e)}") from e
+ValueError: Data preprocessing failed: 'duration'
+2025-04-29 13:22:35 - genetic_rule_miner.data.database - [91mERROR[0m - Database connection error
+Traceback (most recent call last):
+  File "C:\Users\PRCAAL\PROYECTOS\anime_dataset_generator\project\.venv\Lib\site-packages\pandas\core\indexes\base.py", line 3805, in get_loc
+    return self._engine.get_loc(casted_key)
+           ~~~~~~~~~~~~~~~~~~~~^^^^^^^^^^^^
+  File "index.pyx", line 167, in pandas._libs.index.IndexEngine.get_loc
+  File "index.pyx", line 196, in pandas._libs.index.IndexEngine.get_loc
+  File "pandas\\_libs\\hashtable_class_helper.pxi", line 7081, in pandas._libs.hashtable.PyObjectHashTable.get_item
+  File "pandas\\_libs\\hashtable_class_helper.pxi", line 7089, in pandas._libs.hashtable.PyObjectHashTable.get_item
+KeyError: 'duration'
+
+The above exception was the direct cause of the following exception:
+
+Traceback (most recent call last):
+  File "C:\Users\PRCAAL\PROYECTOS\anime_dataset_generator\project\genetic_rule_miner\data\preprocessing.py", line 93, in preprocess_data
+    [0, 20, 25, max(30, df["duration"].max() + 1)],
+                        ~~^^^^^^^^^^^^
+  File "C:\Users\PRCAAL\PROYECTOS\anime_dataset_generator\project\.venv\Lib\site-packages\pandas\core\frame.py", line 4102, in __getitem__
+    indexer = self.columns.get_loc(key)
+  File "C:\Users\PRCAAL\PROYECTOS\anime_dataset_generator\project\.venv\Lib\site-packages\pandas\core\indexes\base.py", line 3812, in get_loc
+    raise KeyError(key) from err
+KeyError: 'duration'
+
+The above exception was the direct cause of the following exception:
+
+Traceback (most recent call last):
+  File "C:\Users\PRCAAL\PROYECTOS\anime_dataset_generator\project\genetic_rule_miner\data\database.py", line 36, in connection
+    yield connection  # Yield the connection
+    ^^^^^^^^^^^^^^^^
+  File "C:\Users\PRCAAL\PROYECTOS\anime_dataset_generator\project\genetic_rule_miner\data\manager.py", line 41, in load_and_preprocess_data
+    user_details_cleaned = self._load_and_clean_data(
+        tables[0], conn
+    )
+  File "C:\Users\PRCAAL\PROYECTOS\anime_dataset_generator\project\genetic_rule_miner\data\manager.py", line 30, in _load_and_clean_data
+    return preprocess_data(clean_string_columns(data))
+  File "C:\Users\PRCAAL\PROYECTOS\anime_dataset_generator\project\genetic_rule_miner\utils\logging.py", line 125, in wrapper
+    result = func(*args, **kwargs)
+  File "C:\Users\PRCAAL\PROYECTOS\anime_dataset_generator\project\genetic_rule_miner\data\preprocessing.py", line 172, in preprocess_data
+    raise ValueError(f"Data preprocessing failed: {str(e)}") from e
+ValueError: Data preprocessing failed: 'duration'
+2025-04-29 13:22:35 - genetic_rule_miner.data.manager - [91mERROR[0m - [91mload_and_preprocess_data failed after 21.1331s: Data loading failed: Connection failed[0m
+Traceback (most recent call last):
+  File "C:\Users\PRCAAL\PROYECTOS\anime_dataset_generator\project\.venv\Lib\site-packages\pandas\core\indexes\base.py", line 3805, in get_loc
+    return self._engine.get_loc(casted_key)
+           ~~~~~~~~~~~~~~~~~~~~^^^^^^^^^^^^
+  File "index.pyx", line 167, in pandas._libs.index.IndexEngine.get_loc
+  File "index.pyx", line 196, in pandas._libs.index.IndexEngine.get_loc
+  File "pandas\\_libs\\hashtable_class_helper.pxi", line 7081, in pandas._libs.hashtable.PyObjectHashTable.get_item
+  File "pandas\\_libs\\hashtable_class_helper.pxi", line 7089, in pandas._libs.hashtable.PyObjectHashTable.get_item
+KeyError: 'duration'
+
+The above exception was the direct cause of the following exception:
+
+Traceback (most recent call last):
+  File "C:\Users\PRCAAL\PROYECTOS\anime_dataset_generator\project\genetic_rule_miner\data\preprocessing.py", line 93, in preprocess_data
+    [0, 20, 25, max(30, df["duration"].max() + 1)],
+                        ~~^^^^^^^^^^^^
+  File "C:\Users\PRCAAL\PROYECTOS\anime_dataset_generator\project\.venv\Lib\site-packages\pandas\core\frame.py", line 4102, in __getitem__
+    indexer = self.columns.get_loc(key)
+  File "C:\Users\PRCAAL\PROYECTOS\anime_dataset_generator\project\.venv\Lib\site-packages\pandas\core\indexes\base.py", line 3812, in get_loc
+    raise KeyError(key) from err
+KeyError: 'duration'
+
+The above exception was the direct cause of the following exception:
+
+Traceback (most recent call last):
+  File "C:\Users\PRCAAL\PROYECTOS\anime_dataset_generator\project\genetic_rule_miner\data\database.py", line 36, in connection
+    yield connection  # Yield the connection
+    ^^^^^^^^^^^^^^^^
+  File "C:\Users\PRCAAL\PROYECTOS\anime_dataset_generator\project\genetic_rule_miner\data\manager.py", line 41, in load_and_preprocess_data
+    user_details_cleaned = self._load_and_clean_data(
+        tables[0], conn
+    )
+  File "C:\Users\PRCAAL\PROYECTOS\anime_dataset_generator\project\genetic_rule_miner\data\manager.py", line 30, in _load_and_clean_data
+    return preprocess_data(clean_string_columns(data))
+  File "C:\Users\PRCAAL\PROYECTOS\anime_dataset_generator\project\genetic_rule_miner\utils\logging.py", line 125, in wrapper
+    result = func(*args, **kwargs)
+  File "C:\Users\PRCAAL\PROYECTOS\anime_dataset_generator\project\genetic_rule_miner\data\preprocessing.py", line 172, in preprocess_data
+    raise ValueError(f"Data preprocessing failed: {str(e)}") from e
+ValueError: Data preprocessing failed: 'duration'
+
+The above exception was the direct cause of the following exception:
+
+Traceback (most recent call last):
+  File "C:\Users\PRCAAL\PROYECTOS\anime_dataset_generator\project\genetic_rule_miner\data\manager.py", line 39, in load_and_preprocess_data
+    with self.db_manager.connection() as conn:
+         ~~~~~~~~~~~~~~~~~~~~~~~~~~^^
+  File "C:\Program Files\WindowsApps\PythonSoftwareFoundation.Python.3.13_3.13.1008.0_x64__qbz5n2kfra8p0\Lib\contextlib.py", line 162, in __exit__
+    self.gen.throw(value)
+    ~~~~~~~~~~~~~~^^^^^^^
+  File "C:\Users\PRCAAL\PROYECTOS\anime_dataset_generator\project\genetic_rule_miner\data\database.py", line 41, in connection
+    raise DatabaseError("Connection failed") from e
+genetic_rule_miner.utils.exceptions.DatabaseError: Connection failed
+
+During handling of the above exception, another exception occurred:
+
+Traceback (most recent call last):
+  File "C:\Users\PRCAAL\PROYECTOS\anime_dataset_generator\project\genetic_rule_miner\utils\logging.py", line 125, in wrapper
+    result = func(*args, **kwargs)
+  File "C:\Users\PRCAAL\PROYECTOS\anime_dataset_generator\project\genetic_rule_miner\data\manager.py", line 55, in load_and_preprocess_data
+    raise DataValidationError(f"Data loading failed: {str(e)}")
+genetic_rule_miner.utils.exceptions.DataValidationError: Data loading failed: Connection failed
+2025-04-29 13:22:35 - __main__ - [91mERROR[0m - Pipeline failed: Data loading failed: Connection failed
+Traceback (most recent call last):
+  File "C:\Users\PRCAAL\PROYECTOS\anime_dataset_generator\project\.venv\Lib\site-packages\pandas\core\indexes\base.py", line 3805, in get_loc
+    return self._engine.get_loc(casted_key)
+           ~~~~~~~~~~~~~~~~~~~~^^^^^^^^^^^^
+  File "index.pyx", line 167, in pandas._libs.index.IndexEngine.get_loc
+  File "index.pyx", line 196, in pandas._libs.index.IndexEngine.get_loc
+  File "pandas\\_libs\\hashtable_class_helper.pxi", line 7081, in pandas._libs.hashtable.PyObjectHashTable.get_item
+  File "pandas\\_libs\\hashtable_class_helper.pxi", line 7089, in pandas._libs.hashtable.PyObjectHashTable.get_item
+KeyError: 'duration'
+
+The above exception was the direct cause of the following exception:
+
+Traceback (most recent call last):
+  File "C:\Users\PRCAAL\PROYECTOS\anime_dataset_generator\project\genetic_rule_miner\data\preprocessing.py", line 93, in preprocess_data
+    [0, 20, 25, max(30, df["duration"].max() + 1)],
+                        ~~^^^^^^^^^^^^
+  File "C:\Users\PRCAAL\PROYECTOS\anime_dataset_generator\project\.venv\Lib\site-packages\pandas\core\frame.py", line 4102, in __getitem__
+    indexer = self.columns.get_loc(key)
+  File "C:\Users\PRCAAL\PROYECTOS\anime_dataset_generator\project\.venv\Lib\site-packages\pandas\core\indexes\base.py", line 3812, in get_loc
+    raise KeyError(key) from err
+KeyError: 'duration'
+
+The above exception was the direct cause of the following exception:
+
+Traceback (most recent call last):
+  File "C:\Users\PRCAAL\PROYECTOS\anime_dataset_generator\project\genetic_rule_miner\data\database.py", line 36, in connection
+    yield connection  # Yield the connection
+    ^^^^^^^^^^^^^^^^
+  File "C:\Users\PRCAAL\PROYECTOS\anime_dataset_generator\project\genetic_rule_miner\data\manager.py", line 41, in load_and_preprocess_data
+    user_details_cleaned = self._load_and_clean_data(
+        tables[0], conn
+    )
+  File "C:\Users\PRCAAL\PROYECTOS\anime_dataset_generator\project\genetic_rule_miner\data\manager.py", line 30, in _load_and_clean_data
+    return preprocess_data(clean_string_columns(data))
+  File "C:\Users\PRCAAL\PROYECTOS\anime_dataset_generator\project\genetic_rule_miner\utils\logging.py", line 125, in wrapper
+    result = func(*args, **kwargs)
+  File "C:\Users\PRCAAL\PROYECTOS\anime_dataset_generator\project\genetic_rule_miner\data\preprocessing.py", line 172, in preprocess_data
+    raise ValueError(f"Data preprocessing failed: {str(e)}") from e
+ValueError: Data preprocessing failed: 'duration'
+
+The above exception was the direct cause of the following exception:
+
+Traceback (most recent call last):
+  File "C:\Users\PRCAAL\PROYECTOS\anime_dataset_generator\project\genetic_rule_miner\data\manager.py", line 39, in load_and_preprocess_data
+    with self.db_manager.connection() as conn:
+         ~~~~~~~~~~~~~~~~~~~~~~~~~~^^
+  File "C:\Program Files\WindowsApps\PythonSoftwareFoundation.Python.3.13_3.13.1008.0_x64__qbz5n2kfra8p0\Lib\contextlib.py", line 162, in __exit__
+    self.gen.throw(value)
+    ~~~~~~~~~~~~~~^^^^^^^
+  File "C:\Users\PRCAAL\PROYECTOS\anime_dataset_generator\project\genetic_rule_miner\data\database.py", line 41, in connection
+    raise DatabaseError("Connection failed") from e
+genetic_rule_miner.utils.exceptions.DatabaseError: Connection failed
+
+During handling of the above exception, another exception occurred:
+
+Traceback (most recent call last):
+  File "c:\Users\PRCAAL\PROYECTOS\anime_dataset_generator\project\genetic_rule_miner\main.py", line 52, in main
+    data_manager.load_and_preprocess_data()
+    ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~^^
+  File "C:\Users\PRCAAL\PROYECTOS\anime_dataset_generator\project\genetic_rule_miner\utils\logging.py", line 125, in wrapper
+    result = func(*args, **kwargs)
+  File "C:\Users\PRCAAL\PROYECTOS\anime_dataset_generator\project\genetic_rule_miner\data\manager.py", line 55, in load_and_preprocess_data
+    raise DataValidationError(f"Data loading failed: {str(e)}")
+genetic_rule_miner.utils.exceptions.DataValidationError: Data loading failed: Connection failed
+2025-04-29 13:22:35 - genetic_rule_miner.data.database - [92mINFO[0m - SQLAlchemy engine closed
+2025-04-29 13:24:30 - __main__ - [92mINFO[0m - Starting rule mining pipeline
+2025-04-29 13:24:30 - genetic_rule_miner.data.database - [92mINFO[0m - SQLAlchemy engine initialized
+2025-04-29 13:24:30 - __main__ - [92mINFO[0m - Loading and preprocessing data...
+2025-04-29 13:24:30 - genetic_rule_miner.data.manager - [92mINFO[0m - [92mEntering load_and_preprocess_data...[0m
+2025-04-29 13:24:51 - genetic_rule_miner.data.preprocessing - [92mINFO[0m - [92mEntering preprocess_data...[0m
+2025-04-29 13:24:51 - genetic_rule_miner.data.preprocessing - [92mINFO[0m - [92mpreprocess_data completed in 0.0263s[0m
+2025-04-29 13:24:51 - genetic_rule_miner.data.preprocessing - [92mINFO[0m - [92mEntering preprocess_data...[0m
+2025-04-29 13:24:51 - genetic_rule_miner.data.preprocessing - [91mERROR[0m - Preprocessing failed. Current data state:
+   anime_id  score                                genres                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                   keywords   type  episodes                         aired premiered           status                                              producers         studios    source duration                          rating  rank  popularity  favorites  scored_by  members
+0         1   8.75         Action, Award Winning, Sci-Fi    odd child edward wong hau pepelu tivrusky iv, jet black pursue criminals throughout space, beautiful con artist faye valentine, tough bounty hunters, maniacal plot continues, bioengineered welsh corgi, spike must choose, jet manages, year 2071, troubled memories, taking care, settlements like, old wounds, newfound family, new societies, mal rewrite, intergalactic outlaws, humble living, growing number, expanded across, drug use, developing bonds, colorful cast, aloof demeanor, spike spiegel, violent past, criminals, bebop crew, spike, spike, spike, past, bebop, written, working, weight, unravel, timeless, theft, surface, ship, rival, revenge, planets, plagued, murder, menace, meanwhile, make, lives, life, joined, hunted, humanity, haunted, goofy, galaxy, filling, ein, earth, duo, disrupted, crime, catch, beneath     TV      26.0   Apr 3, 1998 to Apr 24, 1999    spring  Finished Airing  Bandai Visual, Victor Entertainment, Audio Planning U         Sunrise  Original       24  R - 17+ (violence & profanity)    47          42      86242    1014424  1964909
+1         5   8.38                        Action, Sci-Fi                                                                                                                            whopping three hundred million woolong price, pursue different leads across alba city, oil tanker suddenly explode, strange disease spreading, often unlucky crew, fairly worthless target, causing mass hysteria, casualties mount due, bounty hunters could, another bounty —, bebop crew springs, another day, supposed perpetrator, scheme involving, reaches much, ragtag team, pharmaceutical company, money problems, mal rewrite, individual investigations, followed closely, bebop, written, witnesses, stake, split, spike, solution, smoke, sight, routine, revealing, realized, plot, placed, mars, lives, life, jet, interrupted, however, head, faye, faye, ein, edward, discover, cover, chasing, blast, action  Movie       1.0                   Sep 1, 2001      <NA>  Finished Airing                                 Sunrise, Bandai Visual           Bones  Original      115  R - 17+ (violence & profanity)   210         639       1693     224465   396344
+2         6   8.22             Action, Adventure, Sci-Fi                                                             make eye contact —, two insurance agents, humanoid typhoon .", flattens entire cities, crazy doughnut obsession, rumors say, principles pushed, planet gunsmoke, never taken, misadventures evolve, milly thompson, meryl stryfe, merciless villain, mal rewrite, legendary assassins, lays waste, huge softie, destruction wherever, buffoonish attitude, breaking point, avoids violence, agonizing past, $$ 60, death situations, 000 bounty, vash traverses, death, 000, 000, vash, vash, vash, written, wasteland, unraveled, trio, trail, tow, title, summoned, suffering, stampede, soon, reason, public, oppose, much, morality, minimize, man, life, life, leaves, impact, head, group, goes, garnering, fun, followed, dead, count, costs, claims, bring, attempt, anyone, actuality     TV      26.0   Apr 1, 1998 to Sep 30, 1998    spring  Finished Airing                                   Victor Entertainment        Madhouse     Manga       24       PG-13 - Teens 13 or older   370         261      16779     387574   799654
+3         7   7.24  Action, Drama, Mystery, Supernatural  solving supernatural crimes falls outside, possessing powerful pyrokinetic abilities, though hidden away, local japanese branch, elixir called orbo, supernatural powers —, robin sena transfers, hostile witches —, witches —, robin wants, robin opposes, rogue witches, place within, normal authorities, nonetheless capable, neither numerous, mal rewrite, internal politics, instead handled, inherently evil, human societies, general public, even neutralize, different reasons, criminal means, creating disorder, always existed, also handling, must find, solomon organization, witches, powers, powers, organization, find, solomon, solomon, written, witch, witch, weaken, way, use, training, threat, task, stnj, stnj, seem, putting, particular, odds, navigate, misusing, methods, jurisdiction, italy, finished, dealing, dangerous     TV      26.0   Jul 3, 2002 to Dec 25, 2002    summer  Finished Airing            Bandai Visual, Dentsu, Victor Entertainment         Sunrise  Original       25       PG-13 - Teens 13 or older  3213        1942        672      45200   122664
+4         8   6.93            Action, Adventure, Fantasy                                                                                                                                                                                                                                                                                                                      five dying busters sacrificed, young vandel buster, vandel busters, strongest busters, young boy, five weapons, zenon squad, zenon squad, zenon squad, zenon squad, passed since, passed away, one day, manipulate monsters, life power, dark century, dark century, vandel, weapons, years, suffering, saiga, rule, result, put, people, people, known, joining, hunt, however, group, giving, fault, end, dreams, devils, devil, devil, defeated, continent, carry, beltose, begins, beet, beet, beet, beet, among, adventure, able     TV      52.0  Sep 30, 2004 to Sep 29, 2005      fall  Finished Airing                                       TV Tokyo, Dentsu  Toei Animation     Manga       23                   PG - Children  4726        5637         16       6952    16258
+2025-04-29 13:24:51 - genetic_rule_miner.data.preprocessing - [91mERROR[0m - [91mpreprocess_data failed after 0.0095s: Data preprocessing failed: can only concatenate str (not "int") to str[0m
+Traceback (most recent call last):
+  File "C:\Users\PRCAAL\PROYECTOS\anime_dataset_generator\project\genetic_rule_miner\data\preprocessing.py", line 94, in preprocess_data
+    [0, 20, 25, max(30, df["duration"].max() + 1)],
+                        ~~~~~~~~~~~~~~~~~~~~~^~~
+TypeError: can only concatenate str (not "int") to str
+
+The above exception was the direct cause of the following exception:
+
+Traceback (most recent call last):
+  File "C:\Users\PRCAAL\PROYECTOS\anime_dataset_generator\project\genetic_rule_miner\utils\logging.py", line 125, in wrapper
+    result = func(*args, **kwargs)
+  File "C:\Users\PRCAAL\PROYECTOS\anime_dataset_generator\project\genetic_rule_miner\data\preprocessing.py", line 174, in preprocess_data
+    raise ValueError(f"Data preprocessing failed: {str(e)}") from e
+ValueError: Data preprocessing failed: can only concatenate str (not "int") to str
+2025-04-29 13:24:51 - genetic_rule_miner.data.database - [91mERROR[0m - Database connection error
+Traceback (most recent call last):
+  File "C:\Users\PRCAAL\PROYECTOS\anime_dataset_generator\project\genetic_rule_miner\data\preprocessing.py", line 94, in preprocess_data
+    [0, 20, 25, max(30, df["duration"].max() + 1)],
+                        ~~~~~~~~~~~~~~~~~~~~~^~~
+TypeError: can only concatenate str (not "int") to str
+
+The above exception was the direct cause of the following exception:
+
+Traceback (most recent call last):
+  File "C:\Users\PRCAAL\PROYECTOS\anime_dataset_generator\project\genetic_rule_miner\data\database.py", line 36, in connection
+    yield connection  # Yield the connection
+    ^^^^^^^^^^^^^^^^
+  File "C:\Users\PRCAAL\PROYECTOS\anime_dataset_generator\project\genetic_rule_miner\data\manager.py", line 44, in load_and_preprocess_data
+    anime_data_cleaned = self._load_and_clean_data(tables[1], conn)
+  File "C:\Users\PRCAAL\PROYECTOS\anime_dataset_generator\project\genetic_rule_miner\data\manager.py", line 30, in _load_and_clean_data
+    return preprocess_data(clean_string_columns(data))
+  File "C:\Users\PRCAAL\PROYECTOS\anime_dataset_generator\project\genetic_rule_miner\utils\logging.py", line 125, in wrapper
+    result = func(*args, **kwargs)
+  File "C:\Users\PRCAAL\PROYECTOS\anime_dataset_generator\project\genetic_rule_miner\data\preprocessing.py", line 174, in preprocess_data
+    raise ValueError(f"Data preprocessing failed: {str(e)}") from e
+ValueError: Data preprocessing failed: can only concatenate str (not "int") to str
+2025-04-29 13:24:51 - genetic_rule_miner.data.manager - [91mERROR[0m - [91mload_and_preprocess_data failed after 21.1487s: Data loading failed: Connection failed[0m
+Traceback (most recent call last):
+  File "C:\Users\PRCAAL\PROYECTOS\anime_dataset_generator\project\genetic_rule_miner\data\preprocessing.py", line 94, in preprocess_data
+    [0, 20, 25, max(30, df["duration"].max() + 1)],
+                        ~~~~~~~~~~~~~~~~~~~~~^~~
+TypeError: can only concatenate str (not "int") to str
+
+The above exception was the direct cause of the following exception:
+
+Traceback (most recent call last):
+  File "C:\Users\PRCAAL\PROYECTOS\anime_dataset_generator\project\genetic_rule_miner\data\database.py", line 36, in connection
+    yield connection  # Yield the connection
+    ^^^^^^^^^^^^^^^^
+  File "C:\Users\PRCAAL\PROYECTOS\anime_dataset_generator\project\genetic_rule_miner\data\manager.py", line 44, in load_and_preprocess_data
+    anime_data_cleaned = self._load_and_clean_data(tables[1], conn)
+  File "C:\Users\PRCAAL\PROYECTOS\anime_dataset_generator\project\genetic_rule_miner\data\manager.py", line 30, in _load_and_clean_data
+    return preprocess_data(clean_string_columns(data))
+  File "C:\Users\PRCAAL\PROYECTOS\anime_dataset_generator\project\genetic_rule_miner\utils\logging.py", line 125, in wrapper
+    result = func(*args, **kwargs)
+  File "C:\Users\PRCAAL\PROYECTOS\anime_dataset_generator\project\genetic_rule_miner\data\preprocessing.py", line 174, in preprocess_data
+    raise ValueError(f"Data preprocessing failed: {str(e)}") from e
+ValueError: Data preprocessing failed: can only concatenate str (not "int") to str
+
+The above exception was the direct cause of the following exception:
+
+Traceback (most recent call last):
+  File "C:\Users\PRCAAL\PROYECTOS\anime_dataset_generator\project\genetic_rule_miner\data\manager.py", line 39, in load_and_preprocess_data
+    with self.db_manager.connection() as conn:
+         ~~~~~~~~~~~~~~~~~~~~~~~~~~^^
+  File "C:\Program Files\WindowsApps\PythonSoftwareFoundation.Python.3.13_3.13.1008.0_x64__qbz5n2kfra8p0\Lib\contextlib.py", line 162, in __exit__
+    self.gen.throw(value)
+    ~~~~~~~~~~~~~~^^^^^^^
+  File "C:\Users\PRCAAL\PROYECTOS\anime_dataset_generator\project\genetic_rule_miner\data\database.py", line 41, in connection
+    raise DatabaseError("Connection failed") from e
+genetic_rule_miner.utils.exceptions.DatabaseError: Connection failed
+
+During handling of the above exception, another exception occurred:
+
+Traceback (most recent call last):
+  File "C:\Users\PRCAAL\PROYECTOS\anime_dataset_generator\project\genetic_rule_miner\utils\logging.py", line 125, in wrapper
+    result = func(*args, **kwargs)
+  File "C:\Users\PRCAAL\PROYECTOS\anime_dataset_generator\project\genetic_rule_miner\data\manager.py", line 55, in load_and_preprocess_data
+    raise DataValidationError(f"Data loading failed: {str(e)}")
+genetic_rule_miner.utils.exceptions.DataValidationError: Data loading failed: Connection failed
+2025-04-29 13:24:51 - __main__ - [91mERROR[0m - Pipeline failed: Data loading failed: Connection failed
+Traceback (most recent call last):
+  File "C:\Users\PRCAAL\PROYECTOS\anime_dataset_generator\project\genetic_rule_miner\data\preprocessing.py", line 94, in preprocess_data
+    [0, 20, 25, max(30, df["duration"].max() + 1)],
+                        ~~~~~~~~~~~~~~~~~~~~~^~~
+TypeError: can only concatenate str (not "int") to str
+
+The above exception was the direct cause of the following exception:
+
+Traceback (most recent call last):
+  File "C:\Users\PRCAAL\PROYECTOS\anime_dataset_generator\project\genetic_rule_miner\data\database.py", line 36, in connection
+    yield connection  # Yield the connection
+    ^^^^^^^^^^^^^^^^
+  File "C:\Users\PRCAAL\PROYECTOS\anime_dataset_generator\project\genetic_rule_miner\data\manager.py", line 44, in load_and_preprocess_data
+    anime_data_cleaned = self._load_and_clean_data(tables[1], conn)
+  File "C:\Users\PRCAAL\PROYECTOS\anime_dataset_generator\project\genetic_rule_miner\data\manager.py", line 30, in _load_and_clean_data
+    return preprocess_data(clean_string_columns(data))
+  File "C:\Users\PRCAAL\PROYECTOS\anime_dataset_generator\project\genetic_rule_miner\utils\logging.py", line 125, in wrapper
+    result = func(*args, **kwargs)
+  File "C:\Users\PRCAAL\PROYECTOS\anime_dataset_generator\project\genetic_rule_miner\data\preprocessing.py", line 174, in preprocess_data
+    raise ValueError(f"Data preprocessing failed: {str(e)}") from e
+ValueError: Data preprocessing failed: can only concatenate str (not "int") to str
+
+The above exception was the direct cause of the following exception:
+
+Traceback (most recent call last):
+  File "C:\Users\PRCAAL\PROYECTOS\anime_dataset_generator\project\genetic_rule_miner\data\manager.py", line 39, in load_and_preprocess_data
+    with self.db_manager.connection() as conn:
+         ~~~~~~~~~~~~~~~~~~~~~~~~~~^^
+  File "C:\Program Files\WindowsApps\PythonSoftwareFoundation.Python.3.13_3.13.1008.0_x64__qbz5n2kfra8p0\Lib\contextlib.py", line 162, in __exit__
+    self.gen.throw(value)
+    ~~~~~~~~~~~~~~^^^^^^^
+  File "C:\Users\PRCAAL\PROYECTOS\anime_dataset_generator\project\genetic_rule_miner\data\database.py", line 41, in connection
+    raise DatabaseError("Connection failed") from e
+genetic_rule_miner.utils.exceptions.DatabaseError: Connection failed
+
+During handling of the above exception, another exception occurred:
+
+Traceback (most recent call last):
+  File "c:\Users\PRCAAL\PROYECTOS\anime_dataset_generator\project\genetic_rule_miner\main.py", line 52, in main
+    data_manager.load_and_preprocess_data()
+    ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~^^
+  File "C:\Users\PRCAAL\PROYECTOS\anime_dataset_generator\project\genetic_rule_miner\utils\logging.py", line 125, in wrapper
+    result = func(*args, **kwargs)
+  File "C:\Users\PRCAAL\PROYECTOS\anime_dataset_generator\project\genetic_rule_miner\data\manager.py", line 55, in load_and_preprocess_data
+    raise DataValidationError(f"Data loading failed: {str(e)}")
+genetic_rule_miner.utils.exceptions.DataValidationError: Data loading failed: Connection failed
+2025-04-29 13:24:51 - genetic_rule_miner.data.database - [92mINFO[0m - SQLAlchemy engine closed
+2025-04-29 13:26:20 - __main__ - [92mINFO[0m - Starting rule mining pipeline
+2025-04-29 13:26:20 - genetic_rule_miner.data.database - [92mINFO[0m - SQLAlchemy engine initialized
+2025-04-29 13:26:20 - __main__ - [92mINFO[0m - Loading and preprocessing data...
+2025-04-29 13:26:20 - genetic_rule_miner.data.manager - [92mINFO[0m - [92mEntering load_and_preprocess_data...[0m
+2025-04-29 13:26:41 - genetic_rule_miner.data.preprocessing - [92mINFO[0m - [92mEntering preprocess_data...[0m
+2025-04-29 13:26:41 - genetic_rule_miner.data.preprocessing - [92mINFO[0m - [92mpreprocess_data completed in 0.0049s[0m
+2025-04-29 13:26:41 - genetic_rule_miner.data.preprocessing - [92mINFO[0m - [92mEntering preprocess_data...[0m
+2025-04-29 13:26:41 - genetic_rule_miner.data.preprocessing - [92mINFO[0m - [92mpreprocess_data completed in 0.0328s[0m
+2025-04-29 13:26:41 - genetic_rule_miner.data.preprocessing - [92mINFO[0m - [92mEntering preprocess_data...[0m
+2025-04-29 13:26:41 - genetic_rule_miner.data.preprocessing - [92mINFO[0m - [92mpreprocess_data completed in 0.0007s[0m
+2025-04-29 13:26:41 - genetic_rule_miner.data.manager - [92mINFO[0m - [92mload_and_preprocess_data completed in 21.1367s[0m
+2025-04-29 13:26:41 - __main__ - [92mINFO[0m - [92mEntering save_to_excel...[0m
+2025-04-29 13:26:42 - __main__ - [92mINFO[0m - Data successfully saved to raw_data.xlsx
+2025-04-29 13:26:42 - __main__ - [92mINFO[0m - [92msave_to_excel completed in 1.2084s[0m
+2025-04-29 13:26:42 - __main__ - [92mINFO[0m - Merging preprocessed data...
+2025-04-29 13:26:42 - genetic_rule_miner.data.manager - [92mINFO[0m - [92mEntering merge_data...[0m
+2025-04-29 13:26:42 - genetic_rule_miner.data.manager - [92mINFO[0m - [92mmerge_data completed in 0.0182s[0m
+2025-04-29 13:26:42 - __main__ - [92mINFO[0m - [92mEntering save_to_excel...[0m
+2025-04-29 13:26:42 - __main__ - [92mINFO[0m - Data successfully saved to processed_data.xlsx
+2025-04-29 13:26:42 - __main__ - [92mINFO[0m - [92msave_to_excel completed in 0.1705s[0m
+2025-04-29 13:26:42 - __main__ - [92mINFO[0m - Initializing genetic algorithm...
+2025-04-29 13:26:42 - genetic_rule_miner.data.preprocessing - [92mINFO[0m - [92mEntering preprocess_data...[0m
+2025-04-29 13:26:42 - genetic_rule_miner.data.preprocessing - [92mINFO[0m - [92mpreprocess_data completed in 0.0245s[0m
+2025-04-29 13:26:42 - __main__ - [92mINFO[0m - [92mEntering save_to_excel...[0m
+2025-04-29 13:26:43 - __main__ - [92mINFO[0m - Data successfully saved to datos_limpios.xlsx
+2025-04-29 13:26:43 - __main__ - [92mINFO[0m - [92msave_to_excel completed in 0.1793s[0m
+2025-04-29 13:26:43 - __main__ - [92mINFO[0m - Starting evolution process...
+2025-04-29 13:26:43 - genetic_rule_miner.models.genetic - [92mINFO[0m - Generation 0: Best Fitness=0.0612, Support=0.1468, Confidence=0.4167, Rule: IF on_hold greater than 9.00 AND total_entries greater than 163.00 AND watching greater than 4.10 AND favorites less than 5301.00 AND popularity greater than 1278.00 THEN rating = high
+2025-04-29 13:26:43 - genetic_rule_miner.models.genetic - [92mINFO[0m - Generation 1: Best Fitness=0.0612, Support=0.1468, Confidence=0.4167, Rule: IF on_hold greater than 9.00 AND total_entries greater than 163.00 AND watching greater than 4.10 AND favorites less than 5301.00 AND popularity greater than 1278.00 THEN rating = high
+2025-04-29 13:26:43 - genetic_rule_miner.models.genetic - [92mINFO[0m - Generation 2: Best Fitness=0.0612, Support=0.1468, Confidence=0.4167, Rule: IF on_hold greater than 9.00 AND total_entries greater than 163.00 AND watching greater than 4.10 AND favorites less than 5301.00 AND popularity greater than 1278.00 THEN rating = high
+2025-04-29 13:26:43 - genetic_rule_miner.models.genetic - [92mINFO[0m - Generation 3: Best Fitness=0.0948, Support=0.1988, Confidence=0.4769, Rule: IF on_hold greater than 9.00 AND total_entries greater than 163.00 AND watching greater than 4.10 AND episodes_watched greater than 3948.00 AND popularity greater than 466.02 THEN rating = high
+2025-04-29 13:26:43 - genetic_rule_miner.models.genetic - [92mINFO[0m - Generation 4: Best Fitness=0.0948, Support=0.1988, Confidence=0.4769, Rule: IF on_hold greater than 9.00 AND total_entries greater than 163.00 AND watching greater than 4.10 AND episodes_watched greater than 3948.00 AND popularity greater than 466.02 THEN rating = high
+2025-04-29 13:26:43 - genetic_rule_miner.models.genetic - [92mINFO[0m - Generation 5: Best Fitness=0.0979, Support=0.1896, Confidence=0.5161, Rule: IF age_group equals 'adult' AND on_hold greater than 10.00 AND watching greater than 4.10 AND favorites less than 5301.00 AND popularity greater than 466.02 THEN rating = high
+2025-04-29 13:26:43 - genetic_rule_miner.models.genetic - [92mINFO[0m - Generation 6: Best Fitness=0.0979, Support=0.1896, Confidence=0.5161, Rule: IF age_group equals 'adult' AND on_hold greater than 10.00 AND watching greater than 4.10 AND favorites less than 5301.00 AND popularity greater than 466.02 THEN rating = high
+2025-04-29 13:26:44 - genetic_rule_miner.models.genetic - [92mINFO[0m - Generation 7: Best Fitness=0.1346, Support=0.2599, Confidence=0.5176, Rule: IF on_hold greater than 8.00 AND total_entries greater than 163.00 AND watching greater than 4.10 AND episodes_watched greater than 3948.00 AND popularity greater than 466.02 THEN rating = high
+2025-04-29 13:26:44 - genetic_rule_miner.models.genetic - [92mINFO[0m - Generation 8: Best Fitness=0.1346, Support=0.2599, Confidence=0.5176, Rule: IF on_hold greater than 8.00 AND total_entries greater than 163.00 AND watching greater than 4.10 AND episodes_watched greater than 3948.00 AND popularity greater than 466.02 THEN rating = high
+2025-04-29 13:26:44 - genetic_rule_miner.models.genetic - [92mINFO[0m - Generation 9: Best Fitness=0.1346, Support=0.2599, Confidence=0.5176, Rule: IF on_hold greater than 8.00 AND total_entries greater than 163.00 AND watching greater than 4.10 AND episodes_watched greater than 3948.00 AND popularity greater than 466.02 THEN rating = high
+2025-04-29 13:26:44 - genetic_rule_miner.models.genetic - [92mINFO[0m - Generation 10: Best Fitness=0.1346, Support=0.2599, Confidence=0.5176, Rule: IF on_hold greater than 8.00 AND total_entries greater than 163.00 AND watching greater than 4.10 AND episodes_watched greater than 3948.00 AND popularity greater than 466.02 THEN rating = high
+2025-04-29 13:26:44 - genetic_rule_miner.models.genetic - [92mINFO[0m - Generation 11: Best Fitness=0.1346, Support=0.2599, Confidence=0.5176, Rule: IF on_hold greater than 8.00 AND total_entries greater than 163.00 AND watching greater than 4.10 AND episodes_watched greater than 3948.00 AND popularity greater than 466.02 THEN rating = high
+2025-04-29 13:26:44 - genetic_rule_miner.models.genetic - [92mINFO[0m - Generation 12: Best Fitness=0.1346, Support=0.2599, Confidence=0.5176, Rule: IF on_hold greater than 8.00 AND total_entries greater than 163.00 AND watching greater than 4.10 AND episodes_watched greater than 3948.00 AND popularity greater than 466.02 THEN rating = high
+2025-04-29 13:26:44 - genetic_rule_miner.models.genetic - [92mINFO[0m - Generation 13: Best Fitness=0.1346, Support=0.2599, Confidence=0.5176, Rule: IF on_hold greater than 8.00 AND total_entries greater than 163.00 AND watching greater than 4.10 AND episodes_watched greater than 3948.00 AND popularity greater than 466.02 THEN rating = high
+2025-04-29 13:26:44 - genetic_rule_miner.models.genetic - [92mINFO[0m - Generation 14: Best Fitness=0.1346, Support=0.2599, Confidence=0.5176, Rule: IF on_hold greater than 8.00 AND total_entries greater than 163.00 AND watching greater than 4.10 AND episodes_watched greater than 3948.00 AND popularity greater than 466.02 THEN rating = high
+2025-04-29 13:26:44 - genetic_rule_miner.models.genetic - [92mINFO[0m - Generation 15: Best Fitness=0.1346, Support=0.2599, Confidence=0.5176, Rule: IF on_hold greater than 8.00 AND total_entries greater than 163.00 AND watching greater than 4.10 AND episodes_watched greater than 3948.00 AND popularity greater than 466.02 THEN rating = high
+2025-04-29 13:26:44 - genetic_rule_miner.models.genetic - [92mINFO[0m - Generation 16: Best Fitness=0.1346, Support=0.2599, Confidence=0.5176, Rule: IF on_hold greater than 8.00 AND total_entries greater than 163.00 AND watching greater than 4.10 AND episodes_watched greater than 3948.00 AND popularity greater than 466.02 THEN rating = high
+2025-04-29 13:26:44 - genetic_rule_miner.models.genetic - [92mINFO[0m - Generation 17: Best Fitness=0.1346, Support=0.2599, Confidence=0.5176, Rule: IF on_hold greater than 8.00 AND total_entries greater than 163.00 AND watching greater than 4.10 AND episodes_watched greater than 3948.00 AND popularity greater than 466.02 THEN rating = high
+2025-04-29 13:26:44 - genetic_rule_miner.models.genetic - [92mINFO[0m - Generation 18: Best Fitness=0.1346, Support=0.2599, Confidence=0.5176, Rule: IF on_hold greater than 8.00 AND total_entries greater than 163.00 AND watching greater than 4.10 AND episodes_watched greater than 3948.00 AND popularity greater than 466.02 THEN rating = high
+2025-04-29 13:26:44 - genetic_rule_miner.models.genetic - [92mINFO[0m - Generation 19: Best Fitness=0.1346, Support=0.2599, Confidence=0.5176, Rule: IF on_hold greater than 8.00 AND total_entries greater than 163.00 AND watching greater than 4.10 AND episodes_watched greater than 3948.00 AND popularity greater than 466.02 THEN rating = high
+2025-04-29 13:26:44 - genetic_rule_miner.models.genetic - [92mINFO[0m - Generation 20: Best Fitness=0.1346, Support=0.2599, Confidence=0.5176, Rule: IF on_hold greater than 8.00 AND total_entries greater than 163.00 AND watching greater than 4.10 AND episodes_watched greater than 3948.00 AND popularity greater than 466.02 THEN rating = high
+2025-04-29 13:26:44 - genetic_rule_miner.models.genetic - [92mINFO[0m - Generation 21: Best Fitness=0.1346, Support=0.2599, Confidence=0.5176, Rule: IF on_hold greater than 8.00 AND total_entries greater than 163.00 AND watching greater than 4.10 AND episodes_watched greater than 3948.00 AND popularity greater than 466.02 THEN rating = high
+2025-04-29 13:26:44 - genetic_rule_miner.models.genetic - [92mINFO[0m - Generation 22: Best Fitness=0.1346, Support=0.2599, Confidence=0.5176, Rule: IF on_hold greater than 8.00 AND total_entries greater than 163.00 AND watching greater than 4.10 AND episodes_watched greater than 3948.00 AND popularity greater than 466.02 THEN rating = high
+2025-04-29 13:26:44 - genetic_rule_miner.models.genetic - [92mINFO[0m - Generation 23: Best Fitness=0.1346, Support=0.2599, Confidence=0.5176, Rule: IF on_hold greater than 8.00 AND total_entries greater than 163.00 AND watching greater than 4.10 AND episodes_watched greater than 3948.00 AND popularity greater than 466.02 THEN rating = high
+2025-04-29 13:26:44 - genetic_rule_miner.models.genetic - [92mINFO[0m - Generation 24: Best Fitness=0.1346, Support=0.2599, Confidence=0.5176, Rule: IF on_hold greater than 8.00 AND total_entries greater than 163.00 AND watching greater than 4.10 AND episodes_watched greater than 3948.00 AND popularity greater than 466.02 THEN rating = high
+2025-04-29 13:26:44 - genetic_rule_miner.models.genetic - [92mINFO[0m - Generation 25: Best Fitness=0.1346, Support=0.2599, Confidence=0.5176, Rule: IF on_hold greater than 8.00 AND total_entries greater than 163.00 AND watching greater than 4.10 AND episodes_watched greater than 3948.00 AND popularity greater than 466.02 THEN rating = high
+2025-04-29 13:26:44 - genetic_rule_miner.models.genetic - [92mINFO[0m - Generation 26: Best Fitness=0.1346, Support=0.2599, Confidence=0.5176, Rule: IF on_hold greater than 8.00 AND total_entries greater than 163.00 AND watching greater than 4.10 AND episodes_watched greater than 3948.00 AND popularity greater than 466.02 THEN rating = high
+2025-04-29 13:26:44 - genetic_rule_miner.models.genetic - [92mINFO[0m - Generation 27: Best Fitness=0.1346, Support=0.2599, Confidence=0.5176, Rule: IF on_hold greater than 8.00 AND total_entries greater than 163.00 AND watching greater than 4.10 AND episodes_watched greater than 3948.00 AND popularity greater than 466.02 THEN rating = high
+2025-04-29 13:26:44 - genetic_rule_miner.models.genetic - [92mINFO[0m - Generation 28: Best Fitness=0.1346, Support=0.2599, Confidence=0.5176, Rule: IF on_hold greater than 8.00 AND total_entries greater than 163.00 AND watching greater than 4.10 AND episodes_watched greater than 3948.00 AND popularity greater than 466.02 THEN rating = high
+2025-04-29 13:26:44 - genetic_rule_miner.models.genetic - [92mINFO[0m - Generation 29: Best Fitness=0.1346, Support=0.2599, Confidence=0.5176, Rule: IF on_hold greater than 8.00 AND total_entries greater than 163.00 AND watching greater than 4.10 AND episodes_watched greater than 3948.00 AND popularity greater than 466.02 THEN rating = high
+2025-04-29 13:26:44 - genetic_rule_miner.models.genetic - [92mINFO[0m - Generation 30: Best Fitness=0.1346, Support=0.2599, Confidence=0.5176, Rule: IF on_hold greater than 8.00 AND total_entries greater than 163.00 AND watching greater than 4.10 AND episodes_watched greater than 3948.00 AND popularity greater than 466.02 THEN rating = high
+2025-04-29 13:26:44 - genetic_rule_miner.models.genetic - [92mINFO[0m - Generation 31: Best Fitness=0.1346, Support=0.2599, Confidence=0.5176, Rule: IF on_hold greater than 8.00 AND total_entries greater than 163.00 AND watching greater than 4.10 AND episodes_watched greater than 3948.00 AND popularity greater than 466.02 THEN rating = high
+2025-04-29 13:26:44 - genetic_rule_miner.models.genetic - [92mINFO[0m - Generation 32: Best Fitness=0.1346, Support=0.2599, Confidence=0.5176, Rule: IF on_hold greater than 8.00 AND total_entries greater than 163.00 AND watching greater than 4.10 AND episodes_watched greater than 3948.00 AND popularity greater than 466.02 THEN rating = high
+2025-04-29 13:26:44 - genetic_rule_miner.models.genetic - [92mINFO[0m - Generation 33: Best Fitness=0.1346, Support=0.2599, Confidence=0.5176, Rule: IF on_hold greater than 8.00 AND total_entries greater than 163.00 AND watching greater than 4.10 AND episodes_watched greater than 3948.00 AND popularity greater than 466.02 THEN rating = high
+2025-04-29 13:26:44 - genetic_rule_miner.models.genetic - [92mINFO[0m - Generation 34: Best Fitness=0.1346, Support=0.2599, Confidence=0.5176, Rule: IF on_hold greater than 8.00 AND total_entries greater than 163.00 AND watching greater than 4.10 AND episodes_watched greater than 3948.00 AND popularity greater than 466.02 THEN rating = high
+2025-04-29 13:26:44 - genetic_rule_miner.models.genetic - [92mINFO[0m - Generation 35: Best Fitness=0.1346, Support=0.2599, Confidence=0.5176, Rule: IF on_hold greater than 8.00 AND total_entries greater than 163.00 AND watching greater than 4.10 AND episodes_watched greater than 3948.00 AND popularity greater than 466.02 THEN rating = high
+2025-04-29 13:26:44 - genetic_rule_miner.models.genetic - [92mINFO[0m - Generation 36: Best Fitness=0.1346, Support=0.2599, Confidence=0.5176, Rule: IF on_hold greater than 8.00 AND total_entries greater than 163.00 AND watching greater than 4.10 AND episodes_watched greater than 3948.00 AND popularity greater than 466.02 THEN rating = high
+2025-04-29 13:26:44 - genetic_rule_miner.models.genetic - [92mINFO[0m - Generation 37: Best Fitness=0.1346, Support=0.2599, Confidence=0.5176, Rule: IF on_hold greater than 8.00 AND total_entries greater than 163.00 AND watching greater than 4.10 AND episodes_watched greater than 3948.00 AND popularity greater than 466.02 THEN rating = high
+2025-04-29 13:26:44 - genetic_rule_miner.models.genetic - [92mINFO[0m - Generation 38: Best Fitness=0.1346, Support=0.2599, Confidence=0.5176, Rule: IF on_hold greater than 8.00 AND total_entries greater than 163.00 AND watching greater than 4.10 AND episodes_watched greater than 3948.00 AND popularity greater than 466.02 THEN rating = high
+2025-04-29 13:26:44 - genetic_rule_miner.models.genetic - [92mINFO[0m - Generation 39: Best Fitness=0.1346, Support=0.2599, Confidence=0.5176, Rule: IF on_hold greater than 8.00 AND total_entries greater than 163.00 AND watching greater than 4.10 AND episodes_watched greater than 3948.00 AND popularity greater than 466.02 THEN rating = high
+2025-04-29 13:26:44 - genetic_rule_miner.models.genetic - [92mINFO[0m - Generation 40: Best Fitness=0.1346, Support=0.2599, Confidence=0.5176, Rule: IF on_hold greater than 8.00 AND total_entries greater than 163.00 AND watching greater than 4.10 AND episodes_watched greater than 3948.00 AND popularity greater than 466.02 THEN rating = high
+2025-04-29 13:26:44 - genetic_rule_miner.models.genetic - [92mINFO[0m - Generation 41: Best Fitness=0.1346, Support=0.2599, Confidence=0.5176, Rule: IF on_hold greater than 8.00 AND total_entries greater than 163.00 AND watching greater than 4.10 AND episodes_watched greater than 3948.00 AND popularity greater than 466.02 THEN rating = high
+2025-04-29 13:26:44 - genetic_rule_miner.models.genetic - [92mINFO[0m - Generation 42: Best Fitness=0.1560, Support=0.2966, Confidence=0.5258, Rule: IF on_hold greater than 8.00 AND total_entries greater than 163.00 AND watching greater than 4.10 AND episodes_watched greater than 2187.00 AND popularity greater than 466.02 THEN rating = high
+2025-04-29 13:26:44 - genetic_rule_miner.models.genetic - [92mINFO[0m - Generation 43: Best Fitness=0.1560, Support=0.2966, Confidence=0.5258, Rule: IF on_hold greater than 8.00 AND total_entries greater than 163.00 AND watching greater than 4.10 AND episodes_watched greater than 2187.00 AND popularity greater than 466.02 THEN rating = high
+2025-04-29 13:26:44 - genetic_rule_miner.models.genetic - [92mINFO[0m - Generation 44: Best Fitness=0.1560, Support=0.2966, Confidence=0.5258, Rule: IF on_hold greater than 8.00 AND total_entries greater than 163.00 AND watching greater than 4.10 AND episodes_watched greater than 2187.00 AND popularity greater than 466.02 THEN rating = high
+2025-04-29 13:26:44 - genetic_rule_miner.models.genetic - [92mINFO[0m - Generation 45: Best Fitness=0.1560, Support=0.2966, Confidence=0.5258, Rule: IF on_hold greater than 8.00 AND total_entries greater than 163.00 AND watching greater than 4.10 AND episodes_watched greater than 2187.00 AND popularity greater than 466.02 THEN rating = high
+2025-04-29 13:26:44 - genetic_rule_miner.models.genetic - [92mINFO[0m - Generation 46: Best Fitness=0.1560, Support=0.2966, Confidence=0.5258, Rule: IF on_hold greater than 8.00 AND total_entries greater than 163.00 AND watching greater than 4.10 AND episodes_watched greater than 2187.00 AND popularity greater than 466.02 THEN rating = high
+2025-04-29 13:26:44 - genetic_rule_miner.models.genetic - [92mINFO[0m - Generation 47: Best Fitness=0.1560, Support=0.2966, Confidence=0.5258, Rule: IF on_hold greater than 8.00 AND total_entries greater than 163.00 AND watching greater than 4.10 AND episodes_watched greater than 2187.00 AND popularity greater than 466.02 THEN rating = high
+2025-04-29 13:26:45 - genetic_rule_miner.models.genetic - [92mINFO[0m - Generation 48: Best Fitness=0.1560, Support=0.2966, Confidence=0.5258, Rule: IF on_hold greater than 8.00 AND total_entries greater than 163.00 AND watching greater than 4.10 AND episodes_watched greater than 2187.00 AND popularity greater than 466.02 THEN rating = high
+2025-04-29 13:26:45 - genetic_rule_miner.models.genetic - [92mINFO[0m - Generation 49: Best Fitness=0.1560, Support=0.2966, Confidence=0.5258, Rule: IF on_hold greater than 8.00 AND total_entries greater than 163.00 AND watching greater than 4.10 AND episodes_watched greater than 2187.00 AND popularity greater than 466.02 THEN rating = high
+2025-04-29 13:26:45 - genetic_rule_miner.models.genetic - [92mINFO[0m - Generation 50: Best Fitness=0.1560, Support=0.2966, Confidence=0.5258, Rule: IF on_hold greater than 8.00 AND total_entries greater than 163.00 AND watching greater than 4.10 AND episodes_watched greater than 2187.00 AND popularity greater than 466.02 THEN rating = high
+2025-04-29 13:26:45 - genetic_rule_miner.models.genetic - [92mINFO[0m - Generation 51: Best Fitness=0.1560, Support=0.2966, Confidence=0.5258, Rule: IF on_hold greater than 8.00 AND total_entries greater than 163.00 AND watching greater than 4.10 AND episodes_watched greater than 2187.00 AND popularity greater than 466.02 THEN rating = high
+2025-04-29 13:26:45 - genetic_rule_miner.models.genetic - [92mINFO[0m - Generation 52: Best Fitness=0.1560, Support=0.2966, Confidence=0.5258, Rule: IF on_hold greater than 8.00 AND total_entries greater than 163.00 AND watching greater than 4.10 AND episodes_watched greater than 2187.00 AND popularity greater than 466.02 THEN rating = high
+2025-04-29 13:26:45 - genetic_rule_miner.models.genetic - [92mINFO[0m - Generation 53: Best Fitness=0.1560, Support=0.2966, Confidence=0.5258, Rule: IF on_hold greater than 8.00 AND total_entries greater than 163.00 AND watching greater than 4.10 AND episodes_watched greater than 2187.00 AND popularity greater than 466.02 THEN rating = high
+2025-04-29 13:26:45 - genetic_rule_miner.models.genetic - [92mINFO[0m - Generation 54: Best Fitness=0.1560, Support=0.2966, Confidence=0.5258, Rule: IF on_hold greater than 8.00 AND total_entries greater than 163.00 AND watching greater than 4.10 AND episodes_watched greater than 2187.00 AND popularity greater than 466.02 THEN rating = high
+2025-04-29 13:26:45 - genetic_rule_miner.models.genetic - [92mINFO[0m - Generation 55: Best Fitness=0.1560, Support=0.2966, Confidence=0.5258, Rule: IF on_hold greater than 8.00 AND total_entries greater than 163.00 AND watching greater than 4.10 AND episodes_watched greater than 2187.00 AND popularity greater than 466.02 THEN rating = high
+2025-04-29 13:26:45 - genetic_rule_miner.models.genetic - [92mINFO[0m - Generation 56: Best Fitness=0.1560, Support=0.2966, Confidence=0.5258, Rule: IF on_hold greater than 8.00 AND total_entries greater than 163.00 AND watching greater than 4.10 AND episodes_watched greater than 2187.00 AND popularity greater than 466.02 THEN rating = high
+2025-04-29 13:26:45 - genetic_rule_miner.models.genetic - [92mINFO[0m - Generation 57: Best Fitness=0.1560, Support=0.2966, Confidence=0.5258, Rule: IF on_hold greater than 8.00 AND total_entries greater than 163.00 AND watching greater than 4.10 AND episodes_watched greater than 2187.00 AND popularity greater than 466.02 THEN rating = high
+2025-04-29 13:26:45 - genetic_rule_miner.models.genetic - [92mINFO[0m - Generation 58: Best Fitness=0.1560, Support=0.2966, Confidence=0.5258, Rule: IF on_hold greater than 8.00 AND total_entries greater than 163.00 AND watching greater than 4.10 AND episodes_watched greater than 2187.00 AND popularity greater than 466.02 THEN rating = high
+2025-04-29 13:26:45 - genetic_rule_miner.models.genetic - [92mINFO[0m - Generation 59: Best Fitness=0.1682, Support=0.3089, Confidence=0.5446, Rule: IF on_hold greater than 8.00 AND total_entries greater than 127.00 AND watching greater than 4.10 AND episodes_watched greater than 2187.00 AND popularity greater than 466.02 THEN rating = high
+2025-04-29 13:26:45 - genetic_rule_miner.models.genetic - [92mINFO[0m - Generation 60: Best Fitness=0.1682, Support=0.3089, Confidence=0.5446, Rule: IF on_hold greater than 8.00 AND total_entries greater than 127.00 AND watching greater than 4.10 AND episodes_watched greater than 2187.00 AND popularity greater than 466.02 THEN rating = high
+2025-04-29 13:26:45 - genetic_rule_miner.models.genetic - [92mINFO[0m - Generation 61: Best Fitness=0.1682, Support=0.3089, Confidence=0.5446, Rule: IF on_hold greater than 8.00 AND total_entries greater than 127.00 AND watching greater than 4.10 AND episodes_watched greater than 2187.00 AND popularity greater than 466.02 THEN rating = high
+2025-04-29 13:26:45 - genetic_rule_miner.models.genetic - [92mINFO[0m - Generation 62: Best Fitness=0.1682, Support=0.3089, Confidence=0.5446, Rule: IF on_hold greater than 8.00 AND total_entries greater than 127.00 AND watching greater than 4.10 AND episodes_watched greater than 2187.00 AND popularity greater than 466.02 THEN rating = high
+2025-04-29 13:26:45 - genetic_rule_miner.models.genetic - [92mINFO[0m - Generation 63: Best Fitness=0.1682, Support=0.3089, Confidence=0.5446, Rule: IF on_hold greater than 8.00 AND total_entries greater than 127.00 AND watching greater than 4.10 AND episodes_watched greater than 2187.00 AND popularity greater than 466.02 THEN rating = high
+2025-04-29 13:26:45 - genetic_rule_miner.models.genetic - [92mINFO[0m - Generation 64: Best Fitness=0.1682, Support=0.3089, Confidence=0.5446, Rule: IF on_hold greater than 8.00 AND total_entries greater than 127.00 AND watching greater than 4.10 AND episodes_watched greater than 2187.00 AND popularity greater than 466.02 THEN rating = high
+2025-04-29 13:26:45 - genetic_rule_miner.models.genetic - [92mINFO[0m - Generation 65: Best Fitness=0.1682, Support=0.3089, Confidence=0.5446, Rule: IF on_hold greater than 8.00 AND total_entries greater than 127.00 AND watching greater than 4.10 AND episodes_watched greater than 2187.00 AND popularity greater than 466.02 THEN rating = high
+2025-04-29 13:26:45 - genetic_rule_miner.models.genetic - [92mINFO[0m - Generation 66: Best Fitness=0.1682, Support=0.3089, Confidence=0.5446, Rule: IF on_hold greater than 8.00 AND total_entries greater than 127.00 AND watching greater than 4.10 AND episodes_watched greater than 2187.00 AND popularity greater than 466.02 THEN rating = high
+2025-04-29 13:26:45 - genetic_rule_miner.models.genetic - [92mINFO[0m - Generation 67: Best Fitness=0.1682, Support=0.3089, Confidence=0.5446, Rule: IF on_hold greater than 8.00 AND total_entries greater than 127.00 AND watching greater than 4.10 AND episodes_watched greater than 2187.00 AND popularity greater than 466.02 THEN rating = high
+2025-04-29 13:26:45 - genetic_rule_miner.models.genetic - [92mINFO[0m - Generation 68: Best Fitness=0.1682, Support=0.3089, Confidence=0.5446, Rule: IF on_hold greater than 8.00 AND total_entries greater than 127.00 AND watching greater than 4.10 AND episodes_watched greater than 2187.00 AND popularity greater than 466.02 THEN rating = high
+2025-04-29 13:26:45 - genetic_rule_miner.models.genetic - [92mINFO[0m - Generation 69: Best Fitness=0.1774, Support=0.2813, Confidence=0.6304, Rule: IF on_hold greater than 8.00 AND total_entries greater than 127.00 AND watching greater than 4.10 AND episodes_watched greater than 2187.00 AND popularity less than 1594.50 THEN rating = high
+2025-04-29 13:26:45 - genetic_rule_miner.models.genetic - [92mINFO[0m - Generation 70: Best Fitness=0.1774, Support=0.2813, Confidence=0.6304, Rule: IF on_hold greater than 8.00 AND total_entries greater than 127.00 AND watching greater than 4.10 AND episodes_watched greater than 2187.00 AND popularity less than 1594.50 THEN rating = high
+2025-04-29 13:26:45 - genetic_rule_miner.models.genetic - [92mINFO[0m - Generation 71: Best Fitness=0.1774, Support=0.2813, Confidence=0.6304, Rule: IF on_hold greater than 8.00 AND total_entries greater than 127.00 AND watching greater than 4.10 AND episodes_watched greater than 2187.00 AND popularity less than 1594.50 THEN rating = high
+2025-04-29 13:26:45 - genetic_rule_miner.models.genetic - [92mINFO[0m - Generation 72: Best Fitness=0.1774, Support=0.2813, Confidence=0.6304, Rule: IF on_hold greater than 8.00 AND total_entries greater than 127.00 AND watching greater than 4.10 AND episodes_watched greater than 2187.00 AND popularity less than 1594.50 THEN rating = high
+2025-04-29 13:26:45 - genetic_rule_miner.models.genetic - [92mINFO[0m - Generation 73: Best Fitness=0.1774, Support=0.2813, Confidence=0.6304, Rule: IF on_hold greater than 8.00 AND total_entries greater than 127.00 AND watching greater than 4.10 AND episodes_watched greater than 2187.00 AND popularity less than 1594.50 THEN rating = high
+2025-04-29 13:26:45 - genetic_rule_miner.models.genetic - [92mINFO[0m - Generation 74: Best Fitness=0.1774, Support=0.2813, Confidence=0.6304, Rule: IF on_hold greater than 8.00 AND total_entries greater than 127.00 AND watching greater than 4.10 AND episodes_watched greater than 2187.00 AND popularity less than 1594.50 THEN rating = high
+2025-04-29 13:26:45 - genetic_rule_miner.models.genetic - [92mINFO[0m - Generation 75: Best Fitness=0.1774, Support=0.2813, Confidence=0.6304, Rule: IF on_hold greater than 8.00 AND total_entries greater than 127.00 AND watching greater than 4.10 AND episodes_watched greater than 2187.00 AND popularity less than 1594.50 THEN rating = high
+2025-04-29 13:26:45 - genetic_rule_miner.models.genetic - [92mINFO[0m - Generation 76: Best Fitness=0.1774, Support=0.2813, Confidence=0.6304, Rule: IF on_hold greater than 8.00 AND total_entries greater than 127.00 AND watching greater than 4.10 AND episodes_watched greater than 2187.00 AND popularity less than 1594.50 THEN rating = high
+2025-04-29 13:26:45 - genetic_rule_miner.models.genetic - [92mINFO[0m - Generation 77: Best Fitness=0.1774, Support=0.2813, Confidence=0.6304, Rule: IF on_hold greater than 8.00 AND total_entries greater than 127.00 AND watching greater than 4.10 AND episodes_watched greater than 2187.00 AND popularity less than 1594.50 THEN rating = high
+2025-04-29 13:26:45 - genetic_rule_miner.models.genetic - [92mINFO[0m - Generation 78: Best Fitness=0.1774, Support=0.2813, Confidence=0.6304, Rule: IF on_hold greater than 8.00 AND total_entries greater than 127.00 AND watching greater than 4.10 AND episodes_watched greater than 2187.00 AND popularity less than 1594.50 THEN rating = high
+2025-04-29 13:26:45 - genetic_rule_miner.models.genetic - [92mINFO[0m - Generation 79: Best Fitness=0.1774, Support=0.2813, Confidence=0.6304, Rule: IF on_hold greater than 8.00 AND total_entries greater than 127.00 AND watching greater than 4.10 AND episodes_watched greater than 2187.00 AND popularity less than 1594.50 THEN rating = high
+2025-04-29 13:26:45 - genetic_rule_miner.models.genetic - [92mINFO[0m - Generation 80: Best Fitness=0.1774, Support=0.2813, Confidence=0.6304, Rule: IF on_hold greater than 8.00 AND total_entries greater than 127.00 AND watching greater than 4.10 AND episodes_watched greater than 2187.00 AND popularity less than 1594.50 THEN rating = high
+2025-04-29 13:26:45 - genetic_rule_miner.models.genetic - [92mINFO[0m - Generation 81: Best Fitness=0.1774, Support=0.2813, Confidence=0.6304, Rule: IF on_hold greater than 8.00 AND total_entries greater than 127.00 AND watching greater than 4.10 AND episodes_watched greater than 2187.00 AND popularity less than 1594.50 THEN rating = high
+2025-04-29 13:26:45 - genetic_rule_miner.models.genetic - [92mINFO[0m - Generation 82: Best Fitness=0.1774, Support=0.2813, Confidence=0.6304, Rule: IF on_hold greater than 8.00 AND total_entries greater than 127.00 AND watching greater than 4.10 AND episodes_watched greater than 2187.00 AND popularity less than 1594.50 THEN rating = high
+2025-04-29 13:26:45 - genetic_rule_miner.models.genetic - [92mINFO[0m - Generation 83: Best Fitness=0.1774, Support=0.2813, Confidence=0.6304, Rule: IF on_hold greater than 8.00 AND total_entries greater than 127.00 AND watching greater than 4.10 AND episodes_watched greater than 2187.00 AND popularity less than 1594.50 THEN rating = high
+2025-04-29 13:26:45 - genetic_rule_miner.models.genetic - [92mINFO[0m - Generation 84: Best Fitness=0.1774, Support=0.2813, Confidence=0.6304, Rule: IF on_hold greater than 8.00 AND total_entries greater than 127.00 AND watching greater than 4.10 AND episodes_watched greater than 2187.00 AND popularity less than 1594.50 THEN rating = high
+2025-04-29 13:26:45 - genetic_rule_miner.models.genetic - [92mINFO[0m - Generation 85: Best Fitness=0.1774, Support=0.2813, Confidence=0.6304, Rule: IF on_hold greater than 8.00 AND total_entries greater than 127.00 AND watching greater than 4.10 AND episodes_watched greater than 2187.00 AND popularity less than 1594.50 THEN rating = high
+2025-04-29 13:26:45 - genetic_rule_miner.models.genetic - [92mINFO[0m - Generation 86: Best Fitness=0.1774, Support=0.2813, Confidence=0.6304, Rule: IF on_hold greater than 8.00 AND total_entries greater than 127.00 AND watching greater than 4.10 AND episodes_watched greater than 2187.00 AND popularity less than 1594.50 THEN rating = high
+2025-04-29 13:26:45 - genetic_rule_miner.models.genetic - [92mINFO[0m - Generation 87: Best Fitness=0.1774, Support=0.2813, Confidence=0.6304, Rule: IF on_hold greater than 8.00 AND total_entries greater than 127.00 AND watching greater than 4.10 AND episodes_watched greater than 2187.00 AND popularity less than 1594.50 THEN rating = high
+2025-04-29 13:26:45 - genetic_rule_miner.models.genetic - [92mINFO[0m - Generation 88: Best Fitness=0.1774, Support=0.2813, Confidence=0.6304, Rule: IF on_hold greater than 8.00 AND total_entries greater than 127.00 AND watching greater than 4.10 AND episodes_watched greater than 2187.00 AND popularity less than 1594.50 THEN rating = high
+2025-04-29 13:26:45 - genetic_rule_miner.models.genetic - [92mINFO[0m - Generation 89: Best Fitness=0.1774, Support=0.2813, Confidence=0.6304, Rule: IF on_hold greater than 8.00 AND total_entries greater than 127.00 AND watching greater than 4.10 AND episodes_watched greater than 2187.00 AND popularity less than 1594.50 THEN rating = high
+2025-04-29 13:26:45 - genetic_rule_miner.models.genetic - [92mINFO[0m - Generation 90: Best Fitness=0.1774, Support=0.2813, Confidence=0.6304, Rule: IF on_hold greater than 8.00 AND total_entries greater than 127.00 AND watching greater than 4.10 AND episodes_watched greater than 2187.00 AND popularity less than 1594.50 THEN rating = high
+2025-04-29 13:26:45 - genetic_rule_miner.models.genetic - [92mINFO[0m - Generation 91: Best Fitness=0.1774, Support=0.2813, Confidence=0.6304, Rule: IF on_hold greater than 8.00 AND total_entries greater than 127.00 AND watching greater than 4.10 AND episodes_watched greater than 2187.00 AND popularity less than 1594.50 THEN rating = high
+2025-04-29 13:26:45 - genetic_rule_miner.models.genetic - [92mINFO[0m - Generation 92: Best Fitness=0.1774, Support=0.2813, Confidence=0.6304, Rule: IF on_hold greater than 8.00 AND total_entries greater than 127.00 AND watching greater than 4.10 AND episodes_watched greater than 2187.00 AND popularity less than 1594.50 THEN rating = high
+2025-04-29 13:26:45 - genetic_rule_miner.models.genetic - [92mINFO[0m - Generation 93: Best Fitness=0.1774, Support=0.2813, Confidence=0.6304, Rule: IF on_hold greater than 8.00 AND total_entries greater than 127.00 AND watching greater than 4.10 AND episodes_watched greater than 2187.00 AND popularity less than 1594.50 THEN rating = high
+2025-04-29 13:26:45 - genetic_rule_miner.models.genetic - [92mINFO[0m - Generation 94: Best Fitness=0.1774, Support=0.2813, Confidence=0.6304, Rule: IF on_hold greater than 8.00 AND total_entries greater than 127.00 AND watching greater than 4.10 AND episodes_watched greater than 2187.00 AND popularity less than 1594.50 THEN rating = high
+2025-04-29 13:26:45 - genetic_rule_miner.models.genetic - [92mINFO[0m - Generation 95: Best Fitness=0.1774, Support=0.2813, Confidence=0.6304, Rule: IF on_hold greater than 8.00 AND total_entries greater than 127.00 AND watching greater than 4.10 AND episodes_watched greater than 2187.00 AND popularity less than 1594.50 THEN rating = high
+2025-04-29 13:26:45 - genetic_rule_miner.models.genetic - [92mINFO[0m - Generation 96: Best Fitness=0.1774, Support=0.2813, Confidence=0.6304, Rule: IF on_hold greater than 8.00 AND total_entries greater than 127.00 AND watching greater than 4.10 AND episodes_watched greater than 2187.00 AND popularity less than 1594.50 THEN rating = high
+2025-04-29 13:26:45 - genetic_rule_miner.models.genetic - [92mINFO[0m - Generation 97: Best Fitness=0.1774, Support=0.2813, Confidence=0.6304, Rule: IF on_hold greater than 8.00 AND total_entries greater than 127.00 AND watching greater than 4.10 AND episodes_watched greater than 2187.00 AND popularity less than 1594.50 THEN rating = high
+2025-04-29 13:26:45 - genetic_rule_miner.models.genetic - [92mINFO[0m - Generation 98: Best Fitness=0.1774, Support=0.2813, Confidence=0.6304, Rule: IF on_hold greater than 8.00 AND total_entries greater than 127.00 AND watching greater than 4.10 AND episodes_watched greater than 2187.00 AND popularity less than 1594.50 THEN rating = high
+2025-04-29 13:26:46 - genetic_rule_miner.models.genetic - [92mINFO[0m - Generation 99: Best Fitness=0.1774, Support=0.2813, Confidence=0.6304, Rule: IF on_hold greater than 8.00 AND total_entries greater than 127.00 AND watching greater than 4.10 AND episodes_watched greater than 2187.00 AND popularity less than 1594.50 THEN rating = high
+2025-04-29 13:26:46 - __main__ - [92mINFO[0m - 
+Best Rule Found:
+2025-04-29 13:26:46 - __main__ - [92mINFO[0m - IF on_hold greater than 8.00 AND total_entries greater than 127.00 AND watching greater than 4.10 AND episodes_watched greater than 2187.00 AND popularity less than 1594.50 THEN rating = high
+2025-04-29 13:26:46 - __main__ - [92mINFO[0m - 
+Fitness: 0.1774
+2025-04-29 13:26:46 - __main__ - [92mINFO[0m - Support: 0.28134556574923547
+2025-04-29 13:26:46 - __main__ - [92mINFO[0m - Confidence: 0.6304347826086957
+2025-04-29 13:26:46 - genetic_rule_miner.data.database - [92mINFO[0m - SQLAlchemy engine closed

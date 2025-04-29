@@ -86,21 +86,23 @@ def preprocess_data(df: pd.DataFrame) -> pd.DataFrame:
         # Clean string columns
         df = clean_string_columns(df)
 
-        # Clean and bin 'duration' column
-        df = clean_and_bin_column(
-            df,
-            "duration",
-            [0, 20, 25, max(30, df["duration"].max() + 1)],
-            ["short", "standard", "long"],
-        )
+        if "duration" in df.columns:
+            # Clean and bin 'duration' column
+            df = clean_and_bin_column(
+                df,
+                "duration",
+                [0, 20, 25, max(30, int(df["duration"].max()) + 1)],
+                ["short", "standard", "long"],
+            )
 
         # Clean and bin 'episodes' column
-        df = clean_and_bin_column(
-            df,
-            "episodes",
-            [0, 12, 24, max(26, df["episodes"].max() + 1)],
-            ["short", "medium", "long"],
-        )
+        if "episodes" in df.columns:
+            df = clean_and_bin_column(
+                df,
+                "episodes",
+                [0, 12, 24, max(26, df["episodes"].max() + 1)],
+                ["short", "medium", "long"],
+            )
 
         # Clean 'rating_x' and create 'rating' column
         if "rating_x" in df.columns:
