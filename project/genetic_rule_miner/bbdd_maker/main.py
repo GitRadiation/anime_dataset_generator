@@ -214,139 +214,138 @@ def main():
     logger.info("✅ DatabaseManager loaded successfully")
 
     try:
+
+        logger.info("📥 Starting data loading...")
+
+        # Read and save original data
+        anime_df = pd.read_csv(
+            StringIO(anime_buffer.getvalue().decode("utf-8"))
+        )
+        details_df = pd.read_csv(
+            StringIO(details_buffer.getvalue().decode("utf-8"))
+        )
+        scores_df = pd.read_csv(
+            StringIO(scores_buffer.getvalue().decode("utf-8"))
+        )
+        # Processing
+        anime_df["premiered"] = anime_df["premiered"].apply(clean_premiered)
+
+        anime_buffer = preprocess_to_memory(
+            anime_df,
+            columns_to_keep=[
+                "anime_id",
+                "score",
+                "type",
+                "episodes",
+                "status",
+                "duration",
+                "genres",
+                "aired",
+                "keywords",
+                "rank",
+                "popularity",
+                "favorites",
+                "scored_by",
+                "members",
+                "premiered",
+                "producers",
+                "studios",
+                "source",
+                "rating",
+            ],
+            integer_columns=[
+                "anime_id",
+                "episodes",
+                "rank",
+                "popularity",
+                "favorites",
+                "scored_by",
+                "members",
+                "duration",
+            ],
+            float_columns=["score"],
+        )
+
+        details_df.rename(
+            columns={
+                "Mal ID": "mal_id",
+                "Days Watched": "days_watched",
+                "Mean Score": "mean_score",
+                "Total Entries": "total_entries",
+                "Episodes Watched": "episodes_watched",
+                "Gender": "gender",
+                "Watching": "watching",
+                "Completed": "completed",
+                "On Hold": "on_hold",
+                "Dropped": "dropped",
+                "Plan to Watch": "plan_to_watch",
+                "Rewatched": "rewatched",
+                "Birthday": "birthday",
+            },
+            inplace=True,
+        )
+
+        details_buffer = preprocess_to_memory(
+            details_df,
+            columns_to_keep=[
+                "mal_id",
+                "gender",
+                "days_watched",
+                "mean_score",
+                "birthday",
+                "watching",
+                "completed",
+                "on_hold",
+                "dropped",
+                "plan_to_watch",
+                "total_entries",
+                "rewatched",
+                "episodes_watched",
+            ],
+            integer_columns=[
+                "mal_id",
+                "watching",
+                "completed",
+                "on_hold",
+                "dropped",
+                "plan_to_watch",
+                "total_entries",
+                "rewatched",
+                "episodes_watched",
+            ],
+            float_columns=["days_watched", "mean_score"],
+        )
+
+        scores_df.rename(
+            columns={
+                "User ID": "user_id",
+                "Anime ID": "anime_id",
+                "Score": "rating",
+            },
+            inplace=True,
+        )
+
+        valid_anime_ids = anime_df["anime_id"].dropna().unique().tolist()
+        scores_buffer = preprocess_user_score(
+            scores_df,
+            columns_to_keep=["user_id", "anime_id", "rating"],
+            integer_columns=["user_id", "anime_id", "rating"],
+            valid_anime_ids=valid_anime_ids,
+        )
         with db.connection() as conn:
-            logger.info("📥 Starting data loading...")
-
-            # Read and save original data
-            anime_df = pd.read_csv(
-                StringIO(anime_buffer.getvalue().decode("utf-8"))
-            )
-            details_df = pd.read_csv(
-                StringIO(details_buffer.getvalue().decode("utf-8"))
-            )
-            scores_df = pd.read_csv(
-                StringIO(scores_buffer.getvalue().decode("utf-8"))
-            )
-            # Processing
-            anime_df["premiered"] = anime_df["premiered"].apply(
-                clean_premiered
-            )
-
-            anime_buffer = preprocess_to_memory(
-                anime_df,
-                columns_to_keep=[
-                    "anime_id",
-                    "score",
-                    "type",
-                    "episodes",
-                    "status",
-                    "duration",
-                    "genres",
-                    "aired",
-                    "keywords",
-                    "rank",
-                    "popularity",
-                    "favorites",
-                    "scored_by",
-                    "members",
-                    "premiered",
-                    "producers",
-                    "studios",
-                    "source",
-                    "rating",
-                ],
-                integer_columns=[
-                    "anime_id",
-                    "episodes",
-                    "rank",
-                    "popularity",
-                    "favorites",
-                    "scored_by",
-                    "members",
-                    "duration",
-                ],
-                float_columns=["score"],
-            )
-
-            details_df.rename(
-                columns={
-                    "Mal ID": "mal_id",
-                    "Days Watched": "days_watched",
-                    "Mean Score": "mean_score",
-                    "Total Entries": "total_entries",
-                    "Episodes Watched": "episodes_watched",
-                    "Gender": "gender",
-                    "Watching": "watching",
-                    "Completed": "completed",
-                    "On Hold": "on_hold",
-                    "Dropped": "dropped",
-                    "Plan to Watch": "plan_to_watch",
-                    "Rewatched": "rewatched",
-                    "Birthday": "birthday",
-                },
-                inplace=True,
-            )
-
-            details_buffer = preprocess_to_memory(
-                details_df,
-                columns_to_keep=[
-                    "mal_id",
-                    "gender",
-                    "days_watched",
-                    "mean_score",
-                    "birthday",
-                    "watching",
-                    "completed",
-                    "on_hold",
-                    "dropped",
-                    "plan_to_watch",
-                    "total_entries",
-                    "rewatched",
-                    "episodes_watched",
-                ],
-                integer_columns=[
-                    "mal_id",
-                    "watching",
-                    "completed",
-                    "on_hold",
-                    "dropped",
-                    "plan_to_watch",
-                    "total_entries",
-                    "rewatched",
-                    "episodes_watched",
-                ],
-                float_columns=["days_watched", "mean_score"],
-            )
-
-            scores_df.rename(
-                columns={
-                    "User ID": "user_id",
-                    "Anime ID": "anime_id",
-                    "Score": "rating",
-                },
-                inplace=True,
-            )
-
-            valid_anime_ids = anime_df["anime_id"].dropna().unique().tolist()
-            scores_buffer = preprocess_user_score(
-                scores_df,
-                columns_to_keep=["user_id", "anime_id", "rating"],
-                integer_columns=["user_id", "anime_id", "rating"],
-                valid_anime_ids=valid_anime_ids,
-            )
-
-            # Load to database
-            anime_buffer.seek(0)
-            db.copy_from_buffer(conn, anime_buffer, "anime_dataset")
-            details_buffer.seek(0)
-            db.copy_from_buffer(conn, details_buffer, "user_details")
-            scores_buffer.seek(0)
-            db.copy_from_buffer(conn, scores_buffer, "user_score")
+            with conn.begin():
+                db.copy_from_buffer(conn, anime_buffer, "anime_dataset")
+                db.copy_from_buffer(conn, details_buffer, "user_details")
+                db.copy_from_buffer(conn, scores_buffer, "user_score")
 
         logger.info("✅ Data loading completed successfully")
     except Exception as e:
         logger.error(f"🚨 Critical error: {e}")
         raise
+    finally:
+        if conn:
+            conn.close()
+            logger.info("🔗 Database connection closed")
 
 
 if __name__ == "__main__":

@@ -31,10 +31,16 @@ class AnimeService:
                     f"{self.config.base_url}anime/{anime_id}",
                     timeout=self.config.timeout,
                 )
+                if response.status_code == 404:
+                    logger.warning(
+                        "Anime with ID %d not found (404). Skipping further attempts.",
+                        anime_id,
+                    )
+                    return None
                 response.raise_for_status()
                 logger.debug("Successfully fetched anime with ID %d", anime_id)
                 return response.json().get("data")
-            except (requests.RequestException, KeyError) as e:
+            except requests.RequestException as e:
                 logger.warning(
                     "Failed to fetch anime with ID %d on attempt %d: %s",
                     anime_id,
