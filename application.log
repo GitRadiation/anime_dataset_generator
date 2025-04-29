@@ -6509,3 +6509,729 @@ Fitness: 0.2096
 2025-04-28 12:36:06 - __main__ - [92mINFO[0m - 📥 Iniciando carga de datos...
 2025-04-28 12:37:10 - __main__ - [92mINFO[0m - ✅ Carga completada exitosamente
 2025-04-28 12:37:10 - genetic_rule_miner.data.database - [92mINFO[0m - SQLAlchemy engine closed
+2025-04-29 08:29:51 - __main__ - [92mINFO[0m - Starting rule mining pipeline
+2025-04-29 08:29:51 - genetic_rule_miner.data.database - [92mINFO[0m - SQLAlchemy engine initialized
+2025-04-29 08:29:51 - __main__ - [92mINFO[0m - Loading and preprocessing data...
+2025-04-29 08:29:51 - genetic_rule_miner.data.manager - [92mINFO[0m - [92mEntering load_and_preprocess_data...[0m
+2025-04-29 08:30:12 - genetic_rule_miner.data.preprocessing - [92mINFO[0m - [92mEntering clean_string_columns...[0m
+2025-04-29 08:30:12 - genetic_rule_miner.data.preprocessing - [92mINFO[0m - [92mclean_string_columns completed in 0.0148s[0m
+2025-04-29 08:30:12 - genetic_rule_miner.data.preprocessing - [92mINFO[0m - [92mEntering preprocess_data...[0m
+2025-04-29 08:30:12 - genetic_rule_miner.data.preprocessing - [92mINFO[0m - [92mpreprocess_data completed in 0.0160s[0m
+2025-04-29 08:30:12 - genetic_rule_miner.data.preprocessing - [92mINFO[0m - [92mEntering clean_string_columns...[0m
+2025-04-29 08:30:12 - genetic_rule_miner.data.preprocessing - [92mINFO[0m - [92mclean_string_columns completed in 0.0071s[0m
+2025-04-29 08:30:12 - genetic_rule_miner.data.preprocessing - [92mINFO[0m - [92mEntering preprocess_data...[0m
+2025-04-29 08:30:12 - genetic_rule_miner.data.preprocessing - [92mINFO[0m - [92mpreprocess_data completed in 0.0108s[0m
+2025-04-29 08:30:12 - genetic_rule_miner.data.preprocessing - [92mINFO[0m - [92mEntering clean_string_columns...[0m
+2025-04-29 08:30:12 - genetic_rule_miner.data.preprocessing - [92mINFO[0m - [92mclean_string_columns completed in 0.0004s[0m
+2025-04-29 08:30:12 - genetic_rule_miner.data.preprocessing - [92mINFO[0m - [92mEntering preprocess_data...[0m
+2025-04-29 08:30:12 - genetic_rule_miner.data.preprocessing - [92mINFO[0m - [92mpreprocess_data completed in 0.0007s[0m
+2025-04-29 08:30:12 - genetic_rule_miner.data.manager - [92mINFO[0m - [92mload_and_preprocess_data completed in 21.2008s[0m
+2025-04-29 08:30:12 - __main__ - [92mINFO[0m - [92mEntering save_to_excel...[0m
+2025-04-29 08:30:14 - __main__ - [92mINFO[0m - Data successfully saved to raw_data.xlsx
+2025-04-29 08:30:14 - __main__ - [92mINFO[0m - [92msave_to_excel completed in 1.2738s[0m
+2025-04-29 08:30:14 - __main__ - [92mINFO[0m - Merging preprocessed data...
+2025-04-29 08:30:14 - genetic_rule_miner.data.manager - [92mINFO[0m - [92mEntering merge_data...[0m
+2025-04-29 08:30:14 - genetic_rule_miner.data.manager - [92mINFO[0m - [92mmerge_data completed in 0.0094s[0m
+2025-04-29 08:30:14 - __main__ - [92mINFO[0m - [92mEntering save_to_excel...[0m
+2025-04-29 08:30:14 - __main__ - [92mINFO[0m - Data successfully saved to processed_data.xlsx
+2025-04-29 08:30:14 - __main__ - [92mINFO[0m - [92msave_to_excel completed in 0.1421s[0m
+2025-04-29 08:30:14 - __main__ - [92mINFO[0m - Initializing genetic algorithm...
+2025-04-29 08:30:14 - genetic_rule_miner.data.preprocessing - [92mINFO[0m - [92mEntering clean_string_columns...[0m
+2025-04-29 08:30:14 - genetic_rule_miner.data.preprocessing - [92mINFO[0m - [92mclean_string_columns completed in 0.0087s[0m
+2025-04-29 08:30:14 - genetic_rule_miner.data.preprocessing - [92mINFO[0m - [92mEntering preprocess_data...[0m
+2025-04-29 08:30:14 - genetic_rule_miner.data.preprocessing - [92mINFO[0m - [92mpreprocess_data completed in 0.0148s[0m
+2025-04-29 08:30:14 - __main__ - [92mINFO[0m - [92mEntering save_to_excel...[0m
+2025-04-29 08:30:14 - __main__ - [92mINFO[0m - Data successfully saved to datos_limpios.xlsx
+2025-04-29 08:30:14 - __main__ - [92mINFO[0m - [92msave_to_excel completed in 0.1378s[0m
+2025-04-29 08:30:14 - __main__ - [92mINFO[0m - Starting evolution process...
+2025-04-29 08:30:14 - genetic_rule_miner.models.genetic - [92mINFO[0m - Generation 0: Best Fitness=0.0206, Support=0.0653, Confidence=0.3158, Rule: IF gender equals 'Female' AND days_watched greater than 142.30 AND members less than 337235.00 AND duration_class equals 'standard' AND type equals 'TV' THEN rating = high
+2025-04-29 08:30:15 - genetic_rule_miner.models.genetic - [92mINFO[0m - Generation 1: Best Fitness=0.0206, Support=0.0653, Confidence=0.3158, Rule: IF gender equals 'Female' AND days_watched greater than 142.30 AND members less than 337235.00 AND duration_class equals 'standard' AND type equals 'TV' THEN rating = high
+2025-04-29 08:30:15 - genetic_rule_miner.models.genetic - [92mINFO[0m - Generation 2: Best Fitness=0.0481, Support=0.0790, Confidence=0.6087, Rule: IF mean_score less than 7.37 AND episodes_watched greater than 3948.00 AND duration_class equals 'standard' AND type equals 'TV' AND score greater than 7.59 THEN rating = high
+2025-04-29 08:30:15 - genetic_rule_miner.models.genetic - [92mINFO[0m - Generation 3: Best Fitness=0.0825, Support=0.1993, Confidence=0.4138, Rule: IF days_watched greater than 46.00 AND episodes_watched greater than 3948.00 AND duration_class equals 'standard' AND type equals 'TV' AND favorites less than 3045.00 THEN rating = high
+2025-04-29 08:30:15 - genetic_rule_miner.models.genetic - [92mINFO[0m - Generation 4: Best Fitness=0.1306, Support=0.2371, Confidence=0.5507, Rule: IF days_watched greater than 46.00 AND episodes_watched greater than 3948.00 AND duration_class equals 'standard' AND type equals 'TV' AND aired_start_year greater than 1995.00 THEN rating = high
+2025-04-29 08:30:15 - genetic_rule_miner.models.genetic - [92mINFO[0m - Generation 5: Best Fitness=0.1306, Support=0.2371, Confidence=0.5507, Rule: IF days_watched greater than 46.00 AND episodes_watched greater than 3948.00 AND duration_class equals 'standard' AND type equals 'TV' AND aired_start_year greater than 1995.00 THEN rating = high
+2025-04-29 08:30:15 - genetic_rule_miner.models.genetic - [92mINFO[0m - Generation 6: Best Fitness=0.1306, Support=0.2371, Confidence=0.5507, Rule: IF days_watched greater than 46.00 AND episodes_watched greater than 3948.00 AND duration_class equals 'standard' AND type equals 'TV' AND aired_start_year greater than 1995.00 THEN rating = high
+2025-04-29 08:30:15 - genetic_rule_miner.models.genetic - [92mINFO[0m - Generation 7: Best Fitness=0.1306, Support=0.2371, Confidence=0.5507, Rule: IF days_watched greater than 46.00 AND episodes_watched greater than 3948.00 AND duration_class equals 'standard' AND type equals 'TV' AND aired_start_year greater than 1995.00 THEN rating = high
+2025-04-29 08:30:15 - genetic_rule_miner.models.genetic - [92mINFO[0m - Generation 8: Best Fitness=0.1718, Support=0.2749, Confidence=0.6250, Rule: IF days_watched greater than 46.00 AND episodes_watched greater than 2187.00 AND duration_class equals 'standard' AND type equals 'TV' AND score greater than 7.59 THEN rating = high
+2025-04-29 08:30:16 - genetic_rule_miner.models.genetic - [92mINFO[0m - Generation 9: Best Fitness=0.1718, Support=0.2749, Confidence=0.6250, Rule: IF days_watched greater than 46.00 AND episodes_watched greater than 2187.00 AND duration_class equals 'standard' AND type equals 'TV' AND score greater than 7.59 THEN rating = high
+2025-04-29 08:30:16 - genetic_rule_miner.models.genetic - [92mINFO[0m - Generation 10: Best Fitness=0.1718, Support=0.2749, Confidence=0.6250, Rule: IF days_watched greater than 46.00 AND episodes_watched greater than 2187.00 AND duration_class equals 'standard' AND type equals 'TV' AND score greater than 7.59 THEN rating = high
+2025-04-29 08:30:16 - genetic_rule_miner.models.genetic - [92mINFO[0m - Generation 11: Best Fitness=0.1718, Support=0.2749, Confidence=0.6250, Rule: IF days_watched greater than 46.00 AND episodes_watched greater than 2187.00 AND duration_class equals 'standard' AND type equals 'TV' AND score greater than 7.59 THEN rating = high
+2025-04-29 08:30:16 - genetic_rule_miner.models.genetic - [92mINFO[0m - Generation 12: Best Fitness=0.1718, Support=0.2749, Confidence=0.6250, Rule: IF days_watched greater than 46.00 AND episodes_watched greater than 2187.00 AND duration_class equals 'standard' AND type equals 'TV' AND score greater than 7.59 THEN rating = high
+2025-04-29 08:30:16 - genetic_rule_miner.models.genetic - [92mINFO[0m - Generation 13: Best Fitness=0.1753, Support=0.3471, Confidence=0.5050, Rule: IF days_watched greater than 46.00 AND episodes_watched greater than 2187.00 AND duration_class equals 'standard' AND type equals 'TV' AND score less than 8.01 THEN rating = high
+2025-04-29 08:30:16 - genetic_rule_miner.models.genetic - [92mINFO[0m - Generation 14: Best Fitness=0.1753, Support=0.3471, Confidence=0.5050, Rule: IF days_watched greater than 46.00 AND episodes_watched greater than 2187.00 AND duration_class equals 'standard' AND type equals 'TV' AND score less than 8.01 THEN rating = high
+2025-04-29 08:30:16 - genetic_rule_miner.models.genetic - [92mINFO[0m - Generation 15: Best Fitness=0.1753, Support=0.3471, Confidence=0.5050, Rule: IF days_watched greater than 46.00 AND episodes_watched greater than 2187.00 AND duration_class equals 'standard' AND type equals 'TV' AND score less than 8.01 THEN rating = high
+2025-04-29 08:30:16 - genetic_rule_miner.models.genetic - [92mINFO[0m - Generation 16: Best Fitness=0.1753, Support=0.3471, Confidence=0.5050, Rule: IF days_watched greater than 46.00 AND episodes_watched greater than 2187.00 AND duration_class equals 'standard' AND type equals 'TV' AND score less than 8.01 THEN rating = high
+2025-04-29 08:30:16 - genetic_rule_miner.models.genetic - [92mINFO[0m - Generation 17: Best Fitness=0.1890, Support=0.3952, Confidence=0.4783, Rule: IF days_watched greater than 46.00 AND episodes_watched greater than 2187.00 AND duration_class equals 'standard' AND type equals 'TV' AND score less than 8.24 THEN rating = high
+2025-04-29 08:30:16 - genetic_rule_miner.models.genetic - [92mINFO[0m - Generation 18: Best Fitness=0.1890, Support=0.3952, Confidence=0.4783, Rule: IF days_watched greater than 46.00 AND episodes_watched greater than 2187.00 AND duration_class equals 'standard' AND type equals 'TV' AND score less than 8.24 THEN rating = high
+2025-04-29 08:30:16 - genetic_rule_miner.models.genetic - [92mINFO[0m - Generation 19: Best Fitness=0.2096, Support=0.3505, Confidence=0.5980, Rule: IF days_watched greater than 46.00 AND episodes_watched greater than 2187.00 AND duration_class equals 'standard' AND type equals 'TV' AND score greater than 7.31 THEN rating = high
+2025-04-29 08:30:17 - genetic_rule_miner.models.genetic - [92mINFO[0m - Generation 20: Best Fitness=0.2096, Support=0.3505, Confidence=0.5980, Rule: IF days_watched greater than 46.00 AND episodes_watched greater than 2187.00 AND duration_class equals 'standard' AND type equals 'TV' AND score greater than 7.31 THEN rating = high
+2025-04-29 08:30:17 - genetic_rule_miner.models.genetic - [92mINFO[0m - Generation 21: Best Fitness=0.2096, Support=0.3505, Confidence=0.5980, Rule: IF days_watched greater than 46.00 AND episodes_watched greater than 2187.00 AND duration_class equals 'standard' AND type equals 'TV' AND score greater than 7.31 THEN rating = high
+2025-04-29 08:30:17 - genetic_rule_miner.models.genetic - [92mINFO[0m - Generation 22: Best Fitness=0.2096, Support=0.3505, Confidence=0.5980, Rule: IF days_watched greater than 46.00 AND episodes_watched greater than 2187.00 AND duration_class equals 'standard' AND type equals 'TV' AND score greater than 7.31 THEN rating = high
+2025-04-29 08:30:17 - genetic_rule_miner.models.genetic - [92mINFO[0m - Generation 23: Best Fitness=0.2096, Support=0.3505, Confidence=0.5980, Rule: IF days_watched greater than 46.00 AND episodes_watched greater than 2187.00 AND duration_class equals 'standard' AND type equals 'TV' AND score greater than 7.31 THEN rating = high
+2025-04-29 08:30:17 - genetic_rule_miner.models.genetic - [92mINFO[0m - Generation 24: Best Fitness=0.2096, Support=0.3505, Confidence=0.5980, Rule: IF days_watched greater than 46.00 AND episodes_watched greater than 2187.00 AND duration_class equals 'standard' AND type equals 'TV' AND score greater than 7.31 THEN rating = high
+2025-04-29 08:30:17 - genetic_rule_miner.models.genetic - [92mINFO[0m - Generation 25: Best Fitness=0.2096, Support=0.3505, Confidence=0.5980, Rule: IF days_watched greater than 46.00 AND episodes_watched greater than 2187.00 AND duration_class equals 'standard' AND type equals 'TV' AND score greater than 7.31 THEN rating = high
+2025-04-29 08:30:17 - genetic_rule_miner.models.genetic - [92mINFO[0m - Generation 26: Best Fitness=0.2096, Support=0.3505, Confidence=0.5980, Rule: IF days_watched greater than 46.00 AND episodes_watched greater than 2187.00 AND duration_class equals 'standard' AND type equals 'TV' AND score greater than 7.31 THEN rating = high
+2025-04-29 08:30:17 - genetic_rule_miner.models.genetic - [92mINFO[0m - Generation 27: Best Fitness=0.2096, Support=0.3505, Confidence=0.5980, Rule: IF days_watched greater than 46.00 AND episodes_watched greater than 2187.00 AND duration_class equals 'standard' AND type equals 'TV' AND score greater than 7.31 THEN rating = high
+2025-04-29 08:30:17 - genetic_rule_miner.models.genetic - [92mINFO[0m - Generation 28: Best Fitness=0.2096, Support=0.3505, Confidence=0.5980, Rule: IF days_watched greater than 46.00 AND episodes_watched greater than 2187.00 AND duration_class equals 'standard' AND type equals 'TV' AND score greater than 7.31 THEN rating = high
+2025-04-29 08:30:17 - genetic_rule_miner.models.genetic - [92mINFO[0m - Generation 29: Best Fitness=0.2096, Support=0.3505, Confidence=0.5980, Rule: IF days_watched greater than 46.00 AND episodes_watched greater than 2187.00 AND duration_class equals 'standard' AND type equals 'TV' AND score greater than 7.31 THEN rating = high
+2025-04-29 08:30:17 - genetic_rule_miner.models.genetic - [92mINFO[0m - Generation 30: Best Fitness=0.2096, Support=0.3505, Confidence=0.5980, Rule: IF days_watched greater than 46.00 AND episodes_watched greater than 2187.00 AND duration_class equals 'standard' AND type equals 'TV' AND score greater than 7.31 THEN rating = high
+2025-04-29 08:30:18 - genetic_rule_miner.models.genetic - [92mINFO[0m - Generation 31: Best Fitness=0.2096, Support=0.3505, Confidence=0.5980, Rule: IF days_watched greater than 46.00 AND episodes_watched greater than 2187.00 AND duration_class equals 'standard' AND type equals 'TV' AND score greater than 7.31 THEN rating = high
+2025-04-29 08:30:18 - genetic_rule_miner.models.genetic - [92mINFO[0m - Generation 32: Best Fitness=0.2096, Support=0.3505, Confidence=0.5980, Rule: IF days_watched greater than 46.00 AND episodes_watched greater than 2187.00 AND duration_class equals 'standard' AND type equals 'TV' AND score greater than 7.31 THEN rating = high
+2025-04-29 08:30:18 - genetic_rule_miner.models.genetic - [92mINFO[0m - Generation 33: Best Fitness=0.2096, Support=0.3505, Confidence=0.5980, Rule: IF days_watched greater than 46.00 AND episodes_watched greater than 2187.00 AND duration_class equals 'standard' AND type equals 'TV' AND score greater than 7.31 THEN rating = high
+2025-04-29 08:30:18 - genetic_rule_miner.models.genetic - [92mINFO[0m - Generation 34: Best Fitness=0.2096, Support=0.3505, Confidence=0.5980, Rule: IF days_watched greater than 46.00 AND episodes_watched greater than 2187.00 AND duration_class equals 'standard' AND type equals 'TV' AND score greater than 7.31 THEN rating = high
+2025-04-29 08:30:18 - genetic_rule_miner.models.genetic - [92mINFO[0m - Generation 35: Best Fitness=0.2096, Support=0.3505, Confidence=0.5980, Rule: IF days_watched greater than 46.00 AND episodes_watched greater than 2187.00 AND duration_class equals 'standard' AND type equals 'TV' AND score greater than 7.31 THEN rating = high
+2025-04-29 08:30:18 - genetic_rule_miner.models.genetic - [92mINFO[0m - Generation 36: Best Fitness=0.2096, Support=0.3505, Confidence=0.5980, Rule: IF days_watched greater than 46.00 AND episodes_watched greater than 2187.00 AND duration_class equals 'standard' AND type equals 'TV' AND score greater than 7.31 THEN rating = high
+2025-04-29 08:30:18 - genetic_rule_miner.models.genetic - [92mINFO[0m - Generation 37: Best Fitness=0.2096, Support=0.3505, Confidence=0.5980, Rule: IF days_watched greater than 46.00 AND episodes_watched greater than 2187.00 AND duration_class equals 'standard' AND type equals 'TV' AND score greater than 7.31 THEN rating = high
+2025-04-29 08:30:19 - genetic_rule_miner.models.genetic - [92mINFO[0m - Generation 38: Best Fitness=0.2096, Support=0.3505, Confidence=0.5980, Rule: IF days_watched greater than 46.00 AND episodes_watched greater than 2187.00 AND duration_class equals 'standard' AND type equals 'TV' AND score greater than 7.31 THEN rating = high
+2025-04-29 08:30:19 - genetic_rule_miner.models.genetic - [92mINFO[0m - Generation 39: Best Fitness=0.2096, Support=0.3505, Confidence=0.5980, Rule: IF days_watched greater than 46.00 AND episodes_watched greater than 2187.00 AND duration_class equals 'standard' AND type equals 'TV' AND score greater than 7.31 THEN rating = high
+2025-04-29 08:30:19 - genetic_rule_miner.models.genetic - [92mINFO[0m - Generation 40: Best Fitness=0.2096, Support=0.3505, Confidence=0.5980, Rule: IF days_watched greater than 46.00 AND episodes_watched greater than 2187.00 AND duration_class equals 'standard' AND type equals 'TV' AND score greater than 7.31 THEN rating = high
+2025-04-29 08:30:19 - genetic_rule_miner.models.genetic - [92mINFO[0m - Generation 41: Best Fitness=0.2096, Support=0.3505, Confidence=0.5980, Rule: IF days_watched greater than 46.00 AND episodes_watched greater than 2187.00 AND duration_class equals 'standard' AND type equals 'TV' AND score greater than 7.31 THEN rating = high
+2025-04-29 08:30:19 - genetic_rule_miner.models.genetic - [92mINFO[0m - Generation 42: Best Fitness=0.2096, Support=0.3505, Confidence=0.5980, Rule: IF days_watched greater than 46.00 AND episodes_watched greater than 2187.00 AND duration_class equals 'standard' AND type equals 'TV' AND score greater than 7.31 THEN rating = high
+2025-04-29 08:30:19 - genetic_rule_miner.models.genetic - [92mINFO[0m - Generation 43: Best Fitness=0.2096, Support=0.3505, Confidence=0.5980, Rule: IF days_watched greater than 46.00 AND episodes_watched greater than 2187.00 AND duration_class equals 'standard' AND type equals 'TV' AND score greater than 7.31 THEN rating = high
+2025-04-29 08:30:19 - genetic_rule_miner.models.genetic - [92mINFO[0m - Generation 44: Best Fitness=0.2096, Support=0.3505, Confidence=0.5980, Rule: IF days_watched greater than 46.00 AND episodes_watched greater than 2187.00 AND duration_class equals 'standard' AND type equals 'TV' AND score greater than 7.31 THEN rating = high
+2025-04-29 08:30:20 - genetic_rule_miner.models.genetic - [92mINFO[0m - Generation 45: Best Fitness=0.2096, Support=0.3505, Confidence=0.5980, Rule: IF days_watched greater than 46.00 AND episodes_watched greater than 2187.00 AND duration_class equals 'standard' AND type equals 'TV' AND score greater than 7.31 THEN rating = high
+2025-04-29 08:30:20 - genetic_rule_miner.models.genetic - [92mINFO[0m - Generation 46: Best Fitness=0.2096, Support=0.3505, Confidence=0.5980, Rule: IF days_watched greater than 46.00 AND episodes_watched greater than 2187.00 AND duration_class equals 'standard' AND type equals 'TV' AND score greater than 7.31 THEN rating = high
+2025-04-29 08:30:20 - genetic_rule_miner.models.genetic - [92mINFO[0m - Generation 47: Best Fitness=0.2096, Support=0.3505, Confidence=0.5980, Rule: IF days_watched greater than 46.00 AND episodes_watched greater than 2187.00 AND duration_class equals 'standard' AND type equals 'TV' AND score greater than 7.31 THEN rating = high
+2025-04-29 08:30:20 - genetic_rule_miner.models.genetic - [92mINFO[0m - Generation 48: Best Fitness=0.2096, Support=0.3505, Confidence=0.5980, Rule: IF days_watched greater than 46.00 AND episodes_watched greater than 2187.00 AND duration_class equals 'standard' AND type equals 'TV' AND score greater than 7.31 THEN rating = high
+2025-04-29 08:30:20 - genetic_rule_miner.models.genetic - [92mINFO[0m - Generation 49: Best Fitness=0.2096, Support=0.3505, Confidence=0.5980, Rule: IF days_watched greater than 46.00 AND episodes_watched greater than 2187.00 AND duration_class equals 'standard' AND type equals 'TV' AND score greater than 7.31 THEN rating = high
+2025-04-29 08:30:20 - genetic_rule_miner.models.genetic - [92mINFO[0m - Generation 50: Best Fitness=0.2096, Support=0.3505, Confidence=0.5980, Rule: IF days_watched greater than 46.00 AND episodes_watched greater than 2187.00 AND duration_class equals 'standard' AND type equals 'TV' AND score greater than 7.31 THEN rating = high
+2025-04-29 08:30:20 - genetic_rule_miner.models.genetic - [92mINFO[0m - Generation 51: Best Fitness=0.2096, Support=0.3505, Confidence=0.5980, Rule: IF days_watched greater than 46.00 AND episodes_watched greater than 2187.00 AND duration_class equals 'standard' AND type equals 'TV' AND score greater than 7.31 THEN rating = high
+2025-04-29 08:30:21 - genetic_rule_miner.models.genetic - [92mINFO[0m - Generation 52: Best Fitness=0.2096, Support=0.3505, Confidence=0.5980, Rule: IF days_watched greater than 46.00 AND episodes_watched greater than 2187.00 AND duration_class equals 'standard' AND type equals 'TV' AND score greater than 7.31 THEN rating = high
+2025-04-29 08:30:21 - genetic_rule_miner.models.genetic - [92mINFO[0m - Generation 53: Best Fitness=0.2096, Support=0.3505, Confidence=0.5980, Rule: IF days_watched greater than 46.00 AND episodes_watched greater than 2187.00 AND duration_class equals 'standard' AND type equals 'TV' AND score greater than 7.31 THEN rating = high
+2025-04-29 08:30:21 - genetic_rule_miner.models.genetic - [92mINFO[0m - Generation 54: Best Fitness=0.2096, Support=0.3505, Confidence=0.5980, Rule: IF days_watched greater than 46.00 AND episodes_watched greater than 2187.00 AND duration_class equals 'standard' AND type equals 'TV' AND score greater than 7.31 THEN rating = high
+2025-04-29 08:30:21 - genetic_rule_miner.models.genetic - [92mINFO[0m - Generation 55: Best Fitness=0.2096, Support=0.3505, Confidence=0.5980, Rule: IF days_watched greater than 46.00 AND episodes_watched greater than 2187.00 AND duration_class equals 'standard' AND type equals 'TV' AND score greater than 7.31 THEN rating = high
+2025-04-29 08:30:21 - genetic_rule_miner.models.genetic - [92mINFO[0m - Generation 56: Best Fitness=0.2096, Support=0.3505, Confidence=0.5980, Rule: IF days_watched greater than 46.00 AND episodes_watched greater than 2187.00 AND duration_class equals 'standard' AND type equals 'TV' AND score greater than 7.31 THEN rating = high
+2025-04-29 08:30:21 - genetic_rule_miner.models.genetic - [92mINFO[0m - Generation 57: Best Fitness=0.2096, Support=0.3505, Confidence=0.5980, Rule: IF days_watched greater than 46.00 AND episodes_watched greater than 2187.00 AND duration_class equals 'standard' AND type equals 'TV' AND score greater than 7.31 THEN rating = high
+2025-04-29 08:30:22 - genetic_rule_miner.models.genetic - [92mINFO[0m - Generation 58: Best Fitness=0.2096, Support=0.3505, Confidence=0.5980, Rule: IF days_watched greater than 46.00 AND episodes_watched greater than 2187.00 AND duration_class equals 'standard' AND type equals 'TV' AND score greater than 7.31 THEN rating = high
+2025-04-29 08:30:22 - genetic_rule_miner.models.genetic - [92mINFO[0m - Generation 59: Best Fitness=0.2096, Support=0.3505, Confidence=0.5980, Rule: IF days_watched greater than 46.00 AND episodes_watched greater than 2187.00 AND duration_class equals 'standard' AND type equals 'TV' AND score greater than 7.31 THEN rating = high
+2025-04-29 08:30:22 - genetic_rule_miner.models.genetic - [92mINFO[0m - Generation 60: Best Fitness=0.2096, Support=0.3505, Confidence=0.5980, Rule: IF days_watched greater than 46.00 AND episodes_watched greater than 2187.00 AND duration_class equals 'standard' AND type equals 'TV' AND score greater than 7.31 THEN rating = high
+2025-04-29 08:30:22 - genetic_rule_miner.models.genetic - [92mINFO[0m - Generation 61: Best Fitness=0.2096, Support=0.3505, Confidence=0.5980, Rule: IF days_watched greater than 46.00 AND episodes_watched greater than 2187.00 AND duration_class equals 'standard' AND type equals 'TV' AND score greater than 7.31 THEN rating = high
+2025-04-29 08:30:22 - genetic_rule_miner.models.genetic - [92mINFO[0m - Generation 62: Best Fitness=0.2096, Support=0.3505, Confidence=0.5980, Rule: IF days_watched greater than 46.00 AND episodes_watched greater than 2187.00 AND duration_class equals 'standard' AND type equals 'TV' AND score greater than 7.31 THEN rating = high
+2025-04-29 08:30:22 - genetic_rule_miner.models.genetic - [92mINFO[0m - Generation 63: Best Fitness=0.2096, Support=0.3505, Confidence=0.5980, Rule: IF days_watched greater than 46.00 AND episodes_watched greater than 2187.00 AND duration_class equals 'standard' AND type equals 'TV' AND score greater than 7.31 THEN rating = high
+2025-04-29 08:30:22 - genetic_rule_miner.models.genetic - [92mINFO[0m - Generation 64: Best Fitness=0.2096, Support=0.3505, Confidence=0.5980, Rule: IF days_watched greater than 46.00 AND episodes_watched greater than 2187.00 AND duration_class equals 'standard' AND type equals 'TV' AND score greater than 7.31 THEN rating = high
+2025-04-29 08:30:22 - genetic_rule_miner.models.genetic - [92mINFO[0m - Generation 65: Best Fitness=0.2096, Support=0.3505, Confidence=0.5980, Rule: IF days_watched greater than 46.00 AND episodes_watched greater than 2187.00 AND duration_class equals 'standard' AND type equals 'TV' AND score greater than 7.31 THEN rating = high
+2025-04-29 08:30:22 - genetic_rule_miner.models.genetic - [92mINFO[0m - Generation 66: Best Fitness=0.2096, Support=0.3505, Confidence=0.5980, Rule: IF days_watched greater than 46.00 AND episodes_watched greater than 2187.00 AND duration_class equals 'standard' AND type equals 'TV' AND score greater than 7.31 THEN rating = high
+2025-04-29 08:30:23 - genetic_rule_miner.models.genetic - [92mINFO[0m - Generation 67: Best Fitness=0.2096, Support=0.3505, Confidence=0.5980, Rule: IF days_watched greater than 46.00 AND episodes_watched greater than 2187.00 AND duration_class equals 'standard' AND type equals 'TV' AND score greater than 7.31 THEN rating = high
+2025-04-29 08:30:23 - genetic_rule_miner.models.genetic - [92mINFO[0m - Generation 68: Best Fitness=0.2096, Support=0.3505, Confidence=0.5980, Rule: IF days_watched greater than 46.00 AND episodes_watched greater than 2187.00 AND duration_class equals 'standard' AND type equals 'TV' AND score greater than 7.31 THEN rating = high
+2025-04-29 08:30:23 - genetic_rule_miner.models.genetic - [92mINFO[0m - Generation 69: Best Fitness=0.2096, Support=0.3505, Confidence=0.5980, Rule: IF days_watched greater than 46.00 AND episodes_watched greater than 2187.00 AND duration_class equals 'standard' AND type equals 'TV' AND score greater than 7.31 THEN rating = high
+2025-04-29 08:30:23 - genetic_rule_miner.models.genetic - [92mINFO[0m - Generation 70: Best Fitness=0.2096, Support=0.3505, Confidence=0.5980, Rule: IF days_watched greater than 46.00 AND episodes_watched greater than 2187.00 AND duration_class equals 'standard' AND type equals 'TV' AND score greater than 7.31 THEN rating = high
+2025-04-29 08:30:23 - genetic_rule_miner.models.genetic - [92mINFO[0m - Generation 71: Best Fitness=0.2096, Support=0.3505, Confidence=0.5980, Rule: IF days_watched greater than 46.00 AND episodes_watched greater than 2187.00 AND duration_class equals 'standard' AND type equals 'TV' AND score greater than 7.31 THEN rating = high
+2025-04-29 08:30:23 - genetic_rule_miner.models.genetic - [92mINFO[0m - Generation 72: Best Fitness=0.2096, Support=0.3505, Confidence=0.5980, Rule: IF days_watched greater than 46.00 AND episodes_watched greater than 2187.00 AND duration_class equals 'standard' AND type equals 'TV' AND score greater than 7.31 THEN rating = high
+2025-04-29 08:30:23 - genetic_rule_miner.models.genetic - [92mINFO[0m - Generation 73: Best Fitness=0.2096, Support=0.3505, Confidence=0.5980, Rule: IF days_watched greater than 46.00 AND episodes_watched greater than 2187.00 AND duration_class equals 'standard' AND type equals 'TV' AND score greater than 7.31 THEN rating = high
+2025-04-29 08:30:23 - genetic_rule_miner.models.genetic - [92mINFO[0m - Generation 74: Best Fitness=0.2096, Support=0.3505, Confidence=0.5980, Rule: IF days_watched greater than 46.00 AND episodes_watched greater than 2187.00 AND duration_class equals 'standard' AND type equals 'TV' AND score greater than 7.31 THEN rating = high
+2025-04-29 08:30:23 - genetic_rule_miner.models.genetic - [92mINFO[0m - Generation 75: Best Fitness=0.2096, Support=0.3505, Confidence=0.5980, Rule: IF days_watched greater than 46.00 AND episodes_watched greater than 2187.00 AND duration_class equals 'standard' AND type equals 'TV' AND score greater than 7.31 THEN rating = high
+2025-04-29 08:30:23 - genetic_rule_miner.models.genetic - [92mINFO[0m - Generation 76: Best Fitness=0.2096, Support=0.3505, Confidence=0.5980, Rule: IF days_watched greater than 46.00 AND episodes_watched greater than 2187.00 AND duration_class equals 'standard' AND type equals 'TV' AND score greater than 7.31 THEN rating = high
+2025-04-29 08:30:24 - genetic_rule_miner.models.genetic - [92mINFO[0m - Generation 77: Best Fitness=0.2096, Support=0.3505, Confidence=0.5980, Rule: IF days_watched greater than 46.00 AND episodes_watched greater than 2187.00 AND duration_class equals 'standard' AND type equals 'TV' AND score greater than 7.31 THEN rating = high
+2025-04-29 08:30:24 - genetic_rule_miner.models.genetic - [92mINFO[0m - Generation 78: Best Fitness=0.2096, Support=0.3505, Confidence=0.5980, Rule: IF days_watched greater than 46.00 AND episodes_watched greater than 2187.00 AND duration_class equals 'standard' AND type equals 'TV' AND score greater than 7.31 THEN rating = high
+2025-04-29 08:30:24 - genetic_rule_miner.models.genetic - [92mINFO[0m - Generation 79: Best Fitness=0.2096, Support=0.3505, Confidence=0.5980, Rule: IF days_watched greater than 46.00 AND episodes_watched greater than 2187.00 AND duration_class equals 'standard' AND type equals 'TV' AND score greater than 7.31 THEN rating = high
+2025-04-29 08:30:24 - genetic_rule_miner.models.genetic - [92mINFO[0m - Generation 80: Best Fitness=0.2096, Support=0.3505, Confidence=0.5980, Rule: IF days_watched greater than 46.00 AND episodes_watched greater than 2187.00 AND duration_class equals 'standard' AND type equals 'TV' AND score greater than 7.31 THEN rating = high
+2025-04-29 08:30:24 - genetic_rule_miner.models.genetic - [92mINFO[0m - Generation 81: Best Fitness=0.2096, Support=0.3505, Confidence=0.5980, Rule: IF days_watched greater than 46.00 AND episodes_watched greater than 2187.00 AND duration_class equals 'standard' AND type equals 'TV' AND score greater than 7.31 THEN rating = high
+2025-04-29 08:30:24 - genetic_rule_miner.models.genetic - [92mINFO[0m - Generation 82: Best Fitness=0.2096, Support=0.3505, Confidence=0.5980, Rule: IF days_watched greater than 46.00 AND episodes_watched greater than 2187.00 AND duration_class equals 'standard' AND type equals 'TV' AND score greater than 7.31 THEN rating = high
+2025-04-29 08:30:24 - genetic_rule_miner.models.genetic - [92mINFO[0m - Generation 83: Best Fitness=0.2096, Support=0.3505, Confidence=0.5980, Rule: IF days_watched greater than 46.00 AND episodes_watched greater than 2187.00 AND duration_class equals 'standard' AND type equals 'TV' AND score greater than 7.31 THEN rating = high
+2025-04-29 08:30:24 - genetic_rule_miner.models.genetic - [92mINFO[0m - Generation 84: Best Fitness=0.2096, Support=0.3505, Confidence=0.5980, Rule: IF days_watched greater than 46.00 AND episodes_watched greater than 2187.00 AND duration_class equals 'standard' AND type equals 'TV' AND score greater than 7.31 THEN rating = high
+2025-04-29 08:30:24 - genetic_rule_miner.models.genetic - [92mINFO[0m - Generation 85: Best Fitness=0.2096, Support=0.3505, Confidence=0.5980, Rule: IF days_watched greater than 46.00 AND episodes_watched greater than 2187.00 AND duration_class equals 'standard' AND type equals 'TV' AND score greater than 7.31 THEN rating = high
+2025-04-29 08:30:24 - genetic_rule_miner.models.genetic - [92mINFO[0m - Generation 86: Best Fitness=0.2096, Support=0.3505, Confidence=0.5980, Rule: IF days_watched greater than 46.00 AND episodes_watched greater than 2187.00 AND duration_class equals 'standard' AND type equals 'TV' AND score greater than 7.31 THEN rating = high
+2025-04-29 08:30:24 - genetic_rule_miner.models.genetic - [92mINFO[0m - Generation 87: Best Fitness=0.2096, Support=0.3505, Confidence=0.5980, Rule: IF days_watched greater than 46.00 AND episodes_watched greater than 2187.00 AND duration_class equals 'standard' AND type equals 'TV' AND score greater than 7.31 THEN rating = high
+2025-04-29 08:30:25 - genetic_rule_miner.models.genetic - [92mINFO[0m - Generation 88: Best Fitness=0.2096, Support=0.3505, Confidence=0.5980, Rule: IF days_watched greater than 46.00 AND episodes_watched greater than 2187.00 AND duration_class equals 'standard' AND type equals 'TV' AND score greater than 7.31 THEN rating = high
+2025-04-29 08:30:25 - genetic_rule_miner.models.genetic - [92mINFO[0m - Generation 89: Best Fitness=0.2096, Support=0.3505, Confidence=0.5980, Rule: IF days_watched greater than 46.00 AND episodes_watched greater than 2187.00 AND duration_class equals 'standard' AND type equals 'TV' AND score greater than 7.31 THEN rating = high
+2025-04-29 08:30:25 - genetic_rule_miner.models.genetic - [92mINFO[0m - Generation 90: Best Fitness=0.2096, Support=0.3505, Confidence=0.5980, Rule: IF days_watched greater than 46.00 AND episodes_watched greater than 2187.00 AND duration_class equals 'standard' AND type equals 'TV' AND score greater than 7.31 THEN rating = high
+2025-04-29 08:30:25 - genetic_rule_miner.models.genetic - [92mINFO[0m - Generation 91: Best Fitness=0.2096, Support=0.3505, Confidence=0.5980, Rule: IF days_watched greater than 46.00 AND episodes_watched greater than 2187.00 AND duration_class equals 'standard' AND type equals 'TV' AND score greater than 7.31 THEN rating = high
+2025-04-29 08:30:25 - genetic_rule_miner.models.genetic - [92mINFO[0m - Generation 92: Best Fitness=0.2096, Support=0.3505, Confidence=0.5980, Rule: IF days_watched greater than 46.00 AND episodes_watched greater than 2187.00 AND duration_class equals 'standard' AND type equals 'TV' AND score greater than 7.31 THEN rating = high
+2025-04-29 08:30:25 - genetic_rule_miner.models.genetic - [92mINFO[0m - Generation 93: Best Fitness=0.2096, Support=0.3505, Confidence=0.5980, Rule: IF days_watched greater than 46.00 AND episodes_watched greater than 2187.00 AND duration_class equals 'standard' AND type equals 'TV' AND score greater than 7.31 THEN rating = high
+2025-04-29 08:30:25 - genetic_rule_miner.models.genetic - [92mINFO[0m - Generation 94: Best Fitness=0.2096, Support=0.3505, Confidence=0.5980, Rule: IF days_watched greater than 46.00 AND episodes_watched greater than 2187.00 AND duration_class equals 'standard' AND type equals 'TV' AND score greater than 7.31 THEN rating = high
+2025-04-29 08:30:25 - genetic_rule_miner.models.genetic - [92mINFO[0m - Generation 95: Best Fitness=0.2096, Support=0.3505, Confidence=0.5980, Rule: IF days_watched greater than 46.00 AND episodes_watched greater than 2187.00 AND duration_class equals 'standard' AND type equals 'TV' AND score greater than 7.31 THEN rating = high
+2025-04-29 08:30:25 - genetic_rule_miner.models.genetic - [92mINFO[0m - Generation 96: Best Fitness=0.2096, Support=0.3505, Confidence=0.5980, Rule: IF days_watched greater than 46.00 AND episodes_watched greater than 2187.00 AND duration_class equals 'standard' AND type equals 'TV' AND score greater than 7.31 THEN rating = high
+2025-04-29 08:30:26 - genetic_rule_miner.models.genetic - [92mINFO[0m - Generation 97: Best Fitness=0.2096, Support=0.3505, Confidence=0.5980, Rule: IF days_watched greater than 46.00 AND episodes_watched greater than 2187.00 AND duration_class equals 'standard' AND type equals 'TV' AND score greater than 7.31 THEN rating = high
+2025-04-29 08:30:26 - genetic_rule_miner.models.genetic - [92mINFO[0m - Generation 98: Best Fitness=0.2096, Support=0.3505, Confidence=0.5980, Rule: IF days_watched greater than 46.00 AND episodes_watched greater than 2187.00 AND duration_class equals 'standard' AND type equals 'TV' AND score greater than 7.31 THEN rating = high
+2025-04-29 08:30:26 - genetic_rule_miner.models.genetic - [92mINFO[0m - Generation 99: Best Fitness=0.2096, Support=0.3505, Confidence=0.5980, Rule: IF days_watched greater than 46.00 AND episodes_watched greater than 2187.00 AND duration_class equals 'standard' AND type equals 'TV' AND score greater than 7.31 THEN rating = high
+2025-04-29 08:30:26 - __main__ - [92mINFO[0m - 
+Best Rule Found:
+2025-04-29 08:30:26 - __main__ - [92mINFO[0m - IF days_watched greater than 46.00 AND episodes_watched greater than 2187.00 AND duration_class equals 'standard' AND type equals 'TV' AND score greater than 7.31 THEN rating = high
+2025-04-29 08:30:26 - __main__ - [92mINFO[0m - 
+Fitness: 0.2096
+2025-04-29 08:30:26 - __main__ - [92mINFO[0m - Support: 0.35051546391752575
+2025-04-29 08:30:26 - __main__ - [92mINFO[0m - Confidence: 0.5980392156862745
+2025-04-29 08:30:26 - genetic_rule_miner.data.database - [92mINFO[0m - SQLAlchemy engine closed
+2025-04-29 08:30:39 - __main__ - [92mINFO[0m - 🔧 Fase 1: Inicialización
+2025-04-29 08:30:39 - __main__ - [92mINFO[0m - 📡 Fase 2: Obtención de datos
+2025-04-29 08:30:39 - __main__ - [92mINFO[0m - 🤔 Intento 1 de obtener datos base...
+2025-04-29 08:30:39 - __main__ - [92mINFO[0m - 📡 Obteniendo datos de anime...
+2025-04-29 08:30:39 - genetic_rule_miner.bbdd_maker.anime_service - [92mINFO[0m - AnimeService initialized with config: APIConfig(base_url='https://api.jikan.moe/v4/', max_retries=3, timeout=10.0, request_delay=0.35, rate_limit=3)
+2025-04-29 08:30:39 - genetic_rule_miner.bbdd_maker.anime_service - [92mINFO[0m - Starting to fetch anime data from ID 1 to 100
+2025-04-29 08:30:40 - genetic_rule_miner.bbdd_maker.anime_service - [93mWARNING[0m - Failed to fetch anime with ID 2 on attempt 1: 404 Client Error: Not Found for url: https://api.jikan.moe/v4/anime/2
+2025-04-29 08:30:41 - genetic_rule_miner.bbdd_maker.anime_service - [93mWARNING[0m - Failed to fetch anime with ID 2 on attempt 2: 404 Client Error: Not Found for url: https://api.jikan.moe/v4/anime/2
+2025-04-29 08:30:41 - genetic_rule_miner.bbdd_maker.anime_service - [93mWARNING[0m - Failed to fetch anime with ID 2 on attempt 3: 404 Client Error: Not Found for url: https://api.jikan.moe/v4/anime/2
+2025-04-29 08:30:41 - genetic_rule_miner.bbdd_maker.anime_service - [91mERROR[0m - Failed to fetch anime with ID 2 after 3 attempts
+2025-04-29 08:30:41 - genetic_rule_miner.bbdd_maker.anime_service - [92mINFO[0m - No data found for anime ID 2
+2025-04-29 08:30:41 - genetic_rule_miner.bbdd_maker.anime_service - [93mWARNING[0m - Failed to fetch anime with ID 3 on attempt 1: 429 Client Error: Too Many Requests for url: https://api.jikan.moe/v4/anime/3
+2025-04-29 08:30:41 - genetic_rule_miner.bbdd_maker.anime_service - [93mWARNING[0m - Failed to fetch anime with ID 3 on attempt 2: 429 Client Error: Too Many Requests for url: https://api.jikan.moe/v4/anime/3
+2025-04-29 08:30:42 - genetic_rule_miner.bbdd_maker.anime_service - [93mWARNING[0m - Failed to fetch anime with ID 3 on attempt 3: 404 Client Error: Not Found for url: https://api.jikan.moe/v4/anime/3
+2025-04-29 08:30:42 - genetic_rule_miner.bbdd_maker.anime_service - [91mERROR[0m - Failed to fetch anime with ID 3 after 3 attempts
+2025-04-29 08:30:42 - genetic_rule_miner.bbdd_maker.anime_service - [92mINFO[0m - No data found for anime ID 3
+2025-04-29 08:30:42 - genetic_rule_miner.bbdd_maker.anime_service - [93mWARNING[0m - Failed to fetch anime with ID 4 on attempt 1: 429 Client Error: Too Many Requests for url: https://api.jikan.moe/v4/anime/4
+2025-04-29 08:30:43 - genetic_rule_miner.bbdd_maker.anime_service - [93mWARNING[0m - Failed to fetch anime with ID 4 on attempt 2: 404 Client Error: Not Found for url: https://api.jikan.moe/v4/anime/4
+2025-04-29 08:30:43 - genetic_rule_miner.bbdd_maker.anime_service - [93mWARNING[0m - Failed to fetch anime with ID 4 on attempt 3: 429 Client Error: Too Many Requests for url: https://api.jikan.moe/v4/anime/4
+2025-04-29 08:30:43 - genetic_rule_miner.bbdd_maker.anime_service - [91mERROR[0m - Failed to fetch anime with ID 4 after 3 attempts
+2025-04-29 08:30:43 - genetic_rule_miner.bbdd_maker.anime_service - [92mINFO[0m - No data found for anime ID 4
+2025-04-29 08:30:44 - genetic_rule_miner.bbdd_maker.anime_service - [93mWARNING[0m - Failed to fetch anime with ID 6 on attempt 1: 429 Client Error: Too Many Requests for url: https://api.jikan.moe/v4/anime/6
+2025-04-29 08:30:44 - genetic_rule_miner.bbdd_maker.anime_service - [93mWARNING[0m - Failed to fetch anime with ID 6 on attempt 2: 429 Client Error: Too Many Requests for url: https://api.jikan.moe/v4/anime/6
+2025-04-29 08:30:44 - genetic_rule_miner.bbdd_maker.anime_service - [93mWARNING[0m - Failed to fetch anime with ID 6 on attempt 3: 429 Client Error: Too Many Requests for url: https://api.jikan.moe/v4/anime/6
+2025-04-29 08:30:44 - genetic_rule_miner.bbdd_maker.anime_service - [91mERROR[0m - Failed to fetch anime with ID 6 after 3 attempts
+2025-04-29 08:30:44 - genetic_rule_miner.bbdd_maker.anime_service - [92mINFO[0m - No data found for anime ID 6
+2025-04-29 08:30:44 - genetic_rule_miner.bbdd_maker.anime_service - [93mWARNING[0m - Failed to fetch anime with ID 7 on attempt 1: 429 Client Error: Too Many Requests for url: https://api.jikan.moe/v4/anime/7
+2025-04-29 08:30:45 - genetic_rule_miner.bbdd_maker.anime_service - [93mWARNING[0m - Failed to fetch anime with ID 8 on attempt 1: 429 Client Error: Too Many Requests for url: https://api.jikan.moe/v4/anime/8
+2025-04-29 08:30:45 - genetic_rule_miner.bbdd_maker.anime_service - [93mWARNING[0m - Failed to fetch anime with ID 8 on attempt 2: 429 Client Error: Too Many Requests for url: https://api.jikan.moe/v4/anime/8
+2025-04-29 08:30:45 - genetic_rule_miner.bbdd_maker.anime_service - [93mWARNING[0m - Failed to fetch anime with ID 8 on attempt 3: 429 Client Error: Too Many Requests for url: https://api.jikan.moe/v4/anime/8
+2025-04-29 08:30:45 - genetic_rule_miner.bbdd_maker.anime_service - [91mERROR[0m - Failed to fetch anime with ID 8 after 3 attempts
+2025-04-29 08:30:45 - genetic_rule_miner.bbdd_maker.anime_service - [92mINFO[0m - No data found for anime ID 8
+2025-04-29 08:30:46 - genetic_rule_miner.bbdd_maker.anime_service - [93mWARNING[0m - Failed to fetch anime with ID 9 on attempt 1: 404 Client Error: Not Found for url: https://api.jikan.moe/v4/anime/9
+2025-04-29 08:30:46 - genetic_rule_miner.bbdd_maker.anime_service - [93mWARNING[0m - Failed to fetch anime with ID 9 on attempt 2: 404 Client Error: Not Found for url: https://api.jikan.moe/v4/anime/9
+2025-04-29 08:30:47 - genetic_rule_miner.bbdd_maker.anime_service - [93mWARNING[0m - Failed to fetch anime with ID 9 on attempt 3: 429 Client Error: Too Many Requests for url: https://api.jikan.moe/v4/anime/9
+2025-04-29 08:30:47 - genetic_rule_miner.bbdd_maker.anime_service - [91mERROR[0m - Failed to fetch anime with ID 9 after 3 attempts
+2025-04-29 08:30:47 - genetic_rule_miner.bbdd_maker.anime_service - [92mINFO[0m - No data found for anime ID 9
+2025-04-29 08:30:47 - genetic_rule_miner.bbdd_maker.anime_service - [93mWARNING[0m - Failed to fetch anime with ID 10 on attempt 1: 429 Client Error: Too Many Requests for url: https://api.jikan.moe/v4/anime/10
+2025-04-29 08:30:47 - genetic_rule_miner.bbdd_maker.anime_service - [93mWARNING[0m - Failed to fetch anime with ID 10 on attempt 2: 429 Client Error: Too Many Requests for url: https://api.jikan.moe/v4/anime/10
+2025-04-29 08:30:47 - genetic_rule_miner.bbdd_maker.anime_service - [93mWARNING[0m - Failed to fetch anime with ID 10 on attempt 3: 429 Client Error: Too Many Requests for url: https://api.jikan.moe/v4/anime/10
+2025-04-29 08:30:47 - genetic_rule_miner.bbdd_maker.anime_service - [91mERROR[0m - Failed to fetch anime with ID 10 after 3 attempts
+2025-04-29 08:30:47 - genetic_rule_miner.bbdd_maker.anime_service - [92mINFO[0m - No data found for anime ID 10
+2025-04-29 08:30:48 - genetic_rule_miner.bbdd_maker.anime_service - [93mWARNING[0m - Failed to fetch anime with ID 11 on attempt 1: 404 Client Error: Not Found for url: https://api.jikan.moe/v4/anime/11
+2025-04-29 08:30:48 - genetic_rule_miner.bbdd_maker.anime_service - [93mWARNING[0m - Failed to fetch anime with ID 11 on attempt 2: 429 Client Error: Too Many Requests for url: https://api.jikan.moe/v4/anime/11
+2025-04-29 08:30:48 - genetic_rule_miner.bbdd_maker.anime_service - [93mWARNING[0m - Failed to fetch anime with ID 11 on attempt 3: 404 Client Error: Not Found for url: https://api.jikan.moe/v4/anime/11
+2025-04-29 08:30:48 - genetic_rule_miner.bbdd_maker.anime_service - [91mERROR[0m - Failed to fetch anime with ID 11 after 3 attempts
+2025-04-29 08:30:48 - genetic_rule_miner.bbdd_maker.anime_service - [92mINFO[0m - No data found for anime ID 11
+2025-04-29 08:30:49 - genetic_rule_miner.bbdd_maker.anime_service - [93mWARNING[0m - Failed to fetch anime with ID 12 on attempt 1: 429 Client Error: Too Many Requests for url: https://api.jikan.moe/v4/anime/12
+2025-04-29 08:30:49 - genetic_rule_miner.bbdd_maker.anime_service - [93mWARNING[0m - Failed to fetch anime with ID 12 on attempt 2: 429 Client Error: Too Many Requests for url: https://api.jikan.moe/v4/anime/12
+2025-04-29 08:30:49 - genetic_rule_miner.bbdd_maker.anime_service - [93mWARNING[0m - Failed to fetch anime with ID 12 on attempt 3: 429 Client Error: Too Many Requests for url: https://api.jikan.moe/v4/anime/12
+2025-04-29 08:30:49 - genetic_rule_miner.bbdd_maker.anime_service - [91mERROR[0m - Failed to fetch anime with ID 12 after 3 attempts
+2025-04-29 08:30:49 - genetic_rule_miner.bbdd_maker.anime_service - [92mINFO[0m - No data found for anime ID 12
+2025-04-29 08:30:50 - genetic_rule_miner.bbdd_maker.anime_service - [93mWARNING[0m - Failed to fetch anime with ID 13 on attempt 1: 404 Client Error: Not Found for url: https://api.jikan.moe/v4/anime/13
+2025-04-29 08:30:50 - genetic_rule_miner.bbdd_maker.anime_service - [93mWARNING[0m - Failed to fetch anime with ID 13 on attempt 2: 429 Client Error: Too Many Requests for url: https://api.jikan.moe/v4/anime/13
+2025-04-29 08:30:50 - genetic_rule_miner.bbdd_maker.anime_service - [93mWARNING[0m - Failed to fetch anime with ID 13 on attempt 3: 404 Client Error: Not Found for url: https://api.jikan.moe/v4/anime/13
+2025-04-29 08:30:50 - genetic_rule_miner.bbdd_maker.anime_service - [91mERROR[0m - Failed to fetch anime with ID 13 after 3 attempts
+2025-04-29 08:30:50 - genetic_rule_miner.bbdd_maker.anime_service - [92mINFO[0m - No data found for anime ID 13
+2025-04-29 08:30:51 - genetic_rule_miner.bbdd_maker.anime_service - [93mWARNING[0m - Failed to fetch anime with ID 14 on attempt 1: 429 Client Error: Too Many Requests for url: https://api.jikan.moe/v4/anime/14
+2025-04-29 08:30:51 - genetic_rule_miner.bbdd_maker.anime_service - [93mWARNING[0m - Failed to fetch anime with ID 14 on attempt 2: 429 Client Error: Too Many Requests for url: https://api.jikan.moe/v4/anime/14
+2025-04-29 08:30:51 - genetic_rule_miner.bbdd_maker.anime_service - [93mWARNING[0m - Failed to fetch anime with ID 14 on attempt 3: 429 Client Error: Too Many Requests for url: https://api.jikan.moe/v4/anime/14
+2025-04-29 08:30:51 - genetic_rule_miner.bbdd_maker.anime_service - [91mERROR[0m - Failed to fetch anime with ID 14 after 3 attempts
+2025-04-29 08:30:51 - genetic_rule_miner.bbdd_maker.anime_service - [92mINFO[0m - No data found for anime ID 14
+2025-04-29 08:30:51 - genetic_rule_miner.bbdd_maker.anime_service - [93mWARNING[0m - Failed to fetch anime with ID 15 on attempt 1: 429 Client Error: Too Many Requests for url: https://api.jikan.moe/v4/anime/15
+2025-04-29 08:30:52 - genetic_rule_miner.bbdd_maker.anime_service - [93mWARNING[0m - Failed to fetch anime with ID 16 on attempt 1: 429 Client Error: Too Many Requests for url: https://api.jikan.moe/v4/anime/16
+2025-04-29 08:30:52 - genetic_rule_miner.bbdd_maker.anime_service - [93mWARNING[0m - Failed to fetch anime with ID 16 on attempt 2: 429 Client Error: Too Many Requests for url: https://api.jikan.moe/v4/anime/16
+2025-04-29 08:30:52 - genetic_rule_miner.bbdd_maker.anime_service - [93mWARNING[0m - Failed to fetch anime with ID 16 on attempt 3: 429 Client Error: Too Many Requests for url: https://api.jikan.moe/v4/anime/16
+2025-04-29 08:30:52 - genetic_rule_miner.bbdd_maker.anime_service - [91mERROR[0m - Failed to fetch anime with ID 16 after 3 attempts
+2025-04-29 08:30:52 - genetic_rule_miner.bbdd_maker.anime_service - [92mINFO[0m - No data found for anime ID 16
+2025-04-29 08:30:53 - genetic_rule_miner.bbdd_maker.anime_service - [93mWARNING[0m - Failed to fetch anime with ID 18 on attempt 1: 429 Client Error: Too Many Requests for url: https://api.jikan.moe/v4/anime/18
+2025-04-29 08:30:53 - genetic_rule_miner.bbdd_maker.anime_service - [93mWARNING[0m - Failed to fetch anime with ID 18 on attempt 2: 429 Client Error: Too Many Requests for url: https://api.jikan.moe/v4/anime/18
+2025-04-29 08:30:53 - genetic_rule_miner.bbdd_maker.anime_service - [93mWARNING[0m - Failed to fetch anime with ID 18 on attempt 3: 429 Client Error: Too Many Requests for url: https://api.jikan.moe/v4/anime/18
+2025-04-29 08:30:53 - genetic_rule_miner.bbdd_maker.anime_service - [91mERROR[0m - Failed to fetch anime with ID 18 after 3 attempts
+2025-04-29 08:30:53 - genetic_rule_miner.bbdd_maker.anime_service - [92mINFO[0m - No data found for anime ID 18
+2025-04-29 08:30:54 - genetic_rule_miner.bbdd_maker.anime_service - [93mWARNING[0m - Failed to fetch anime with ID 20 on attempt 1: 429 Client Error: Too Many Requests for url: https://api.jikan.moe/v4/anime/20
+2025-04-29 08:30:54 - genetic_rule_miner.bbdd_maker.anime_service - [93mWARNING[0m - Failed to fetch anime with ID 20 on attempt 2: 429 Client Error: Too Many Requests for url: https://api.jikan.moe/v4/anime/20
+2025-04-29 08:30:54 - genetic_rule_miner.bbdd_maker.anime_service - [93mWARNING[0m - Failed to fetch anime with ID 20 on attempt 3: 429 Client Error: Too Many Requests for url: https://api.jikan.moe/v4/anime/20
+2025-04-29 08:30:54 - genetic_rule_miner.bbdd_maker.anime_service - [91mERROR[0m - Failed to fetch anime with ID 20 after 3 attempts
+2025-04-29 08:30:54 - genetic_rule_miner.bbdd_maker.anime_service - [92mINFO[0m - No data found for anime ID 20
+2025-04-29 08:30:55 - genetic_rule_miner.bbdd_maker.anime_service - [93mWARNING[0m - Failed to fetch anime with ID 22 on attempt 1: 429 Client Error: Too Many Requests for url: https://api.jikan.moe/v4/anime/22
+2025-04-29 08:30:55 - genetic_rule_miner.bbdd_maker.anime_service - [93mWARNING[0m - Failed to fetch anime with ID 22 on attempt 2: 429 Client Error: Too Many Requests for url: https://api.jikan.moe/v4/anime/22
+2025-04-29 08:30:55 - genetic_rule_miner.bbdd_maker.anime_service - [93mWARNING[0m - Failed to fetch anime with ID 22 on attempt 3: 429 Client Error: Too Many Requests for url: https://api.jikan.moe/v4/anime/22
+2025-04-29 08:30:55 - genetic_rule_miner.bbdd_maker.anime_service - [91mERROR[0m - Failed to fetch anime with ID 22 after 3 attempts
+2025-04-29 08:30:55 - genetic_rule_miner.bbdd_maker.anime_service - [92mINFO[0m - No data found for anime ID 22
+2025-04-29 08:30:55 - genetic_rule_miner.bbdd_maker.anime_service - [93mWARNING[0m - Failed to fetch anime with ID 23 on attempt 1: 429 Client Error: Too Many Requests for url: https://api.jikan.moe/v4/anime/23
+2025-04-29 08:30:56 - genetic_rule_miner.bbdd_maker.anime_service - [93mWARNING[0m - Failed to fetch anime with ID 24 on attempt 1: 429 Client Error: Too Many Requests for url: https://api.jikan.moe/v4/anime/24
+2025-04-29 08:30:56 - genetic_rule_miner.bbdd_maker.anime_service - [93mWARNING[0m - Failed to fetch anime with ID 24 on attempt 2: 429 Client Error: Too Many Requests for url: https://api.jikan.moe/v4/anime/24
+2025-04-29 08:30:56 - genetic_rule_miner.bbdd_maker.anime_service - [93mWARNING[0m - Failed to fetch anime with ID 24 on attempt 3: 429 Client Error: Too Many Requests for url: https://api.jikan.moe/v4/anime/24
+2025-04-29 08:30:56 - genetic_rule_miner.bbdd_maker.anime_service - [91mERROR[0m - Failed to fetch anime with ID 24 after 3 attempts
+2025-04-29 08:30:56 - genetic_rule_miner.bbdd_maker.anime_service - [92mINFO[0m - No data found for anime ID 24
+2025-04-29 08:30:57 - genetic_rule_miner.bbdd_maker.anime_service - [93mWARNING[0m - Failed to fetch anime with ID 26 on attempt 1: 429 Client Error: Too Many Requests for url: https://api.jikan.moe/v4/anime/26
+2025-04-29 08:30:57 - genetic_rule_miner.bbdd_maker.anime_service - [93mWARNING[0m - Failed to fetch anime with ID 26 on attempt 2: 429 Client Error: Too Many Requests for url: https://api.jikan.moe/v4/anime/26
+2025-04-29 08:30:57 - genetic_rule_miner.bbdd_maker.anime_service - [93mWARNING[0m - Failed to fetch anime with ID 26 on attempt 3: 429 Client Error: Too Many Requests for url: https://api.jikan.moe/v4/anime/26
+2025-04-29 08:30:57 - genetic_rule_miner.bbdd_maker.anime_service - [91mERROR[0m - Failed to fetch anime with ID 26 after 3 attempts
+2025-04-29 08:30:57 - genetic_rule_miner.bbdd_maker.anime_service - [92mINFO[0m - No data found for anime ID 26
+2025-04-29 08:30:58 - genetic_rule_miner.bbdd_maker.anime_service - [93mWARNING[0m - Failed to fetch anime with ID 28 on attempt 1: 429 Client Error: Too Many Requests for url: https://api.jikan.moe/v4/anime/28
+2025-04-29 08:30:58 - genetic_rule_miner.bbdd_maker.anime_service - [93mWARNING[0m - Failed to fetch anime with ID 28 on attempt 2: 429 Client Error: Too Many Requests for url: https://api.jikan.moe/v4/anime/28
+2025-04-29 08:30:58 - genetic_rule_miner.bbdd_maker.anime_service - [93mWARNING[0m - Failed to fetch anime with ID 28 on attempt 3: 429 Client Error: Too Many Requests for url: https://api.jikan.moe/v4/anime/28
+2025-04-29 08:30:58 - genetic_rule_miner.bbdd_maker.anime_service - [91mERROR[0m - Failed to fetch anime with ID 28 after 3 attempts
+2025-04-29 08:30:58 - genetic_rule_miner.bbdd_maker.anime_service - [92mINFO[0m - No data found for anime ID 28
+2025-04-29 08:30:58 - genetic_rule_miner.bbdd_maker.anime_service - [93mWARNING[0m - Failed to fetch anime with ID 29 on attempt 1: 429 Client Error: Too Many Requests for url: https://api.jikan.moe/v4/anime/29
+2025-04-29 08:31:00 - genetic_rule_miner.bbdd_maker.anime_service - [93mWARNING[0m - Failed to fetch anime with ID 31 on attempt 1: 429 Client Error: Too Many Requests for url: https://api.jikan.moe/v4/anime/31
+2025-04-29 08:31:00 - genetic_rule_miner.bbdd_maker.anime_service - [93mWARNING[0m - Failed to fetch anime with ID 31 on attempt 2: 429 Client Error: Too Many Requests for url: https://api.jikan.moe/v4/anime/31
+2025-04-29 08:31:00 - genetic_rule_miner.bbdd_maker.anime_service - [93mWARNING[0m - Failed to fetch anime with ID 31 on attempt 3: 429 Client Error: Too Many Requests for url: https://api.jikan.moe/v4/anime/31
+2025-04-29 08:31:00 - genetic_rule_miner.bbdd_maker.anime_service - [91mERROR[0m - Failed to fetch anime with ID 31 after 3 attempts
+2025-04-29 08:31:00 - genetic_rule_miner.bbdd_maker.anime_service - [92mINFO[0m - No data found for anime ID 31
+2025-04-29 08:31:01 - genetic_rule_miner.bbdd_maker.anime_service - [93mWARNING[0m - Failed to fetch anime with ID 33 on attempt 1: 429 Client Error: Too Many Requests for url: https://api.jikan.moe/v4/anime/33
+2025-04-29 08:31:01 - genetic_rule_miner.bbdd_maker.anime_service - [93mWARNING[0m - Failed to fetch anime with ID 33 on attempt 2: 429 Client Error: Too Many Requests for url: https://api.jikan.moe/v4/anime/33
+2025-04-29 08:31:01 - genetic_rule_miner.bbdd_maker.anime_service - [93mWARNING[0m - Failed to fetch anime with ID 33 on attempt 3: 429 Client Error: Too Many Requests for url: https://api.jikan.moe/v4/anime/33
+2025-04-29 08:31:01 - genetic_rule_miner.bbdd_maker.anime_service - [91mERROR[0m - Failed to fetch anime with ID 33 after 3 attempts
+2025-04-29 08:31:01 - genetic_rule_miner.bbdd_maker.anime_service - [92mINFO[0m - No data found for anime ID 33
+2025-04-29 08:31:02 - genetic_rule_miner.bbdd_maker.anime_service - [93mWARNING[0m - Failed to fetch anime with ID 34 on attempt 1: 404 Client Error: Not Found for url: https://api.jikan.moe/v4/anime/34
+2025-04-29 08:31:02 - genetic_rule_miner.bbdd_maker.anime_service - [93mWARNING[0m - Failed to fetch anime with ID 34 on attempt 2: 404 Client Error: Not Found for url: https://api.jikan.moe/v4/anime/34
+2025-04-29 08:31:03 - genetic_rule_miner.bbdd_maker.anime_service - [93mWARNING[0m - Failed to fetch anime with ID 34 on attempt 3: 429 Client Error: Too Many Requests for url: https://api.jikan.moe/v4/anime/34
+2025-04-29 08:31:03 - genetic_rule_miner.bbdd_maker.anime_service - [91mERROR[0m - Failed to fetch anime with ID 34 after 3 attempts
+2025-04-29 08:31:03 - genetic_rule_miner.bbdd_maker.anime_service - [92mINFO[0m - No data found for anime ID 34
+2025-04-29 08:31:03 - genetic_rule_miner.bbdd_maker.anime_service - [93mWARNING[0m - Failed to fetch anime with ID 35 on attempt 1: 429 Client Error: Too Many Requests for url: https://api.jikan.moe/v4/anime/35
+2025-04-29 08:31:03 - genetic_rule_miner.bbdd_maker.anime_service - [93mWARNING[0m - Failed to fetch anime with ID 35 on attempt 2: 429 Client Error: Too Many Requests for url: https://api.jikan.moe/v4/anime/35
+2025-04-29 08:31:03 - genetic_rule_miner.bbdd_maker.anime_service - [93mWARNING[0m - Failed to fetch anime with ID 35 on attempt 3: 429 Client Error: Too Many Requests for url: https://api.jikan.moe/v4/anime/35
+2025-04-29 08:31:03 - genetic_rule_miner.bbdd_maker.anime_service - [91mERROR[0m - Failed to fetch anime with ID 35 after 3 attempts
+2025-04-29 08:31:03 - genetic_rule_miner.bbdd_maker.anime_service - [92mINFO[0m - No data found for anime ID 35
+2025-04-29 08:31:04 - genetic_rule_miner.bbdd_maker.anime_service - [93mWARNING[0m - Failed to fetch anime with ID 36 on attempt 1: 404 Client Error: Not Found for url: https://api.jikan.moe/v4/anime/36
+2025-04-29 08:31:04 - genetic_rule_miner.bbdd_maker.anime_service - [93mWARNING[0m - Failed to fetch anime with ID 36 on attempt 2: 429 Client Error: Too Many Requests for url: https://api.jikan.moe/v4/anime/36
+2025-04-29 08:31:04 - genetic_rule_miner.bbdd_maker.anime_service - [93mWARNING[0m - Failed to fetch anime with ID 36 on attempt 3: 404 Client Error: Not Found for url: https://api.jikan.moe/v4/anime/36
+2025-04-29 08:31:04 - genetic_rule_miner.bbdd_maker.anime_service - [91mERROR[0m - Failed to fetch anime with ID 36 after 3 attempts
+2025-04-29 08:31:04 - genetic_rule_miner.bbdd_maker.anime_service - [92mINFO[0m - No data found for anime ID 36
+2025-04-29 08:31:05 - genetic_rule_miner.bbdd_maker.anime_service - [93mWARNING[0m - Failed to fetch anime with ID 37 on attempt 1: 429 Client Error: Too Many Requests for url: https://api.jikan.moe/v4/anime/37
+2025-04-29 08:31:05 - genetic_rule_miner.bbdd_maker.anime_service - [93mWARNING[0m - Failed to fetch anime with ID 37 on attempt 2: 429 Client Error: Too Many Requests for url: https://api.jikan.moe/v4/anime/37
+2025-04-29 08:31:05 - genetic_rule_miner.bbdd_maker.anime_service - [93mWARNING[0m - Failed to fetch anime with ID 37 on attempt 3: 429 Client Error: Too Many Requests for url: https://api.jikan.moe/v4/anime/37
+2025-04-29 08:31:05 - genetic_rule_miner.bbdd_maker.anime_service - [91mERROR[0m - Failed to fetch anime with ID 37 after 3 attempts
+2025-04-29 08:31:05 - genetic_rule_miner.bbdd_maker.anime_service - [92mINFO[0m - No data found for anime ID 37
+2025-04-29 08:31:05 - genetic_rule_miner.bbdd_maker.anime_service - [93mWARNING[0m - Failed to fetch anime with ID 38 on attempt 1: 429 Client Error: Too Many Requests for url: https://api.jikan.moe/v4/anime/38
+2025-04-29 08:31:06 - genetic_rule_miner.bbdd_maker.anime_service - [93mWARNING[0m - Failed to fetch anime with ID 38 on attempt 2: 404 Client Error: Not Found for url: https://api.jikan.moe/v4/anime/38
+2025-04-29 08:31:06 - genetic_rule_miner.bbdd_maker.anime_service - [93mWARNING[0m - Failed to fetch anime with ID 38 on attempt 3: 429 Client Error: Too Many Requests for url: https://api.jikan.moe/v4/anime/38
+2025-04-29 08:31:06 - genetic_rule_miner.bbdd_maker.anime_service - [91mERROR[0m - Failed to fetch anime with ID 38 after 3 attempts
+2025-04-29 08:31:06 - genetic_rule_miner.bbdd_maker.anime_service - [92mINFO[0m - No data found for anime ID 38
+2025-04-29 08:31:07 - genetic_rule_miner.bbdd_maker.anime_service - [93mWARNING[0m - Failed to fetch anime with ID 39 on attempt 1: 404 Client Error: Not Found for url: https://api.jikan.moe/v4/anime/39
+2025-04-29 08:31:07 - genetic_rule_miner.bbdd_maker.anime_service - [93mWARNING[0m - Failed to fetch anime with ID 39 on attempt 2: 429 Client Error: Too Many Requests for url: https://api.jikan.moe/v4/anime/39
+2025-04-29 08:31:07 - genetic_rule_miner.bbdd_maker.anime_service - [93mWARNING[0m - Failed to fetch anime with ID 39 on attempt 3: 404 Client Error: Not Found for url: https://api.jikan.moe/v4/anime/39
+2025-04-29 08:31:07 - genetic_rule_miner.bbdd_maker.anime_service - [91mERROR[0m - Failed to fetch anime with ID 39 after 3 attempts
+2025-04-29 08:31:07 - genetic_rule_miner.bbdd_maker.anime_service - [92mINFO[0m - No data found for anime ID 39
+2025-04-29 08:31:08 - genetic_rule_miner.bbdd_maker.anime_service - [93mWARNING[0m - Failed to fetch anime with ID 40 on attempt 1: 429 Client Error: Too Many Requests for url: https://api.jikan.moe/v4/anime/40
+2025-04-29 08:31:08 - genetic_rule_miner.bbdd_maker.anime_service - [93mWARNING[0m - Failed to fetch anime with ID 40 on attempt 2: 429 Client Error: Too Many Requests for url: https://api.jikan.moe/v4/anime/40
+2025-04-29 08:31:08 - genetic_rule_miner.bbdd_maker.anime_service - [93mWARNING[0m - Failed to fetch anime with ID 40 on attempt 3: 429 Client Error: Too Many Requests for url: https://api.jikan.moe/v4/anime/40
+2025-04-29 08:31:08 - genetic_rule_miner.bbdd_maker.anime_service - [91mERROR[0m - Failed to fetch anime with ID 40 after 3 attempts
+2025-04-29 08:31:08 - genetic_rule_miner.bbdd_maker.anime_service - [92mINFO[0m - No data found for anime ID 40
+2025-04-29 08:31:08 - genetic_rule_miner.bbdd_maker.anime_service - [93mWARNING[0m - Failed to fetch anime with ID 41 on attempt 1: 429 Client Error: Too Many Requests for url: https://api.jikan.moe/v4/anime/41
+2025-04-29 08:31:09 - genetic_rule_miner.bbdd_maker.anime_service - [93mWARNING[0m - Failed to fetch anime with ID 41 on attempt 2: 404 Client Error: Not Found for url: https://api.jikan.moe/v4/anime/41
+2025-04-29 08:31:09 - genetic_rule_miner.bbdd_maker.anime_service - [93mWARNING[0m - Failed to fetch anime with ID 41 on attempt 3: 404 Client Error: Not Found for url: https://api.jikan.moe/v4/anime/41
+2025-04-29 08:31:09 - genetic_rule_miner.bbdd_maker.anime_service - [91mERROR[0m - Failed to fetch anime with ID 41 after 3 attempts
+2025-04-29 08:31:09 - genetic_rule_miner.bbdd_maker.anime_service - [92mINFO[0m - No data found for anime ID 41
+2025-04-29 08:31:10 - genetic_rule_miner.bbdd_maker.anime_service - [93mWARNING[0m - Failed to fetch anime with ID 42 on attempt 1: 429 Client Error: Too Many Requests for url: https://api.jikan.moe/v4/anime/42
+2025-04-29 08:31:10 - genetic_rule_miner.bbdd_maker.anime_service - [93mWARNING[0m - Failed to fetch anime with ID 42 on attempt 2: 429 Client Error: Too Many Requests for url: https://api.jikan.moe/v4/anime/42
+2025-04-29 08:31:10 - genetic_rule_miner.bbdd_maker.anime_service - [93mWARNING[0m - Failed to fetch anime with ID 42 on attempt 3: 429 Client Error: Too Many Requests for url: https://api.jikan.moe/v4/anime/42
+2025-04-29 08:31:10 - genetic_rule_miner.bbdd_maker.anime_service - [91mERROR[0m - Failed to fetch anime with ID 42 after 3 attempts
+2025-04-29 08:31:10 - genetic_rule_miner.bbdd_maker.anime_service - [92mINFO[0m - No data found for anime ID 42
+2025-04-29 08:31:10 - genetic_rule_miner.bbdd_maker.anime_service - [93mWARNING[0m - Failed to fetch anime with ID 43 on attempt 1: 429 Client Error: Too Many Requests for url: https://api.jikan.moe/v4/anime/43
+2025-04-29 08:31:11 - genetic_rule_miner.bbdd_maker.anime_service - [93mWARNING[0m - Failed to fetch anime with ID 44 on attempt 1: 429 Client Error: Too Many Requests for url: https://api.jikan.moe/v4/anime/44
+2025-04-29 08:31:11 - genetic_rule_miner.bbdd_maker.anime_service - [93mWARNING[0m - Failed to fetch anime with ID 44 on attempt 2: 429 Client Error: Too Many Requests for url: https://api.jikan.moe/v4/anime/44
+2025-04-29 08:31:11 - genetic_rule_miner.bbdd_maker.anime_service - [93mWARNING[0m - Failed to fetch anime with ID 44 on attempt 3: 429 Client Error: Too Many Requests for url: https://api.jikan.moe/v4/anime/44
+2025-04-29 08:31:11 - genetic_rule_miner.bbdd_maker.anime_service - [91mERROR[0m - Failed to fetch anime with ID 44 after 3 attempts
+2025-04-29 08:31:11 - genetic_rule_miner.bbdd_maker.anime_service - [92mINFO[0m - No data found for anime ID 44
+2025-04-29 08:31:13 - genetic_rule_miner.bbdd_maker.anime_service - [93mWARNING[0m - Failed to fetch anime with ID 47 on attempt 1: 429 Client Error: Too Many Requests for url: https://api.jikan.moe/v4/anime/47
+2025-04-29 08:31:13 - genetic_rule_miner.bbdd_maker.anime_service - [93mWARNING[0m - Failed to fetch anime with ID 47 on attempt 2: 429 Client Error: Too Many Requests for url: https://api.jikan.moe/v4/anime/47
+2025-04-29 08:31:14 - genetic_rule_miner.bbdd_maker.anime_service - [93mWARNING[0m - Failed to fetch anime with ID 48 on attempt 1: 429 Client Error: Too Many Requests for url: https://api.jikan.moe/v4/anime/48
+2025-04-29 08:31:14 - genetic_rule_miner.bbdd_maker.anime_service - [93mWARNING[0m - Failed to fetch anime with ID 48 on attempt 2: 429 Client Error: Too Many Requests for url: https://api.jikan.moe/v4/anime/48
+2025-04-29 08:31:14 - genetic_rule_miner.bbdd_maker.anime_service - [93mWARNING[0m - Failed to fetch anime with ID 48 on attempt 3: 429 Client Error: Too Many Requests for url: https://api.jikan.moe/v4/anime/48
+2025-04-29 08:31:14 - genetic_rule_miner.bbdd_maker.anime_service - [91mERROR[0m - Failed to fetch anime with ID 48 after 3 attempts
+2025-04-29 08:31:14 - genetic_rule_miner.bbdd_maker.anime_service - [92mINFO[0m - No data found for anime ID 48
+2025-04-29 08:31:15 - genetic_rule_miner.bbdd_maker.anime_service - [93mWARNING[0m - Failed to fetch anime with ID 50 on attempt 1: 429 Client Error: Too Many Requests for url: https://api.jikan.moe/v4/anime/50
+2025-04-29 08:31:15 - genetic_rule_miner.bbdd_maker.anime_service - [93mWARNING[0m - Failed to fetch anime with ID 50 on attempt 2: 429 Client Error: Too Many Requests for url: https://api.jikan.moe/v4/anime/50
+2025-04-29 08:31:15 - genetic_rule_miner.bbdd_maker.anime_service - [93mWARNING[0m - Failed to fetch anime with ID 50 on attempt 3: 429 Client Error: Too Many Requests for url: https://api.jikan.moe/v4/anime/50
+2025-04-29 08:31:15 - genetic_rule_miner.bbdd_maker.anime_service - [91mERROR[0m - Failed to fetch anime with ID 50 after 3 attempts
+2025-04-29 08:31:15 - genetic_rule_miner.bbdd_maker.anime_service - [92mINFO[0m - No data found for anime ID 50
+2025-04-29 08:31:15 - genetic_rule_miner.bbdd_maker.anime_service - [93mWARNING[0m - Failed to fetch anime with ID 51 on attempt 1: 429 Client Error: Too Many Requests for url: https://api.jikan.moe/v4/anime/51
+2025-04-29 08:31:16 - genetic_rule_miner.bbdd_maker.anime_service - [93mWARNING[0m - Failed to fetch anime with ID 52 on attempt 1: 429 Client Error: Too Many Requests for url: https://api.jikan.moe/v4/anime/52
+2025-04-29 08:31:16 - genetic_rule_miner.bbdd_maker.anime_service - [93mWARNING[0m - Failed to fetch anime with ID 52 on attempt 2: 429 Client Error: Too Many Requests for url: https://api.jikan.moe/v4/anime/52
+2025-04-29 08:31:16 - genetic_rule_miner.bbdd_maker.anime_service - [93mWARNING[0m - Failed to fetch anime with ID 52 on attempt 3: 429 Client Error: Too Many Requests for url: https://api.jikan.moe/v4/anime/52
+2025-04-29 08:31:16 - genetic_rule_miner.bbdd_maker.anime_service - [91mERROR[0m - Failed to fetch anime with ID 52 after 3 attempts
+2025-04-29 08:31:16 - genetic_rule_miner.bbdd_maker.anime_service - [92mINFO[0m - No data found for anime ID 52
+2025-04-29 08:31:17 - genetic_rule_miner.bbdd_maker.anime_service - [93mWARNING[0m - Failed to fetch anime with ID 54 on attempt 1: 429 Client Error: Too Many Requests for url: https://api.jikan.moe/v4/anime/54
+2025-04-29 08:31:17 - genetic_rule_miner.bbdd_maker.anime_service - [93mWARNING[0m - Failed to fetch anime with ID 54 on attempt 2: 429 Client Error: Too Many Requests for url: https://api.jikan.moe/v4/anime/54
+2025-04-29 08:31:17 - genetic_rule_miner.bbdd_maker.anime_service - [93mWARNING[0m - Failed to fetch anime with ID 54 on attempt 3: 429 Client Error: Too Many Requests for url: https://api.jikan.moe/v4/anime/54
+2025-04-29 08:31:17 - genetic_rule_miner.bbdd_maker.anime_service - [91mERROR[0m - Failed to fetch anime with ID 54 after 3 attempts
+2025-04-29 08:31:17 - genetic_rule_miner.bbdd_maker.anime_service - [92mINFO[0m - No data found for anime ID 54
+2025-04-29 08:31:18 - genetic_rule_miner.bbdd_maker.anime_service - [93mWARNING[0m - Failed to fetch anime with ID 56 on attempt 1: 429 Client Error: Too Many Requests for url: https://api.jikan.moe/v4/anime/56
+2025-04-29 08:31:18 - genetic_rule_miner.bbdd_maker.anime_service - [93mWARNING[0m - Failed to fetch anime with ID 56 on attempt 2: 429 Client Error: Too Many Requests for url: https://api.jikan.moe/v4/anime/56
+2025-04-29 08:31:18 - genetic_rule_miner.bbdd_maker.anime_service - [93mWARNING[0m - Failed to fetch anime with ID 56 on attempt 3: 429 Client Error: Too Many Requests for url: https://api.jikan.moe/v4/anime/56
+2025-04-29 08:31:18 - genetic_rule_miner.bbdd_maker.anime_service - [91mERROR[0m - Failed to fetch anime with ID 56 after 3 attempts
+2025-04-29 08:31:18 - genetic_rule_miner.bbdd_maker.anime_service - [92mINFO[0m - No data found for anime ID 56
+2025-04-29 08:31:19 - genetic_rule_miner.bbdd_maker.anime_service - [93mWARNING[0m - Failed to fetch anime with ID 58 on attempt 1: 429 Client Error: Too Many Requests for url: https://api.jikan.moe/v4/anime/58
+2025-04-29 08:31:19 - genetic_rule_miner.bbdd_maker.anime_service - [93mWARNING[0m - Failed to fetch anime with ID 58 on attempt 2: 429 Client Error: Too Many Requests for url: https://api.jikan.moe/v4/anime/58
+2025-04-29 08:31:19 - genetic_rule_miner.bbdd_maker.anime_service - [93mWARNING[0m - Failed to fetch anime with ID 58 on attempt 3: 429 Client Error: Too Many Requests for url: https://api.jikan.moe/v4/anime/58
+2025-04-29 08:31:19 - genetic_rule_miner.bbdd_maker.anime_service - [91mERROR[0m - Failed to fetch anime with ID 58 after 3 attempts
+2025-04-29 08:31:19 - genetic_rule_miner.bbdd_maker.anime_service - [92mINFO[0m - No data found for anime ID 58
+2025-04-29 08:31:19 - genetic_rule_miner.bbdd_maker.anime_service - [93mWARNING[0m - Failed to fetch anime with ID 59 on attempt 1: 429 Client Error: Too Many Requests for url: https://api.jikan.moe/v4/anime/59
+2025-04-29 08:31:20 - genetic_rule_miner.bbdd_maker.anime_service - [93mWARNING[0m - Failed to fetch anime with ID 60 on attempt 1: 429 Client Error: Too Many Requests for url: https://api.jikan.moe/v4/anime/60
+2025-04-29 08:31:20 - genetic_rule_miner.bbdd_maker.anime_service - [93mWARNING[0m - Failed to fetch anime with ID 60 on attempt 2: 429 Client Error: Too Many Requests for url: https://api.jikan.moe/v4/anime/60
+2025-04-29 08:31:20 - genetic_rule_miner.bbdd_maker.anime_service - [93mWARNING[0m - Failed to fetch anime with ID 60 on attempt 3: 429 Client Error: Too Many Requests for url: https://api.jikan.moe/v4/anime/60
+2025-04-29 08:31:20 - genetic_rule_miner.bbdd_maker.anime_service - [91mERROR[0m - Failed to fetch anime with ID 60 after 3 attempts
+2025-04-29 08:31:20 - genetic_rule_miner.bbdd_maker.anime_service - [92mINFO[0m - No data found for anime ID 60
+2025-04-29 08:31:21 - genetic_rule_miner.bbdd_maker.anime_service - [93mWARNING[0m - Failed to fetch anime with ID 62 on attempt 1: 429 Client Error: Too Many Requests for url: https://api.jikan.moe/v4/anime/62
+2025-04-29 08:31:21 - genetic_rule_miner.bbdd_maker.anime_service - [93mWARNING[0m - Failed to fetch anime with ID 62 on attempt 2: 429 Client Error: Too Many Requests for url: https://api.jikan.moe/v4/anime/62
+2025-04-29 08:31:21 - genetic_rule_miner.bbdd_maker.anime_service - [93mWARNING[0m - Failed to fetch anime with ID 62 on attempt 3: 429 Client Error: Too Many Requests for url: https://api.jikan.moe/v4/anime/62
+2025-04-29 08:31:21 - genetic_rule_miner.bbdd_maker.anime_service - [91mERROR[0m - Failed to fetch anime with ID 62 after 3 attempts
+2025-04-29 08:31:21 - genetic_rule_miner.bbdd_maker.anime_service - [92mINFO[0m - No data found for anime ID 62
+2025-04-29 08:31:21 - genetic_rule_miner.bbdd_maker.anime_service - [93mWARNING[0m - Failed to fetch anime with ID 63 on attempt 1: 429 Client Error: Too Many Requests for url: https://api.jikan.moe/v4/anime/63
+2025-04-29 08:31:22 - genetic_rule_miner.bbdd_maker.anime_service - [93mWARNING[0m - Failed to fetch anime with ID 64 on attempt 1: 429 Client Error: Too Many Requests for url: https://api.jikan.moe/v4/anime/64
+2025-04-29 08:31:22 - genetic_rule_miner.bbdd_maker.anime_service - [93mWARNING[0m - Failed to fetch anime with ID 64 on attempt 2: 429 Client Error: Too Many Requests for url: https://api.jikan.moe/v4/anime/64
+2025-04-29 08:31:22 - genetic_rule_miner.bbdd_maker.anime_service - [93mWARNING[0m - Failed to fetch anime with ID 64 on attempt 3: 429 Client Error: Too Many Requests for url: https://api.jikan.moe/v4/anime/64
+2025-04-29 08:31:22 - genetic_rule_miner.bbdd_maker.anime_service - [91mERROR[0m - Failed to fetch anime with ID 64 after 3 attempts
+2025-04-29 08:31:22 - genetic_rule_miner.bbdd_maker.anime_service - [92mINFO[0m - No data found for anime ID 64
+2025-04-29 08:31:23 - genetic_rule_miner.bbdd_maker.anime_service - [93mWARNING[0m - Failed to fetch anime with ID 66 on attempt 1: 429 Client Error: Too Many Requests for url: https://api.jikan.moe/v4/anime/66
+2025-04-29 08:31:23 - genetic_rule_miner.bbdd_maker.anime_service - [93mWARNING[0m - Failed to fetch anime with ID 66 on attempt 2: 429 Client Error: Too Many Requests for url: https://api.jikan.moe/v4/anime/66
+2025-04-29 08:31:23 - genetic_rule_miner.bbdd_maker.anime_service - [93mWARNING[0m - Failed to fetch anime with ID 66 on attempt 3: 429 Client Error: Too Many Requests for url: https://api.jikan.moe/v4/anime/66
+2025-04-29 08:31:23 - genetic_rule_miner.bbdd_maker.anime_service - [91mERROR[0m - Failed to fetch anime with ID 66 after 3 attempts
+2025-04-29 08:31:23 - genetic_rule_miner.bbdd_maker.anime_service - [92mINFO[0m - No data found for anime ID 66
+2025-04-29 08:31:24 - genetic_rule_miner.bbdd_maker.anime_service - [93mWARNING[0m - Failed to fetch anime with ID 68 on attempt 1: 429 Client Error: Too Many Requests for url: https://api.jikan.moe/v4/anime/68
+2025-04-29 08:31:24 - genetic_rule_miner.bbdd_maker.anime_service - [93mWARNING[0m - Failed to fetch anime with ID 68 on attempt 2: 429 Client Error: Too Many Requests for url: https://api.jikan.moe/v4/anime/68
+2025-04-29 08:31:24 - genetic_rule_miner.bbdd_maker.anime_service - [93mWARNING[0m - Failed to fetch anime with ID 68 on attempt 3: 429 Client Error: Too Many Requests for url: https://api.jikan.moe/v4/anime/68
+2025-04-29 08:31:24 - genetic_rule_miner.bbdd_maker.anime_service - [91mERROR[0m - Failed to fetch anime with ID 68 after 3 attempts
+2025-04-29 08:31:24 - genetic_rule_miner.bbdd_maker.anime_service - [92mINFO[0m - No data found for anime ID 68
+2025-04-29 08:31:24 - genetic_rule_miner.bbdd_maker.anime_service - [93mWARNING[0m - Failed to fetch anime with ID 69 on attempt 1: 429 Client Error: Too Many Requests for url: https://api.jikan.moe/v4/anime/69
+2025-04-29 08:31:25 - genetic_rule_miner.bbdd_maker.anime_service - [93mWARNING[0m - Failed to fetch anime with ID 70 on attempt 1: 429 Client Error: Too Many Requests for url: https://api.jikan.moe/v4/anime/70
+2025-04-29 08:31:25 - genetic_rule_miner.bbdd_maker.anime_service - [93mWARNING[0m - Failed to fetch anime with ID 70 on attempt 2: 429 Client Error: Too Many Requests for url: https://api.jikan.moe/v4/anime/70
+2025-04-29 08:31:26 - genetic_rule_miner.bbdd_maker.anime_service - [93mWARNING[0m - Failed to fetch anime with ID 70 on attempt 3: 404 Client Error: Not Found for url: https://api.jikan.moe/v4/anime/70
+2025-04-29 08:31:26 - genetic_rule_miner.bbdd_maker.anime_service - [91mERROR[0m - Failed to fetch anime with ID 70 after 3 attempts
+2025-04-29 08:31:26 - genetic_rule_miner.bbdd_maker.anime_service - [92mINFO[0m - No data found for anime ID 70
+2025-04-29 08:31:26 - genetic_rule_miner.bbdd_maker.anime_service - [93mWARNING[0m - Failed to fetch anime with ID 71 on attempt 1: 429 Client Error: Too Many Requests for url: https://api.jikan.moe/v4/anime/71
+2025-04-29 08:31:27 - genetic_rule_miner.bbdd_maker.anime_service - [93mWARNING[0m - Failed to fetch anime with ID 72 on attempt 1: 429 Client Error: Too Many Requests for url: https://api.jikan.moe/v4/anime/72
+2025-04-29 08:31:27 - genetic_rule_miner.bbdd_maker.anime_service - [93mWARNING[0m - Failed to fetch anime with ID 72 on attempt 2: 429 Client Error: Too Many Requests for url: https://api.jikan.moe/v4/anime/72
+2025-04-29 08:31:27 - genetic_rule_miner.bbdd_maker.anime_service - [93mWARNING[0m - Failed to fetch anime with ID 72 on attempt 3: 429 Client Error: Too Many Requests for url: https://api.jikan.moe/v4/anime/72
+2025-04-29 08:31:27 - genetic_rule_miner.bbdd_maker.anime_service - [91mERROR[0m - Failed to fetch anime with ID 72 after 3 attempts
+2025-04-29 08:31:27 - genetic_rule_miner.bbdd_maker.anime_service - [92mINFO[0m - No data found for anime ID 72
+2025-04-29 08:31:28 - genetic_rule_miner.bbdd_maker.anime_service - [93mWARNING[0m - Failed to fetch anime with ID 74 on attempt 1: 429 Client Error: Too Many Requests for url: https://api.jikan.moe/v4/anime/74
+2025-04-29 08:31:28 - genetic_rule_miner.bbdd_maker.anime_service - [93mWARNING[0m - Failed to fetch anime with ID 74 on attempt 2: 429 Client Error: Too Many Requests for url: https://api.jikan.moe/v4/anime/74
+2025-04-29 08:31:28 - genetic_rule_miner.bbdd_maker.anime_service - [93mWARNING[0m - Failed to fetch anime with ID 74 on attempt 3: 429 Client Error: Too Many Requests for url: https://api.jikan.moe/v4/anime/74
+2025-04-29 08:31:28 - genetic_rule_miner.bbdd_maker.anime_service - [91mERROR[0m - Failed to fetch anime with ID 74 after 3 attempts
+2025-04-29 08:31:28 - genetic_rule_miner.bbdd_maker.anime_service - [92mINFO[0m - No data found for anime ID 74
+2025-04-29 08:31:29 - genetic_rule_miner.bbdd_maker.anime_service - [93mWARNING[0m - Failed to fetch anime with ID 76 on attempt 1: 429 Client Error: Too Many Requests for url: https://api.jikan.moe/v4/anime/76
+2025-04-29 08:31:29 - genetic_rule_miner.bbdd_maker.anime_service - [93mWARNING[0m - Failed to fetch anime with ID 76 on attempt 2: 429 Client Error: Too Many Requests for url: https://api.jikan.moe/v4/anime/76
+2025-04-29 08:31:29 - genetic_rule_miner.bbdd_maker.anime_service - [93mWARNING[0m - Failed to fetch anime with ID 76 on attempt 3: 429 Client Error: Too Many Requests for url: https://api.jikan.moe/v4/anime/76
+2025-04-29 08:31:29 - genetic_rule_miner.bbdd_maker.anime_service - [91mERROR[0m - Failed to fetch anime with ID 76 after 3 attempts
+2025-04-29 08:31:29 - genetic_rule_miner.bbdd_maker.anime_service - [92mINFO[0m - No data found for anime ID 76
+2025-04-29 08:31:30 - genetic_rule_miner.bbdd_maker.anime_service - [93mWARNING[0m - Failed to fetch anime with ID 78 on attempt 1: 429 Client Error: Too Many Requests for url: https://api.jikan.moe/v4/anime/78
+2025-04-29 08:31:30 - genetic_rule_miner.bbdd_maker.anime_service - [93mWARNING[0m - Failed to fetch anime with ID 78 on attempt 2: 429 Client Error: Too Many Requests for url: https://api.jikan.moe/v4/anime/78
+2025-04-29 08:31:30 - genetic_rule_miner.bbdd_maker.anime_service - [93mWARNING[0m - Failed to fetch anime with ID 78 on attempt 3: 429 Client Error: Too Many Requests for url: https://api.jikan.moe/v4/anime/78
+2025-04-29 08:31:30 - genetic_rule_miner.bbdd_maker.anime_service - [91mERROR[0m - Failed to fetch anime with ID 78 after 3 attempts
+2025-04-29 08:31:30 - genetic_rule_miner.bbdd_maker.anime_service - [92mINFO[0m - No data found for anime ID 78
+2025-04-29 08:31:30 - genetic_rule_miner.bbdd_maker.anime_service - [93mWARNING[0m - Failed to fetch anime with ID 79 on attempt 1: 429 Client Error: Too Many Requests for url: https://api.jikan.moe/v4/anime/79
+2025-04-29 08:31:31 - genetic_rule_miner.bbdd_maker.anime_service - [93mWARNING[0m - Failed to fetch anime with ID 80 on attempt 1: 429 Client Error: Too Many Requests for url: https://api.jikan.moe/v4/anime/80
+2025-04-29 08:31:31 - genetic_rule_miner.bbdd_maker.anime_service - [93mWARNING[0m - Failed to fetch anime with ID 80 on attempt 2: 429 Client Error: Too Many Requests for url: https://api.jikan.moe/v4/anime/80
+2025-04-29 08:31:31 - genetic_rule_miner.bbdd_maker.anime_service - [93mWARNING[0m - Failed to fetch anime with ID 80 on attempt 3: 429 Client Error: Too Many Requests for url: https://api.jikan.moe/v4/anime/80
+2025-04-29 08:31:31 - genetic_rule_miner.bbdd_maker.anime_service - [91mERROR[0m - Failed to fetch anime with ID 80 after 3 attempts
+2025-04-29 08:31:31 - genetic_rule_miner.bbdd_maker.anime_service - [92mINFO[0m - No data found for anime ID 80
+2025-04-29 08:31:32 - genetic_rule_miner.bbdd_maker.anime_service - [93mWARNING[0m - Failed to fetch anime with ID 82 on attempt 1: 429 Client Error: Too Many Requests for url: https://api.jikan.moe/v4/anime/82
+2025-04-29 08:31:32 - genetic_rule_miner.bbdd_maker.anime_service - [93mWARNING[0m - Failed to fetch anime with ID 82 on attempt 2: 429 Client Error: Too Many Requests for url: https://api.jikan.moe/v4/anime/82
+2025-04-29 08:31:32 - genetic_rule_miner.bbdd_maker.anime_service - [93mWARNING[0m - Failed to fetch anime with ID 82 on attempt 3: 429 Client Error: Too Many Requests for url: https://api.jikan.moe/v4/anime/82
+2025-04-29 08:31:32 - genetic_rule_miner.bbdd_maker.anime_service - [91mERROR[0m - Failed to fetch anime with ID 82 after 3 attempts
+2025-04-29 08:31:32 - genetic_rule_miner.bbdd_maker.anime_service - [92mINFO[0m - No data found for anime ID 82
+2025-04-29 08:31:33 - genetic_rule_miner.bbdd_maker.anime_service - [93mWARNING[0m - Failed to fetch anime with ID 84 on attempt 1: 429 Client Error: Too Many Requests for url: https://api.jikan.moe/v4/anime/84
+2025-04-29 08:31:33 - genetic_rule_miner.bbdd_maker.anime_service - [93mWARNING[0m - Failed to fetch anime with ID 84 on attempt 2: 429 Client Error: Too Many Requests for url: https://api.jikan.moe/v4/anime/84
+2025-04-29 08:31:33 - genetic_rule_miner.bbdd_maker.anime_service - [93mWARNING[0m - Failed to fetch anime with ID 84 on attempt 3: 429 Client Error: Too Many Requests for url: https://api.jikan.moe/v4/anime/84
+2025-04-29 08:31:33 - genetic_rule_miner.bbdd_maker.anime_service - [91mERROR[0m - Failed to fetch anime with ID 84 after 3 attempts
+2025-04-29 08:31:33 - genetic_rule_miner.bbdd_maker.anime_service - [92mINFO[0m - No data found for anime ID 84
+2025-04-29 08:31:33 - genetic_rule_miner.bbdd_maker.anime_service - [93mWARNING[0m - Failed to fetch anime with ID 85 on attempt 1: 429 Client Error: Too Many Requests for url: https://api.jikan.moe/v4/anime/85
+2025-04-29 08:31:34 - genetic_rule_miner.bbdd_maker.anime_service - [93mWARNING[0m - Failed to fetch anime with ID 86 on attempt 1: 429 Client Error: Too Many Requests for url: https://api.jikan.moe/v4/anime/86
+2025-04-29 08:31:34 - genetic_rule_miner.bbdd_maker.anime_service - [93mWARNING[0m - Failed to fetch anime with ID 86 on attempt 2: 429 Client Error: Too Many Requests for url: https://api.jikan.moe/v4/anime/86
+2025-04-29 08:31:34 - genetic_rule_miner.bbdd_maker.anime_service - [93mWARNING[0m - Failed to fetch anime with ID 86 on attempt 3: 429 Client Error: Too Many Requests for url: https://api.jikan.moe/v4/anime/86
+2025-04-29 08:31:34 - genetic_rule_miner.bbdd_maker.anime_service - [91mERROR[0m - Failed to fetch anime with ID 86 after 3 attempts
+2025-04-29 08:31:34 - genetic_rule_miner.bbdd_maker.anime_service - [92mINFO[0m - No data found for anime ID 86
+2025-04-29 08:31:35 - genetic_rule_miner.bbdd_maker.anime_service - [93mWARNING[0m - Failed to fetch anime with ID 88 on attempt 1: 429 Client Error: Too Many Requests for url: https://api.jikan.moe/v4/anime/88
+2025-04-29 08:31:35 - genetic_rule_miner.bbdd_maker.anime_service - [93mWARNING[0m - Failed to fetch anime with ID 88 on attempt 2: 429 Client Error: Too Many Requests for url: https://api.jikan.moe/v4/anime/88
+2025-04-29 08:31:35 - genetic_rule_miner.bbdd_maker.anime_service - [93mWARNING[0m - Failed to fetch anime with ID 88 on attempt 3: 429 Client Error: Too Many Requests for url: https://api.jikan.moe/v4/anime/88
+2025-04-29 08:31:35 - genetic_rule_miner.bbdd_maker.anime_service - [91mERROR[0m - Failed to fetch anime with ID 88 after 3 attempts
+2025-04-29 08:31:35 - genetic_rule_miner.bbdd_maker.anime_service - [92mINFO[0m - No data found for anime ID 88
+2025-04-29 08:31:36 - genetic_rule_miner.bbdd_maker.anime_service - [93mWARNING[0m - Failed to fetch anime with ID 90 on attempt 1: 429 Client Error: Too Many Requests for url: https://api.jikan.moe/v4/anime/90
+2025-04-29 08:31:36 - genetic_rule_miner.bbdd_maker.anime_service - [93mWARNING[0m - Failed to fetch anime with ID 90 on attempt 2: 429 Client Error: Too Many Requests for url: https://api.jikan.moe/v4/anime/90
+2025-04-29 08:31:36 - genetic_rule_miner.bbdd_maker.anime_service - [93mWARNING[0m - Failed to fetch anime with ID 90 on attempt 3: 429 Client Error: Too Many Requests for url: https://api.jikan.moe/v4/anime/90
+2025-04-29 08:31:36 - genetic_rule_miner.bbdd_maker.anime_service - [91mERROR[0m - Failed to fetch anime with ID 90 after 3 attempts
+2025-04-29 08:31:36 - genetic_rule_miner.bbdd_maker.anime_service - [92mINFO[0m - No data found for anime ID 90
+2025-04-29 08:31:36 - genetic_rule_miner.bbdd_maker.anime_service - [93mWARNING[0m - Failed to fetch anime with ID 91 on attempt 1: 429 Client Error: Too Many Requests for url: https://api.jikan.moe/v4/anime/91
+2025-04-29 08:31:37 - genetic_rule_miner.bbdd_maker.anime_service - [93mWARNING[0m - Failed to fetch anime with ID 92 on attempt 1: 429 Client Error: Too Many Requests for url: https://api.jikan.moe/v4/anime/92
+2025-04-29 08:31:37 - genetic_rule_miner.bbdd_maker.anime_service - [93mWARNING[0m - Failed to fetch anime with ID 92 on attempt 2: 429 Client Error: Too Many Requests for url: https://api.jikan.moe/v4/anime/92
+2025-04-29 08:31:37 - genetic_rule_miner.bbdd_maker.anime_service - [93mWARNING[0m - Failed to fetch anime with ID 92 on attempt 3: 429 Client Error: Too Many Requests for url: https://api.jikan.moe/v4/anime/92
+2025-04-29 08:31:37 - genetic_rule_miner.bbdd_maker.anime_service - [91mERROR[0m - Failed to fetch anime with ID 92 after 3 attempts
+2025-04-29 08:31:37 - genetic_rule_miner.bbdd_maker.anime_service - [92mINFO[0m - No data found for anime ID 92
+2025-04-29 08:31:38 - genetic_rule_miner.bbdd_maker.anime_service - [93mWARNING[0m - Failed to fetch anime with ID 94 on attempt 1: 429 Client Error: Too Many Requests for url: https://api.jikan.moe/v4/anime/94
+2025-04-29 08:31:38 - genetic_rule_miner.bbdd_maker.anime_service - [93mWARNING[0m - Failed to fetch anime with ID 94 on attempt 2: 429 Client Error: Too Many Requests for url: https://api.jikan.moe/v4/anime/94
+2025-04-29 08:31:38 - genetic_rule_miner.bbdd_maker.anime_service - [93mWARNING[0m - Failed to fetch anime with ID 94 on attempt 3: 429 Client Error: Too Many Requests for url: https://api.jikan.moe/v4/anime/94
+2025-04-29 08:31:38 - genetic_rule_miner.bbdd_maker.anime_service - [91mERROR[0m - Failed to fetch anime with ID 94 after 3 attempts
+2025-04-29 08:31:38 - genetic_rule_miner.bbdd_maker.anime_service - [92mINFO[0m - No data found for anime ID 94
+2025-04-29 08:31:39 - genetic_rule_miner.bbdd_maker.anime_service - [93mWARNING[0m - Failed to fetch anime with ID 96 on attempt 1: 429 Client Error: Too Many Requests for url: https://api.jikan.moe/v4/anime/96
+2025-04-29 08:31:39 - genetic_rule_miner.bbdd_maker.anime_service - [93mWARNING[0m - Failed to fetch anime with ID 96 on attempt 2: 429 Client Error: Too Many Requests for url: https://api.jikan.moe/v4/anime/96
+2025-04-29 08:31:39 - genetic_rule_miner.bbdd_maker.anime_service - [93mWARNING[0m - Failed to fetch anime with ID 96 on attempt 3: 429 Client Error: Too Many Requests for url: https://api.jikan.moe/v4/anime/96
+2025-04-29 08:31:39 - genetic_rule_miner.bbdd_maker.anime_service - [91mERROR[0m - Failed to fetch anime with ID 96 after 3 attempts
+2025-04-29 08:31:39 - genetic_rule_miner.bbdd_maker.anime_service - [92mINFO[0m - No data found for anime ID 96
+2025-04-29 08:31:40 - genetic_rule_miner.bbdd_maker.anime_service - [93mWARNING[0m - Failed to fetch anime with ID 98 on attempt 1: 429 Client Error: Too Many Requests for url: https://api.jikan.moe/v4/anime/98
+2025-04-29 08:31:40 - genetic_rule_miner.bbdd_maker.anime_service - [93mWARNING[0m - Failed to fetch anime with ID 98 on attempt 2: 429 Client Error: Too Many Requests for url: https://api.jikan.moe/v4/anime/98
+2025-04-29 08:31:40 - genetic_rule_miner.bbdd_maker.anime_service - [93mWARNING[0m - Failed to fetch anime with ID 98 on attempt 3: 429 Client Error: Too Many Requests for url: https://api.jikan.moe/v4/anime/98
+2025-04-29 08:31:40 - genetic_rule_miner.bbdd_maker.anime_service - [91mERROR[0m - Failed to fetch anime with ID 98 after 3 attempts
+2025-04-29 08:31:40 - genetic_rule_miner.bbdd_maker.anime_service - [92mINFO[0m - No data found for anime ID 98
+2025-04-29 08:31:41 - genetic_rule_miner.bbdd_maker.anime_service - [93mWARNING[0m - Failed to fetch anime with ID 100 on attempt 1: 429 Client Error: Too Many Requests for url: https://api.jikan.moe/v4/anime/100
+2025-04-29 08:31:41 - genetic_rule_miner.bbdd_maker.anime_service - [93mWARNING[0m - Failed to fetch anime with ID 100 on attempt 2: 429 Client Error: Too Many Requests for url: https://api.jikan.moe/v4/anime/100
+2025-04-29 08:31:41 - genetic_rule_miner.bbdd_maker.anime_service - [93mWARNING[0m - Failed to fetch anime with ID 100 on attempt 3: 429 Client Error: Too Many Requests for url: https://api.jikan.moe/v4/anime/100
+2025-04-29 08:31:41 - genetic_rule_miner.bbdd_maker.anime_service - [91mERROR[0m - Failed to fetch anime with ID 100 after 3 attempts
+2025-04-29 08:31:41 - genetic_rule_miner.bbdd_maker.anime_service - [92mINFO[0m - No data found for anime ID 100
+2025-04-29 08:31:41 - genetic_rule_miner.bbdd_maker.anime_service - [92mINFO[0m - Finished fetching anime data. Total records: 43
+2025-04-29 08:31:41 - genetic_rule_miner.bbdd_maker.anime_service - [92mINFO[0m - Anime data written to buffer
+2025-04-29 08:31:41 - __main__ - [92mINFO[0m - 📡 Generando lista de usuarios...
+2025-04-29 08:31:41 - genetic_rule_miner.bbdd_maker.user_service - [92mINFO[0m - UserService inicializado con configuración: APIConfig(base_url='https://api.jikan.moe/v4/', max_retries=3, timeout=10.0, request_delay=0.35, rate_limit=3)
+2025-04-29 08:31:41 - genetic_rule_miner.bbdd_maker.user_service - [92mINFO[0m - Iniciando generación de lista de usuarios para IDs 1 a 100
+2025-04-29 08:31:41 - genetic_rule_miner.bbdd_maker.user_service - [92mINFO[0m - Usuario ID 1 encontrado exitosamente
+2025-04-29 08:31:41 - genetic_rule_miner.bbdd_maker.user_service - [92mINFO[0m - Usuario ID 1 agregado a la lista
+2025-04-29 08:31:42 - genetic_rule_miner.bbdd_maker.user_service - [91mERROR[0m - Error en intento 1 para user_id 2: 429 Client Error: Too Many Requests for url: https://api.jikan.moe/v4/users/userbyid/2
+2025-04-29 08:31:44 - genetic_rule_miner.bbdd_maker.user_service - [93mWARNING[0m - Usuario ID 2 no encontrado (404)
+2025-04-29 08:31:44 - genetic_rule_miner.bbdd_maker.user_service - [93mWARNING[0m - Usuario ID 2 no tiene datos válidos
+2025-04-29 08:31:45 - genetic_rule_miner.bbdd_maker.user_service - [92mINFO[0m - Usuario ID 3 encontrado exitosamente
+2025-04-29 08:31:45 - genetic_rule_miner.bbdd_maker.user_service - [92mINFO[0m - Usuario ID 3 agregado a la lista
+2025-04-29 08:31:46 - genetic_rule_miner.bbdd_maker.user_service - [92mINFO[0m - Usuario ID 4 encontrado exitosamente
+2025-04-29 08:31:46 - genetic_rule_miner.bbdd_maker.user_service - [92mINFO[0m - Usuario ID 4 agregado a la lista
+2025-04-29 08:31:47 - genetic_rule_miner.bbdd_maker.user_service - [93mWARNING[0m - Usuario ID 5 no encontrado (404)
+2025-04-29 08:31:47 - genetic_rule_miner.bbdd_maker.user_service - [93mWARNING[0m - Usuario ID 5 no tiene datos válidos
+2025-04-29 08:31:48 - genetic_rule_miner.bbdd_maker.user_service - [93mWARNING[0m - Usuario ID 6 no encontrado (404)
+2025-04-29 08:31:48 - genetic_rule_miner.bbdd_maker.user_service - [93mWARNING[0m - Usuario ID 6 no tiene datos válidos
+2025-04-29 08:31:49 - genetic_rule_miner.bbdd_maker.user_service - [93mWARNING[0m - Usuario ID 7 no encontrado (404)
+2025-04-29 08:31:49 - genetic_rule_miner.bbdd_maker.user_service - [93mWARNING[0m - Usuario ID 7 no tiene datos válidos
+2025-04-29 08:31:51 - genetic_rule_miner.bbdd_maker.user_service - [93mWARNING[0m - Usuario ID 8 no encontrado (404)
+2025-04-29 08:31:51 - genetic_rule_miner.bbdd_maker.user_service - [93mWARNING[0m - Usuario ID 8 no tiene datos válidos
+2025-04-29 08:31:51 - genetic_rule_miner.bbdd_maker.user_service - [92mINFO[0m - Usuario ID 9 encontrado exitosamente
+2025-04-29 08:31:51 - genetic_rule_miner.bbdd_maker.user_service - [92mINFO[0m - Usuario ID 9 agregado a la lista
+2025-04-29 08:31:52 - genetic_rule_miner.bbdd_maker.user_service - [93mWARNING[0m - Usuario ID 10 no encontrado (404)
+2025-04-29 08:31:52 - genetic_rule_miner.bbdd_maker.user_service - [93mWARNING[0m - Usuario ID 10 no tiene datos válidos
+2025-04-29 08:31:54 - genetic_rule_miner.bbdd_maker.user_service - [93mWARNING[0m - Usuario ID 11 no encontrado (404)
+2025-04-29 08:31:54 - genetic_rule_miner.bbdd_maker.user_service - [93mWARNING[0m - Usuario ID 11 no tiene datos válidos
+2025-04-29 08:31:55 - genetic_rule_miner.bbdd_maker.user_service - [93mWARNING[0m - Usuario ID 12 no encontrado (404)
+2025-04-29 08:31:55 - genetic_rule_miner.bbdd_maker.user_service - [93mWARNING[0m - Usuario ID 12 no tiene datos válidos
+2025-04-29 08:31:56 - genetic_rule_miner.bbdd_maker.user_service - [93mWARNING[0m - Usuario ID 13 no encontrado (404)
+2025-04-29 08:31:56 - genetic_rule_miner.bbdd_maker.user_service - [93mWARNING[0m - Usuario ID 13 no tiene datos válidos
+2025-04-29 08:31:57 - genetic_rule_miner.bbdd_maker.user_service - [93mWARNING[0m - Usuario ID 14 no encontrado (404)
+2025-04-29 08:31:57 - genetic_rule_miner.bbdd_maker.user_service - [93mWARNING[0m - Usuario ID 14 no tiene datos válidos
+2025-04-29 08:31:59 - genetic_rule_miner.bbdd_maker.user_service - [93mWARNING[0m - Usuario ID 15 no encontrado (404)
+2025-04-29 08:31:59 - genetic_rule_miner.bbdd_maker.user_service - [93mWARNING[0m - Usuario ID 15 no tiene datos válidos
+2025-04-29 08:32:00 - genetic_rule_miner.bbdd_maker.user_service - [93mWARNING[0m - Usuario ID 16 no encontrado (404)
+2025-04-29 08:32:00 - genetic_rule_miner.bbdd_maker.user_service - [93mWARNING[0m - Usuario ID 16 no tiene datos válidos
+2025-04-29 08:32:01 - genetic_rule_miner.bbdd_maker.user_service - [93mWARNING[0m - Usuario ID 17 no encontrado (404)
+2025-04-29 08:32:01 - genetic_rule_miner.bbdd_maker.user_service - [93mWARNING[0m - Usuario ID 17 no tiene datos válidos
+2025-04-29 08:32:02 - genetic_rule_miner.bbdd_maker.user_service - [92mINFO[0m - Usuario ID 18 encontrado exitosamente
+2025-04-29 08:32:02 - genetic_rule_miner.bbdd_maker.user_service - [92mINFO[0m - Usuario ID 18 agregado a la lista
+2025-04-29 08:32:03 - genetic_rule_miner.bbdd_maker.user_service - [93mWARNING[0m - Usuario ID 19 no encontrado (404)
+2025-04-29 08:32:03 - genetic_rule_miner.bbdd_maker.user_service - [93mWARNING[0m - Usuario ID 19 no tiene datos válidos
+2025-04-29 08:32:05 - genetic_rule_miner.bbdd_maker.user_service - [92mINFO[0m - Usuario ID 20 encontrado exitosamente
+2025-04-29 08:32:05 - genetic_rule_miner.bbdd_maker.user_service - [92mINFO[0m - Usuario ID 20 agregado a la lista
+2025-04-29 08:32:06 - genetic_rule_miner.bbdd_maker.user_service - [93mWARNING[0m - Usuario ID 21 no encontrado (404)
+2025-04-29 08:32:06 - genetic_rule_miner.bbdd_maker.user_service - [93mWARNING[0m - Usuario ID 21 no tiene datos válidos
+2025-04-29 08:32:07 - genetic_rule_miner.bbdd_maker.user_service - [93mWARNING[0m - Usuario ID 22 no encontrado (404)
+2025-04-29 08:32:07 - genetic_rule_miner.bbdd_maker.user_service - [93mWARNING[0m - Usuario ID 22 no tiene datos válidos
+2025-04-29 08:32:09 - genetic_rule_miner.bbdd_maker.user_service - [92mINFO[0m - Usuario ID 23 encontrado exitosamente
+2025-04-29 08:32:09 - genetic_rule_miner.bbdd_maker.user_service - [92mINFO[0m - Usuario ID 23 agregado a la lista
+2025-04-29 08:32:10 - genetic_rule_miner.bbdd_maker.user_service - [93mWARNING[0m - Usuario ID 24 no encontrado (404)
+2025-04-29 08:32:10 - genetic_rule_miner.bbdd_maker.user_service - [93mWARNING[0m - Usuario ID 24 no tiene datos válidos
+2025-04-29 08:32:11 - genetic_rule_miner.bbdd_maker.user_service - [93mWARNING[0m - Usuario ID 25 no encontrado (404)
+2025-04-29 08:32:11 - genetic_rule_miner.bbdd_maker.user_service - [93mWARNING[0m - Usuario ID 25 no tiene datos válidos
+2025-04-29 08:32:12 - genetic_rule_miner.bbdd_maker.user_service - [93mWARNING[0m - Usuario ID 26 no encontrado (404)
+2025-04-29 08:32:12 - genetic_rule_miner.bbdd_maker.user_service - [93mWARNING[0m - Usuario ID 26 no tiene datos válidos
+2025-04-29 08:32:14 - genetic_rule_miner.bbdd_maker.user_service - [93mWARNING[0m - Usuario ID 27 no encontrado (404)
+2025-04-29 08:32:14 - genetic_rule_miner.bbdd_maker.user_service - [93mWARNING[0m - Usuario ID 27 no tiene datos válidos
+2025-04-29 08:32:15 - genetic_rule_miner.bbdd_maker.user_service - [93mWARNING[0m - Usuario ID 28 no encontrado (404)
+2025-04-29 08:32:15 - genetic_rule_miner.bbdd_maker.user_service - [93mWARNING[0m - Usuario ID 28 no tiene datos válidos
+2025-04-29 08:32:17 - genetic_rule_miner.bbdd_maker.user_service - [93mWARNING[0m - Usuario ID 29 no encontrado (404)
+2025-04-29 08:32:17 - genetic_rule_miner.bbdd_maker.user_service - [93mWARNING[0m - Usuario ID 29 no tiene datos válidos
+2025-04-29 08:32:18 - genetic_rule_miner.bbdd_maker.user_service - [93mWARNING[0m - Usuario ID 30 no encontrado (404)
+2025-04-29 08:32:18 - genetic_rule_miner.bbdd_maker.user_service - [93mWARNING[0m - Usuario ID 30 no tiene datos válidos
+2025-04-29 08:32:19 - genetic_rule_miner.bbdd_maker.user_service - [93mWARNING[0m - Usuario ID 31 no encontrado (404)
+2025-04-29 08:32:19 - genetic_rule_miner.bbdd_maker.user_service - [93mWARNING[0m - Usuario ID 31 no tiene datos válidos
+2025-04-29 08:32:21 - genetic_rule_miner.bbdd_maker.user_service - [93mWARNING[0m - Usuario ID 32 no encontrado (404)
+2025-04-29 08:32:21 - genetic_rule_miner.bbdd_maker.user_service - [93mWARNING[0m - Usuario ID 32 no tiene datos válidos
+2025-04-29 08:32:22 - genetic_rule_miner.bbdd_maker.user_service - [93mWARNING[0m - Usuario ID 33 no encontrado (404)
+2025-04-29 08:32:22 - genetic_rule_miner.bbdd_maker.user_service - [93mWARNING[0m - Usuario ID 33 no tiene datos válidos
+2025-04-29 08:32:23 - genetic_rule_miner.bbdd_maker.user_service - [93mWARNING[0m - Usuario ID 34 no encontrado (404)
+2025-04-29 08:32:23 - genetic_rule_miner.bbdd_maker.user_service - [93mWARNING[0m - Usuario ID 34 no tiene datos válidos
+2025-04-29 08:32:25 - genetic_rule_miner.bbdd_maker.user_service - [93mWARNING[0m - Usuario ID 35 no encontrado (404)
+2025-04-29 08:32:25 - genetic_rule_miner.bbdd_maker.user_service - [93mWARNING[0m - Usuario ID 35 no tiene datos válidos
+2025-04-29 08:32:26 - genetic_rule_miner.bbdd_maker.user_service - [92mINFO[0m - Usuario ID 36 encontrado exitosamente
+2025-04-29 08:32:26 - genetic_rule_miner.bbdd_maker.user_service - [92mINFO[0m - Usuario ID 36 agregado a la lista
+2025-04-29 08:32:28 - genetic_rule_miner.bbdd_maker.user_service - [92mINFO[0m - Usuario ID 37 encontrado exitosamente
+2025-04-29 08:32:28 - genetic_rule_miner.bbdd_maker.user_service - [92mINFO[0m - Usuario ID 37 agregado a la lista
+2025-04-29 08:32:29 - genetic_rule_miner.bbdd_maker.user_service - [93mWARNING[0m - Usuario ID 38 no encontrado (404)
+2025-04-29 08:32:29 - genetic_rule_miner.bbdd_maker.user_service - [93mWARNING[0m - Usuario ID 38 no tiene datos válidos
+2025-04-29 08:32:30 - genetic_rule_miner.bbdd_maker.user_service - [93mWARNING[0m - Usuario ID 39 no encontrado (404)
+2025-04-29 08:32:30 - genetic_rule_miner.bbdd_maker.user_service - [93mWARNING[0m - Usuario ID 39 no tiene datos válidos
+2025-04-29 08:32:31 - genetic_rule_miner.bbdd_maker.user_service - [93mWARNING[0m - Usuario ID 40 no encontrado (404)
+2025-04-29 08:32:31 - genetic_rule_miner.bbdd_maker.user_service - [93mWARNING[0m - Usuario ID 40 no tiene datos válidos
+2025-04-29 08:32:32 - genetic_rule_miner.bbdd_maker.user_service - [93mWARNING[0m - Usuario ID 41 no encontrado (404)
+2025-04-29 08:32:32 - genetic_rule_miner.bbdd_maker.user_service - [93mWARNING[0m - Usuario ID 41 no tiene datos válidos
+2025-04-29 08:32:34 - genetic_rule_miner.bbdd_maker.user_service - [93mWARNING[0m - Usuario ID 42 no encontrado (404)
+2025-04-29 08:32:34 - genetic_rule_miner.bbdd_maker.user_service - [93mWARNING[0m - Usuario ID 42 no tiene datos válidos
+2025-04-29 08:32:35 - genetic_rule_miner.bbdd_maker.user_service - [93mWARNING[0m - Usuario ID 43 no encontrado (404)
+2025-04-29 08:32:35 - genetic_rule_miner.bbdd_maker.user_service - [93mWARNING[0m - Usuario ID 43 no tiene datos válidos
+2025-04-29 08:32:36 - genetic_rule_miner.bbdd_maker.user_service - [92mINFO[0m - Usuario ID 44 encontrado exitosamente
+2025-04-29 08:32:36 - genetic_rule_miner.bbdd_maker.user_service - [92mINFO[0m - Usuario ID 44 agregado a la lista
+2025-04-29 08:32:37 - genetic_rule_miner.bbdd_maker.user_service - [93mWARNING[0m - Usuario ID 45 no encontrado (404)
+2025-04-29 08:32:37 - genetic_rule_miner.bbdd_maker.user_service - [93mWARNING[0m - Usuario ID 45 no tiene datos válidos
+2025-04-29 08:32:38 - genetic_rule_miner.bbdd_maker.user_service - [93mWARNING[0m - Usuario ID 46 no encontrado (404)
+2025-04-29 08:32:38 - genetic_rule_miner.bbdd_maker.user_service - [93mWARNING[0m - Usuario ID 46 no tiene datos válidos
+2025-04-29 08:32:40 - genetic_rule_miner.bbdd_maker.user_service - [92mINFO[0m - Usuario ID 47 encontrado exitosamente
+2025-04-29 08:32:40 - genetic_rule_miner.bbdd_maker.user_service - [92mINFO[0m - Usuario ID 47 agregado a la lista
+2025-04-29 08:32:41 - genetic_rule_miner.bbdd_maker.user_service - [92mINFO[0m - Usuario ID 48 encontrado exitosamente
+2025-04-29 08:32:41 - genetic_rule_miner.bbdd_maker.user_service - [92mINFO[0m - Usuario ID 48 agregado a la lista
+2025-04-29 08:32:43 - genetic_rule_miner.bbdd_maker.user_service - [93mWARNING[0m - Usuario ID 49 no encontrado (404)
+2025-04-29 08:32:43 - genetic_rule_miner.bbdd_maker.user_service - [93mWARNING[0m - Usuario ID 49 no tiene datos válidos
+2025-04-29 08:32:44 - genetic_rule_miner.bbdd_maker.user_service - [93mWARNING[0m - Usuario ID 50 no encontrado (404)
+2025-04-29 08:32:44 - genetic_rule_miner.bbdd_maker.user_service - [93mWARNING[0m - Usuario ID 50 no tiene datos válidos
+2025-04-29 08:32:45 - genetic_rule_miner.bbdd_maker.user_service - [93mWARNING[0m - Usuario ID 51 no encontrado (404)
+2025-04-29 08:32:45 - genetic_rule_miner.bbdd_maker.user_service - [93mWARNING[0m - Usuario ID 51 no tiene datos válidos
+2025-04-29 08:32:46 - genetic_rule_miner.bbdd_maker.user_service - [93mWARNING[0m - Usuario ID 52 no encontrado (404)
+2025-04-29 08:32:46 - genetic_rule_miner.bbdd_maker.user_service - [93mWARNING[0m - Usuario ID 52 no tiene datos válidos
+2025-04-29 08:32:48 - genetic_rule_miner.bbdd_maker.user_service - [92mINFO[0m - Usuario ID 53 encontrado exitosamente
+2025-04-29 08:32:48 - genetic_rule_miner.bbdd_maker.user_service - [92mINFO[0m - Usuario ID 53 agregado a la lista
+2025-04-29 08:32:49 - genetic_rule_miner.bbdd_maker.user_service - [93mWARNING[0m - Usuario ID 54 no encontrado (404)
+2025-04-29 08:32:49 - genetic_rule_miner.bbdd_maker.user_service - [93mWARNING[0m - Usuario ID 54 no tiene datos válidos
+2025-04-29 08:32:50 - genetic_rule_miner.bbdd_maker.user_service - [93mWARNING[0m - Usuario ID 55 no encontrado (404)
+2025-04-29 08:32:50 - genetic_rule_miner.bbdd_maker.user_service - [93mWARNING[0m - Usuario ID 55 no tiene datos válidos
+2025-04-29 08:32:51 - genetic_rule_miner.bbdd_maker.user_service - [93mWARNING[0m - Usuario ID 56 no encontrado (404)
+2025-04-29 08:32:51 - genetic_rule_miner.bbdd_maker.user_service - [93mWARNING[0m - Usuario ID 56 no tiene datos válidos
+2025-04-29 08:32:52 - genetic_rule_miner.bbdd_maker.user_service - [93mWARNING[0m - Usuario ID 57 no encontrado (404)
+2025-04-29 08:32:52 - genetic_rule_miner.bbdd_maker.user_service - [93mWARNING[0m - Usuario ID 57 no tiene datos válidos
+2025-04-29 08:32:54 - genetic_rule_miner.bbdd_maker.user_service - [93mWARNING[0m - Usuario ID 58 no encontrado (404)
+2025-04-29 08:32:54 - genetic_rule_miner.bbdd_maker.user_service - [93mWARNING[0m - Usuario ID 58 no tiene datos válidos
+2025-04-29 08:32:55 - genetic_rule_miner.bbdd_maker.user_service - [93mWARNING[0m - Usuario ID 59 no encontrado (404)
+2025-04-29 08:32:55 - genetic_rule_miner.bbdd_maker.user_service - [93mWARNING[0m - Usuario ID 59 no tiene datos válidos
+2025-04-29 08:32:56 - genetic_rule_miner.bbdd_maker.user_service - [93mWARNING[0m - Usuario ID 60 no encontrado (404)
+2025-04-29 08:32:56 - genetic_rule_miner.bbdd_maker.user_service - [93mWARNING[0m - Usuario ID 60 no tiene datos válidos
+2025-04-29 08:32:57 - genetic_rule_miner.bbdd_maker.user_service - [93mWARNING[0m - Usuario ID 61 no encontrado (404)
+2025-04-29 08:32:57 - genetic_rule_miner.bbdd_maker.user_service - [93mWARNING[0m - Usuario ID 61 no tiene datos válidos
+2025-04-29 08:32:59 - genetic_rule_miner.bbdd_maker.user_service - [93mWARNING[0m - Usuario ID 62 no encontrado (404)
+2025-04-29 08:32:59 - genetic_rule_miner.bbdd_maker.user_service - [93mWARNING[0m - Usuario ID 62 no tiene datos válidos
+2025-04-29 08:33:00 - genetic_rule_miner.bbdd_maker.user_service - [93mWARNING[0m - Usuario ID 63 no encontrado (404)
+2025-04-29 08:33:00 - genetic_rule_miner.bbdd_maker.user_service - [93mWARNING[0m - Usuario ID 63 no tiene datos válidos
+2025-04-29 08:33:01 - genetic_rule_miner.bbdd_maker.user_service - [93mWARNING[0m - Usuario ID 64 no encontrado (404)
+2025-04-29 08:33:01 - genetic_rule_miner.bbdd_maker.user_service - [93mWARNING[0m - Usuario ID 64 no tiene datos válidos
+2025-04-29 08:33:03 - genetic_rule_miner.bbdd_maker.user_service - [93mWARNING[0m - Usuario ID 65 no encontrado (404)
+2025-04-29 08:33:03 - genetic_rule_miner.bbdd_maker.user_service - [93mWARNING[0m - Usuario ID 65 no tiene datos válidos
+2025-04-29 08:33:04 - genetic_rule_miner.bbdd_maker.user_service - [92mINFO[0m - Usuario ID 66 encontrado exitosamente
+2025-04-29 08:33:04 - genetic_rule_miner.bbdd_maker.user_service - [92mINFO[0m - Usuario ID 66 agregado a la lista
+2025-04-29 08:33:05 - genetic_rule_miner.bbdd_maker.user_service - [92mINFO[0m - Usuario ID 67 encontrado exitosamente
+2025-04-29 08:33:05 - genetic_rule_miner.bbdd_maker.user_service - [92mINFO[0m - Usuario ID 67 agregado a la lista
+2025-04-29 08:33:07 - genetic_rule_miner.bbdd_maker.user_service - [93mWARNING[0m - Usuario ID 68 no encontrado (404)
+2025-04-29 08:33:07 - genetic_rule_miner.bbdd_maker.user_service - [93mWARNING[0m - Usuario ID 68 no tiene datos válidos
+2025-04-29 08:33:08 - genetic_rule_miner.bbdd_maker.user_service - [93mWARNING[0m - Usuario ID 69 no encontrado (404)
+2025-04-29 08:33:08 - genetic_rule_miner.bbdd_maker.user_service - [93mWARNING[0m - Usuario ID 69 no tiene datos válidos
+2025-04-29 08:33:09 - genetic_rule_miner.bbdd_maker.user_service - [92mINFO[0m - Usuario ID 70 encontrado exitosamente
+2025-04-29 08:33:09 - genetic_rule_miner.bbdd_maker.user_service - [92mINFO[0m - Usuario ID 70 agregado a la lista
+2025-04-29 08:33:10 - genetic_rule_miner.bbdd_maker.user_service - [92mINFO[0m - Usuario ID 71 encontrado exitosamente
+2025-04-29 08:33:10 - genetic_rule_miner.bbdd_maker.user_service - [92mINFO[0m - Usuario ID 71 agregado a la lista
+2025-04-29 08:33:12 - genetic_rule_miner.bbdd_maker.user_service - [92mINFO[0m - Usuario ID 72 encontrado exitosamente
+2025-04-29 08:33:12 - genetic_rule_miner.bbdd_maker.user_service - [92mINFO[0m - Usuario ID 72 agregado a la lista
+2025-04-29 08:33:14 - genetic_rule_miner.bbdd_maker.user_service - [93mWARNING[0m - Usuario ID 73 no encontrado (404)
+2025-04-29 08:33:14 - genetic_rule_miner.bbdd_maker.user_service - [93mWARNING[0m - Usuario ID 73 no tiene datos válidos
+2025-04-29 08:33:15 - genetic_rule_miner.bbdd_maker.user_service - [93mWARNING[0m - Usuario ID 74 no encontrado (404)
+2025-04-29 08:33:15 - genetic_rule_miner.bbdd_maker.user_service - [93mWARNING[0m - Usuario ID 74 no tiene datos válidos
+2025-04-29 08:33:16 - genetic_rule_miner.bbdd_maker.user_service - [93mWARNING[0m - Usuario ID 75 no encontrado (404)
+2025-04-29 08:33:16 - genetic_rule_miner.bbdd_maker.user_service - [93mWARNING[0m - Usuario ID 75 no tiene datos válidos
+2025-04-29 08:33:17 - genetic_rule_miner.bbdd_maker.user_service - [93mWARNING[0m - Usuario ID 76 no encontrado (404)
+2025-04-29 08:33:17 - genetic_rule_miner.bbdd_maker.user_service - [93mWARNING[0m - Usuario ID 76 no tiene datos válidos
+2025-04-29 08:33:18 - genetic_rule_miner.bbdd_maker.user_service - [92mINFO[0m - Usuario ID 77 encontrado exitosamente
+2025-04-29 08:33:18 - genetic_rule_miner.bbdd_maker.user_service - [92mINFO[0m - Usuario ID 77 agregado a la lista
+2025-04-29 08:33:20 - genetic_rule_miner.bbdd_maker.user_service - [93mWARNING[0m - Usuario ID 78 no encontrado (404)
+2025-04-29 08:33:20 - genetic_rule_miner.bbdd_maker.user_service - [93mWARNING[0m - Usuario ID 78 no tiene datos válidos
+2025-04-29 08:33:21 - genetic_rule_miner.bbdd_maker.user_service - [93mWARNING[0m - Usuario ID 79 no encontrado (404)
+2025-04-29 08:33:21 - genetic_rule_miner.bbdd_maker.user_service - [93mWARNING[0m - Usuario ID 79 no tiene datos válidos
+2025-04-29 08:33:22 - genetic_rule_miner.bbdd_maker.user_service - [92mINFO[0m - Usuario ID 80 encontrado exitosamente
+2025-04-29 08:33:22 - genetic_rule_miner.bbdd_maker.user_service - [92mINFO[0m - Usuario ID 80 agregado a la lista
+2025-04-29 08:33:23 - genetic_rule_miner.bbdd_maker.user_service - [92mINFO[0m - Usuario ID 81 encontrado exitosamente
+2025-04-29 08:33:23 - genetic_rule_miner.bbdd_maker.user_service - [92mINFO[0m - Usuario ID 81 agregado a la lista
+2025-04-29 08:33:25 - genetic_rule_miner.bbdd_maker.user_service - [92mINFO[0m - Usuario ID 82 encontrado exitosamente
+2025-04-29 08:33:25 - genetic_rule_miner.bbdd_maker.user_service - [92mINFO[0m - Usuario ID 82 agregado a la lista
+2025-04-29 08:33:26 - genetic_rule_miner.bbdd_maker.user_service - [92mINFO[0m - Usuario ID 83 encontrado exitosamente
+2025-04-29 08:33:26 - genetic_rule_miner.bbdd_maker.user_service - [92mINFO[0m - Usuario ID 83 agregado a la lista
+2025-04-29 08:33:27 - genetic_rule_miner.bbdd_maker.user_service - [93mWARNING[0m - Usuario ID 84 no encontrado (404)
+2025-04-29 08:33:27 - genetic_rule_miner.bbdd_maker.user_service - [93mWARNING[0m - Usuario ID 84 no tiene datos válidos
+2025-04-29 08:33:29 - genetic_rule_miner.bbdd_maker.user_service - [93mWARNING[0m - Usuario ID 85 no encontrado (404)
+2025-04-29 08:33:29 - genetic_rule_miner.bbdd_maker.user_service - [93mWARNING[0m - Usuario ID 85 no tiene datos válidos
+2025-04-29 08:33:30 - genetic_rule_miner.bbdd_maker.user_service - [93mWARNING[0m - Usuario ID 86 no encontrado (404)
+2025-04-29 08:33:30 - genetic_rule_miner.bbdd_maker.user_service - [93mWARNING[0m - Usuario ID 86 no tiene datos válidos
+2025-04-29 08:33:31 - genetic_rule_miner.bbdd_maker.user_service - [93mWARNING[0m - Usuario ID 87 no encontrado (404)
+2025-04-29 08:33:31 - genetic_rule_miner.bbdd_maker.user_service - [93mWARNING[0m - Usuario ID 87 no tiene datos válidos
+2025-04-29 08:33:32 - genetic_rule_miner.bbdd_maker.user_service - [92mINFO[0m - Usuario ID 88 encontrado exitosamente
+2025-04-29 08:33:32 - genetic_rule_miner.bbdd_maker.user_service - [92mINFO[0m - Usuario ID 88 agregado a la lista
+2025-04-29 08:33:34 - genetic_rule_miner.bbdd_maker.user_service - [93mWARNING[0m - Usuario ID 89 no encontrado (404)
+2025-04-29 08:33:34 - genetic_rule_miner.bbdd_maker.user_service - [93mWARNING[0m - Usuario ID 89 no tiene datos válidos
+2025-04-29 08:33:35 - genetic_rule_miner.bbdd_maker.user_service - [92mINFO[0m - Usuario ID 90 encontrado exitosamente
+2025-04-29 08:33:35 - genetic_rule_miner.bbdd_maker.user_service - [92mINFO[0m - Usuario ID 90 agregado a la lista
+2025-04-29 08:33:36 - genetic_rule_miner.bbdd_maker.user_service - [92mINFO[0m - Usuario ID 91 encontrado exitosamente
+2025-04-29 08:33:36 - genetic_rule_miner.bbdd_maker.user_service - [92mINFO[0m - Usuario ID 91 agregado a la lista
+2025-04-29 08:33:37 - genetic_rule_miner.bbdd_maker.user_service - [93mWARNING[0m - Usuario ID 92 no encontrado (404)
+2025-04-29 08:33:37 - genetic_rule_miner.bbdd_maker.user_service - [93mWARNING[0m - Usuario ID 92 no tiene datos válidos
+2025-04-29 08:33:39 - genetic_rule_miner.bbdd_maker.user_service - [93mWARNING[0m - Usuario ID 93 no encontrado (404)
+2025-04-29 08:33:39 - genetic_rule_miner.bbdd_maker.user_service - [93mWARNING[0m - Usuario ID 93 no tiene datos válidos
+2025-04-29 08:33:40 - genetic_rule_miner.bbdd_maker.user_service - [93mWARNING[0m - Usuario ID 94 no encontrado (404)
+2025-04-29 08:33:40 - genetic_rule_miner.bbdd_maker.user_service - [93mWARNING[0m - Usuario ID 94 no tiene datos válidos
+2025-04-29 08:33:41 - genetic_rule_miner.bbdd_maker.user_service - [92mINFO[0m - Usuario ID 95 encontrado exitosamente
+2025-04-29 08:33:41 - genetic_rule_miner.bbdd_maker.user_service - [92mINFO[0m - Usuario ID 95 agregado a la lista
+2025-04-29 08:33:42 - genetic_rule_miner.bbdd_maker.user_service - [93mWARNING[0m - Usuario ID 96 no encontrado (404)
+2025-04-29 08:33:42 - genetic_rule_miner.bbdd_maker.user_service - [93mWARNING[0m - Usuario ID 96 no tiene datos válidos
+2025-04-29 08:33:43 - genetic_rule_miner.bbdd_maker.user_service - [93mWARNING[0m - Usuario ID 97 no encontrado (404)
+2025-04-29 08:33:43 - genetic_rule_miner.bbdd_maker.user_service - [93mWARNING[0m - Usuario ID 97 no tiene datos válidos
+2025-04-29 08:33:45 - genetic_rule_miner.bbdd_maker.user_service - [93mWARNING[0m - Usuario ID 98 no encontrado (404)
+2025-04-29 08:33:45 - genetic_rule_miner.bbdd_maker.user_service - [93mWARNING[0m - Usuario ID 98 no tiene datos válidos
+2025-04-29 08:33:46 - genetic_rule_miner.bbdd_maker.user_service - [93mWARNING[0m - Usuario ID 99 no encontrado (404)
+2025-04-29 08:33:46 - genetic_rule_miner.bbdd_maker.user_service - [93mWARNING[0m - Usuario ID 99 no tiene datos válidos
+2025-04-29 08:33:47 - genetic_rule_miner.bbdd_maker.user_service - [93mWARNING[0m - Usuario ID 100 no encontrado (404)
+2025-04-29 08:33:47 - genetic_rule_miner.bbdd_maker.user_service - [93mWARNING[0m - Usuario ID 100 no tiene datos válidos
+2025-04-29 08:33:47 - genetic_rule_miner.bbdd_maker.user_service - [92mINFO[0m - Progreso: 100.0% (100/100)
+2025-04-29 08:33:47 - genetic_rule_miner.bbdd_maker.user_service - [92mINFO[0m - Generación completada. Usuarios válidos: 27/100
+2025-04-29 08:33:47 - __main__ - [92mINFO[0m - 📡 Preparando datos de usuarios...
+2025-04-29 08:33:47 - __main__ - [92mINFO[0m - 📡 Obteniendo detalles de usuarios...
+2025-04-29 08:33:47 - genetic_rule_miner.bbdd_maker.details_service - [92mINFO[0m - DetailsService inicializado con configuración predeterminada.
+2025-04-29 08:33:47 - genetic_rule_miner.bbdd_maker.details_service - [92mINFO[0m - Inicio de procesamiento para 27 usuarios.
+2025-04-29 08:33:48 - genetic_rule_miner.bbdd_maker.details_service - [92mINFO[0m - Procesados 3/27
+2025-04-29 08:33:50 - genetic_rule_miner.bbdd_maker.details_service - [93mWARNING[0m - Intento 1 fallido para vondur (HTTP 429).
+2025-04-29 08:33:51 - genetic_rule_miner.bbdd_maker.details_service - [92mINFO[0m - Procesados 6/27
+2025-04-29 08:33:53 - genetic_rule_miner.bbdd_maker.details_service - [93mWARNING[0m - Intento 1 fallido para megan (HTTP 429).
+2025-04-29 08:33:55 - genetic_rule_miner.bbdd_maker.details_service - [92mINFO[0m - Procesados 9/27
+2025-04-29 08:33:57 - genetic_rule_miner.bbdd_maker.details_service - [92mINFO[0m - Procesados 12/27
+2025-04-29 08:33:58 - genetic_rule_miner.bbdd_maker.details_service - [93mWARNING[0m - Intento 1 fallido para Hiromi (HTTP 429).
+2025-04-29 08:34:00 - genetic_rule_miner.bbdd_maker.details_service - [92mINFO[0m - Procesados 15/27
+2025-04-29 08:34:01 - genetic_rule_miner.bbdd_maker.details_service - [93mWARNING[0m - Intento 1 fallido para Smoka (HTTP 429).
+2025-04-29 08:34:03 - genetic_rule_miner.bbdd_maker.details_service - [92mINFO[0m - Procesados 18/27
+2025-04-29 08:34:05 - genetic_rule_miner.bbdd_maker.details_service - [93mWARNING[0m - Intento 1 fallido para Ramp (HTTP 429).
+2025-04-29 08:34:06 - genetic_rule_miner.bbdd_maker.details_service - [92mINFO[0m - Procesados 21/27
+2025-04-29 08:34:08 - genetic_rule_miner.bbdd_maker.details_service - [93mWARNING[0m - Intento 1 fallido para wicked2k (HTTP 429).
+2025-04-29 08:34:09 - genetic_rule_miner.bbdd_maker.details_service - [92mINFO[0m - Procesados 24/27
+2025-04-29 08:34:11 - genetic_rule_miner.bbdd_maker.details_service - [93mWARNING[0m - Intento 1 fallido para sorairo (HTTP 429).
+2025-04-29 08:34:13 - genetic_rule_miner.bbdd_maker.details_service - [92mINFO[0m - Procesados 27/27
+2025-04-29 08:34:14 - genetic_rule_miner.bbdd_maker.details_service - [92mINFO[0m - Tiempo total de procesamiento: 26.43s
+2025-04-29 08:34:14 - __main__ - [92mINFO[0m - 📡 Obteniendo puntuaciones de usuarios...
+2025-04-29 08:34:14 - genetic_rule_miner.bbdd_maker.score_service - [92mINFO[0m - ScoreService inicializado con configuración predeterminada.
+2025-04-29 08:34:14 - genetic_rule_miner.bbdd_maker.score_service - [92mINFO[0m - Iniciando procesamiento de usuarios para generar CSV.
+2025-04-29 08:34:14 - genetic_rule_miner.bbdd_maker.score_service - [92mINFO[0m - Total de usuarios a procesar: 27.
+2025-04-29 08:34:14 - genetic_rule_miner.bbdd_maker.score_service - [92mINFO[0m - Procesando lote 1.
+2025-04-29 08:34:14 - genetic_rule_miner.bbdd_maker.score_service - [92mINFO[0m - Procesando lote de 27 usuarios.
+2025-04-29 08:34:15 - genetic_rule_miner.bbdd_maker.score_service - [92mINFO[0m - Datos obtenidos para Xinil.
+2025-04-29 08:34:16 - genetic_rule_miner.bbdd_maker.score_service - [93mWARNING[0m - Sin datos para Aokaado.
+2025-04-29 08:34:17 - genetic_rule_miner.bbdd_maker.score_service - [92mINFO[0m - Datos obtenidos para Crystal.
+2025-04-29 08:34:17 - genetic_rule_miner.bbdd_maker.score_service - [92mINFO[0m - Datos obtenidos para Arcane.
+2025-04-29 08:34:18 - genetic_rule_miner.bbdd_maker.score_service - [93mWARNING[0m - Respuesta HTTP 418 para Mad.
+2025-04-29 08:34:18 - genetic_rule_miner.bbdd_maker.score_service - [93mWARNING[0m - Sin datos para Mad.
+2025-04-29 08:34:18 - genetic_rule_miner.bbdd_maker.score_service - [92mINFO[0m - Datos obtenidos para vondur.
+2025-04-29 08:34:19 - genetic_rule_miner.bbdd_maker.score_service - [92mINFO[0m - Datos obtenidos para Amuro.
+2025-04-29 08:34:19 - genetic_rule_miner.bbdd_maker.score_service - [93mWARNING[0m - Respuesta HTTP 418 para Baman.
+2025-04-29 08:34:19 - genetic_rule_miner.bbdd_maker.score_service - [93mWARNING[0m - Sin datos para Baman.
+2025-04-29 08:34:20 - genetic_rule_miner.bbdd_maker.score_service - [92mINFO[0m - Datos obtenidos para megan.
+2025-04-29 08:34:21 - genetic_rule_miner.bbdd_maker.score_service - [93mWARNING[0m - Respuesta HTTP 418 para beddan.
+2025-04-29 08:34:21 - genetic_rule_miner.bbdd_maker.score_service - [93mWARNING[0m - Sin datos para beddan.
+2025-04-29 08:34:21 - genetic_rule_miner.bbdd_maker.score_service - [92mINFO[0m - Datos obtenidos para kei-clone.
+2025-04-29 08:34:23 - genetic_rule_miner.bbdd_maker.score_service - [92mINFO[0m - Datos obtenidos para seif.
+2025-04-29 08:34:24 - genetic_rule_miner.bbdd_maker.score_service - [92mINFO[0m - Datos obtenidos para Ladholyman.
+2025-04-29 08:34:24 - genetic_rule_miner.bbdd_maker.score_service - [92mINFO[0m - Datos obtenidos para Hiromi.
+2025-04-29 08:34:25 - genetic_rule_miner.bbdd_maker.score_service - [92mINFO[0m - Datos obtenidos para ShadowOz.
+2025-04-29 08:34:26 - genetic_rule_miner.bbdd_maker.score_service - [92mINFO[0m - Datos obtenidos para Cruzle.
+2025-04-29 08:34:26 - genetic_rule_miner.bbdd_maker.score_service - [92mINFO[0m - Datos obtenidos para Smoka.
+2025-04-29 08:34:26 - genetic_rule_miner.bbdd_maker.score_service - [92mINFO[0m - Datos obtenidos para james2k.
+2025-04-29 08:34:27 - genetic_rule_miner.bbdd_maker.score_service - [93mWARNING[0m - Sin datos para Emp-.
+2025-04-29 08:34:28 - genetic_rule_miner.bbdd_maker.score_service - [92mINFO[0m - Datos obtenidos para koalatees.
+2025-04-29 08:34:28 - genetic_rule_miner.bbdd_maker.score_service - [92mINFO[0m - Datos obtenidos para Ramp.
+2025-04-29 08:34:29 - genetic_rule_miner.bbdd_maker.score_service - [92mINFO[0m - Datos obtenidos para Achtor.
+2025-04-29 08:34:30 - genetic_rule_miner.bbdd_maker.score_service - [92mINFO[0m - Datos obtenidos para jaames.
+2025-04-29 08:34:31 - genetic_rule_miner.bbdd_maker.score_service - [92mINFO[0m - Datos obtenidos para wicked2k.
+2025-04-29 08:34:31 - genetic_rule_miner.bbdd_maker.score_service - [93mWARNING[0m - Respuesta HTTP 418 para xich.
+2025-04-29 08:34:31 - genetic_rule_miner.bbdd_maker.score_service - [93mWARNING[0m - Sin datos para xich.
+2025-04-29 08:34:32 - genetic_rule_miner.bbdd_maker.score_service - [92mINFO[0m - Datos obtenidos para marvin_9martian.
+2025-04-29 08:34:33 - genetic_rule_miner.bbdd_maker.score_service - [92mINFO[0m - Datos obtenidos para sorairo.
+2025-04-29 08:34:33 - genetic_rule_miner.bbdd_maker.score_service - [92mINFO[0m - Lote procesado con 3179 registros obtenidos.
+2025-04-29 08:34:33 - genetic_rule_miner.bbdd_maker.score_service - [92mINFO[0m - Procesado: 27/27 (100.0%).
+2025-04-29 08:34:33 - genetic_rule_miner.bbdd_maker.score_service - [92mINFO[0m - Procesamiento completo. Generando archivo CSV.
+2025-04-29 08:34:33 - __main__ - [92mINFO[0m - ✅ Obtención de datos base exitosa
+2025-04-29 08:34:33 - __main__ - [92mINFO[0m - 🔧 Fase 3: Preprocesamiento y Carga de datos
+2025-04-29 08:34:33 - __main__ - [92mINFO[0m - 🔗 Conectando a la base de datos...
+2025-04-29 08:34:33 - genetic_rule_miner.data.database - [92mINFO[0m - SQLAlchemy engine initialized
+2025-04-29 08:34:33 - __main__ - [92mINFO[0m - ✅ DatabaseManager cargado correctamente
+2025-04-29 08:34:54 - __main__ - [92mINFO[0m - 📥 Iniciando carga de datos...
+2025-04-29 08:35:57 - __main__ - [92mINFO[0m - ✅ Carga completada exitosamente
+2025-04-29 08:35:57 - genetic_rule_miner.data.database - [92mINFO[0m - SQLAlchemy engine closed
