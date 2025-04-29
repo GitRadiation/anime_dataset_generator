@@ -214,7 +214,7 @@ def main():
     logger.info("✅ DatabaseManager loaded successfully")
 
     try:
-        with db.connection() as _:
+        with db.connection() as conn:
             logger.info("📥 Starting data loading...")
 
             # Read and save original data
@@ -337,11 +337,11 @@ def main():
 
             # Load to database
             anime_buffer.seek(0)
-            db.copy_from_buffer(anime_buffer, "anime_dataset")
+            db.copy_from_buffer(conn, anime_buffer, "anime_dataset")
             details_buffer.seek(0)
-            db.copy_from_buffer(details_buffer, "user_details")
+            db.copy_from_buffer(conn, details_buffer, "user_details")
             scores_buffer.seek(0)
-            db.copy_from_buffer(scores_buffer, "user_score")
+            db.copy_from_buffer(conn, scores_buffer, "user_score")
 
         logger.info("✅ Data loading completed successfully")
     except Exception as e:

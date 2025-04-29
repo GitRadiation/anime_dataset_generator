@@ -39,9 +39,6 @@ class DatabaseManager:
         except Exception as e:
             logger.error("Database connection error", exc_info=True)
             raise DatabaseError("Connection failed") from e
-        finally:
-            if connection:
-                connection.close()  # Ensure the connection is closed
 
     def initialize(self) -> None:
         """Initialize SQLAlchemy engine and session factory."""
@@ -102,7 +99,7 @@ class DatabaseManager:
         return sql
 
     def copy_from_buffer(
-        self, buffer, table: str, conflict_action="DO UPDATE"
+        self, conn: Connection, buffer, table: str, conflict_action="DO UPDATE"
     ) -> None:
         """Copy data from the buffer to the PostgreSQL table."""
         buffer.seek(0)
@@ -112,20 +109,19 @@ class DatabaseManager:
         # Determine conflict columns based on table
         table_conflict_columns = self._get_conflict_columns(table)
 
-        with self.connection() as conn:
-            for row in reader:
-                cleaned_row = {
-                    key: None if value == "\\N" else value
-                    for key, value in row.items()
-                }
+        for row in reader:
+            cleaned_row = {
+                key: None if value == "\\N" else value
+                for key, value in row.items()
+            }
 
-                # Construct the SQL query for the insert or update operation
-                sql = self._construct_sql(
-                    table, columns, table_conflict_columns, conflict_action
-                )
+            # Construct the SQL query for the insert or update operation
+            sql = self._construct_sql(
+                table, columns, table_conflict_columns, conflict_action
+            )
 
-                # Execute the query using the raw connection
-                conn.execute(text(sql), cleaned_row)
+            # Execute the query using the raw connection
+            conn.execute(text(sql), cleaned_row)
 
     def _get_conflict_columns(self, table: str) -> list:
         """Return the list of conflict columns based on the table."""
@@ -137,29 +133,3 @@ class DatabaseManager:
             return ["mal_id"]
         else:
             return []  # Default to no conflict resolution
-
-    def load_data(self, data, table: str) -> None:
-        """Load data into the specified PostgreSQL table."""
-        if data.empty:
-            logger.warning(f"No data to load into table {table}")
-            return
-
-        # Convert the DataFrame to a list of dictionaries
-        records = data.to_dict(orient="records")
-        columns = data.columns.tolist()
-
-        # Determine conflict columns based on table
-        table_conflict_columns = self._get_conflict_columns(table)
-
-        with self.connection() as conn:
-            for record in records:
-                # Construct the SQL query for the insert or update operation
-                sql = self._construct_sql(
-                    table,
-                    columns,
-                    table_conflict_columns,
-                    conflict_action="DO UPDATE",
-                )
-
-                # Execute the query using the raw connection
-                conn.execute(text(sql), record)
