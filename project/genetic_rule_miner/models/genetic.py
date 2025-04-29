@@ -52,6 +52,9 @@ class GeneticRuleMiner:
 
         self.population = self._init_population()
 
+    def _deduplicate_conditions(self, conditions):
+        return list({cond[0]: cond for cond in conditions}.values())
+
     @lru_cache(maxsize=None)
     def _get_numeric_cols(self) -> Sequence[str]:
         return [
@@ -78,48 +81,13 @@ class GeneticRuleMiner:
     def _create_rule(
         self, min_user_conds: int = 2, max_conditions: int = 5
     ) -> dict:
-        conditions = []
-
-        # Selecciona las condiciones de las columnas de usuario, asegurándose de que no se repitan
         user_conds = self.rng.choice(
             self.user_cols, size=min_user_conds, replace=False
         )
-        conditions.extend(self._create_condition(col) for col in user_conds)
-
-        # Añadir condiciones de otras columnas, evitando las que ya están en las condiciones
-        other_cols = [
-            c
-            for c in self.df.columns
-            if c
-            not in self.user_cols
-            + [self.target]
-            + [cond[0] for cond in conditions]
-        ]
-        if other_cols:
-            extra = min(max_conditions - len(conditions), len(other_cols))
-            conditions.extend(
-                self._create_condition(col)
-                for col in self.rng.choice(
-                    other_cols, size=extra, replace=False
-                )
-            )
-
-        # Si la cantidad total de condiciones es menor al máximo, añadir condiciones adicionales
-        if len(conditions) < max_conditions:
-            remaining_cols = [
-                c
-                for c in self.df.columns
-                if c not in [cond[0] for cond in conditions]
-            ]
-            extra_conditions = max_conditions - len(conditions)
-            conditions.extend(
-                self._create_condition(col)
-                for col in self.rng.choice(
-                    remaining_cols, size=extra_conditions, replace=False
-                )
-            )
-
-        return {"conditions": conditions, "target": (self.target, "high")}
+        conditions = [self._create_condition(col) for col in user_conds]
+        rule = {"conditions": conditions, "target": (self.target, "high")}
+        self._complete_conditions(rule, min_user_conds, max_conditions)
+        return rule
 
     def _create_condition(
         self, col: str
@@ -130,23 +98,53 @@ class GeneticRuleMiner:
             return (col, op, value)
         else:
             raw_values = self.df[col].dropna()
-
-            if isinstance(raw_values.iloc[0], list):
-                all_vals = list(set(itertools.chain.from_iterable(raw_values)))
-            else:
-                all_vals = list(raw_values.astype(str).unique())
-
+            all_vals = (
+                list(set(itertools.chain.from_iterable(raw_values)))
+                if isinstance(raw_values.iloc[0], list)
+                else list(raw_values.astype(str).unique())
+            )
             if not all_vals:
                 logger.warning(f"No unique values found for column '{col}'")
                 return (col, "==", "UNKNOWN")
-
             return (col, "==", str(self.rng.choice(all_vals)))
+
+    def _add_condition(self, rule, existing_cols, column_pool):
+        available_cols = [c for c in column_pool if c not in existing_cols]
+        if not available_cols:
+            return None
+        col = self.rng.choice(available_cols)
+        condition = self._create_condition(col)
+        rule["conditions"].append(condition)
+        existing_cols.add(col)
+        return condition
+
+    def _complete_conditions(
+        self, rule: dict, min_user_conds: int, max_conditions: int
+    ) -> None:
+        """Ensure a rule has the required number of user conditions and total conditions."""
+        existing_cols = {cond[0] for cond in rule["conditions"]}
+        user_conds = [
+            cond for cond in rule["conditions"] if cond[0] in self.user_cols
+        ]
+
+        while (
+            len(user_conds) < min_user_conds
+            and len(rule["conditions"]) < max_conditions
+        ):
+            condition = self._add_condition(
+                rule, existing_cols, self.user_cols
+            )
+            if condition:
+                user_conds.append(condition)
+
+        while len(rule["conditions"]) < max_conditions:
+            self._add_condition(rule, existing_cols, self.df.columns)
 
     def fitness(self, rule: dict) -> float:
         """Calculate rule fitness (support * confidence)."""
-        support = self._vectorized_support(rule["conditions"])
-        confidence = self._vectorized_confidence(rule)
-        return support * confidence
+        return self._vectorized_support(
+            rule["conditions"]
+        ) * self._vectorized_confidence(rule)
 
     def _build_condition_mask(self, conditions: Sequence[tuple]) -> np.ndarray:
         # Crea una máscara booleana para las condiciones
@@ -155,6 +153,10 @@ class GeneticRuleMiner:
         mask = np.ones(len(self.df), dtype=bool)
         for col, op, value in conditions:
             col_data = self.df[col].values
+            # Modifica la máscara booleana mask,
+            # dejando en True solo aquellos elementos que
+            # ya eran True y además cumplen la condición
+            # Es un operador AND bit a bit
             if op == "<":
                 mask &= col_data < value
             elif op == ">":
@@ -163,7 +165,11 @@ class GeneticRuleMiner:
                 if pd.api.types.is_numeric_dtype(self.df[col]):
                     mask &= col_data == float(value)
                 else:
-                    mask &= self.df[col].astype(str).values == str(value)
+                    mask &= (
+                        col_data == float(value)
+                        if pd.api.types.is_numeric_dtype(self.df[col])
+                        else self.df[col].astype(str).values == str(value)
+                    )
         return mask
 
     def _vectorized_support(self, conditions: Sequence[tuple]) -> float:
@@ -183,15 +189,21 @@ class GeneticRuleMiner:
         target_mask = self.df[self.target].values == rule["target"][1]
         return np.mean(target_mask[conditions_mask])
 
-    def format_rule(self, rule: dict) -> str:
-        conditions = []
-        for col, op, value in rule["conditions"]:
-            readable_op = self.OPERATOR_MAP.get(op, op)
-            if col in self._numeric_cols:
-                conditions.append(f"{col} {readable_op} {value:.2f}")
-            else:
-                conditions.append(f"{col} {readable_op} '{value}'")
+    def _format_condition(
+        self, col: str, op: str, value: Union[float, str]
+    ) -> str:
+        readable_op = self.OPERATOR_MAP.get(op, op)
+        return (
+            f"{col} {readable_op} {value:.2f}"
+            if col in self._numeric_cols
+            else f"{col} {readable_op} '{value}'"
+        )
 
+    def format_rule(self, rule: dict) -> str:
+        conditions = [
+            self._format_condition(col, op, value)
+            for col, op, value in rule["conditions"]
+        ]
         target_col, target_val = rule["target"]
         return (
             f"IF {' AND '.join(conditions)} THEN {target_col} = {target_val}"
@@ -212,7 +224,7 @@ class GeneticRuleMiner:
             col = new_rule["conditions"][idx][0]
             # Genera una nueva condición aleatoria sobre la misma columna
             new_rule["conditions"][idx] = self._create_condition(col)
-
+        self._complete_conditions(new_rule, min_user_conds=2, max_conditions=5)
         return new_rule
 
     def crossover(self, parent1: dict, parent2: dict) -> tuple[dict, dict]:
@@ -225,7 +237,6 @@ class GeneticRuleMiner:
         # Selecciona un punto de cruce aleatorio
         # entre 1 y min_len - 1 para asegurar que ambos padres
         # tengan al menos una condición en cada hijo
-
         split = self.rng.integers(1, min_len)
 
         child1 = {
@@ -240,67 +251,21 @@ class GeneticRuleMiner:
         }
 
         # Elimina condiciones duplicadas en ambos hijos
-        child1["conditions"] = list(
-            {cond[0]: cond for cond in child1["conditions"]}.values()
+        child1["conditions"] = self._deduplicate_conditions(
+            child1["conditions"]
         )
-        child2["conditions"] = list(
-            {cond[0]: cond for cond in child2["conditions"]}.values()
+        child2["conditions"] = self._deduplicate_conditions(
+            child2["conditions"]
         )
 
         # Asegurarse de que ambos hijos tengan al menos 2 condiciones (si no se añaden más del usuario)
-        while len(child1["conditions"]) < 2:
-            col = self.rng.choice(self.user_cols)
-            child1["conditions"].append(self._create_condition(col))
-
         # Añadir condiciones aleatorias de otras columnas
         # para completar hasta 5 condiciones
-        while len(child1["conditions"]) < 5:
-            col = self.rng.choice(self.df.columns)
-            if col not in [cond[0] for cond in child1["conditions"]]:
-                child1["conditions"].append(self._create_condition(col))
-
-        # Lo mismo para el segundo hijo
-        while len(child2["conditions"]) < 2:
-            col = self.rng.choice(self.user_cols)
-            child2["conditions"].append(self._create_condition(col))
-
-        while len(child2["conditions"]) < 5:
-            col = self.rng.choice(self.df.columns)
-            if col not in [cond[0] for cond in child2["conditions"]]:
-                child2["conditions"].append(self._create_condition(col))
-
-        # Asegurarse de que ambos hijos tengan al menos 2 condiciones
-        # y no más de 5 condiciones
         # Esto es importante porque si no, los hijos pueden ser inválidos
         # y no se pueden evaluar
-        # Si no se cumplen las condiciones, se añaden condiciones aleatorias
-        # en validate_rule_conditions
-
-        for child in [child1, child2]:
-            partial(
-                self._validate_rule_conditions,
-                min_user_conds=2,
-                max_conditions=5,
-            )(child)
-
+        self._complete_conditions(child1, min_user_conds=2, max_conditions=5)
+        self._complete_conditions(child2, min_user_conds=2, max_conditions=5)
         return child1, child2
-
-    def _validate_rule_conditions(
-        self, rule: dict, min_user_conds: int, max_conditions: int
-    ) -> None:
-        # Conteo de reglas de la columna de usuario
-        # para asegurarse de que al menos 2 condiciones de usuario
-        user_conds = sum(
-            1 for cond in rule["conditions"] if cond[0] in self.user_cols
-        )
-        # Si no hay suficientes condiciones de usuario, añade más
-        while (
-            user_conds < min_user_conds
-            and len(rule["conditions"]) < max_conditions
-        ):
-            col = self.rng.choice(self.user_cols)
-            rule["conditions"].append(self._create_condition(col))
-            user_conds += 1
 
     def _select_parents(self) -> Sequence[dict]:
         selected = []
@@ -329,36 +294,29 @@ class GeneticRuleMiner:
 
         return new_population
 
-    def _get_best_individual(self) -> dict:
-        fitness_scores = np.array(
-            [self.fitness(rule) for rule in self.population]
-        )
+    def _evaluate_population(self) -> np.ndarray:
+        return np.array([self.fitness(rule) for rule in self.population])
+
+    def _get_best_individual(
+        self, fitness_scores: Optional[np.ndarray] = None
+    ) -> dict:
+        """Optional fitness_scores parameter to avoid recalculating."""
+        if fitness_scores is None:
+            fitness_scores = self._evaluate_population()
         return self.population[np.argmax(fitness_scores)]
 
     def _update_tracking(self, generation: int) -> None:
-        # Evaluar las reglas solo una vez
-        current_fitness = np.array(
-            [self.fitness(rule) for rule in self.population]
-        )
-        best_idx = np.argmax(current_fitness)
-        best_rule = self.population[best_idx]
-
-        # Obtener support y confidence de la mejor regla en un solo paso
+        fitness_scores = self._evaluate_population()
+        best_rule = self._get_best_individual(fitness_scores)
         best_support = self._vectorized_support(best_rule["conditions"])
         best_confidence = self._vectorized_confidence(best_rule)
-
-        # Registrar la historia de la mejor fitness
-        self.best_fitness_history.append(current_fitness[best_idx])
-
-        # Formatear la regla y registrar la información
-        formatted_rule = self.format_rule(best_rule)
-
+        self.best_fitness_history.append(
+            fitness_scores[np.argmax(fitness_scores)]
+        )
         logger.info(
-            f"Generation {generation}: "
-            f"Best Fitness={current_fitness[best_idx]:.4f}, "
-            f"Support={best_support:.4f}, "
-            f"Confidence={best_confidence:.4f}, "
-            f"Rule: {formatted_rule}"
+            f"Generation {generation}: Best Fitness={fitness_scores[np.argmax(fitness_scores)]:.4f}, "
+            f"Support={best_support:.4f}, Confidence={best_confidence:.4f}, "
+            f"Rule: {self.format_rule(best_rule)}"
         )
 
     def evolve(self) -> dict:
@@ -379,23 +337,11 @@ class GeneticRuleMiner:
         return self._compile_results()
 
     def _compile_results(self) -> dict:
-        # Directamente usar el mejor individuo de la última generación
         best_rule = self._get_best_individual()
-
-        # Obtener los valores de soporte y confianza
-        best_support = self._vectorized_support(best_rule["conditions"])
-        best_confidence = self._vectorized_confidence(best_rule)
-
-        # Almacenar el mejor fitness
-        best_fitness = self.best_fitness_history[-1]
-
-        # Formatear la mejor regla
-        formatted_rule = self.format_rule(best_rule)
-
         return {
             "best_rule": best_rule,
-            "formatted_rule": formatted_rule,
-            "best_fitness": best_fitness,
-            "best_support": best_support,
-            "best_confidence": best_confidence,
+            "formatted_rule": self.format_rule(best_rule),
+            "best_fitness": self.best_fitness_history[-1],
+            "best_support": self._vectorized_support(best_rule["conditions"]),
+            "best_confidence": self._vectorized_confidence(best_rule),
         }

@@ -16,19 +16,17 @@ class DetailsService:
     def __init__(self, config: APIConfig = APIConfig()):
         self.config = config
 
-        # Optimización de parámetros
+        # Parameter optimization
         self.batch_size = 3
         self.request_delay = 0.35
         self.batch_delay = 1.0
         self.max_retries = 3
 
-        logger.info(
-            "DetailsService inicializado con configuración predeterminada."
-        )
+        logger.info("DetailsService initialized with default configuration.")
 
     def get_user_details(self, usernames: List[str]) -> BytesIO:
-        """Genera CSV con datos detallados optimizados"""
-        logger.info(f"Inicio de procesamiento para {len(usernames)} usuarios.")
+        """Generates a CSV with detailed optimized data"""
+        logger.info(f"Starting processing for {len(usernames)} users.")
         buffer = StringIO()
         writer = csv.writer(buffer)
         writer.writerow(
@@ -58,7 +56,7 @@ class DetailsService:
         for i in range(0, total, self.batch_size):
             batch = usernames[i : i + self.batch_size]
             logger.debug(
-                f"Procesando batch {i // self.batch_size + 1}: {batch}"
+                f"Processing batch {i // self.batch_size + 1}: {batch}"
             )
             batch_data = []
 
@@ -67,22 +65,18 @@ class DetailsService:
                     writer.writerow(data)
                     batch_data.append(data)
                 else:
-                    logger.warning(
-                        f"No se encontraron datos para el usuario: {username}"
-                    )
+                    logger.warning(f"No data found for user: {username}")
 
-            logger.info(f"Procesados {min(i+self.batch_size, total)}/{total}")
+            logger.info(f"Processed {min(i+self.batch_size, total)}/{total}")
             self._handle_rate_limits(len(batch_data))
 
-        logger.info(
-            f"Tiempo total de procesamiento: {time.time()-start_time:.2f}s"
-        )
+        logger.info(f"Total processing time: {time.time()-start_time:.2f}s")
         buffer.seek(0)
         return BytesIO(buffer.getvalue().encode("utf-8"))
 
     def _fetch_user_data(self, username: str) -> Optional[list]:
-        """Obtiene datos de usuario con reintentos"""
-        logger.debug(f"Solicitando datos para el usuario: {username}")
+        """Fetches user data with retries"""
+        logger.debug(f"Requesting data for user: {username}")
         for attempt in range(self.max_retries):
             try:
                 response = requests.get(
@@ -92,33 +86,31 @@ class DetailsService:
 
                 if response.status_code == 200:
                     logger.debug(
-                        f"Datos obtenidos exitosamente para {username}."
+                        f"Successfully retrieved data for {username}."
                     )
                     return self._parse_response(response.json())
 
                 if response.status_code == 404:
-                    logger.info(f"Usuario no encontrado: {username}")
+                    logger.info(f"User not found: {username}")
                     return None
 
                 logger.warning(
-                    f"Intento {attempt+1} fallido para {username} (HTTP {response.status_code})."
+                    f"Attempt {attempt+1} failed for {username} (HTTP {response.status_code})."
                 )
                 time.sleep(2**attempt)
 
             except Exception as e:
                 logger.error(
-                    f"Error en intento {attempt+1} para {username}: {str(e)}"
+                    f"Error on attempt {attempt+1} for {username}: {str(e)}"
                 )
                 time.sleep(2**attempt)
 
-        logger.error(
-            f"Fallaron todos los intentos para obtener datos de {username}."
-        )
+        logger.error(f"All attempts to fetch data for {username} failed.")
         return None
 
     def _parse_response(self, response: dict) -> list:
-        """Extrae y estructura los datos relevantes"""
-        logger.debug("Parseando respuesta de la API.")
+        """Extracts and structures relevant data"""
+        logger.debug("Parsing API response.")
         data = response.get("data", {})
         stats = data.get("statistics", {}).get("anime", {})
 
@@ -142,9 +134,9 @@ class DetailsService:
         ]
 
     def _handle_rate_limits(self, batch_size: int):
-        """Gestiona los límites de la API"""
+        """Handles API rate limits"""
         if batch_size > 0:
             logger.debug(
-                f"Aplicando retraso de {self.batch_delay}s para respetar límites de la API."
+                f"Applying a delay of {self.batch_delay}s to respect API rate limits."
             )
             time.sleep(self.batch_delay)

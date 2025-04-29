@@ -16,16 +16,16 @@ class UserService:
     def __init__(self, config: APIConfig = APIConfig()):
         self.config = config
         logger.info(
-            "UserService inicializado con configuración: %s", self.config
+            "UserService initialized with configuration: %s", self.config
         )
 
     def _fetch_with_retry(self, user_id: int) -> Optional[dict]:
-        """Lógica de reintentos con manejo de errores"""
-        logger.debug("Iniciando _fetch_with_retry para user_id: %d", user_id)
+        """Retry logic with error handling"""
+        logger.debug("Starting _fetch_with_retry for user_id: %d", user_id)
         for attempt in range(self.config.max_retries):
             try:
                 logger.debug(
-                    "Intento %d para user_id: %d", attempt + 1, user_id
+                    "Attempt %d for user_id: %d", attempt + 1, user_id
                 )
                 response = requests.get(
                     f"https://api.jikan.moe/v4/users/userbyid/{user_id}",
@@ -33,40 +33,36 @@ class UserService:
                 )
 
                 if response.status_code == 200:
-                    logger.info(
-                        "Usuario ID %d encontrado exitosamente", user_id
-                    )
+                    logger.info("User ID %d successfully found", user_id)
                     return response.json().get("data")
                 elif response.status_code == 404:
-                    logger.warning(
-                        "Usuario ID %d no encontrado (404)", user_id
-                    )
+                    logger.warning("User ID %d not found (404)", user_id)
                     return None
 
                 response.raise_for_status()
 
             except requests.exceptions.RequestException as e:
                 logger.error(
-                    "Error en intento %d para user_id %d: %s",
+                    "Error on attempt %d for user_id %d: %s",
                     attempt + 1,
                     user_id,
                     str(e),
                 )
                 if attempt < self.config.max_retries - 1:
-                    logger.debug("Esperando antes del próximo intento...")
-                    time.sleep(2**attempt)  # Backoff exponencial
+                    logger.debug("Waiting before the next attempt...")
+                    time.sleep(2**attempt)  # Exponential backoff
 
         logger.error(
-            "Usuario ID %d no disponible después de %d intentos",
+            "User ID %d unavailable after %d attempts",
             user_id,
             self.config.max_retries,
         )
         return None
 
     def generate_userlist(self, start_id: int, end_id: int) -> BytesIO:
-        """Genera lista de usuarios con búsqueda por rango de IDs"""
+        """Generate a list of users by searching a range of IDs"""
         logger.info(
-            "Iniciando generación de lista de usuarios para IDs %d a %d",
+            "Starting user list generation for IDs %d to %d",
             start_id,
             end_id,
         )
@@ -83,7 +79,7 @@ class UserService:
 
         for user_id in range(start_id, end_id + 1):
             try:
-                logger.debug("Procesando user_id: %d", user_id)
+                logger.debug("Processing user_id: %d", user_id)
                 data = self._fetch_with_retry(user_id)
                 user_record = {
                     "user_id": user_id,
@@ -94,41 +90,39 @@ class UserService:
                 if data:
                     writer.writerow(user_record)
                     valid_users += 1
-                    logger.info("Usuario ID %d agregado a la lista", user_id)
+                    logger.info("User ID %d added to the list", user_id)
                 else:
-                    logger.warning(
-                        "Usuario ID %d no tiene datos válidos", user_id
-                    )
+                    logger.warning("User ID %d has no valid data", user_id)
 
                 time.sleep(self.config.request_delay)
 
             except Exception as e:
                 logger.error(
-                    "Error crítico procesando ID %d: %s", user_id, str(e)
+                    "Critical error processing ID %d: %s", user_id, str(e)
                 )
             finally:
                 total_processed += 1
                 if total_processed % 100 == 0:
                     logger.info(
-                        "Progreso: %.1f%% (%d/%d)",
+                        "Progress: %.1f%% (%d/%d)",
                         total_processed / (end_id - start_id + 1) * 100,
                         total_processed,
                         end_id - start_id + 1,
                     )
 
-        # Convertir a bytes antes de retornar
+        # Convert to bytes before returning
         text_buffer.seek(0)
         byte_buffer = BytesIO(text_buffer.getvalue().encode("utf-8"))
         logger.info(
-            "Generación completada. Usuarios válidos: %d/%d",
+            "Generation completed. Valid users: %d/%d",
             valid_users,
             total_processed,
         )
         return byte_buffer
 
     def get_users(self, user_ids: List[int]) -> BytesIO:
-        """Método existente para obtener múltiples usuarios (compatibilidad)"""
-        logger.info("Iniciando obtención de usuarios para IDs: %s", user_ids)
+        """Existing method to fetch multiple users (compatibility)"""
+        logger.info("Starting user retrieval for IDs: %s", user_ids)
         buffer = BytesIO()
         writer = csv.DictWriter(
             buffer, fieldnames=["user_id", "username", "user_url"]
@@ -136,7 +130,7 @@ class UserService:
         writer.writeheader()
 
         for user_id in user_ids:
-            logger.debug("Procesando user_id: %d", user_id)
+            logger.debug("Processing user_id: %d", user_id)
             data = self._fetch_with_retry(user_id)
             if data:
                 record = {
@@ -145,11 +139,11 @@ class UserService:
                     "user_url": data.get("url"),
                 }
                 writer.writerow(record)
-                logger.info("Usuario ID %d agregado al archivo", user_id)
+                logger.info("User ID %d added to the file", user_id)
                 time.sleep(self.config.request_delay)
             else:
-                logger.warning("Usuario ID %d no tiene datos válidos", user_id)
+                logger.warning("User ID %d has no valid data", user_id)
 
         buffer.seek(0)
-        logger.info("Obtención de usuarios completada")
+        logger.info("User retrieval completed")
         return buffer

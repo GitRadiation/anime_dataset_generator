@@ -18,7 +18,7 @@ class AnimeService:
         logger.info("AnimeService initialized with config: %s", self.config)
 
     def _fetch_anime(self, anime_id: int) -> Optional[dict]:
-        """Obtiene los datos del anime desde la API."""
+        """Fetch anime data from the API."""
         for attempt in range(self.config.max_retries):
             try:
                 logger.debug(
@@ -53,7 +53,7 @@ class AnimeService:
         )
         buffer = BytesIO()
         records = []
-        r = Rake()  # Inicializar RAKE una sola vez
+        r = Rake()  # Initialize RAKE only once
 
         for anime_id in range(start_id, end_id + 1):
             logger.debug("Processing anime with ID %d", anime_id)

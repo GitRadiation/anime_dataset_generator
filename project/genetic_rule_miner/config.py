@@ -1,5 +1,4 @@
-"""Application configuration settings."""
-
+# config.py
 import os
 from dataclasses import dataclass
 from typing import Optional
@@ -7,7 +6,8 @@ from typing import Optional
 
 @dataclass
 class APIConfig:
-    """Configuration for external API services."""
+    """Configuration for external API services"""
+
     base_url: str = "https://api.jikan.moe/v4/"
     max_retries: int = 3
     timeout: float = 10.0
@@ -19,17 +19,17 @@ class APIConfig:
         if any(val < 0 for val in (self.timeout, self.request_delay)):
             raise ValueError("Negative values not allowed for time settings")
 
+
 @dataclass
 class DBConfig:
-    """Database connection configuration."""
+    """Configuration for database connections"""
+
     host: str = os.getenv("DB_HOST", "localhost")
-    port: int = int(os.getenv("DB_PORT", "5432"))
+    port: int = int(os.getenv("DB_PORT", 5432))
     database: str = os.getenv("DB_NAME", "mydatabase")
     user: str = os.getenv("DB_USER", "postgres")
     password: str = os.getenv("DB_PASS", "postgres")
     sqlite_file: Optional[str] = None
-    pool_size: int = 5
-    pool_timeout: int = 30
 
     def __post_init__(self) -> None:
         """Validate database configuration."""
