@@ -10922,3 +10922,19 @@ genetic_rule_miner.utils.exceptions.DatabaseError: Connection failed
 2025-04-29 12:39:46 - genetic_rule_miner.bbdd_maker.score_service - [92mINFO[0m - Data retrieved for james2k.
 2025-04-29 12:39:46 - genetic_rule_miner.bbdd_maker.score_service - [93mWARNING[0m - No data for Emp-.
 2025-04-29 12:39:47 - genetic_rule_miner.bbdd_maker.score_service - [92mINFO[0m - Data retrieved for koalatees.
+2025-04-29 12:39:48 - genetic_rule_miner.bbdd_maker.score_service - [92mINFO[0m - Data retrieved for Ramp.
+2025-04-29 12:39:49 - genetic_rule_miner.bbdd_maker.score_service - [92mINFO[0m - Data retrieved for Achtor.
+2025-04-29 12:39:49 - genetic_rule_miner.bbdd_maker.score_service - [92mINFO[0m - Data retrieved for jaames.
+2025-04-29 12:39:50 - genetic_rule_miner.bbdd_maker.score_service - [92mINFO[0m - Data retrieved for wicked2k.
+2025-04-29 12:39:51 - genetic_rule_miner.bbdd_maker.score_service - [93mWARNING[0m - HTTP response 418 for xich.
+2025-04-29 12:39:51 - genetic_rule_miner.bbdd_maker.score_service - [93mWARNING[0m - No data for xich.
+2025-04-29 12:39:51 - genetic_rule_miner.bbdd_maker.score_service - [92mINFO[0m - Data retrieved for marvin_9martian.
+2025-04-29 12:39:52 - genetic_rule_miner.bbdd_maker.score_service - [92mINFO[0m - Data retrieved for sorairo.
+2025-04-29 12:39:52 - genetic_rule_miner.bbdd_maker.score_service - [92mINFO[0m - Batch processed with 3179 records retrieved.
+2025-04-29 12:39:52 - genetic_rule_miner.bbdd_maker.score_service - [92mINFO[0m - Processed: 27/27 (100.0%).
+2025-04-29 12:39:52 - genetic_rule_miner.bbdd_maker.score_service - [92mINFO[0m - Processing complete. Generating CSV file.
+2025-04-29 12:39:52 - __main__ - [92mINFO[0m - ✅ Successfully retrieved base data
+2025-04-29 12:39:52 - __main__ - [92mINFO[0m - 🔧 Phase 3: Preprocessing and Data Loading
+2025-04-29 12:39:52 - __main__ - [92mINFO[0m - 🔗 Connecting to the database...
+2025-04-29 12:39:53 - genetic_rule_miner.data.database - [92mINFO[0m - SQLAlchemy engine initialized
+2025-04-29 12:39:53 - __main__ - [92mINFO[0m - ✅ DatabaseManager loaded successfully
