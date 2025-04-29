@@ -28,7 +28,6 @@ class DatabaseManager:
     @contextmanager
     def connection(self):
         """Provide a database connection from the SQLAlchemy engine."""
-        # Return the engine directly, instead of the session
         try:
             if self._engine:
                 yield self._engine.connect()  # Yield a raw connection
@@ -37,10 +36,6 @@ class DatabaseManager:
         except Exception as e:
             logger.error("Database connection error", exc_info=True)
             raise DatabaseError("Connection failed") from e
-        finally:
-            # Ensure we close the connection after usage
-            if self._engine:
-                self._engine.dispose()
 
     def initialize(self) -> None:
         """Initialize SQLAlchemy engine and session factory."""
@@ -61,6 +56,45 @@ class DatabaseManager:
                 "SQLAlchemy engine initialization failed"
             ) from e
 
+    def _construct_sql(
+        self,
+        table,
+        columns,
+        conflict_columns,
+        conflict_action,
+        update_clause=None,
+    ):
+        """Construct the SQL query for inserting or updating data."""
+        placeholders = ", ".join([f":{col}" for col in columns])
+
+        if conflict_columns:
+            conflict_str = f"ON CONFLICT ({', '.join(conflict_columns)})"
+            if conflict_action == "DO UPDATE":
+                update_clause = update_clause or ", ".join(
+                    [
+                        f"{col} = EXCLUDED.{col}"
+                        for col in columns
+                        if col not in conflict_columns
+                    ]
+                )
+                sql = f"""
+                    INSERT INTO {table} ({', '.join(columns)})
+                    VALUES ({placeholders})
+                    {conflict_str} DO UPDATE SET {update_clause}
+                """
+            else:
+                sql = f"""
+                    INSERT INTO {table} ({', '.join(columns)})
+                    VALUES ({placeholders})
+                    {conflict_str} {conflict_action}
+                """
+        else:
+            sql = f"""
+                INSERT INTO {table} ({', '.join(columns)})
+                VALUES ({placeholders})
+            """
+        return sql
+
     def copy_from_buffer(
         self, buffer, table: str, conflict_action="DO UPDATE"
     ):
@@ -69,6 +103,9 @@ class DatabaseManager:
         reader = csv.DictReader(buffer)
         columns = reader.fieldnames
 
+        # Determine conflict columns based on table
+        table_conflict_columns = self._get_conflict_columns(table)
+
         with self.connection() as conn:
             for row in reader:
                 cleaned_row = {
@@ -76,44 +113,21 @@ class DatabaseManager:
                     for key, value in row.items()
                 }
 
-                # Determine conflict columns based on table
-                if table == "user_score":
-                    conflict_columns = ["user_id", "anime_id"]
-                elif table == "anime_dataset":
-                    conflict_columns = ["anime_id"]
-                elif table == "user_details":
-                    conflict_columns = ["mal_id"]
-                else:
-                    conflict_columns = []  # Default to no conflict resolution
-
-                placeholders = ", ".join([f":{col}" for col in columns])
-
-                if conflict_columns and conflict_action == "DO UPDATE":
-                    update_clause = ", ".join(
-                        [
-                            f"{col} = EXCLUDED.{col}"
-                            for col in columns
-                            if col not in conflict_columns
-                        ]
-                    )
-
-                    sql = f"""
-                        INSERT INTO {table} ({', '.join(columns)})
-                        VALUES ({placeholders})
-                        ON CONFLICT ({', '.join(conflict_columns)}) 
-                        DO UPDATE SET {update_clause}
-                    """
-                elif conflict_columns:
-                    sql = f"""
-                        INSERT INTO {table} ({', '.join(columns)})
-                        VALUES ({placeholders})
-                        ON CONFLICT ({', '.join(conflict_columns)}) {conflict_action}
-                    """
-                else:
-                    sql = f"""
-                        INSERT INTO {table} ({', '.join(columns)})
-                        VALUES ({placeholders})
-                    """
+                # Construct the SQL query for the insert or update operation
+                sql = self._construct_sql(
+                    table, columns, table_conflict_columns, conflict_action
+                )
 
                 # Execute the query using the raw connection
                 conn.execute(text(sql), cleaned_row)
+
+    def _get_conflict_columns(self, table: str):
+        """Return the list of conflict columns based on the table."""
+        if table == "user_score":
+            return ["user_id", "anime_id"]
+        elif table == "anime_dataset":
+            return ["anime_id"]
+        elif table == "user_details":
+            return ["mal_id"]
+        else:
+            return []  # Default to no conflict resolution
