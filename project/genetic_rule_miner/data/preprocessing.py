@@ -91,7 +91,7 @@ def preprocess_data(df: pd.DataFrame) -> pd.DataFrame:
             df = clean_and_bin_column(
                 df,
                 "duration",
-                [0, 20, 25, max(30, int(df["duration"].max()) + 1)],
+                [0, 20, 25, max(30, df["duration"].max() + 1)],
                 ["short", "standard", "long"],
             )
 
