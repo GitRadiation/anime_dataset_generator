@@ -16,7 +16,7 @@ CREATE TABLE anime_dataset (
     producers VARCHAR(255),
     studios VARCHAR(255),
     source VARCHAR(50),
-    duration VARCHAR(50),
+    duration INTEGER,
     rating VARCHAR(50),
     rank INTEGER,
     popularity INTEGER,
