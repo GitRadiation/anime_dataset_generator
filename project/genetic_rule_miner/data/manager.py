@@ -22,6 +22,13 @@ class DataManager:
         """Initialize with database configuration."""
         self.db_manager = DatabaseManager(db_config)
 
+    def _load_and_clean_data(
+        self, table_name: str, conn: object
+    ) -> pd.DataFrame:
+        """Load data from a table and preprocess it."""
+        data = pd.read_sql(f"SELECT * FROM {table_name}", conn)
+        return preprocess_data(clean_string_columns(data))
+
     @log_execution
     def load_and_preprocess_data(
         self,
@@ -30,24 +37,13 @@ class DataManager:
         tables = ["user_details", "anime_dataset", "user_score"]
         try:
             with self.db_manager.connection() as conn:
-                # Load data
-                user_details = pd.read_sql(f"SELECT * FROM {tables[0]}", conn)
-                anime_data = pd.read_sql(f"SELECT * FROM {tables[1]}", conn)
-                user_scores = pd.read_sql(
-                    f"SELECT * FROM {tables[2]}",
-                    conn,
-                    parse_dates=["timestamp"],
+                # Load and clean data for each table using the helper function
+                user_details_cleaned = self._load_and_clean_data(
+                    tables[0], conn
                 )
-
-                # Clean and preprocess data
-                user_details_cleaned = preprocess_data(
-                    clean_string_columns(user_details)
-                )
-                anime_data_cleaned = preprocess_data(
-                    clean_string_columns(anime_data)
-                )
-                user_scores_cleaned = preprocess_data(
-                    clean_string_columns(user_scores)
+                anime_data_cleaned = self._load_and_clean_data(tables[1], conn)
+                user_scores_cleaned = self._load_and_clean_data(
+                    tables[2], conn
                 )
 
                 return (
