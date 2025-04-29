@@ -1,7 +1,8 @@
 import csv
 from contextlib import contextmanager
+from typing import Generator
 
-from sqlalchemy import create_engine, text
+from sqlalchemy import Connection, create_engine, text
 
 from genetic_rule_miner.config import DBConfig
 from genetic_rule_miner.utils.exceptions import DatabaseError
@@ -26,16 +27,21 @@ class DatabaseManager:
             logger.info("SQLAlchemy engine closed")
 
     @contextmanager
-    def connection(self):
+    def connection(self) -> Generator[Connection, None, None]:
         """Provide a database connection from the SQLAlchemy engine."""
+        connection = None
         try:
             if self._engine:
-                yield self._engine.connect()  # Yield a raw connection
+                connection = self._engine.connect()  # Create a raw connection
+                yield connection  # Yield the connection
             else:
                 raise DatabaseError("Database engine not initialized")
         except Exception as e:
             logger.error("Database connection error", exc_info=True)
             raise DatabaseError("Connection failed") from e
+        finally:
+            if connection:
+                connection.close()  # Ensure the connection is closed
 
     def initialize(self) -> None:
         """Initialize SQLAlchemy engine and session factory."""
@@ -63,7 +69,7 @@ class DatabaseManager:
         conflict_columns,
         conflict_action,
         update_clause=None,
-    ):
+    ) -> str:
         """Construct the SQL query for inserting or updating data."""
         placeholders = ", ".join([f":{col}" for col in columns])
 
@@ -97,7 +103,7 @@ class DatabaseManager:
 
     def copy_from_buffer(
         self, buffer, table: str, conflict_action="DO UPDATE"
-    ):
+    ) -> None:
         """Copy data from the buffer to the PostgreSQL table."""
         buffer.seek(0)
         reader = csv.DictReader(buffer)
@@ -121,7 +127,7 @@ class DatabaseManager:
                 # Execute the query using the raw connection
                 conn.execute(text(sql), cleaned_row)
 
-    def _get_conflict_columns(self, table: str):
+    def _get_conflict_columns(self, table: str) -> list:
         """Return the list of conflict columns based on the table."""
         if table == "user_score":
             return ["user_id", "anime_id"]
@@ -131,3 +137,29 @@ class DatabaseManager:
             return ["mal_id"]
         else:
             return []  # Default to no conflict resolution
+
+    def load_data(self, data, table: str) -> None:
+        """Load data into the specified PostgreSQL table."""
+        if data.empty:
+            logger.warning(f"No data to load into table {table}")
+            return
+
+        # Convert the DataFrame to a list of dictionaries
+        records = data.to_dict(orient="records")
+        columns = data.columns.tolist()
+
+        # Determine conflict columns based on table
+        table_conflict_columns = self._get_conflict_columns(table)
+
+        with self.connection() as conn:
+            for record in records:
+                # Construct the SQL query for the insert or update operation
+                sql = self._construct_sql(
+                    table,
+                    columns,
+                    table_conflict_columns,
+                    conflict_action="DO UPDATE",
+                )
+
+                # Execute the query using the raw connection
+                conn.execute(text(sql), record)
