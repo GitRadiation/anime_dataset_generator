@@ -10316,3 +10316,609 @@ genetic_rule_miner.utils.exceptions.DatabaseError: Connection failed
 2025-04-29 10:06:01 - __main__ - [92mINFO[0m - 📥 Starting data loading...
 2025-04-29 10:07:04 - __main__ - [92mINFO[0m - ✅ Data loading completed successfully
 2025-04-29 10:07:04 - genetic_rule_miner.data.database - [92mINFO[0m - SQLAlchemy engine closed
+2025-04-29 12:36:12 - __main__ - [92mINFO[0m - 🔧 Phase 1: Initialization
+2025-04-29 12:36:12 - __main__ - [92mINFO[0m - 📡 Phase 2: Data Retrieval
+2025-04-29 12:36:12 - __main__ - [92mINFO[0m - 🤔 Attempt 1 to retrieve base data...
+2025-04-29 12:36:12 - __main__ - [92mINFO[0m - 📡 Retrieving anime data...
+2025-04-29 12:36:12 - genetic_rule_miner.bbdd_maker.anime_service - [92mINFO[0m - AnimeService initialized with config: APIConfig(base_url='https://api.jikan.moe/v4/', max_retries=3, timeout=10.0, request_delay=0.35, rate_limit=3)
+2025-04-29 12:36:12 - genetic_rule_miner.bbdd_maker.anime_service - [92mINFO[0m - Starting to fetch anime data from ID 1 to 100
+2025-04-29 12:36:13 - genetic_rule_miner.bbdd_maker.anime_service - [93mWARNING[0m - Failed to fetch anime with ID 2 on attempt 1: 404 Client Error: Not Found for url: https://api.jikan.moe/v4/anime/2
+2025-04-29 12:36:13 - genetic_rule_miner.bbdd_maker.anime_service - [93mWARNING[0m - Failed to fetch anime with ID 2 on attempt 2: 404 Client Error: Not Found for url: https://api.jikan.moe/v4/anime/2
+2025-04-29 12:36:13 - genetic_rule_miner.bbdd_maker.anime_service - [93mWARNING[0m - Failed to fetch anime with ID 2 on attempt 3: 429 Client Error: Too Many Requests for url: https://api.jikan.moe/v4/anime/2
+2025-04-29 12:36:13 - genetic_rule_miner.bbdd_maker.anime_service - [91mERROR[0m - Failed to fetch anime with ID 2 after 3 attempts
+2025-04-29 12:36:13 - genetic_rule_miner.bbdd_maker.anime_service - [92mINFO[0m - No data found for anime ID 2
+2025-04-29 12:36:13 - genetic_rule_miner.bbdd_maker.anime_service - [93mWARNING[0m - Failed to fetch anime with ID 3 on attempt 1: 429 Client Error: Too Many Requests for url: https://api.jikan.moe/v4/anime/3
+2025-04-29 12:36:14 - genetic_rule_miner.bbdd_maker.anime_service - [93mWARNING[0m - Failed to fetch anime with ID 3 on attempt 2: 404 Client Error: Not Found for url: https://api.jikan.moe/v4/anime/3
+2025-04-29 12:36:14 - genetic_rule_miner.bbdd_maker.anime_service - [93mWARNING[0m - Failed to fetch anime with ID 3 on attempt 3: 429 Client Error: Too Many Requests for url: https://api.jikan.moe/v4/anime/3
+2025-04-29 12:36:14 - genetic_rule_miner.bbdd_maker.anime_service - [91mERROR[0m - Failed to fetch anime with ID 3 after 3 attempts
+2025-04-29 12:36:14 - genetic_rule_miner.bbdd_maker.anime_service - [92mINFO[0m - No data found for anime ID 3
+2025-04-29 12:36:14 - genetic_rule_miner.bbdd_maker.anime_service - [93mWARNING[0m - Failed to fetch anime with ID 4 on attempt 1: 429 Client Error: Too Many Requests for url: https://api.jikan.moe/v4/anime/4
+2025-04-29 12:36:14 - genetic_rule_miner.bbdd_maker.anime_service - [93mWARNING[0m - Failed to fetch anime with ID 4 on attempt 2: 429 Client Error: Too Many Requests for url: https://api.jikan.moe/v4/anime/4
+2025-04-29 12:36:14 - genetic_rule_miner.bbdd_maker.anime_service - [93mWARNING[0m - Failed to fetch anime with ID 4 on attempt 3: 429 Client Error: Too Many Requests for url: https://api.jikan.moe/v4/anime/4
+2025-04-29 12:36:14 - genetic_rule_miner.bbdd_maker.anime_service - [91mERROR[0m - Failed to fetch anime with ID 4 after 3 attempts
+2025-04-29 12:36:14 - genetic_rule_miner.bbdd_maker.anime_service - [92mINFO[0m - No data found for anime ID 4
+2025-04-29 12:36:15 - genetic_rule_miner.bbdd_maker.anime_service - [93mWARNING[0m - Failed to fetch anime with ID 6 on attempt 1: 429 Client Error: Too Many Requests for url: https://api.jikan.moe/v4/anime/6
+2025-04-29 12:36:15 - genetic_rule_miner.bbdd_maker.anime_service - [93mWARNING[0m - Failed to fetch anime with ID 6 on attempt 2: 429 Client Error: Too Many Requests for url: https://api.jikan.moe/v4/anime/6
+2025-04-29 12:36:15 - genetic_rule_miner.bbdd_maker.anime_service - [93mWARNING[0m - Failed to fetch anime with ID 6 on attempt 3: 429 Client Error: Too Many Requests for url: https://api.jikan.moe/v4/anime/6
+2025-04-29 12:36:15 - genetic_rule_miner.bbdd_maker.anime_service - [91mERROR[0m - Failed to fetch anime with ID 6 after 3 attempts
+2025-04-29 12:36:15 - genetic_rule_miner.bbdd_maker.anime_service - [92mINFO[0m - No data found for anime ID 6
+2025-04-29 12:36:16 - genetic_rule_miner.bbdd_maker.anime_service - [93mWARNING[0m - Failed to fetch anime with ID 8 on attempt 1: 429 Client Error: Too Many Requests for url: https://api.jikan.moe/v4/anime/8
+2025-04-29 12:36:16 - genetic_rule_miner.bbdd_maker.anime_service - [93mWARNING[0m - Failed to fetch anime with ID 8 on attempt 2: 429 Client Error: Too Many Requests for url: https://api.jikan.moe/v4/anime/8
+2025-04-29 12:36:16 - genetic_rule_miner.bbdd_maker.anime_service - [93mWARNING[0m - Failed to fetch anime with ID 8 on attempt 3: 429 Client Error: Too Many Requests for url: https://api.jikan.moe/v4/anime/8
+2025-04-29 12:36:16 - genetic_rule_miner.bbdd_maker.anime_service - [91mERROR[0m - Failed to fetch anime with ID 8 after 3 attempts
+2025-04-29 12:36:16 - genetic_rule_miner.bbdd_maker.anime_service - [92mINFO[0m - No data found for anime ID 8
+2025-04-29 12:36:16 - genetic_rule_miner.bbdd_maker.anime_service - [93mWARNING[0m - Failed to fetch anime with ID 9 on attempt 1: 429 Client Error: Too Many Requests for url: https://api.jikan.moe/v4/anime/9
+2025-04-29 12:36:17 - genetic_rule_miner.bbdd_maker.anime_service - [93mWARNING[0m - Failed to fetch anime with ID 9 on attempt 2: 404 Client Error: Not Found for url: https://api.jikan.moe/v4/anime/9
+2025-04-29 12:36:17 - genetic_rule_miner.bbdd_maker.anime_service - [93mWARNING[0m - Failed to fetch anime with ID 9 on attempt 3: 429 Client Error: Too Many Requests for url: https://api.jikan.moe/v4/anime/9
+2025-04-29 12:36:17 - genetic_rule_miner.bbdd_maker.anime_service - [91mERROR[0m - Failed to fetch anime with ID 9 after 3 attempts
+2025-04-29 12:36:17 - genetic_rule_miner.bbdd_maker.anime_service - [92mINFO[0m - No data found for anime ID 9
+2025-04-29 12:36:17 - genetic_rule_miner.bbdd_maker.anime_service - [93mWARNING[0m - Failed to fetch anime with ID 10 on attempt 1: 429 Client Error: Too Many Requests for url: https://api.jikan.moe/v4/anime/10
+2025-04-29 12:36:17 - genetic_rule_miner.bbdd_maker.anime_service - [93mWARNING[0m - Failed to fetch anime with ID 10 on attempt 2: 429 Client Error: Too Many Requests for url: https://api.jikan.moe/v4/anime/10
+2025-04-29 12:36:17 - genetic_rule_miner.bbdd_maker.anime_service - [93mWARNING[0m - Failed to fetch anime with ID 10 on attempt 3: 404 Client Error: Not Found for url: https://api.jikan.moe/v4/anime/10
+2025-04-29 12:36:17 - genetic_rule_miner.bbdd_maker.anime_service - [91mERROR[0m - Failed to fetch anime with ID 10 after 3 attempts
+2025-04-29 12:36:17 - genetic_rule_miner.bbdd_maker.anime_service - [92mINFO[0m - No data found for anime ID 10
+2025-04-29 12:36:18 - genetic_rule_miner.bbdd_maker.anime_service - [93mWARNING[0m - Failed to fetch anime with ID 11 on attempt 1: 429 Client Error: Too Many Requests for url: https://api.jikan.moe/v4/anime/11
+2025-04-29 12:36:18 - genetic_rule_miner.bbdd_maker.anime_service - [93mWARNING[0m - Failed to fetch anime with ID 11 on attempt 2: 429 Client Error: Too Many Requests for url: https://api.jikan.moe/v4/anime/11
+2025-04-29 12:36:18 - genetic_rule_miner.bbdd_maker.anime_service - [93mWARNING[0m - Failed to fetch anime with ID 11 on attempt 3: 429 Client Error: Too Many Requests for url: https://api.jikan.moe/v4/anime/11
+2025-04-29 12:36:18 - genetic_rule_miner.bbdd_maker.anime_service - [91mERROR[0m - Failed to fetch anime with ID 11 after 3 attempts
+2025-04-29 12:36:18 - genetic_rule_miner.bbdd_maker.anime_service - [92mINFO[0m - No data found for anime ID 11
+2025-04-29 12:36:18 - genetic_rule_miner.bbdd_maker.anime_service - [93mWARNING[0m - Failed to fetch anime with ID 12 on attempt 1: 429 Client Error: Too Many Requests for url: https://api.jikan.moe/v4/anime/12
+2025-04-29 12:36:18 - genetic_rule_miner.bbdd_maker.anime_service - [93mWARNING[0m - Failed to fetch anime with ID 12 on attempt 2: 404 Client Error: Not Found for url: https://api.jikan.moe/v4/anime/12
+2025-04-29 12:36:19 - genetic_rule_miner.bbdd_maker.anime_service - [93mWARNING[0m - Failed to fetch anime with ID 12 on attempt 3: 429 Client Error: Too Many Requests for url: https://api.jikan.moe/v4/anime/12
+2025-04-29 12:36:19 - genetic_rule_miner.bbdd_maker.anime_service - [91mERROR[0m - Failed to fetch anime with ID 12 after 3 attempts
+2025-04-29 12:36:19 - genetic_rule_miner.bbdd_maker.anime_service - [92mINFO[0m - No data found for anime ID 12
+2025-04-29 12:36:19 - genetic_rule_miner.bbdd_maker.anime_service - [93mWARNING[0m - Failed to fetch anime with ID 13 on attempt 1: 429 Client Error: Too Many Requests for url: https://api.jikan.moe/v4/anime/13
+2025-04-29 12:36:19 - genetic_rule_miner.bbdd_maker.anime_service - [93mWARNING[0m - Failed to fetch anime with ID 13 on attempt 2: 429 Client Error: Too Many Requests for url: https://api.jikan.moe/v4/anime/13
+2025-04-29 12:36:19 - genetic_rule_miner.bbdd_maker.anime_service - [93mWARNING[0m - Failed to fetch anime with ID 13 on attempt 3: 429 Client Error: Too Many Requests for url: https://api.jikan.moe/v4/anime/13
+2025-04-29 12:36:19 - genetic_rule_miner.bbdd_maker.anime_service - [91mERROR[0m - Failed to fetch anime with ID 13 after 3 attempts
+2025-04-29 12:36:19 - genetic_rule_miner.bbdd_maker.anime_service - [92mINFO[0m - No data found for anime ID 13
+2025-04-29 12:36:19 - genetic_rule_miner.bbdd_maker.anime_service - [93mWARNING[0m - Failed to fetch anime with ID 14 on attempt 1: 404 Client Error: Not Found for url: https://api.jikan.moe/v4/anime/14
+2025-04-29 12:36:20 - genetic_rule_miner.bbdd_maker.anime_service - [93mWARNING[0m - Failed to fetch anime with ID 14 on attempt 2: 429 Client Error: Too Many Requests for url: https://api.jikan.moe/v4/anime/14
+2025-04-29 12:36:20 - genetic_rule_miner.bbdd_maker.anime_service - [93mWARNING[0m - Failed to fetch anime with ID 14 on attempt 3: 429 Client Error: Too Many Requests for url: https://api.jikan.moe/v4/anime/14
+2025-04-29 12:36:20 - genetic_rule_miner.bbdd_maker.anime_service - [91mERROR[0m - Failed to fetch anime with ID 14 after 3 attempts
+2025-04-29 12:36:20 - genetic_rule_miner.bbdd_maker.anime_service - [92mINFO[0m - No data found for anime ID 14
+2025-04-29 12:36:20 - genetic_rule_miner.bbdd_maker.anime_service - [93mWARNING[0m - Failed to fetch anime with ID 15 on attempt 1: 429 Client Error: Too Many Requests for url: https://api.jikan.moe/v4/anime/15
+2025-04-29 12:36:20 - genetic_rule_miner.bbdd_maker.anime_service - [93mWARNING[0m - Failed to fetch anime with ID 15 on attempt 2: 429 Client Error: Too Many Requests for url: https://api.jikan.moe/v4/anime/15
+2025-04-29 12:36:21 - genetic_rule_miner.bbdd_maker.anime_service - [93mWARNING[0m - Failed to fetch anime with ID 16 on attempt 1: 429 Client Error: Too Many Requests for url: https://api.jikan.moe/v4/anime/16
+2025-04-29 12:36:21 - genetic_rule_miner.bbdd_maker.anime_service - [93mWARNING[0m - Failed to fetch anime with ID 16 on attempt 2: 429 Client Error: Too Many Requests for url: https://api.jikan.moe/v4/anime/16
+2025-04-29 12:36:21 - genetic_rule_miner.bbdd_maker.anime_service - [93mWARNING[0m - Failed to fetch anime with ID 16 on attempt 3: 429 Client Error: Too Many Requests for url: https://api.jikan.moe/v4/anime/16
+2025-04-29 12:36:21 - genetic_rule_miner.bbdd_maker.anime_service - [91mERROR[0m - Failed to fetch anime with ID 16 after 3 attempts
+2025-04-29 12:36:21 - genetic_rule_miner.bbdd_maker.anime_service - [92mINFO[0m - No data found for anime ID 16
+2025-04-29 12:36:22 - genetic_rule_miner.bbdd_maker.anime_service - [93mWARNING[0m - Failed to fetch anime with ID 18 on attempt 1: 429 Client Error: Too Many Requests for url: https://api.jikan.moe/v4/anime/18
+2025-04-29 12:36:22 - genetic_rule_miner.bbdd_maker.anime_service - [93mWARNING[0m - Failed to fetch anime with ID 18 on attempt 2: 429 Client Error: Too Many Requests for url: https://api.jikan.moe/v4/anime/18
+2025-04-29 12:36:22 - genetic_rule_miner.bbdd_maker.anime_service - [93mWARNING[0m - Failed to fetch anime with ID 18 on attempt 3: 429 Client Error: Too Many Requests for url: https://api.jikan.moe/v4/anime/18
+2025-04-29 12:36:22 - genetic_rule_miner.bbdd_maker.anime_service - [91mERROR[0m - Failed to fetch anime with ID 18 after 3 attempts
+2025-04-29 12:36:22 - genetic_rule_miner.bbdd_maker.anime_service - [92mINFO[0m - No data found for anime ID 18
+2025-04-29 12:36:22 - genetic_rule_miner.bbdd_maker.anime_service - [93mWARNING[0m - Failed to fetch anime with ID 19 on attempt 1: 429 Client Error: Too Many Requests for url: https://api.jikan.moe/v4/anime/19
+2025-04-29 12:36:23 - genetic_rule_miner.bbdd_maker.anime_service - [93mWARNING[0m - Failed to fetch anime with ID 20 on attempt 1: 429 Client Error: Too Many Requests for url: https://api.jikan.moe/v4/anime/20
+2025-04-29 12:36:23 - genetic_rule_miner.bbdd_maker.anime_service - [93mWARNING[0m - Failed to fetch anime with ID 20 on attempt 2: 429 Client Error: Too Many Requests for url: https://api.jikan.moe/v4/anime/20
+2025-04-29 12:36:23 - genetic_rule_miner.bbdd_maker.anime_service - [93mWARNING[0m - Failed to fetch anime with ID 20 on attempt 3: 429 Client Error: Too Many Requests for url: https://api.jikan.moe/v4/anime/20
+2025-04-29 12:36:23 - genetic_rule_miner.bbdd_maker.anime_service - [91mERROR[0m - Failed to fetch anime with ID 20 after 3 attempts
+2025-04-29 12:36:23 - genetic_rule_miner.bbdd_maker.anime_service - [92mINFO[0m - No data found for anime ID 20
+2025-04-29 12:36:24 - genetic_rule_miner.bbdd_maker.anime_service - [93mWARNING[0m - Failed to fetch anime with ID 22 on attempt 1: 429 Client Error: Too Many Requests for url: https://api.jikan.moe/v4/anime/22
+2025-04-29 12:36:24 - genetic_rule_miner.bbdd_maker.anime_service - [93mWARNING[0m - Failed to fetch anime with ID 22 on attempt 2: 429 Client Error: Too Many Requests for url: https://api.jikan.moe/v4/anime/22
+2025-04-29 12:36:24 - genetic_rule_miner.bbdd_maker.anime_service - [93mWARNING[0m - Failed to fetch anime with ID 22 on attempt 3: 429 Client Error: Too Many Requests for url: https://api.jikan.moe/v4/anime/22
+2025-04-29 12:36:24 - genetic_rule_miner.bbdd_maker.anime_service - [91mERROR[0m - Failed to fetch anime with ID 22 after 3 attempts
+2025-04-29 12:36:24 - genetic_rule_miner.bbdd_maker.anime_service - [92mINFO[0m - No data found for anime ID 22
+2025-04-29 12:36:24 - genetic_rule_miner.bbdd_maker.anime_service - [93mWARNING[0m - Failed to fetch anime with ID 23 on attempt 1: 429 Client Error: Too Many Requests for url: https://api.jikan.moe/v4/anime/23
+2025-04-29 12:36:25 - genetic_rule_miner.bbdd_maker.anime_service - [93mWARNING[0m - Failed to fetch anime with ID 24 on attempt 1: 429 Client Error: Too Many Requests for url: https://api.jikan.moe/v4/anime/24
+2025-04-29 12:36:25 - genetic_rule_miner.bbdd_maker.anime_service - [93mWARNING[0m - Failed to fetch anime with ID 24 on attempt 2: 429 Client Error: Too Many Requests for url: https://api.jikan.moe/v4/anime/24
+2025-04-29 12:36:25 - genetic_rule_miner.bbdd_maker.anime_service - [93mWARNING[0m - Failed to fetch anime with ID 24 on attempt 3: 429 Client Error: Too Many Requests for url: https://api.jikan.moe/v4/anime/24
+2025-04-29 12:36:25 - genetic_rule_miner.bbdd_maker.anime_service - [91mERROR[0m - Failed to fetch anime with ID 24 after 3 attempts
+2025-04-29 12:36:25 - genetic_rule_miner.bbdd_maker.anime_service - [92mINFO[0m - No data found for anime ID 24
+2025-04-29 12:36:25 - genetic_rule_miner.bbdd_maker.anime_service - [93mWARNING[0m - Failed to fetch anime with ID 25 on attempt 1: 429 Client Error: Too Many Requests for url: https://api.jikan.moe/v4/anime/25
+2025-04-29 12:36:26 - genetic_rule_miner.bbdd_maker.anime_service - [93mWARNING[0m - Failed to fetch anime with ID 26 on attempt 1: 429 Client Error: Too Many Requests for url: https://api.jikan.moe/v4/anime/26
+2025-04-29 12:36:27 - genetic_rule_miner.bbdd_maker.anime_service - [93mWARNING[0m - Failed to fetch anime with ID 26 on attempt 2: 429 Client Error: Too Many Requests for url: https://api.jikan.moe/v4/anime/26
+2025-04-29 12:36:27 - genetic_rule_miner.bbdd_maker.anime_service - [93mWARNING[0m - Failed to fetch anime with ID 27 on attempt 1: 429 Client Error: Too Many Requests for url: https://api.jikan.moe/v4/anime/27
+2025-04-29 12:36:27 - genetic_rule_miner.bbdd_maker.anime_service - [93mWARNING[0m - Failed to fetch anime with ID 27 on attempt 2: 429 Client Error: Too Many Requests for url: https://api.jikan.moe/v4/anime/27
+2025-04-29 12:36:28 - genetic_rule_miner.bbdd_maker.anime_service - [93mWARNING[0m - Failed to fetch anime with ID 28 on attempt 1: 429 Client Error: Too Many Requests for url: https://api.jikan.moe/v4/anime/28
+2025-04-29 12:36:28 - genetic_rule_miner.bbdd_maker.anime_service - [93mWARNING[0m - Failed to fetch anime with ID 28 on attempt 2: 429 Client Error: Too Many Requests for url: https://api.jikan.moe/v4/anime/28
+2025-04-29 12:36:28 - genetic_rule_miner.bbdd_maker.anime_service - [93mWARNING[0m - Failed to fetch anime with ID 28 on attempt 3: 429 Client Error: Too Many Requests for url: https://api.jikan.moe/v4/anime/28
+2025-04-29 12:36:28 - genetic_rule_miner.bbdd_maker.anime_service - [91mERROR[0m - Failed to fetch anime with ID 28 after 3 attempts
+2025-04-29 12:36:28 - genetic_rule_miner.bbdd_maker.anime_service - [92mINFO[0m - No data found for anime ID 28
+2025-04-29 12:36:28 - genetic_rule_miner.bbdd_maker.anime_service - [93mWARNING[0m - Failed to fetch anime with ID 29 on attempt 1: 429 Client Error: Too Many Requests for url: https://api.jikan.moe/v4/anime/29
+2025-04-29 12:36:29 - genetic_rule_miner.bbdd_maker.anime_service - [93mWARNING[0m - Failed to fetch anime with ID 30 on attempt 1: 429 Client Error: Too Many Requests for url: https://api.jikan.moe/v4/anime/30
+2025-04-29 12:36:29 - genetic_rule_miner.bbdd_maker.anime_service - [93mWARNING[0m - Failed to fetch anime with ID 30 on attempt 2: 429 Client Error: Too Many Requests for url: https://api.jikan.moe/v4/anime/30
+2025-04-29 12:36:29 - genetic_rule_miner.bbdd_maker.anime_service - [93mWARNING[0m - Failed to fetch anime with ID 30 on attempt 3: 429 Client Error: Too Many Requests for url: https://api.jikan.moe/v4/anime/30
+2025-04-29 12:36:29 - genetic_rule_miner.bbdd_maker.anime_service - [91mERROR[0m - Failed to fetch anime with ID 30 after 3 attempts
+2025-04-29 12:36:29 - genetic_rule_miner.bbdd_maker.anime_service - [92mINFO[0m - No data found for anime ID 30
+2025-04-29 12:36:29 - genetic_rule_miner.bbdd_maker.anime_service - [93mWARNING[0m - Failed to fetch anime with ID 31 on attempt 1: 429 Client Error: Too Many Requests for url: https://api.jikan.moe/v4/anime/31
+2025-04-29 12:36:30 - genetic_rule_miner.bbdd_maker.anime_service - [93mWARNING[0m - Failed to fetch anime with ID 32 on attempt 1: 429 Client Error: Too Many Requests for url: https://api.jikan.moe/v4/anime/32
+2025-04-29 12:36:30 - genetic_rule_miner.bbdd_maker.anime_service - [93mWARNING[0m - Failed to fetch anime with ID 32 on attempt 2: 429 Client Error: Too Many Requests for url: https://api.jikan.moe/v4/anime/32
+2025-04-29 12:36:30 - genetic_rule_miner.bbdd_maker.anime_service - [93mWARNING[0m - Failed to fetch anime with ID 32 on attempt 3: 429 Client Error: Too Many Requests for url: https://api.jikan.moe/v4/anime/32
+2025-04-29 12:36:30 - genetic_rule_miner.bbdd_maker.anime_service - [91mERROR[0m - Failed to fetch anime with ID 32 after 3 attempts
+2025-04-29 12:36:30 - genetic_rule_miner.bbdd_maker.anime_service - [92mINFO[0m - No data found for anime ID 32
+2025-04-29 12:36:31 - genetic_rule_miner.bbdd_maker.anime_service - [93mWARNING[0m - Failed to fetch anime with ID 34 on attempt 1: 429 Client Error: Too Many Requests for url: https://api.jikan.moe/v4/anime/34
+2025-04-29 12:36:31 - genetic_rule_miner.bbdd_maker.anime_service - [93mWARNING[0m - Failed to fetch anime with ID 34 on attempt 2: 429 Client Error: Too Many Requests for url: https://api.jikan.moe/v4/anime/34
+2025-04-29 12:36:31 - genetic_rule_miner.bbdd_maker.anime_service - [93mWARNING[0m - Failed to fetch anime with ID 34 on attempt 3: 429 Client Error: Too Many Requests for url: https://api.jikan.moe/v4/anime/34
+2025-04-29 12:36:31 - genetic_rule_miner.bbdd_maker.anime_service - [91mERROR[0m - Failed to fetch anime with ID 34 after 3 attempts
+2025-04-29 12:36:31 - genetic_rule_miner.bbdd_maker.anime_service - [92mINFO[0m - No data found for anime ID 34
+2025-04-29 12:36:31 - genetic_rule_miner.bbdd_maker.anime_service - [93mWARNING[0m - Failed to fetch anime with ID 35 on attempt 1: 429 Client Error: Too Many Requests for url: https://api.jikan.moe/v4/anime/35
+2025-04-29 12:36:32 - genetic_rule_miner.bbdd_maker.anime_service - [93mWARNING[0m - Failed to fetch anime with ID 35 on attempt 2: 404 Client Error: Not Found for url: https://api.jikan.moe/v4/anime/35
+2025-04-29 12:36:32 - genetic_rule_miner.bbdd_maker.anime_service - [93mWARNING[0m - Failed to fetch anime with ID 35 on attempt 3: 429 Client Error: Too Many Requests for url: https://api.jikan.moe/v4/anime/35
+2025-04-29 12:36:32 - genetic_rule_miner.bbdd_maker.anime_service - [91mERROR[0m - Failed to fetch anime with ID 35 after 3 attempts
+2025-04-29 12:36:32 - genetic_rule_miner.bbdd_maker.anime_service - [92mINFO[0m - No data found for anime ID 35
+2025-04-29 12:36:32 - genetic_rule_miner.bbdd_maker.anime_service - [93mWARNING[0m - Failed to fetch anime with ID 36 on attempt 1: 429 Client Error: Too Many Requests for url: https://api.jikan.moe/v4/anime/36
+2025-04-29 12:36:32 - genetic_rule_miner.bbdd_maker.anime_service - [93mWARNING[0m - Failed to fetch anime with ID 36 on attempt 2: 429 Client Error: Too Many Requests for url: https://api.jikan.moe/v4/anime/36
+2025-04-29 12:36:32 - genetic_rule_miner.bbdd_maker.anime_service - [93mWARNING[0m - Failed to fetch anime with ID 36 on attempt 3: 429 Client Error: Too Many Requests for url: https://api.jikan.moe/v4/anime/36
+2025-04-29 12:36:32 - genetic_rule_miner.bbdd_maker.anime_service - [91mERROR[0m - Failed to fetch anime with ID 36 after 3 attempts
+2025-04-29 12:36:32 - genetic_rule_miner.bbdd_maker.anime_service - [92mINFO[0m - No data found for anime ID 36
+2025-04-29 12:36:33 - genetic_rule_miner.bbdd_maker.anime_service - [93mWARNING[0m - Failed to fetch anime with ID 37 on attempt 1: 404 Client Error: Not Found for url: https://api.jikan.moe/v4/anime/37
+2025-04-29 12:36:33 - genetic_rule_miner.bbdd_maker.anime_service - [93mWARNING[0m - Failed to fetch anime with ID 37 on attempt 2: 429 Client Error: Too Many Requests for url: https://api.jikan.moe/v4/anime/37
+2025-04-29 12:36:33 - genetic_rule_miner.bbdd_maker.anime_service - [93mWARNING[0m - Failed to fetch anime with ID 37 on attempt 3: 429 Client Error: Too Many Requests for url: https://api.jikan.moe/v4/anime/37
+2025-04-29 12:36:33 - genetic_rule_miner.bbdd_maker.anime_service - [91mERROR[0m - Failed to fetch anime with ID 37 after 3 attempts
+2025-04-29 12:36:33 - genetic_rule_miner.bbdd_maker.anime_service - [92mINFO[0m - No data found for anime ID 37
+2025-04-29 12:36:33 - genetic_rule_miner.bbdd_maker.anime_service - [93mWARNING[0m - Failed to fetch anime with ID 38 on attempt 1: 429 Client Error: Too Many Requests for url: https://api.jikan.moe/v4/anime/38
+2025-04-29 12:36:33 - genetic_rule_miner.bbdd_maker.anime_service - [93mWARNING[0m - Failed to fetch anime with ID 38 on attempt 2: 404 Client Error: Not Found for url: https://api.jikan.moe/v4/anime/38
+2025-04-29 12:36:34 - genetic_rule_miner.bbdd_maker.anime_service - [93mWARNING[0m - Failed to fetch anime with ID 38 on attempt 3: 429 Client Error: Too Many Requests for url: https://api.jikan.moe/v4/anime/38
+2025-04-29 12:36:34 - genetic_rule_miner.bbdd_maker.anime_service - [91mERROR[0m - Failed to fetch anime with ID 38 after 3 attempts
+2025-04-29 12:36:34 - genetic_rule_miner.bbdd_maker.anime_service - [92mINFO[0m - No data found for anime ID 38
+2025-04-29 12:36:34 - genetic_rule_miner.bbdd_maker.anime_service - [93mWARNING[0m - Failed to fetch anime with ID 39 on attempt 1: 429 Client Error: Too Many Requests for url: https://api.jikan.moe/v4/anime/39
+2025-04-29 12:36:34 - genetic_rule_miner.bbdd_maker.anime_service - [93mWARNING[0m - Failed to fetch anime with ID 39 on attempt 2: 429 Client Error: Too Many Requests for url: https://api.jikan.moe/v4/anime/39
+2025-04-29 12:36:34 - genetic_rule_miner.bbdd_maker.anime_service - [93mWARNING[0m - Failed to fetch anime with ID 39 on attempt 3: 429 Client Error: Too Many Requests for url: https://api.jikan.moe/v4/anime/39
+2025-04-29 12:36:34 - genetic_rule_miner.bbdd_maker.anime_service - [91mERROR[0m - Failed to fetch anime with ID 39 after 3 attempts
+2025-04-29 12:36:34 - genetic_rule_miner.bbdd_maker.anime_service - [92mINFO[0m - No data found for anime ID 39
+2025-04-29 12:36:35 - genetic_rule_miner.bbdd_maker.anime_service - [93mWARNING[0m - Failed to fetch anime with ID 40 on attempt 1: 404 Client Error: Not Found for url: https://api.jikan.moe/v4/anime/40
+2025-04-29 12:36:35 - genetic_rule_miner.bbdd_maker.anime_service - [93mWARNING[0m - Failed to fetch anime with ID 40 on attempt 2: 429 Client Error: Too Many Requests for url: https://api.jikan.moe/v4/anime/40
+2025-04-29 12:36:35 - genetic_rule_miner.bbdd_maker.anime_service - [93mWARNING[0m - Failed to fetch anime with ID 40 on attempt 3: 429 Client Error: Too Many Requests for url: https://api.jikan.moe/v4/anime/40
+2025-04-29 12:36:35 - genetic_rule_miner.bbdd_maker.anime_service - [91mERROR[0m - Failed to fetch anime with ID 40 after 3 attempts
+2025-04-29 12:36:35 - genetic_rule_miner.bbdd_maker.anime_service - [92mINFO[0m - No data found for anime ID 40
+2025-04-29 12:36:35 - genetic_rule_miner.bbdd_maker.anime_service - [93mWARNING[0m - Failed to fetch anime with ID 41 on attempt 1: 429 Client Error: Too Many Requests for url: https://api.jikan.moe/v4/anime/41
+2025-04-29 12:36:35 - genetic_rule_miner.bbdd_maker.anime_service - [93mWARNING[0m - Failed to fetch anime with ID 41 on attempt 2: 429 Client Error: Too Many Requests for url: https://api.jikan.moe/v4/anime/41
+2025-04-29 12:36:36 - genetic_rule_miner.bbdd_maker.anime_service - [93mWARNING[0m - Failed to fetch anime with ID 41 on attempt 3: 404 Client Error: Not Found for url: https://api.jikan.moe/v4/anime/41
+2025-04-29 12:36:36 - genetic_rule_miner.bbdd_maker.anime_service - [91mERROR[0m - Failed to fetch anime with ID 41 after 3 attempts
+2025-04-29 12:36:36 - genetic_rule_miner.bbdd_maker.anime_service - [92mINFO[0m - No data found for anime ID 41
+2025-04-29 12:36:36 - genetic_rule_miner.bbdd_maker.anime_service - [93mWARNING[0m - Failed to fetch anime with ID 42 on attempt 1: 429 Client Error: Too Many Requests for url: https://api.jikan.moe/v4/anime/42
+2025-04-29 12:36:36 - genetic_rule_miner.bbdd_maker.anime_service - [93mWARNING[0m - Failed to fetch anime with ID 42 on attempt 2: 429 Client Error: Too Many Requests for url: https://api.jikan.moe/v4/anime/42
+2025-04-29 12:36:36 - genetic_rule_miner.bbdd_maker.anime_service - [93mWARNING[0m - Failed to fetch anime with ID 42 on attempt 3: 429 Client Error: Too Many Requests for url: https://api.jikan.moe/v4/anime/42
+2025-04-29 12:36:36 - genetic_rule_miner.bbdd_maker.anime_service - [91mERROR[0m - Failed to fetch anime with ID 42 after 3 attempts
+2025-04-29 12:36:36 - genetic_rule_miner.bbdd_maker.anime_service - [92mINFO[0m - No data found for anime ID 42
+2025-04-29 12:36:37 - genetic_rule_miner.bbdd_maker.anime_service - [93mWARNING[0m - Failed to fetch anime with ID 44 on attempt 1: 429 Client Error: Too Many Requests for url: https://api.jikan.moe/v4/anime/44
+2025-04-29 12:36:37 - genetic_rule_miner.bbdd_maker.anime_service - [93mWARNING[0m - Failed to fetch anime with ID 44 on attempt 2: 429 Client Error: Too Many Requests for url: https://api.jikan.moe/v4/anime/44
+2025-04-29 12:36:37 - genetic_rule_miner.bbdd_maker.anime_service - [93mWARNING[0m - Failed to fetch anime with ID 44 on attempt 3: 429 Client Error: Too Many Requests for url: https://api.jikan.moe/v4/anime/44
+2025-04-29 12:36:37 - genetic_rule_miner.bbdd_maker.anime_service - [91mERROR[0m - Failed to fetch anime with ID 44 after 3 attempts
+2025-04-29 12:36:37 - genetic_rule_miner.bbdd_maker.anime_service - [92mINFO[0m - No data found for anime ID 44
+2025-04-29 12:36:37 - genetic_rule_miner.bbdd_maker.anime_service - [93mWARNING[0m - Failed to fetch anime with ID 45 on attempt 1: 429 Client Error: Too Many Requests for url: https://api.jikan.moe/v4/anime/45
+2025-04-29 12:36:38 - genetic_rule_miner.bbdd_maker.anime_service - [93mWARNING[0m - Failed to fetch anime with ID 46 on attempt 1: 429 Client Error: Too Many Requests for url: https://api.jikan.moe/v4/anime/46
+2025-04-29 12:36:38 - genetic_rule_miner.bbdd_maker.anime_service - [93mWARNING[0m - Failed to fetch anime with ID 46 on attempt 2: 429 Client Error: Too Many Requests for url: https://api.jikan.moe/v4/anime/46
+2025-04-29 12:36:38 - genetic_rule_miner.bbdd_maker.anime_service - [93mWARNING[0m - Failed to fetch anime with ID 46 on attempt 3: 429 Client Error: Too Many Requests for url: https://api.jikan.moe/v4/anime/46
+2025-04-29 12:36:38 - genetic_rule_miner.bbdd_maker.anime_service - [91mERROR[0m - Failed to fetch anime with ID 46 after 3 attempts
+2025-04-29 12:36:38 - genetic_rule_miner.bbdd_maker.anime_service - [92mINFO[0m - No data found for anime ID 46
+2025-04-29 12:36:38 - genetic_rule_miner.bbdd_maker.anime_service - [93mWARNING[0m - Failed to fetch anime with ID 47 on attempt 1: 429 Client Error: Too Many Requests for url: https://api.jikan.moe/v4/anime/47
+2025-04-29 12:36:39 - genetic_rule_miner.bbdd_maker.anime_service - [93mWARNING[0m - Failed to fetch anime with ID 48 on attempt 1: 429 Client Error: Too Many Requests for url: https://api.jikan.moe/v4/anime/48
+2025-04-29 12:36:39 - genetic_rule_miner.bbdd_maker.anime_service - [93mWARNING[0m - Failed to fetch anime with ID 48 on attempt 2: 429 Client Error: Too Many Requests for url: https://api.jikan.moe/v4/anime/48
+2025-04-29 12:36:39 - genetic_rule_miner.bbdd_maker.anime_service - [93mWARNING[0m - Failed to fetch anime with ID 48 on attempt 3: 429 Client Error: Too Many Requests for url: https://api.jikan.moe/v4/anime/48
+2025-04-29 12:36:39 - genetic_rule_miner.bbdd_maker.anime_service - [91mERROR[0m - Failed to fetch anime with ID 48 after 3 attempts
+2025-04-29 12:36:39 - genetic_rule_miner.bbdd_maker.anime_service - [92mINFO[0m - No data found for anime ID 48
+2025-04-29 12:36:39 - genetic_rule_miner.bbdd_maker.anime_service - [93mWARNING[0m - Failed to fetch anime with ID 49 on attempt 1: 429 Client Error: Too Many Requests for url: https://api.jikan.moe/v4/anime/49
+2025-04-29 12:36:40 - genetic_rule_miner.bbdd_maker.anime_service - [93mWARNING[0m - Failed to fetch anime with ID 50 on attempt 1: 429 Client Error: Too Many Requests for url: https://api.jikan.moe/v4/anime/50
+2025-04-29 12:36:40 - genetic_rule_miner.bbdd_maker.anime_service - [93mWARNING[0m - Failed to fetch anime with ID 50 on attempt 2: 429 Client Error: Too Many Requests for url: https://api.jikan.moe/v4/anime/50
+2025-04-29 12:36:40 - genetic_rule_miner.bbdd_maker.anime_service - [93mWARNING[0m - Failed to fetch anime with ID 50 on attempt 3: 429 Client Error: Too Many Requests for url: https://api.jikan.moe/v4/anime/50
+2025-04-29 12:36:40 - genetic_rule_miner.bbdd_maker.anime_service - [91mERROR[0m - Failed to fetch anime with ID 50 after 3 attempts
+2025-04-29 12:36:40 - genetic_rule_miner.bbdd_maker.anime_service - [92mINFO[0m - No data found for anime ID 50
+2025-04-29 12:36:41 - genetic_rule_miner.bbdd_maker.anime_service - [93mWARNING[0m - Failed to fetch anime with ID 52 on attempt 1: 429 Client Error: Too Many Requests for url: https://api.jikan.moe/v4/anime/52
+2025-04-29 12:36:41 - genetic_rule_miner.bbdd_maker.anime_service - [93mWARNING[0m - Failed to fetch anime with ID 52 on attempt 2: 429 Client Error: Too Many Requests for url: https://api.jikan.moe/v4/anime/52
+2025-04-29 12:36:41 - genetic_rule_miner.bbdd_maker.anime_service - [93mWARNING[0m - Failed to fetch anime with ID 52 on attempt 3: 429 Client Error: Too Many Requests for url: https://api.jikan.moe/v4/anime/52
+2025-04-29 12:36:41 - genetic_rule_miner.bbdd_maker.anime_service - [91mERROR[0m - Failed to fetch anime with ID 52 after 3 attempts
+2025-04-29 12:36:41 - genetic_rule_miner.bbdd_maker.anime_service - [92mINFO[0m - No data found for anime ID 52
+2025-04-29 12:36:41 - genetic_rule_miner.bbdd_maker.anime_service - [93mWARNING[0m - Failed to fetch anime with ID 53 on attempt 1: 429 Client Error: Too Many Requests for url: https://api.jikan.moe/v4/anime/53
+2025-04-29 12:36:42 - genetic_rule_miner.bbdd_maker.anime_service - [93mWARNING[0m - Failed to fetch anime with ID 54 on attempt 1: 429 Client Error: Too Many Requests for url: https://api.jikan.moe/v4/anime/54
+2025-04-29 12:36:42 - genetic_rule_miner.bbdd_maker.anime_service - [93mWARNING[0m - Failed to fetch anime with ID 54 on attempt 2: 429 Client Error: Too Many Requests for url: https://api.jikan.moe/v4/anime/54
+2025-04-29 12:36:42 - genetic_rule_miner.bbdd_maker.anime_service - [93mWARNING[0m - Failed to fetch anime with ID 54 on attempt 3: 429 Client Error: Too Many Requests for url: https://api.jikan.moe/v4/anime/54
+2025-04-29 12:36:42 - genetic_rule_miner.bbdd_maker.anime_service - [91mERROR[0m - Failed to fetch anime with ID 54 after 3 attempts
+2025-04-29 12:36:42 - genetic_rule_miner.bbdd_maker.anime_service - [92mINFO[0m - No data found for anime ID 54
+2025-04-29 12:36:42 - genetic_rule_miner.bbdd_maker.anime_service - [93mWARNING[0m - Failed to fetch anime with ID 55 on attempt 1: 429 Client Error: Too Many Requests for url: https://api.jikan.moe/v4/anime/55
+2025-04-29 12:36:43 - genetic_rule_miner.bbdd_maker.anime_service - [93mWARNING[0m - Failed to fetch anime with ID 56 on attempt 1: 429 Client Error: Too Many Requests for url: https://api.jikan.moe/v4/anime/56
+2025-04-29 12:36:43 - genetic_rule_miner.bbdd_maker.anime_service - [93mWARNING[0m - Failed to fetch anime with ID 56 on attempt 2: 429 Client Error: Too Many Requests for url: https://api.jikan.moe/v4/anime/56
+2025-04-29 12:36:43 - genetic_rule_miner.bbdd_maker.anime_service - [93mWARNING[0m - Failed to fetch anime with ID 56 on attempt 3: 429 Client Error: Too Many Requests for url: https://api.jikan.moe/v4/anime/56
+2025-04-29 12:36:43 - genetic_rule_miner.bbdd_maker.anime_service - [91mERROR[0m - Failed to fetch anime with ID 56 after 3 attempts
+2025-04-29 12:36:43 - genetic_rule_miner.bbdd_maker.anime_service - [92mINFO[0m - No data found for anime ID 56
+2025-04-29 12:36:44 - genetic_rule_miner.bbdd_maker.anime_service - [93mWARNING[0m - Failed to fetch anime with ID 58 on attempt 1: 429 Client Error: Too Many Requests for url: https://api.jikan.moe/v4/anime/58
+2025-04-29 12:36:44 - genetic_rule_miner.bbdd_maker.anime_service - [93mWARNING[0m - Failed to fetch anime with ID 58 on attempt 2: 429 Client Error: Too Many Requests for url: https://api.jikan.moe/v4/anime/58
+2025-04-29 12:36:44 - genetic_rule_miner.bbdd_maker.anime_service - [93mWARNING[0m - Failed to fetch anime with ID 58 on attempt 3: 429 Client Error: Too Many Requests for url: https://api.jikan.moe/v4/anime/58
+2025-04-29 12:36:44 - genetic_rule_miner.bbdd_maker.anime_service - [91mERROR[0m - Failed to fetch anime with ID 58 after 3 attempts
+2025-04-29 12:36:44 - genetic_rule_miner.bbdd_maker.anime_service - [92mINFO[0m - No data found for anime ID 58
+2025-04-29 12:36:45 - genetic_rule_miner.bbdd_maker.anime_service - [93mWARNING[0m - Failed to fetch anime with ID 60 on attempt 1: 429 Client Error: Too Many Requests for url: https://api.jikan.moe/v4/anime/60
+2025-04-29 12:36:45 - genetic_rule_miner.bbdd_maker.anime_service - [93mWARNING[0m - Failed to fetch anime with ID 60 on attempt 2: 429 Client Error: Too Many Requests for url: https://api.jikan.moe/v4/anime/60
+2025-04-29 12:36:45 - genetic_rule_miner.bbdd_maker.anime_service - [93mWARNING[0m - Failed to fetch anime with ID 60 on attempt 3: 429 Client Error: Too Many Requests for url: https://api.jikan.moe/v4/anime/60
+2025-04-29 12:36:45 - genetic_rule_miner.bbdd_maker.anime_service - [91mERROR[0m - Failed to fetch anime with ID 60 after 3 attempts
+2025-04-29 12:36:45 - genetic_rule_miner.bbdd_maker.anime_service - [92mINFO[0m - No data found for anime ID 60
+2025-04-29 12:36:45 - genetic_rule_miner.bbdd_maker.anime_service - [93mWARNING[0m - Failed to fetch anime with ID 61 on attempt 1: 429 Client Error: Too Many Requests for url: https://api.jikan.moe/v4/anime/61
+2025-04-29 12:36:46 - genetic_rule_miner.bbdd_maker.anime_service - [93mWARNING[0m - Failed to fetch anime with ID 62 on attempt 1: 429 Client Error: Too Many Requests for url: https://api.jikan.moe/v4/anime/62
+2025-04-29 12:36:46 - genetic_rule_miner.bbdd_maker.anime_service - [93mWARNING[0m - Failed to fetch anime with ID 62 on attempt 2: 429 Client Error: Too Many Requests for url: https://api.jikan.moe/v4/anime/62
+2025-04-29 12:36:46 - genetic_rule_miner.bbdd_maker.anime_service - [93mWARNING[0m - Failed to fetch anime with ID 62 on attempt 3: 429 Client Error: Too Many Requests for url: https://api.jikan.moe/v4/anime/62
+2025-04-29 12:36:46 - genetic_rule_miner.bbdd_maker.anime_service - [91mERROR[0m - Failed to fetch anime with ID 62 after 3 attempts
+2025-04-29 12:36:46 - genetic_rule_miner.bbdd_maker.anime_service - [92mINFO[0m - No data found for anime ID 62
+2025-04-29 12:36:46 - genetic_rule_miner.bbdd_maker.anime_service - [93mWARNING[0m - Failed to fetch anime with ID 63 on attempt 1: 429 Client Error: Too Many Requests for url: https://api.jikan.moe/v4/anime/63
+2025-04-29 12:36:47 - genetic_rule_miner.bbdd_maker.anime_service - [93mWARNING[0m - Failed to fetch anime with ID 64 on attempt 1: 429 Client Error: Too Many Requests for url: https://api.jikan.moe/v4/anime/64
+2025-04-29 12:36:47 - genetic_rule_miner.bbdd_maker.anime_service - [93mWARNING[0m - Failed to fetch anime with ID 64 on attempt 2: 429 Client Error: Too Many Requests for url: https://api.jikan.moe/v4/anime/64
+2025-04-29 12:36:47 - genetic_rule_miner.bbdd_maker.anime_service - [93mWARNING[0m - Failed to fetch anime with ID 64 on attempt 3: 429 Client Error: Too Many Requests for url: https://api.jikan.moe/v4/anime/64
+2025-04-29 12:36:47 - genetic_rule_miner.bbdd_maker.anime_service - [91mERROR[0m - Failed to fetch anime with ID 64 after 3 attempts
+2025-04-29 12:36:47 - genetic_rule_miner.bbdd_maker.anime_service - [92mINFO[0m - No data found for anime ID 64
+2025-04-29 12:36:47 - genetic_rule_miner.bbdd_maker.anime_service - [93mWARNING[0m - Failed to fetch anime with ID 65 on attempt 1: 429 Client Error: Too Many Requests for url: https://api.jikan.moe/v4/anime/65
+2025-04-29 12:36:48 - genetic_rule_miner.bbdd_maker.anime_service - [93mWARNING[0m - Failed to fetch anime with ID 66 on attempt 1: 429 Client Error: Too Many Requests for url: https://api.jikan.moe/v4/anime/66
+2025-04-29 12:36:48 - genetic_rule_miner.bbdd_maker.anime_service - [93mWARNING[0m - Failed to fetch anime with ID 66 on attempt 2: 429 Client Error: Too Many Requests for url: https://api.jikan.moe/v4/anime/66
+2025-04-29 12:36:48 - genetic_rule_miner.bbdd_maker.anime_service - [93mWARNING[0m - Failed to fetch anime with ID 66 on attempt 3: 429 Client Error: Too Many Requests for url: https://api.jikan.moe/v4/anime/66
+2025-04-29 12:36:48 - genetic_rule_miner.bbdd_maker.anime_service - [91mERROR[0m - Failed to fetch anime with ID 66 after 3 attempts
+2025-04-29 12:36:48 - genetic_rule_miner.bbdd_maker.anime_service - [92mINFO[0m - No data found for anime ID 66
+2025-04-29 12:36:49 - genetic_rule_miner.bbdd_maker.anime_service - [93mWARNING[0m - Failed to fetch anime with ID 68 on attempt 1: 429 Client Error: Too Many Requests for url: https://api.jikan.moe/v4/anime/68
+2025-04-29 12:36:49 - genetic_rule_miner.bbdd_maker.anime_service - [93mWARNING[0m - Failed to fetch anime with ID 68 on attempt 2: 429 Client Error: Too Many Requests for url: https://api.jikan.moe/v4/anime/68
+2025-04-29 12:36:49 - genetic_rule_miner.bbdd_maker.anime_service - [93mWARNING[0m - Failed to fetch anime with ID 68 on attempt 3: 429 Client Error: Too Many Requests for url: https://api.jikan.moe/v4/anime/68
+2025-04-29 12:36:49 - genetic_rule_miner.bbdd_maker.anime_service - [91mERROR[0m - Failed to fetch anime with ID 68 after 3 attempts
+2025-04-29 12:36:49 - genetic_rule_miner.bbdd_maker.anime_service - [92mINFO[0m - No data found for anime ID 68
+2025-04-29 12:36:49 - genetic_rule_miner.bbdd_maker.anime_service - [93mWARNING[0m - Failed to fetch anime with ID 69 on attempt 1: 429 Client Error: Too Many Requests for url: https://api.jikan.moe/v4/anime/69
+2025-04-29 12:36:50 - genetic_rule_miner.bbdd_maker.anime_service - [93mWARNING[0m - Failed to fetch anime with ID 70 on attempt 1: 429 Client Error: Too Many Requests for url: https://api.jikan.moe/v4/anime/70
+2025-04-29 12:36:50 - genetic_rule_miner.bbdd_maker.anime_service - [93mWARNING[0m - Failed to fetch anime with ID 70 on attempt 2: 429 Client Error: Too Many Requests for url: https://api.jikan.moe/v4/anime/70
+2025-04-29 12:36:50 - genetic_rule_miner.bbdd_maker.anime_service - [93mWARNING[0m - Failed to fetch anime with ID 70 on attempt 3: 429 Client Error: Too Many Requests for url: https://api.jikan.moe/v4/anime/70
+2025-04-29 12:36:50 - genetic_rule_miner.bbdd_maker.anime_service - [91mERROR[0m - Failed to fetch anime with ID 70 after 3 attempts
+2025-04-29 12:36:50 - genetic_rule_miner.bbdd_maker.anime_service - [92mINFO[0m - No data found for anime ID 70
+2025-04-29 12:36:51 - genetic_rule_miner.bbdd_maker.anime_service - [93mWARNING[0m - Failed to fetch anime with ID 72 on attempt 1: 429 Client Error: Too Many Requests for url: https://api.jikan.moe/v4/anime/72
+2025-04-29 12:36:51 - genetic_rule_miner.bbdd_maker.anime_service - [93mWARNING[0m - Failed to fetch anime with ID 72 on attempt 2: 429 Client Error: Too Many Requests for url: https://api.jikan.moe/v4/anime/72
+2025-04-29 12:36:51 - genetic_rule_miner.bbdd_maker.anime_service - [93mWARNING[0m - Failed to fetch anime with ID 72 on attempt 3: 429 Client Error: Too Many Requests for url: https://api.jikan.moe/v4/anime/72
+2025-04-29 12:36:51 - genetic_rule_miner.bbdd_maker.anime_service - [91mERROR[0m - Failed to fetch anime with ID 72 after 3 attempts
+2025-04-29 12:36:51 - genetic_rule_miner.bbdd_maker.anime_service - [92mINFO[0m - No data found for anime ID 72
+2025-04-29 12:36:51 - genetic_rule_miner.bbdd_maker.anime_service - [93mWARNING[0m - Failed to fetch anime with ID 73 on attempt 1: 429 Client Error: Too Many Requests for url: https://api.jikan.moe/v4/anime/73
+2025-04-29 12:36:52 - genetic_rule_miner.bbdd_maker.anime_service - [93mWARNING[0m - Failed to fetch anime with ID 74 on attempt 1: 429 Client Error: Too Many Requests for url: https://api.jikan.moe/v4/anime/74
+2025-04-29 12:36:52 - genetic_rule_miner.bbdd_maker.anime_service - [93mWARNING[0m - Failed to fetch anime with ID 74 on attempt 2: 429 Client Error: Too Many Requests for url: https://api.jikan.moe/v4/anime/74
+2025-04-29 12:36:52 - genetic_rule_miner.bbdd_maker.anime_service - [93mWARNING[0m - Failed to fetch anime with ID 74 on attempt 3: 429 Client Error: Too Many Requests for url: https://api.jikan.moe/v4/anime/74
+2025-04-29 12:36:52 - genetic_rule_miner.bbdd_maker.anime_service - [91mERROR[0m - Failed to fetch anime with ID 74 after 3 attempts
+2025-04-29 12:36:52 - genetic_rule_miner.bbdd_maker.anime_service - [92mINFO[0m - No data found for anime ID 74
+2025-04-29 12:36:52 - genetic_rule_miner.bbdd_maker.anime_service - [93mWARNING[0m - Failed to fetch anime with ID 75 on attempt 1: 429 Client Error: Too Many Requests for url: https://api.jikan.moe/v4/anime/75
+2025-04-29 12:36:53 - genetic_rule_miner.bbdd_maker.anime_service - [93mWARNING[0m - Failed to fetch anime with ID 76 on attempt 1: 429 Client Error: Too Many Requests for url: https://api.jikan.moe/v4/anime/76
+2025-04-29 12:36:53 - genetic_rule_miner.bbdd_maker.anime_service - [93mWARNING[0m - Failed to fetch anime with ID 76 on attempt 2: 429 Client Error: Too Many Requests for url: https://api.jikan.moe/v4/anime/76
+2025-04-29 12:36:53 - genetic_rule_miner.bbdd_maker.anime_service - [93mWARNING[0m - Failed to fetch anime with ID 76 on attempt 3: 429 Client Error: Too Many Requests for url: https://api.jikan.moe/v4/anime/76
+2025-04-29 12:36:53 - genetic_rule_miner.bbdd_maker.anime_service - [91mERROR[0m - Failed to fetch anime with ID 76 after 3 attempts
+2025-04-29 12:36:53 - genetic_rule_miner.bbdd_maker.anime_service - [92mINFO[0m - No data found for anime ID 76
+2025-04-29 12:36:53 - genetic_rule_miner.bbdd_maker.anime_service - [93mWARNING[0m - Failed to fetch anime with ID 77 on attempt 1: 429 Client Error: Too Many Requests for url: https://api.jikan.moe/v4/anime/77
+2025-04-29 12:36:54 - genetic_rule_miner.bbdd_maker.anime_service - [93mWARNING[0m - Failed to fetch anime with ID 78 on attempt 1: 429 Client Error: Too Many Requests for url: https://api.jikan.moe/v4/anime/78
+2025-04-29 12:36:54 - genetic_rule_miner.bbdd_maker.anime_service - [93mWARNING[0m - Failed to fetch anime with ID 78 on attempt 2: 429 Client Error: Too Many Requests for url: https://api.jikan.moe/v4/anime/78
+2025-04-29 12:36:54 - genetic_rule_miner.bbdd_maker.anime_service - [93mWARNING[0m - Failed to fetch anime with ID 78 on attempt 3: 429 Client Error: Too Many Requests for url: https://api.jikan.moe/v4/anime/78
+2025-04-29 12:36:54 - genetic_rule_miner.bbdd_maker.anime_service - [91mERROR[0m - Failed to fetch anime with ID 78 after 3 attempts
+2025-04-29 12:36:54 - genetic_rule_miner.bbdd_maker.anime_service - [92mINFO[0m - No data found for anime ID 78
+2025-04-29 12:36:55 - genetic_rule_miner.bbdd_maker.anime_service - [93mWARNING[0m - Failed to fetch anime with ID 80 on attempt 1: 429 Client Error: Too Many Requests for url: https://api.jikan.moe/v4/anime/80
+2025-04-29 12:36:55 - genetic_rule_miner.bbdd_maker.anime_service - [93mWARNING[0m - Failed to fetch anime with ID 80 on attempt 2: 429 Client Error: Too Many Requests for url: https://api.jikan.moe/v4/anime/80
+2025-04-29 12:36:55 - genetic_rule_miner.bbdd_maker.anime_service - [93mWARNING[0m - Failed to fetch anime with ID 80 on attempt 3: 429 Client Error: Too Many Requests for url: https://api.jikan.moe/v4/anime/80
+2025-04-29 12:36:55 - genetic_rule_miner.bbdd_maker.anime_service - [91mERROR[0m - Failed to fetch anime with ID 80 after 3 attempts
+2025-04-29 12:36:55 - genetic_rule_miner.bbdd_maker.anime_service - [92mINFO[0m - No data found for anime ID 80
+2025-04-29 12:36:55 - genetic_rule_miner.bbdd_maker.anime_service - [93mWARNING[0m - Failed to fetch anime with ID 81 on attempt 1: 429 Client Error: Too Many Requests for url: https://api.jikan.moe/v4/anime/81
+2025-04-29 12:36:56 - genetic_rule_miner.bbdd_maker.anime_service - [93mWARNING[0m - Failed to fetch anime with ID 82 on attempt 1: 429 Client Error: Too Many Requests for url: https://api.jikan.moe/v4/anime/82
+2025-04-29 12:36:56 - genetic_rule_miner.bbdd_maker.anime_service - [93mWARNING[0m - Failed to fetch anime with ID 82 on attempt 2: 429 Client Error: Too Many Requests for url: https://api.jikan.moe/v4/anime/82
+2025-04-29 12:36:56 - genetic_rule_miner.bbdd_maker.anime_service - [93mWARNING[0m - Failed to fetch anime with ID 82 on attempt 3: 429 Client Error: Too Many Requests for url: https://api.jikan.moe/v4/anime/82
+2025-04-29 12:36:56 - genetic_rule_miner.bbdd_maker.anime_service - [91mERROR[0m - Failed to fetch anime with ID 82 after 3 attempts
+2025-04-29 12:36:56 - genetic_rule_miner.bbdd_maker.anime_service - [92mINFO[0m - No data found for anime ID 82
+2025-04-29 12:36:57 - genetic_rule_miner.bbdd_maker.anime_service - [93mWARNING[0m - Failed to fetch anime with ID 84 on attempt 1: 429 Client Error: Too Many Requests for url: https://api.jikan.moe/v4/anime/84
+2025-04-29 12:36:57 - genetic_rule_miner.bbdd_maker.anime_service - [93mWARNING[0m - Failed to fetch anime with ID 84 on attempt 2: 429 Client Error: Too Many Requests for url: https://api.jikan.moe/v4/anime/84
+2025-04-29 12:36:57 - genetic_rule_miner.bbdd_maker.anime_service - [93mWARNING[0m - Failed to fetch anime with ID 84 on attempt 3: 429 Client Error: Too Many Requests for url: https://api.jikan.moe/v4/anime/84
+2025-04-29 12:36:57 - genetic_rule_miner.bbdd_maker.anime_service - [91mERROR[0m - Failed to fetch anime with ID 84 after 3 attempts
+2025-04-29 12:36:57 - genetic_rule_miner.bbdd_maker.anime_service - [92mINFO[0m - No data found for anime ID 84
+2025-04-29 12:36:57 - genetic_rule_miner.bbdd_maker.anime_service - [93mWARNING[0m - Failed to fetch anime with ID 85 on attempt 1: 429 Client Error: Too Many Requests for url: https://api.jikan.moe/v4/anime/85
+2025-04-29 12:36:58 - genetic_rule_miner.bbdd_maker.anime_service - [93mWARNING[0m - Failed to fetch anime with ID 86 on attempt 1: 429 Client Error: Too Many Requests for url: https://api.jikan.moe/v4/anime/86
+2025-04-29 12:36:58 - genetic_rule_miner.bbdd_maker.anime_service - [93mWARNING[0m - Failed to fetch anime with ID 86 on attempt 2: 429 Client Error: Too Many Requests for url: https://api.jikan.moe/v4/anime/86
+2025-04-29 12:36:58 - genetic_rule_miner.bbdd_maker.anime_service - [93mWARNING[0m - Failed to fetch anime with ID 86 on attempt 3: 429 Client Error: Too Many Requests for url: https://api.jikan.moe/v4/anime/86
+2025-04-29 12:36:58 - genetic_rule_miner.bbdd_maker.anime_service - [91mERROR[0m - Failed to fetch anime with ID 86 after 3 attempts
+2025-04-29 12:36:58 - genetic_rule_miner.bbdd_maker.anime_service - [92mINFO[0m - No data found for anime ID 86
+2025-04-29 12:36:59 - genetic_rule_miner.bbdd_maker.anime_service - [93mWARNING[0m - Failed to fetch anime with ID 88 on attempt 1: 429 Client Error: Too Many Requests for url: https://api.jikan.moe/v4/anime/88
+2025-04-29 12:36:59 - genetic_rule_miner.bbdd_maker.anime_service - [93mWARNING[0m - Failed to fetch anime with ID 88 on attempt 2: 429 Client Error: Too Many Requests for url: https://api.jikan.moe/v4/anime/88
+2025-04-29 12:36:59 - genetic_rule_miner.bbdd_maker.anime_service - [93mWARNING[0m - Failed to fetch anime with ID 88 on attempt 3: 429 Client Error: Too Many Requests for url: https://api.jikan.moe/v4/anime/88
+2025-04-29 12:36:59 - genetic_rule_miner.bbdd_maker.anime_service - [91mERROR[0m - Failed to fetch anime with ID 88 after 3 attempts
+2025-04-29 12:36:59 - genetic_rule_miner.bbdd_maker.anime_service - [92mINFO[0m - No data found for anime ID 88
+2025-04-29 12:36:59 - genetic_rule_miner.bbdd_maker.anime_service - [93mWARNING[0m - Failed to fetch anime with ID 89 on attempt 1: 429 Client Error: Too Many Requests for url: https://api.jikan.moe/v4/anime/89
+2025-04-29 12:37:00 - genetic_rule_miner.bbdd_maker.anime_service - [93mWARNING[0m - Failed to fetch anime with ID 90 on attempt 1: 429 Client Error: Too Many Requests for url: https://api.jikan.moe/v4/anime/90
+2025-04-29 12:37:00 - genetic_rule_miner.bbdd_maker.anime_service - [93mWARNING[0m - Failed to fetch anime with ID 90 on attempt 2: 429 Client Error: Too Many Requests for url: https://api.jikan.moe/v4/anime/90
+2025-04-29 12:37:00 - genetic_rule_miner.bbdd_maker.anime_service - [93mWARNING[0m - Failed to fetch anime with ID 90 on attempt 3: 429 Client Error: Too Many Requests for url: https://api.jikan.moe/v4/anime/90
+2025-04-29 12:37:00 - genetic_rule_miner.bbdd_maker.anime_service - [91mERROR[0m - Failed to fetch anime with ID 90 after 3 attempts
+2025-04-29 12:37:00 - genetic_rule_miner.bbdd_maker.anime_service - [92mINFO[0m - No data found for anime ID 90
+2025-04-29 12:37:00 - genetic_rule_miner.bbdd_maker.anime_service - [93mWARNING[0m - Failed to fetch anime with ID 91 on attempt 1: 429 Client Error: Too Many Requests for url: https://api.jikan.moe/v4/anime/91
+2025-04-29 12:37:01 - genetic_rule_miner.bbdd_maker.anime_service - [93mWARNING[0m - Failed to fetch anime with ID 92 on attempt 1: 429 Client Error: Too Many Requests for url: https://api.jikan.moe/v4/anime/92
+2025-04-29 12:37:01 - genetic_rule_miner.bbdd_maker.anime_service - [93mWARNING[0m - Failed to fetch anime with ID 92 on attempt 2: 429 Client Error: Too Many Requests for url: https://api.jikan.moe/v4/anime/92
+2025-04-29 12:37:01 - genetic_rule_miner.bbdd_maker.anime_service - [93mWARNING[0m - Failed to fetch anime with ID 92 on attempt 3: 429 Client Error: Too Many Requests for url: https://api.jikan.moe/v4/anime/92
+2025-04-29 12:37:01 - genetic_rule_miner.bbdd_maker.anime_service - [91mERROR[0m - Failed to fetch anime with ID 92 after 3 attempts
+2025-04-29 12:37:01 - genetic_rule_miner.bbdd_maker.anime_service - [92mINFO[0m - No data found for anime ID 92
+2025-04-29 12:37:02 - genetic_rule_miner.bbdd_maker.anime_service - [93mWARNING[0m - Failed to fetch anime with ID 94 on attempt 1: 429 Client Error: Too Many Requests for url: https://api.jikan.moe/v4/anime/94
+2025-04-29 12:37:02 - genetic_rule_miner.bbdd_maker.anime_service - [93mWARNING[0m - Failed to fetch anime with ID 94 on attempt 2: 429 Client Error: Too Many Requests for url: https://api.jikan.moe/v4/anime/94
+2025-04-29 12:37:02 - genetic_rule_miner.bbdd_maker.anime_service - [93mWARNING[0m - Failed to fetch anime with ID 94 on attempt 3: 429 Client Error: Too Many Requests for url: https://api.jikan.moe/v4/anime/94
+2025-04-29 12:37:02 - genetic_rule_miner.bbdd_maker.anime_service - [91mERROR[0m - Failed to fetch anime with ID 94 after 3 attempts
+2025-04-29 12:37:02 - genetic_rule_miner.bbdd_maker.anime_service - [92mINFO[0m - No data found for anime ID 94
+2025-04-29 12:37:03 - genetic_rule_miner.bbdd_maker.anime_service - [93mWARNING[0m - Failed to fetch anime with ID 96 on attempt 1: 429 Client Error: Too Many Requests for url: https://api.jikan.moe/v4/anime/96
+2025-04-29 12:37:03 - genetic_rule_miner.bbdd_maker.anime_service - [93mWARNING[0m - Failed to fetch anime with ID 96 on attempt 2: 429 Client Error: Too Many Requests for url: https://api.jikan.moe/v4/anime/96
+2025-04-29 12:37:03 - genetic_rule_miner.bbdd_maker.anime_service - [93mWARNING[0m - Failed to fetch anime with ID 96 on attempt 3: 429 Client Error: Too Many Requests for url: https://api.jikan.moe/v4/anime/96
+2025-04-29 12:37:03 - genetic_rule_miner.bbdd_maker.anime_service - [91mERROR[0m - Failed to fetch anime with ID 96 after 3 attempts
+2025-04-29 12:37:03 - genetic_rule_miner.bbdd_maker.anime_service - [92mINFO[0m - No data found for anime ID 96
+2025-04-29 12:37:03 - genetic_rule_miner.bbdd_maker.anime_service - [93mWARNING[0m - Failed to fetch anime with ID 97 on attempt 1: 429 Client Error: Too Many Requests for url: https://api.jikan.moe/v4/anime/97
+2025-04-29 12:37:04 - genetic_rule_miner.bbdd_maker.anime_service - [93mWARNING[0m - Failed to fetch anime with ID 98 on attempt 1: 429 Client Error: Too Many Requests for url: https://api.jikan.moe/v4/anime/98
+2025-04-29 12:37:04 - genetic_rule_miner.bbdd_maker.anime_service - [93mWARNING[0m - Failed to fetch anime with ID 98 on attempt 2: 429 Client Error: Too Many Requests for url: https://api.jikan.moe/v4/anime/98
+2025-04-29 12:37:04 - genetic_rule_miner.bbdd_maker.anime_service - [93mWARNING[0m - Failed to fetch anime with ID 98 on attempt 3: 429 Client Error: Too Many Requests for url: https://api.jikan.moe/v4/anime/98
+2025-04-29 12:37:04 - genetic_rule_miner.bbdd_maker.anime_service - [91mERROR[0m - Failed to fetch anime with ID 98 after 3 attempts
+2025-04-29 12:37:04 - genetic_rule_miner.bbdd_maker.anime_service - [92mINFO[0m - No data found for anime ID 98
+2025-04-29 12:37:04 - genetic_rule_miner.bbdd_maker.anime_service - [93mWARNING[0m - Failed to fetch anime with ID 99 on attempt 1: 429 Client Error: Too Many Requests for url: https://api.jikan.moe/v4/anime/99
+2025-04-29 12:37:05 - genetic_rule_miner.bbdd_maker.anime_service - [93mWARNING[0m - Failed to fetch anime with ID 100 on attempt 1: 429 Client Error: Too Many Requests for url: https://api.jikan.moe/v4/anime/100
+2025-04-29 12:37:05 - genetic_rule_miner.bbdd_maker.anime_service - [93mWARNING[0m - Failed to fetch anime with ID 100 on attempt 2: 429 Client Error: Too Many Requests for url: https://api.jikan.moe/v4/anime/100
+2025-04-29 12:37:05 - genetic_rule_miner.bbdd_maker.anime_service - [93mWARNING[0m - Failed to fetch anime with ID 100 on attempt 3: 429 Client Error: Too Many Requests for url: https://api.jikan.moe/v4/anime/100
+2025-04-29 12:37:05 - genetic_rule_miner.bbdd_maker.anime_service - [91mERROR[0m - Failed to fetch anime with ID 100 after 3 attempts
+2025-04-29 12:37:05 - genetic_rule_miner.bbdd_maker.anime_service - [92mINFO[0m - No data found for anime ID 100
+2025-04-29 12:37:05 - genetic_rule_miner.bbdd_maker.anime_service - [92mINFO[0m - Finished fetching anime data. Total records: 43
+2025-04-29 12:37:05 - genetic_rule_miner.bbdd_maker.anime_service - [92mINFO[0m - Anime data written to buffer
+2025-04-29 12:37:05 - __main__ - [92mINFO[0m - 📡 Generating user list...
+2025-04-29 12:37:05 - genetic_rule_miner.bbdd_maker.user_service - [92mINFO[0m - UserService initialized with configuration: APIConfig(base_url='https://api.jikan.moe/v4/', max_retries=3, timeout=10.0, request_delay=0.35, rate_limit=3)
+2025-04-29 12:37:05 - genetic_rule_miner.bbdd_maker.user_service - [92mINFO[0m - Starting user list generation for IDs 1 to 100
+2025-04-29 12:37:05 - genetic_rule_miner.bbdd_maker.user_service - [91mERROR[0m - Error on attempt 1 for user_id 1: 429 Client Error: Too Many Requests for url: https://api.jikan.moe/v4/users/userbyid/1
+2025-04-29 12:37:07 - genetic_rule_miner.bbdd_maker.user_service - [92mINFO[0m - User ID 1 successfully found
+2025-04-29 12:37:07 - genetic_rule_miner.bbdd_maker.user_service - [92mINFO[0m - User ID 1 added to the list
+2025-04-29 12:37:07 - genetic_rule_miner.bbdd_maker.user_service - [93mWARNING[0m - User ID 2 not found (404)
+2025-04-29 12:37:07 - genetic_rule_miner.bbdd_maker.user_service - [93mWARNING[0m - User ID 2 has no valid data
+2025-04-29 12:37:08 - genetic_rule_miner.bbdd_maker.user_service - [92mINFO[0m - User ID 3 successfully found
+2025-04-29 12:37:08 - genetic_rule_miner.bbdd_maker.user_service - [92mINFO[0m - User ID 3 added to the list
+2025-04-29 12:37:08 - genetic_rule_miner.bbdd_maker.user_service - [91mERROR[0m - Error on attempt 1 for user_id 4: 429 Client Error: Too Many Requests for url: https://api.jikan.moe/v4/users/userbyid/4
+2025-04-29 12:37:10 - genetic_rule_miner.bbdd_maker.user_service - [92mINFO[0m - User ID 4 successfully found
+2025-04-29 12:37:10 - genetic_rule_miner.bbdd_maker.user_service - [92mINFO[0m - User ID 4 added to the list
+2025-04-29 12:37:10 - genetic_rule_miner.bbdd_maker.user_service - [93mWARNING[0m - User ID 5 not found (404)
+2025-04-29 12:37:10 - genetic_rule_miner.bbdd_maker.user_service - [93mWARNING[0m - User ID 5 has no valid data
+2025-04-29 12:37:11 - genetic_rule_miner.bbdd_maker.user_service - [93mWARNING[0m - User ID 6 not found (404)
+2025-04-29 12:37:11 - genetic_rule_miner.bbdd_maker.user_service - [93mWARNING[0m - User ID 6 has no valid data
+2025-04-29 12:37:11 - genetic_rule_miner.bbdd_maker.user_service - [91mERROR[0m - Error on attempt 1 for user_id 7: 429 Client Error: Too Many Requests for url: https://api.jikan.moe/v4/users/userbyid/7
+2025-04-29 12:37:12 - genetic_rule_miner.bbdd_maker.user_service - [93mWARNING[0m - User ID 7 not found (404)
+2025-04-29 12:37:12 - genetic_rule_miner.bbdd_maker.user_service - [93mWARNING[0m - User ID 7 has no valid data
+2025-04-29 12:37:13 - genetic_rule_miner.bbdd_maker.user_service - [93mWARNING[0m - User ID 8 not found (404)
+2025-04-29 12:37:13 - genetic_rule_miner.bbdd_maker.user_service - [93mWARNING[0m - User ID 8 has no valid data
+2025-04-29 12:37:14 - genetic_rule_miner.bbdd_maker.user_service - [92mINFO[0m - User ID 9 successfully found
+2025-04-29 12:37:14 - genetic_rule_miner.bbdd_maker.user_service - [92mINFO[0m - User ID 9 added to the list
+2025-04-29 12:37:14 - genetic_rule_miner.bbdd_maker.user_service - [91mERROR[0m - Error on attempt 1 for user_id 10: 429 Client Error: Too Many Requests for url: https://api.jikan.moe/v4/users/userbyid/10
+2025-04-29 12:37:15 - genetic_rule_miner.bbdd_maker.user_service - [93mWARNING[0m - User ID 10 not found (404)
+2025-04-29 12:37:15 - genetic_rule_miner.bbdd_maker.user_service - [93mWARNING[0m - User ID 10 has no valid data
+2025-04-29 12:37:16 - genetic_rule_miner.bbdd_maker.user_service - [93mWARNING[0m - User ID 11 not found (404)
+2025-04-29 12:37:16 - genetic_rule_miner.bbdd_maker.user_service - [93mWARNING[0m - User ID 11 has no valid data
+2025-04-29 12:37:17 - genetic_rule_miner.bbdd_maker.user_service - [93mWARNING[0m - User ID 12 not found (404)
+2025-04-29 12:37:17 - genetic_rule_miner.bbdd_maker.user_service - [93mWARNING[0m - User ID 12 has no valid data
+2025-04-29 12:37:17 - genetic_rule_miner.bbdd_maker.user_service - [91mERROR[0m - Error on attempt 1 for user_id 13: 429 Client Error: Too Many Requests for url: https://api.jikan.moe/v4/users/userbyid/13
+2025-04-29 12:37:18 - genetic_rule_miner.bbdd_maker.user_service - [93mWARNING[0m - User ID 13 not found (404)
+2025-04-29 12:37:18 - genetic_rule_miner.bbdd_maker.user_service - [93mWARNING[0m - User ID 13 has no valid data
+2025-04-29 12:37:19 - genetic_rule_miner.bbdd_maker.user_service - [93mWARNING[0m - User ID 14 not found (404)
+2025-04-29 12:37:19 - genetic_rule_miner.bbdd_maker.user_service - [93mWARNING[0m - User ID 14 has no valid data
+2025-04-29 12:37:19 - genetic_rule_miner.bbdd_maker.user_service - [93mWARNING[0m - User ID 15 not found (404)
+2025-04-29 12:37:19 - genetic_rule_miner.bbdd_maker.user_service - [93mWARNING[0m - User ID 15 has no valid data
+2025-04-29 12:37:20 - genetic_rule_miner.bbdd_maker.user_service - [91mERROR[0m - Error on attempt 1 for user_id 16: 429 Client Error: Too Many Requests for url: https://api.jikan.moe/v4/users/userbyid/16
+2025-04-29 12:37:21 - genetic_rule_miner.bbdd_maker.user_service - [93mWARNING[0m - User ID 16 not found (404)
+2025-04-29 12:37:21 - genetic_rule_miner.bbdd_maker.user_service - [93mWARNING[0m - User ID 16 has no valid data
+2025-04-29 12:37:22 - genetic_rule_miner.bbdd_maker.user_service - [93mWARNING[0m - User ID 17 not found (404)
+2025-04-29 12:37:22 - genetic_rule_miner.bbdd_maker.user_service - [93mWARNING[0m - User ID 17 has no valid data
+2025-04-29 12:37:22 - genetic_rule_miner.bbdd_maker.user_service - [91mERROR[0m - Error on attempt 1 for user_id 18: 429 Client Error: Too Many Requests for url: https://api.jikan.moe/v4/users/userbyid/18
+2025-04-29 12:37:24 - genetic_rule_miner.bbdd_maker.user_service - [92mINFO[0m - User ID 18 successfully found
+2025-04-29 12:37:24 - genetic_rule_miner.bbdd_maker.user_service - [92mINFO[0m - User ID 18 added to the list
+2025-04-29 12:37:24 - genetic_rule_miner.bbdd_maker.user_service - [93mWARNING[0m - User ID 19 not found (404)
+2025-04-29 12:37:24 - genetic_rule_miner.bbdd_maker.user_service - [93mWARNING[0m - User ID 19 has no valid data
+2025-04-29 12:37:25 - genetic_rule_miner.bbdd_maker.user_service - [92mINFO[0m - User ID 20 successfully found
+2025-04-29 12:37:25 - genetic_rule_miner.bbdd_maker.user_service - [92mINFO[0m - User ID 20 added to the list
+2025-04-29 12:37:25 - genetic_rule_miner.bbdd_maker.user_service - [91mERROR[0m - Error on attempt 1 for user_id 21: 429 Client Error: Too Many Requests for url: https://api.jikan.moe/v4/users/userbyid/21
+2025-04-29 12:37:27 - genetic_rule_miner.bbdd_maker.user_service - [93mWARNING[0m - User ID 21 not found (404)
+2025-04-29 12:37:27 - genetic_rule_miner.bbdd_maker.user_service - [93mWARNING[0m - User ID 21 has no valid data
+2025-04-29 12:37:27 - genetic_rule_miner.bbdd_maker.user_service - [93mWARNING[0m - User ID 22 not found (404)
+2025-04-29 12:37:27 - genetic_rule_miner.bbdd_maker.user_service - [93mWARNING[0m - User ID 22 has no valid data
+2025-04-29 12:37:28 - genetic_rule_miner.bbdd_maker.user_service - [92mINFO[0m - User ID 23 successfully found
+2025-04-29 12:37:28 - genetic_rule_miner.bbdd_maker.user_service - [92mINFO[0m - User ID 23 added to the list
+2025-04-29 12:37:28 - genetic_rule_miner.bbdd_maker.user_service - [91mERROR[0m - Error on attempt 1 for user_id 24: 429 Client Error: Too Many Requests for url: https://api.jikan.moe/v4/users/userbyid/24
+2025-04-29 12:37:29 - genetic_rule_miner.bbdd_maker.user_service - [93mWARNING[0m - User ID 24 not found (404)
+2025-04-29 12:37:29 - genetic_rule_miner.bbdd_maker.user_service - [93mWARNING[0m - User ID 24 has no valid data
+2025-04-29 12:37:30 - genetic_rule_miner.bbdd_maker.user_service - [93mWARNING[0m - User ID 25 not found (404)
+2025-04-29 12:37:30 - genetic_rule_miner.bbdd_maker.user_service - [93mWARNING[0m - User ID 25 has no valid data
+2025-04-29 12:37:31 - genetic_rule_miner.bbdd_maker.user_service - [93mWARNING[0m - User ID 26 not found (404)
+2025-04-29 12:37:31 - genetic_rule_miner.bbdd_maker.user_service - [93mWARNING[0m - User ID 26 has no valid data
+2025-04-29 12:37:31 - genetic_rule_miner.bbdd_maker.user_service - [91mERROR[0m - Error on attempt 1 for user_id 27: 429 Client Error: Too Many Requests for url: https://api.jikan.moe/v4/users/userbyid/27
+2025-04-29 12:37:32 - genetic_rule_miner.bbdd_maker.user_service - [93mWARNING[0m - User ID 27 not found (404)
+2025-04-29 12:37:32 - genetic_rule_miner.bbdd_maker.user_service - [93mWARNING[0m - User ID 27 has no valid data
+2025-04-29 12:37:33 - genetic_rule_miner.bbdd_maker.user_service - [93mWARNING[0m - User ID 28 not found (404)
+2025-04-29 12:37:33 - genetic_rule_miner.bbdd_maker.user_service - [93mWARNING[0m - User ID 28 has no valid data
+2025-04-29 12:37:34 - genetic_rule_miner.bbdd_maker.user_service - [93mWARNING[0m - User ID 29 not found (404)
+2025-04-29 12:37:34 - genetic_rule_miner.bbdd_maker.user_service - [93mWARNING[0m - User ID 29 has no valid data
+2025-04-29 12:37:34 - genetic_rule_miner.bbdd_maker.user_service - [91mERROR[0m - Error on attempt 1 for user_id 30: 429 Client Error: Too Many Requests for url: https://api.jikan.moe/v4/users/userbyid/30
+2025-04-29 12:37:35 - genetic_rule_miner.bbdd_maker.user_service - [93mWARNING[0m - User ID 30 not found (404)
+2025-04-29 12:37:35 - genetic_rule_miner.bbdd_maker.user_service - [93mWARNING[0m - User ID 30 has no valid data
+2025-04-29 12:37:36 - genetic_rule_miner.bbdd_maker.user_service - [93mWARNING[0m - User ID 31 not found (404)
+2025-04-29 12:37:36 - genetic_rule_miner.bbdd_maker.user_service - [93mWARNING[0m - User ID 31 has no valid data
+2025-04-29 12:37:36 - genetic_rule_miner.bbdd_maker.user_service - [93mWARNING[0m - User ID 32 not found (404)
+2025-04-29 12:37:36 - genetic_rule_miner.bbdd_maker.user_service - [93mWARNING[0m - User ID 32 has no valid data
+2025-04-29 12:37:37 - genetic_rule_miner.bbdd_maker.user_service - [91mERROR[0m - Error on attempt 1 for user_id 33: 429 Client Error: Too Many Requests for url: https://api.jikan.moe/v4/users/userbyid/33
+2025-04-29 12:37:38 - genetic_rule_miner.bbdd_maker.user_service - [93mWARNING[0m - User ID 33 not found (404)
+2025-04-29 12:37:38 - genetic_rule_miner.bbdd_maker.user_service - [93mWARNING[0m - User ID 33 has no valid data
+2025-04-29 12:37:39 - genetic_rule_miner.bbdd_maker.user_service - [93mWARNING[0m - User ID 34 not found (404)
+2025-04-29 12:37:39 - genetic_rule_miner.bbdd_maker.user_service - [93mWARNING[0m - User ID 34 has no valid data
+2025-04-29 12:37:39 - genetic_rule_miner.bbdd_maker.user_service - [91mERROR[0m - Error on attempt 1 for user_id 35: 429 Client Error: Too Many Requests for url: https://api.jikan.moe/v4/users/userbyid/35
+2025-04-29 12:37:41 - genetic_rule_miner.bbdd_maker.user_service - [93mWARNING[0m - User ID 35 not found (404)
+2025-04-29 12:37:41 - genetic_rule_miner.bbdd_maker.user_service - [93mWARNING[0m - User ID 35 has no valid data
+2025-04-29 12:37:41 - genetic_rule_miner.bbdd_maker.user_service - [92mINFO[0m - User ID 36 successfully found
+2025-04-29 12:37:41 - genetic_rule_miner.bbdd_maker.user_service - [92mINFO[0m - User ID 36 added to the list
+2025-04-29 12:37:42 - genetic_rule_miner.bbdd_maker.user_service - [92mINFO[0m - User ID 37 successfully found
+2025-04-29 12:37:42 - genetic_rule_miner.bbdd_maker.user_service - [92mINFO[0m - User ID 37 added to the list
+2025-04-29 12:37:42 - genetic_rule_miner.bbdd_maker.user_service - [91mERROR[0m - Error on attempt 1 for user_id 38: 429 Client Error: Too Many Requests for url: https://api.jikan.moe/v4/users/userbyid/38
+2025-04-29 12:37:43 - genetic_rule_miner.bbdd_maker.user_service - [93mWARNING[0m - User ID 38 not found (404)
+2025-04-29 12:37:43 - genetic_rule_miner.bbdd_maker.user_service - [93mWARNING[0m - User ID 38 has no valid data
+2025-04-29 12:37:44 - genetic_rule_miner.bbdd_maker.user_service - [93mWARNING[0m - User ID 39 not found (404)
+2025-04-29 12:37:44 - genetic_rule_miner.bbdd_maker.user_service - [93mWARNING[0m - User ID 39 has no valid data
+2025-04-29 12:37:45 - genetic_rule_miner.bbdd_maker.user_service - [93mWARNING[0m - User ID 40 not found (404)
+2025-04-29 12:37:45 - genetic_rule_miner.bbdd_maker.user_service - [93mWARNING[0m - User ID 40 has no valid data
+2025-04-29 12:37:45 - genetic_rule_miner.bbdd_maker.user_service - [91mERROR[0m - Error on attempt 1 for user_id 41: 429 Client Error: Too Many Requests for url: https://api.jikan.moe/v4/users/userbyid/41
+2025-04-29 12:37:46 - genetic_rule_miner.bbdd_maker.user_service - [93mWARNING[0m - User ID 41 not found (404)
+2025-04-29 12:37:46 - genetic_rule_miner.bbdd_maker.user_service - [93mWARNING[0m - User ID 41 has no valid data
+2025-04-29 12:37:47 - genetic_rule_miner.bbdd_maker.user_service - [93mWARNING[0m - User ID 42 not found (404)
+2025-04-29 12:37:47 - genetic_rule_miner.bbdd_maker.user_service - [93mWARNING[0m - User ID 42 has no valid data
+2025-04-29 12:37:48 - genetic_rule_miner.bbdd_maker.user_service - [93mWARNING[0m - User ID 43 not found (404)
+2025-04-29 12:37:48 - genetic_rule_miner.bbdd_maker.user_service - [93mWARNING[0m - User ID 43 has no valid data
+2025-04-29 12:37:48 - genetic_rule_miner.bbdd_maker.user_service - [91mERROR[0m - Error on attempt 1 for user_id 44: 429 Client Error: Too Many Requests for url: https://api.jikan.moe/v4/users/userbyid/44
+2025-04-29 12:37:49 - genetic_rule_miner.bbdd_maker.user_service - [92mINFO[0m - User ID 44 successfully found
+2025-04-29 12:37:49 - genetic_rule_miner.bbdd_maker.user_service - [92mINFO[0m - User ID 44 added to the list
+2025-04-29 12:37:50 - genetic_rule_miner.bbdd_maker.user_service - [93mWARNING[0m - User ID 45 not found (404)
+2025-04-29 12:37:50 - genetic_rule_miner.bbdd_maker.user_service - [93mWARNING[0m - User ID 45 has no valid data
+2025-04-29 12:37:50 - genetic_rule_miner.bbdd_maker.user_service - [93mWARNING[0m - User ID 46 not found (404)
+2025-04-29 12:37:50 - genetic_rule_miner.bbdd_maker.user_service - [93mWARNING[0m - User ID 46 has no valid data
+2025-04-29 12:37:51 - genetic_rule_miner.bbdd_maker.user_service - [91mERROR[0m - Error on attempt 1 for user_id 47: 429 Client Error: Too Many Requests for url: https://api.jikan.moe/v4/users/userbyid/47
+2025-04-29 12:37:52 - genetic_rule_miner.bbdd_maker.user_service - [92mINFO[0m - User ID 47 successfully found
+2025-04-29 12:37:52 - genetic_rule_miner.bbdd_maker.user_service - [92mINFO[0m - User ID 47 added to the list
+2025-04-29 12:37:53 - genetic_rule_miner.bbdd_maker.user_service - [92mINFO[0m - User ID 48 successfully found
+2025-04-29 12:37:53 - genetic_rule_miner.bbdd_maker.user_service - [92mINFO[0m - User ID 48 added to the list
+2025-04-29 12:37:53 - genetic_rule_miner.bbdd_maker.user_service - [91mERROR[0m - Error on attempt 1 for user_id 49: 429 Client Error: Too Many Requests for url: https://api.jikan.moe/v4/users/userbyid/49
+2025-04-29 12:37:55 - genetic_rule_miner.bbdd_maker.user_service - [93mWARNING[0m - User ID 49 not found (404)
+2025-04-29 12:37:55 - genetic_rule_miner.bbdd_maker.user_service - [93mWARNING[0m - User ID 49 has no valid data
+2025-04-29 12:37:55 - genetic_rule_miner.bbdd_maker.user_service - [93mWARNING[0m - User ID 50 not found (404)
+2025-04-29 12:37:55 - genetic_rule_miner.bbdd_maker.user_service - [93mWARNING[0m - User ID 50 has no valid data
+2025-04-29 12:37:56 - genetic_rule_miner.bbdd_maker.user_service - [93mWARNING[0m - User ID 51 not found (404)
+2025-04-29 12:37:56 - genetic_rule_miner.bbdd_maker.user_service - [93mWARNING[0m - User ID 51 has no valid data
+2025-04-29 12:37:56 - genetic_rule_miner.bbdd_maker.user_service - [91mERROR[0m - Error on attempt 1 for user_id 52: 429 Client Error: Too Many Requests for url: https://api.jikan.moe/v4/users/userbyid/52
+2025-04-29 12:37:57 - genetic_rule_miner.bbdd_maker.user_service - [93mWARNING[0m - User ID 52 not found (404)
+2025-04-29 12:37:57 - genetic_rule_miner.bbdd_maker.user_service - [93mWARNING[0m - User ID 52 has no valid data
+2025-04-29 12:37:58 - genetic_rule_miner.bbdd_maker.user_service - [92mINFO[0m - User ID 53 successfully found
+2025-04-29 12:37:58 - genetic_rule_miner.bbdd_maker.user_service - [92mINFO[0m - User ID 53 added to the list
+2025-04-29 12:37:59 - genetic_rule_miner.bbdd_maker.user_service - [93mWARNING[0m - User ID 54 not found (404)
+2025-04-29 12:37:59 - genetic_rule_miner.bbdd_maker.user_service - [93mWARNING[0m - User ID 54 has no valid data
+2025-04-29 12:37:59 - genetic_rule_miner.bbdd_maker.user_service - [91mERROR[0m - Error on attempt 1 for user_id 55: 429 Client Error: Too Many Requests for url: https://api.jikan.moe/v4/users/userbyid/55
+2025-04-29 12:38:00 - genetic_rule_miner.bbdd_maker.user_service - [93mWARNING[0m - User ID 55 not found (404)
+2025-04-29 12:38:00 - genetic_rule_miner.bbdd_maker.user_service - [93mWARNING[0m - User ID 55 has no valid data
+2025-04-29 12:38:01 - genetic_rule_miner.bbdd_maker.user_service - [93mWARNING[0m - User ID 56 not found (404)
+2025-04-29 12:38:01 - genetic_rule_miner.bbdd_maker.user_service - [93mWARNING[0m - User ID 56 has no valid data
+2025-04-29 12:38:02 - genetic_rule_miner.bbdd_maker.user_service - [93mWARNING[0m - User ID 57 not found (404)
+2025-04-29 12:38:02 - genetic_rule_miner.bbdd_maker.user_service - [93mWARNING[0m - User ID 57 has no valid data
+2025-04-29 12:38:02 - genetic_rule_miner.bbdd_maker.user_service - [91mERROR[0m - Error on attempt 1 for user_id 58: 429 Client Error: Too Many Requests for url: https://api.jikan.moe/v4/users/userbyid/58
+2025-04-29 12:38:03 - genetic_rule_miner.bbdd_maker.user_service - [93mWARNING[0m - User ID 58 not found (404)
+2025-04-29 12:38:03 - genetic_rule_miner.bbdd_maker.user_service - [93mWARNING[0m - User ID 58 has no valid data
+2025-04-29 12:38:04 - genetic_rule_miner.bbdd_maker.user_service - [93mWARNING[0m - User ID 59 not found (404)
+2025-04-29 12:38:04 - genetic_rule_miner.bbdd_maker.user_service - [93mWARNING[0m - User ID 59 has no valid data
+2025-04-29 12:38:04 - genetic_rule_miner.bbdd_maker.user_service - [93mWARNING[0m - User ID 60 not found (404)
+2025-04-29 12:38:04 - genetic_rule_miner.bbdd_maker.user_service - [93mWARNING[0m - User ID 60 has no valid data
+2025-04-29 12:38:05 - genetic_rule_miner.bbdd_maker.user_service - [91mERROR[0m - Error on attempt 1 for user_id 61: 429 Client Error: Too Many Requests for url: https://api.jikan.moe/v4/users/userbyid/61
+2025-04-29 12:38:06 - genetic_rule_miner.bbdd_maker.user_service - [93mWARNING[0m - User ID 61 not found (404)
+2025-04-29 12:38:06 - genetic_rule_miner.bbdd_maker.user_service - [93mWARNING[0m - User ID 61 has no valid data
+2025-04-29 12:38:07 - genetic_rule_miner.bbdd_maker.user_service - [93mWARNING[0m - User ID 62 not found (404)
+2025-04-29 12:38:07 - genetic_rule_miner.bbdd_maker.user_service - [93mWARNING[0m - User ID 62 has no valid data
+2025-04-29 12:38:07 - genetic_rule_miner.bbdd_maker.user_service - [91mERROR[0m - Error on attempt 1 for user_id 63: 429 Client Error: Too Many Requests for url: https://api.jikan.moe/v4/users/userbyid/63
+2025-04-29 12:38:08 - genetic_rule_miner.bbdd_maker.user_service - [93mWARNING[0m - User ID 63 not found (404)
+2025-04-29 12:38:08 - genetic_rule_miner.bbdd_maker.user_service - [93mWARNING[0m - User ID 63 has no valid data
+2025-04-29 12:38:09 - genetic_rule_miner.bbdd_maker.user_service - [93mWARNING[0m - User ID 64 not found (404)
+2025-04-29 12:38:09 - genetic_rule_miner.bbdd_maker.user_service - [93mWARNING[0m - User ID 64 has no valid data
+2025-04-29 12:38:10 - genetic_rule_miner.bbdd_maker.user_service - [93mWARNING[0m - User ID 65 not found (404)
+2025-04-29 12:38:10 - genetic_rule_miner.bbdd_maker.user_service - [93mWARNING[0m - User ID 65 has no valid data
+2025-04-29 12:38:10 - genetic_rule_miner.bbdd_maker.user_service - [91mERROR[0m - Error on attempt 1 for user_id 66: 429 Client Error: Too Many Requests for url: https://api.jikan.moe/v4/users/userbyid/66
+2025-04-29 12:38:11 - genetic_rule_miner.bbdd_maker.user_service - [92mINFO[0m - User ID 66 successfully found
+2025-04-29 12:38:11 - genetic_rule_miner.bbdd_maker.user_service - [92mINFO[0m - User ID 66 added to the list
+2025-04-29 12:38:12 - genetic_rule_miner.bbdd_maker.user_service - [92mINFO[0m - User ID 67 successfully found
+2025-04-29 12:38:12 - genetic_rule_miner.bbdd_maker.user_service - [92mINFO[0m - User ID 67 added to the list
+2025-04-29 12:38:13 - genetic_rule_miner.bbdd_maker.user_service - [93mWARNING[0m - User ID 68 not found (404)
+2025-04-29 12:38:13 - genetic_rule_miner.bbdd_maker.user_service - [93mWARNING[0m - User ID 68 has no valid data
+2025-04-29 12:38:13 - genetic_rule_miner.bbdd_maker.user_service - [91mERROR[0m - Error on attempt 1 for user_id 69: 429 Client Error: Too Many Requests for url: https://api.jikan.moe/v4/users/userbyid/69
+2025-04-29 12:38:14 - genetic_rule_miner.bbdd_maker.user_service - [93mWARNING[0m - User ID 69 not found (404)
+2025-04-29 12:38:14 - genetic_rule_miner.bbdd_maker.user_service - [93mWARNING[0m - User ID 69 has no valid data
+2025-04-29 12:38:15 - genetic_rule_miner.bbdd_maker.user_service - [92mINFO[0m - User ID 70 successfully found
+2025-04-29 12:38:15 - genetic_rule_miner.bbdd_maker.user_service - [92mINFO[0m - User ID 70 added to the list
+2025-04-29 12:38:16 - genetic_rule_miner.bbdd_maker.user_service - [92mINFO[0m - User ID 71 successfully found
+2025-04-29 12:38:16 - genetic_rule_miner.bbdd_maker.user_service - [92mINFO[0m - User ID 71 added to the list
+2025-04-29 12:38:16 - genetic_rule_miner.bbdd_maker.user_service - [91mERROR[0m - Error on attempt 1 for user_id 72: 429 Client Error: Too Many Requests for url: https://api.jikan.moe/v4/users/userbyid/72
+2025-04-29 12:38:17 - genetic_rule_miner.bbdd_maker.user_service - [92mINFO[0m - User ID 72 successfully found
+2025-04-29 12:38:17 - genetic_rule_miner.bbdd_maker.user_service - [92mINFO[0m - User ID 72 added to the list
+2025-04-29 12:38:18 - genetic_rule_miner.bbdd_maker.user_service - [93mWARNING[0m - User ID 73 not found (404)
+2025-04-29 12:38:18 - genetic_rule_miner.bbdd_maker.user_service - [93mWARNING[0m - User ID 73 has no valid data
+2025-04-29 12:38:18 - genetic_rule_miner.bbdd_maker.user_service - [91mERROR[0m - Error on attempt 1 for user_id 74: 429 Client Error: Too Many Requests for url: https://api.jikan.moe/v4/users/userbyid/74
+2025-04-29 12:38:20 - genetic_rule_miner.bbdd_maker.user_service - [93mWARNING[0m - User ID 74 not found (404)
+2025-04-29 12:38:20 - genetic_rule_miner.bbdd_maker.user_service - [93mWARNING[0m - User ID 74 has no valid data
+2025-04-29 12:38:20 - genetic_rule_miner.bbdd_maker.user_service - [93mWARNING[0m - User ID 75 not found (404)
+2025-04-29 12:38:20 - genetic_rule_miner.bbdd_maker.user_service - [93mWARNING[0m - User ID 75 has no valid data
+2025-04-29 12:38:21 - genetic_rule_miner.bbdd_maker.user_service - [93mWARNING[0m - User ID 76 not found (404)
+2025-04-29 12:38:21 - genetic_rule_miner.bbdd_maker.user_service - [93mWARNING[0m - User ID 76 has no valid data
+2025-04-29 12:38:21 - genetic_rule_miner.bbdd_maker.user_service - [91mERROR[0m - Error on attempt 1 for user_id 77: 429 Client Error: Too Many Requests for url: https://api.jikan.moe/v4/users/userbyid/77
+2025-04-29 12:38:23 - genetic_rule_miner.bbdd_maker.user_service - [92mINFO[0m - User ID 77 successfully found
+2025-04-29 12:38:23 - genetic_rule_miner.bbdd_maker.user_service - [92mINFO[0m - User ID 77 added to the list
+2025-04-29 12:38:23 - genetic_rule_miner.bbdd_maker.user_service - [93mWARNING[0m - User ID 78 not found (404)
+2025-04-29 12:38:23 - genetic_rule_miner.bbdd_maker.user_service - [93mWARNING[0m - User ID 78 has no valid data
+2025-04-29 12:38:24 - genetic_rule_miner.bbdd_maker.user_service - [93mWARNING[0m - User ID 79 not found (404)
+2025-04-29 12:38:24 - genetic_rule_miner.bbdd_maker.user_service - [93mWARNING[0m - User ID 79 has no valid data
+2025-04-29 12:38:24 - genetic_rule_miner.bbdd_maker.user_service - [91mERROR[0m - Error on attempt 1 for user_id 80: 429 Client Error: Too Many Requests for url: https://api.jikan.moe/v4/users/userbyid/80
+2025-04-29 12:38:25 - genetic_rule_miner.bbdd_maker.user_service - [92mINFO[0m - User ID 80 successfully found
+2025-04-29 12:38:25 - genetic_rule_miner.bbdd_maker.user_service - [92mINFO[0m - User ID 80 added to the list
+2025-04-29 12:38:26 - genetic_rule_miner.bbdd_maker.user_service - [92mINFO[0m - User ID 81 successfully found
+2025-04-29 12:38:26 - genetic_rule_miner.bbdd_maker.user_service - [92mINFO[0m - User ID 81 added to the list
+2025-04-29 12:38:27 - genetic_rule_miner.bbdd_maker.user_service - [92mINFO[0m - User ID 82 successfully found
+2025-04-29 12:38:27 - genetic_rule_miner.bbdd_maker.user_service - [92mINFO[0m - User ID 82 added to the list
+2025-04-29 12:38:27 - genetic_rule_miner.bbdd_maker.user_service - [91mERROR[0m - Error on attempt 1 for user_id 83: 429 Client Error: Too Many Requests for url: https://api.jikan.moe/v4/users/userbyid/83
+2025-04-29 12:38:28 - genetic_rule_miner.bbdd_maker.user_service - [92mINFO[0m - User ID 83 successfully found
+2025-04-29 12:38:28 - genetic_rule_miner.bbdd_maker.user_service - [92mINFO[0m - User ID 83 added to the list
+2025-04-29 12:38:29 - genetic_rule_miner.bbdd_maker.user_service - [93mWARNING[0m - User ID 84 not found (404)
+2025-04-29 12:38:29 - genetic_rule_miner.bbdd_maker.user_service - [93mWARNING[0m - User ID 84 has no valid data
+2025-04-29 12:38:30 - genetic_rule_miner.bbdd_maker.user_service - [93mWARNING[0m - User ID 85 not found (404)
+2025-04-29 12:38:30 - genetic_rule_miner.bbdd_maker.user_service - [93mWARNING[0m - User ID 85 has no valid data
+2025-04-29 12:38:30 - genetic_rule_miner.bbdd_maker.user_service - [91mERROR[0m - Error on attempt 1 for user_id 86: 429 Client Error: Too Many Requests for url: https://api.jikan.moe/v4/users/userbyid/86
+2025-04-29 12:38:31 - genetic_rule_miner.bbdd_maker.user_service - [93mWARNING[0m - User ID 86 not found (404)
+2025-04-29 12:38:31 - genetic_rule_miner.bbdd_maker.user_service - [93mWARNING[0m - User ID 86 has no valid data
+2025-04-29 12:38:32 - genetic_rule_miner.bbdd_maker.user_service - [93mWARNING[0m - User ID 87 not found (404)
+2025-04-29 12:38:32 - genetic_rule_miner.bbdd_maker.user_service - [93mWARNING[0m - User ID 87 has no valid data
+2025-04-29 12:38:32 - genetic_rule_miner.bbdd_maker.user_service - [92mINFO[0m - User ID 88 successfully found
+2025-04-29 12:38:32 - genetic_rule_miner.bbdd_maker.user_service - [92mINFO[0m - User ID 88 added to the list
+2025-04-29 12:38:33 - genetic_rule_miner.bbdd_maker.user_service - [91mERROR[0m - Error on attempt 1 for user_id 89: 429 Client Error: Too Many Requests for url: https://api.jikan.moe/v4/users/userbyid/89
+2025-04-29 12:38:34 - genetic_rule_miner.bbdd_maker.user_service - [93mWARNING[0m - User ID 89 not found (404)
+2025-04-29 12:38:34 - genetic_rule_miner.bbdd_maker.user_service - [93mWARNING[0m - User ID 89 has no valid data
+2025-04-29 12:38:35 - genetic_rule_miner.bbdd_maker.user_service - [92mINFO[0m - User ID 90 successfully found
+2025-04-29 12:38:35 - genetic_rule_miner.bbdd_maker.user_service - [92mINFO[0m - User ID 90 added to the list
+2025-04-29 12:38:35 - genetic_rule_miner.bbdd_maker.user_service - [91mERROR[0m - Error on attempt 1 for user_id 91: 429 Client Error: Too Many Requests for url: https://api.jikan.moe/v4/users/userbyid/91
+2025-04-29 12:38:37 - genetic_rule_miner.bbdd_maker.user_service - [92mINFO[0m - User ID 91 successfully found
+2025-04-29 12:38:37 - genetic_rule_miner.bbdd_maker.user_service - [92mINFO[0m - User ID 91 added to the list
+2025-04-29 12:38:37 - genetic_rule_miner.bbdd_maker.user_service - [93mWARNING[0m - User ID 92 not found (404)
+2025-04-29 12:38:37 - genetic_rule_miner.bbdd_maker.user_service - [93mWARNING[0m - User ID 92 has no valid data
+2025-04-29 12:38:38 - genetic_rule_miner.bbdd_maker.user_service - [93mWARNING[0m - User ID 93 not found (404)
+2025-04-29 12:38:38 - genetic_rule_miner.bbdd_maker.user_service - [93mWARNING[0m - User ID 93 has no valid data
+2025-04-29 12:38:38 - genetic_rule_miner.bbdd_maker.user_service - [91mERROR[0m - Error on attempt 1 for user_id 94: 429 Client Error: Too Many Requests for url: https://api.jikan.moe/v4/users/userbyid/94
+2025-04-29 12:38:40 - genetic_rule_miner.bbdd_maker.user_service - [93mWARNING[0m - User ID 94 not found (404)
+2025-04-29 12:38:40 - genetic_rule_miner.bbdd_maker.user_service - [93mWARNING[0m - User ID 94 has no valid data
+2025-04-29 12:38:40 - genetic_rule_miner.bbdd_maker.user_service - [92mINFO[0m - User ID 95 successfully found
+2025-04-29 12:38:40 - genetic_rule_miner.bbdd_maker.user_service - [92mINFO[0m - User ID 95 added to the list
+2025-04-29 12:38:41 - genetic_rule_miner.bbdd_maker.user_service - [93mWARNING[0m - User ID 96 not found (404)
+2025-04-29 12:38:41 - genetic_rule_miner.bbdd_maker.user_service - [93mWARNING[0m - User ID 96 has no valid data
+2025-04-29 12:38:41 - genetic_rule_miner.bbdd_maker.user_service - [91mERROR[0m - Error on attempt 1 for user_id 97: 429 Client Error: Too Many Requests for url: https://api.jikan.moe/v4/users/userbyid/97
+2025-04-29 12:38:42 - genetic_rule_miner.bbdd_maker.user_service - [93mWARNING[0m - User ID 97 not found (404)
+2025-04-29 12:38:42 - genetic_rule_miner.bbdd_maker.user_service - [93mWARNING[0m - User ID 97 has no valid data
+2025-04-29 12:38:43 - genetic_rule_miner.bbdd_maker.user_service - [93mWARNING[0m - User ID 98 not found (404)
+2025-04-29 12:38:43 - genetic_rule_miner.bbdd_maker.user_service - [93mWARNING[0m - User ID 98 has no valid data
+2025-04-29 12:38:44 - genetic_rule_miner.bbdd_maker.user_service - [93mWARNING[0m - User ID 99 not found (404)
+2025-04-29 12:38:44 - genetic_rule_miner.bbdd_maker.user_service - [93mWARNING[0m - User ID 99 has no valid data
+2025-04-29 12:38:44 - genetic_rule_miner.bbdd_maker.user_service - [91mERROR[0m - Error on attempt 1 for user_id 100: 429 Client Error: Too Many Requests for url: https://api.jikan.moe/v4/users/userbyid/100
+2025-04-29 12:38:45 - genetic_rule_miner.bbdd_maker.user_service - [93mWARNING[0m - User ID 100 not found (404)
+2025-04-29 12:38:45 - genetic_rule_miner.bbdd_maker.user_service - [93mWARNING[0m - User ID 100 has no valid data
+2025-04-29 12:38:46 - genetic_rule_miner.bbdd_maker.user_service - [92mINFO[0m - Progress: 100.0% (100/100)
+2025-04-29 12:38:46 - genetic_rule_miner.bbdd_maker.user_service - [92mINFO[0m - Generation completed. Valid users: 27/100
+2025-04-29 12:38:46 - __main__ - [92mINFO[0m - 📡 Preparing user data...
+2025-04-29 12:38:46 - __main__ - [92mINFO[0m - 📡 Retrieving user details...
+2025-04-29 12:38:46 - genetic_rule_miner.bbdd_maker.details_service - [92mINFO[0m - DetailsService initialized with default configuration.
+2025-04-29 12:38:46 - genetic_rule_miner.bbdd_maker.details_service - [92mINFO[0m - Starting processing for 27 users.
+2025-04-29 12:38:50 - genetic_rule_miner.bbdd_maker.details_service - [92mINFO[0m - Processed 3/27
+2025-04-29 12:38:54 - genetic_rule_miner.bbdd_maker.details_service - [92mINFO[0m - Processed 6/27
+2025-04-29 12:38:59 - genetic_rule_miner.bbdd_maker.details_service - [92mINFO[0m - Processed 9/27
+2025-04-29 12:39:03 - genetic_rule_miner.bbdd_maker.details_service - [92mINFO[0m - Processed 12/27
+2025-04-29 12:39:10 - genetic_rule_miner.bbdd_maker.details_service - [92mINFO[0m - Processed 15/27
+2025-04-29 12:39:18 - genetic_rule_miner.bbdd_maker.details_service - [92mINFO[0m - Processed 18/27
+2025-04-29 12:39:24 - genetic_rule_miner.bbdd_maker.details_service - [92mINFO[0m - Processed 21/27
+2025-04-29 12:39:28 - genetic_rule_miner.bbdd_maker.details_service - [92mINFO[0m - Processed 24/27
+2025-04-29 12:39:32 - genetic_rule_miner.bbdd_maker.details_service - [92mINFO[0m - Processed 27/27
+2025-04-29 12:39:33 - genetic_rule_miner.bbdd_maker.details_service - [92mINFO[0m - Total processing time: 47.47s
+2025-04-29 12:39:33 - __main__ - [92mINFO[0m - 📡 Retrieving user scores...
+2025-04-29 12:39:33 - genetic_rule_miner.bbdd_maker.score_service - [92mINFO[0m - ScoreService initialized with default configuration.
+2025-04-29 12:39:33 - genetic_rule_miner.bbdd_maker.score_service - [92mINFO[0m - Starting user processing to generate CSV.
+2025-04-29 12:39:33 - genetic_rule_miner.bbdd_maker.score_service - [92mINFO[0m - Total users to process: 27.
+2025-04-29 12:39:33 - genetic_rule_miner.bbdd_maker.score_service - [92mINFO[0m - Processing batch 1.
+2025-04-29 12:39:33 - genetic_rule_miner.bbdd_maker.score_service - [92mINFO[0m - Processing batch of 27 users.
+2025-04-29 12:39:35 - genetic_rule_miner.bbdd_maker.score_service - [92mINFO[0m - Data retrieved for Xinil.
+2025-04-29 12:39:35 - genetic_rule_miner.bbdd_maker.score_service - [93mWARNING[0m - No data for Aokaado.
+2025-04-29 12:39:36 - genetic_rule_miner.bbdd_maker.score_service - [92mINFO[0m - Data retrieved for Crystal.
+2025-04-29 12:39:37 - genetic_rule_miner.bbdd_maker.score_service - [92mINFO[0m - Data retrieved for Arcane.
+2025-04-29 12:39:37 - genetic_rule_miner.bbdd_maker.score_service - [93mWARNING[0m - HTTP response 418 for Mad.
+2025-04-29 12:39:37 - genetic_rule_miner.bbdd_maker.score_service - [93mWARNING[0m - No data for Mad.
+2025-04-29 12:39:38 - genetic_rule_miner.bbdd_maker.score_service - [92mINFO[0m - Data retrieved for vondur.
+2025-04-29 12:39:39 - genetic_rule_miner.bbdd_maker.score_service - [92mINFO[0m - Data retrieved for Amuro.
+2025-04-29 12:39:39 - genetic_rule_miner.bbdd_maker.score_service - [93mWARNING[0m - HTTP response 418 for Baman.
+2025-04-29 12:39:39 - genetic_rule_miner.bbdd_maker.score_service - [93mWARNING[0m - No data for Baman.
+2025-04-29 12:39:40 - genetic_rule_miner.bbdd_maker.score_service - [92mINFO[0m - Data retrieved for megan.
+2025-04-29 12:39:40 - genetic_rule_miner.bbdd_maker.score_service - [93mWARNING[0m - HTTP response 418 for beddan.
+2025-04-29 12:39:40 - genetic_rule_miner.bbdd_maker.score_service - [93mWARNING[0m - No data for beddan.
+2025-04-29 12:39:41 - genetic_rule_miner.bbdd_maker.score_service - [92mINFO[0m - Data retrieved for kei-clone.
+2025-04-29 12:39:42 - genetic_rule_miner.bbdd_maker.score_service - [92mINFO[0m - Data retrieved for seif.
+2025-04-29 12:39:42 - genetic_rule_miner.bbdd_maker.score_service - [92mINFO[0m - Data retrieved for Ladholyman.
+2025-04-29 12:39:43 - genetic_rule_miner.bbdd_maker.score_service - [92mINFO[0m - Data retrieved for Hiromi.
+2025-04-29 12:39:43 - genetic_rule_miner.bbdd_maker.score_service - [92mINFO[0m - Data retrieved for ShadowOz.
+2025-04-29 12:39:44 - genetic_rule_miner.bbdd_maker.score_service - [92mINFO[0m - Data retrieved for Cruzle.
+2025-04-29 12:39:45 - genetic_rule_miner.bbdd_maker.score_service - [92mINFO[0m - Data retrieved for Smoka.
+2025-04-29 12:39:46 - genetic_rule_miner.bbdd_maker.score_service - [92mINFO[0m - Data retrieved for james2k.
+2025-04-29 12:39:46 - genetic_rule_miner.bbdd_maker.score_service - [93mWARNING[0m - No data for Emp-.
+2025-04-29 12:39:47 - genetic_rule_miner.bbdd_maker.score_service - [92mINFO[0m - Data retrieved for koalatees.

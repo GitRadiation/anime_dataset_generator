@@ -1,4 +1,5 @@
 import logging
+import time
 from io import BytesIO
 from typing import Optional
 
@@ -40,6 +41,10 @@ class AnimeService:
                     attempt + 1,
                     e,
                 )
+
+                if attempt < self.config.max_retries - 1:
+                    logger.debug("Waiting before the next attempt...")
+                    time.sleep(2**attempt)  # Exponential backoff
         logger.error(
             "Failed to fetch anime with ID %d after %d attempts",
             anime_id,
