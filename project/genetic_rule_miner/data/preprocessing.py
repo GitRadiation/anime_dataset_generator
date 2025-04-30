@@ -129,10 +129,12 @@ def preprocess_data(df: pd.DataFrame) -> pd.DataFrame:
                 labels=["young", "adult", "senior"],
                 include_lowest=True,
             )
+            # Drop 'birthday' column after processing
+            df = df.drop(columns=["birthday"], errors="ignore")
 
         # Process 'aired' column and extract start year
         if "aired" in df.columns:
-            df["aired_start_year"] = (
+            df["aired"] = (
                 df["aired"]
                 .astype(str)
                 .str.extract(r"(\d{4})")[0]

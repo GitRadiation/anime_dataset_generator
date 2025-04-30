@@ -74,9 +74,8 @@ def main() -> None:
             df=processed_df,
             target="rating",
             user_cols=user_details.columns.tolist(),
-            pop_size=50,
+            pop_size=250,
             generations=100,
-            random_seed=42,
         )
         logger.info("Starting evolution process...")
         results = miner.evolve()

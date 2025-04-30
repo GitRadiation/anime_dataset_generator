@@ -1,16 +1,38 @@
 """Genetic algorithm implementation with collections.abc and NumPy."""
 
+import copy
 import itertools
 from collections.abc import Mapping, MutableSequence, Sequence
 from functools import lru_cache, partial
-from typing import Optional, Union
+from typing import Optional, Tuple, Union
 
 import numpy as np
 import pandas as pd
+from numpy.random import Generator
 
 from genetic_rule_miner.utils.logging import LogManager
 
 logger = LogManager.get_logger(__name__)
+
+
+Condition = Tuple[str, str, Union[float, str]]
+
+
+def cache_conditions(method):
+    cache_name = f"_{method.__name__}_cache"
+
+    def wrapper(self, conditions):
+        key = tuple(conditions)
+        if not hasattr(self, cache_name):
+            setattr(self, cache_name, {})
+        cache = getattr(self, cache_name)
+        if key in cache:
+            return cache[key]
+        result = method(self, conditions)
+        cache[key] = result
+        return result
+
+    return wrapper
 
 
 class GeneticRuleMiner:
@@ -23,7 +45,7 @@ class GeneticRuleMiner:
         user_cols: Sequence[str],
         pop_size: int = 50,
         generations: int = 100,
-        mutation_rate: float = 0.1,
+        mutation_rate: float = 0.7,
         random_seed: Optional[int] = None,
     ):
         self.df = df.copy()
@@ -31,8 +53,18 @@ class GeneticRuleMiner:
         self.pop_size = pop_size
         self.generations = generations
         self.mutation_rate = mutation_rate
+        self._condition_mask_cache: dict[int, np.ndarray] = {}
+
         self.user_cols = [col for col in user_cols if col in df.columns]
-        self.rng = np.random.default_rng(random_seed)
+
+        if not self.user_cols:
+            raise ValueError("No valid user columns provided.")
+
+        if "high" not in self.df[self.target].unique():
+            logger.warning(
+                f"Target value 'high' not found in column '{self.target}'."
+            )
+        self.rng: Generator = np.random.default_rng(random_seed)
 
         self.population: MutableSequence[dict] = []
         self.best_fitness_history: MutableSequence[float] = []
@@ -137,8 +169,14 @@ class GeneticRuleMiner:
             if condition:
                 user_conds.append(condition)
 
+        # Completar las condiciones hasta 5 si es necesario
         while len(rule["conditions"]) < max_conditions:
-            self._add_condition(rule, existing_cols, self.df.columns)
+            # Asegurarse de que 'target' no sea considerado en las reglas; evitar target => target
+            self._add_condition(
+                rule,
+                existing_cols,
+                [col for col in self.df.columns if col != self.target],
+            )
 
     def fitness(self, rule: dict) -> float:
         """Calculate rule fitness (support * confidence)."""
@@ -146,7 +184,10 @@ class GeneticRuleMiner:
             rule["conditions"]
         ) * self._vectorized_confidence(rule)
 
-    def _build_condition_mask(self, conditions: Sequence[tuple]) -> np.ndarray:
+    @cache_conditions
+    def _build_condition_mask(
+        self, conditions: Sequence[Condition]
+    ) -> np.ndarray:
         # Crea una máscara booleana para las condiciones
         # de las filas que cumplen las condiciones
         # Inicializa la máscara como True para todas las filas
@@ -163,16 +204,12 @@ class GeneticRuleMiner:
                 mask &= col_data > value
             elif op == "==":
                 if pd.api.types.is_numeric_dtype(self.df[col]):
-                    mask &= col_data == float(value)
+                    mask &= self.df[col] == float(value)
                 else:
-                    mask &= (
-                        col_data == float(value)
-                        if pd.api.types.is_numeric_dtype(self.df[col])
-                        else self.df[col].astype(str).values == str(value)
-                    )
+                    mask &= self.df[col].astype(str) == str(value)
         return mask
 
-    def _vectorized_support(self, conditions: Sequence[tuple]) -> float:
+    def _vectorized_support(self, conditions: Sequence[Condition]) -> float:
         """Calcula el soporte como proporción de filas que cumplen las condiciones."""
         return np.mean(self._build_condition_mask(conditions))
 
@@ -210,7 +247,7 @@ class GeneticRuleMiner:
         )
 
     def mutate(self, rule: dict) -> dict:
-        new_rule = rule.copy()
+        new_rule = copy.deepcopy(rule)
         # Crea una lista independiente para que los cambios no afecten a la regla original
         new_rule["conditions"] = rule["conditions"][:]
 
@@ -218,13 +255,44 @@ class GeneticRuleMiner:
             len(new_rule["conditions"]) > 0
             and self.rng.random() < self.mutation_rate
         ):
-            # Selecciona un índice aleatorio para mutar
-            idx = self.rng.integers(0, len(new_rule["conditions"]))
-            # Nombre de la columna a mutar
-            col = new_rule["conditions"][idx][0]
-            # Genera una nueva condición aleatoria sobre la misma columna
-            new_rule["conditions"][idx] = self._create_condition(col)
-        self._complete_conditions(new_rule, min_user_conds=2, max_conditions=5)
+            action = self.rng.choice(["replace", "add", "remove", "swap"])
+
+            if action == "replace" and len(new_rule["conditions"]) > 0:
+                # Reemplazar una condición con una nueva aleatoria
+                idx = self.rng.integers(len(new_rule["conditions"]))
+                col = new_rule["conditions"][idx][0]  # Columna actual
+                new_rule["conditions"][idx] = self._create_condition(col)
+
+            elif action == "add":
+                # Agregar una nueva condición, seleccionando columnas no usadas
+                used_cols = set(cond[0] for cond in new_rule["conditions"])
+                unused_cols = [
+                    col
+                    for col in self.df.columns
+                    if col not in used_cols and col != self.target
+                ]
+
+                if unused_cols:
+                    new_col = self.rng.choice(unused_cols)
+                    new_rule["conditions"].append(
+                        self._create_condition(new_col)
+                    )
+
+            elif action == "remove" and len(new_rule["conditions"]) > 1:
+                # Eliminar una condición aleatoria
+                idx = self.rng.integers(len(new_rule["conditions"]))
+                del new_rule["conditions"][idx]
+
+            elif action == "swap" and len(new_rule["conditions"]) > 1:
+                # Intercambiar dos condiciones aleatorias
+                idx1, idx2 = self.rng.choice(
+                    range(len(new_rule["conditions"])), 2
+                )
+                new_rule["conditions"][idx1], new_rule["conditions"][idx2] = (
+                    new_rule["conditions"][idx2],
+                    new_rule["conditions"][idx1],
+                )
+
         return new_rule
 
     def crossover(self, parent1: dict, parent2: dict) -> tuple[dict, dict]:
@@ -287,10 +355,13 @@ class GeneticRuleMiner:
         new_population: MutableSequence[dict] = []
         # Recorre la lista de padres en pasos de 2
         # para crear dos hijos a partir de cada par de padres
-        for i in range(0, self.pop_size, 2):
-
+        for i in range(0, len(parents) - 1, 2):
             child1, child2 = self.crossover(parents[i], parents[i + 1])
             new_population.extend([self.mutate(child1), self.mutate(child2)])
+
+        # Si hay un padre sobrante, lo copias o mutas directamente
+        if len(parents) % 2 == 1:
+            new_population.append(self.mutate(parents[-1]))
 
         return new_population
 
@@ -320,19 +391,64 @@ class GeneticRuleMiner:
         )
 
     def evolve(self) -> dict:
-        """Evolves the population over a number of generations."""
+        """Evolves the population over a number of generations with forced diversity."""
+        stagnation = 0
+        best_fitness = -np.inf
 
-        # La población inicial se genera en el constructor
         for generation in range(self.generations):
+            # Evaluar la población para obtener los puntajes de aptitud (fitness)
+            fitness_scores = self._evaluate_population()
+
+            # Obtener el número de reglas únicas en la población
+            unique_rules = len(
+                {tuple(rule["conditions"]) for rule in self.population}
+            )
+            logger.info(
+                f"Generation {generation}: {unique_rules} unique rules"
+            )
+
+            if hasattr(self, "_build_condition_mask_cache"):
+                input(
+                    "Press Enter to clear the cache..."
+                )  # Solo es necesario para depuración, puedes eliminarlo después
+
+            # Selección de padres para el siguiente ciclo de evolución
             parents = self._select_parents()
             new_population = self._create_new_generation(parents)
 
-            # Preservar el mejor individuo de la generación anterior
-            if generation > 0:
-                new_population[0] = self._get_best_individual()
+            # Introducir diversidad forzada (mutación aleatoria de parte de la población)
+            diversity_count = int(self.pop_size * 0.1)
+            for i in range(self.pop_size - diversity_count, self.pop_size):
+                new_population[i] = self._create_rule()
 
+            # Preservar los mejores individuos de la generación anterior (elitismo)
+            if generation > 0:
+                # Top-5% élite
+                num_elite = max(1, self.pop_size // 20)
+                elite_indices = np.argsort(fitness_scores)[::-1][:num_elite]
+                elites = [self.population[i] for i in elite_indices]
+                new_population[:num_elite] = elites
+
+            # Actualizar la población
             self.population = new_population
+
+            # Actualizar el seguimiento de las estadísticas
             self._update_tracking(generation)
+
+            # Verificar si se ha alcanzado un nuevo mejor puntaje de fitness
+            best_idx = np.argmax(fitness_scores)
+            if fitness_scores[best_idx] > best_fitness:
+                best_fitness = fitness_scores[best_idx]
+                stagnation = 0
+            else:
+                stagnation += 1
+
+            # Early stopping si no hay mejoras en 20 generaciones
+            if stagnation >= 20:
+                logger.info(
+                    "Early stopping: no improvement in 20 generations."
+                )
+                break
 
         return self._compile_results()
 
