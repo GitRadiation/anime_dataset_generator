@@ -86,21 +86,23 @@ def preprocess_data(df: pd.DataFrame) -> pd.DataFrame:
         # Clean string columns
         df = clean_string_columns(df)
 
-        # Clean and bin 'duration' column
-        df = clean_and_bin_column(
-            df,
-            "duration",
-            [0, 20, 25, max(30, df["duration"].max() + 1)],
-            ["short", "standard", "long"],
-        )
+        if "duration" in df.columns:
+            # Clean and bin 'duration' column
+            df = clean_and_bin_column(
+                df,
+                "duration",
+                [0, 20, 25, max(30, df["duration"].max() + 1)],
+                ["short", "standard", "long"],
+            )
 
         # Clean and bin 'episodes' column
-        df = clean_and_bin_column(
-            df,
-            "episodes",
-            [0, 12, 24, max(26, df["episodes"].max() + 1)],
-            ["short", "medium", "long"],
-        )
+        if "episodes" in df.columns:
+            df = clean_and_bin_column(
+                df,
+                "episodes",
+                [0, 12, 24, max(26, df["episodes"].max() + 1)],
+                ["short", "medium", "long"],
+            )
 
         # Clean 'rating_x' and create 'rating' column
         if "rating_x" in df.columns:
@@ -127,10 +129,12 @@ def preprocess_data(df: pd.DataFrame) -> pd.DataFrame:
                 labels=["young", "adult", "senior"],
                 include_lowest=True,
             )
+            # Drop 'birthday' column after processing
+            df = df.drop(columns=["birthday"], errors="ignore")
 
         # Process 'aired' column and extract start year
         if "aired" in df.columns:
-            df["aired_start_year"] = (
+            df["aired"] = (
                 df["aired"]
                 .astype(str)
                 .str.extract(r"(\d{4})")[0]

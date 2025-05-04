@@ -91,7 +91,9 @@ class DetailsService:
                     return self._parse_response(response.json())
 
                 if response.status_code == 404:
-                    logger.info(f"User not found: {username}")
+                    logger.info(
+                        f"User not found: {username}. Skipping further attempts."
+                    )
                     return None
 
                 logger.warning(

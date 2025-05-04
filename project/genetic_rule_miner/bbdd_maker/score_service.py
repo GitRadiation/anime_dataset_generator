@@ -50,27 +50,44 @@ class ScoreService:
     def _scrape_user_scores(
         self, username: str, user_id: int
     ) -> Optional[List[list]]:
-        """Main scraping logic with dual table structure"""
+        """Main scraping logic with retries and dual table structure"""
         logger.debug(f"Starting scraping for user: {username}.")
-        try:
-            url = f"https://myanimelist.net/animelist/{username}?status={self.status_code}"
-            response = requests.get(url, timeout=self.config.timeout)
+        for attempt in range(self.config.max_retries):
+            try:
+                url = f"https://myanimelist.net/animelist/{username}?status={self.status_code}"
+                response = requests.get(url, timeout=self.config.timeout)
 
-            if response.status_code != 200:
-                logger.warning(
-                    f"HTTP response {response.status_code} for {username}."
+                if response.status_code == 200:
+                    logger.debug(
+                        f"Successfully retrieved HTML for {username}."
+                    )
+                    soup = BeautifulSoup(response.content, "html.parser")
+                    return self._parse_modern_table(
+                        soup, user_id, username
+                    ) or self._parse_legacy_tables(soup, user_id, username)
+
+                if response.status_code == 404:
+                    logger.info(
+                        f"User not found: {username}. Skipping further attempts."
+                    )
+                    return None
+
+                if response.status_code == 429:
+                    logger.warning(
+                        f"Rate limit exceeded for {username}. Retrying..."
+                    )
+                else:
+                    return None
+                time.sleep(2**attempt)
+
+            except Exception as e:
+                logger.error(
+                    f"Error on attempt {attempt+1} for {username}: {str(e)}"
                 )
-                return None
+                time.sleep(2**attempt)
 
-            soup = BeautifulSoup(response.content, "html.parser")
-            logger.debug(f"HTML content retrieved for {username}.")
-            return self._parse_modern_table(
-                soup, user_id, username
-            ) or self._parse_legacy_tables(soup, user_id, username)
-
-        except Exception as e:
-            logger.error(f"Scraping error for {username}: {str(e)}")
-            return None
+        logger.error(f"All attempts to scrape data for {username} failed.")
+        return None
 
     def _parse_modern_table(self, soup, user_id, username):
         """Handles modern table with data-items"""
