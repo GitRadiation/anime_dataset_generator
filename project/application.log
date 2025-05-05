@@ -4304,3 +4304,18 @@ Fitness: 0.6667
  False False]
 2025-04-24 12:03:35 - __main__ - [92mINFO[0m - Confidence: 0
 2025-04-24 12:03:35 - genetic_rule_miner.data.database - [92mINFO[0m - PostgreSQL connection pool closed
+2025-05-04 16:55:52 - __main__ - [92mINFO[0m - 🔧 Phase 1: Initialization
+2025-05-04 16:55:52 - __main__ - [92mINFO[0m - 📡 Phase 2: Data Retrieval
+2025-05-04 16:55:52 - __main__ - [92mINFO[0m - 🤔 Attempt 1 to retrieve base data...
+2025-05-04 16:55:52 - __main__ - [92mINFO[0m - 📡 Retrieving anime data...
+2025-05-04 16:55:52 - genetic_rule_miner.bbdd_maker.anime_service - [92mINFO[0m - AnimeService initialized with config: APIConfig(base_url='https://api.jikan.moe/v4/', max_retries=3, timeout=10.0, request_delay=0.35, rate_limit=3)
+2025-05-04 16:55:52 - genetic_rule_miner.bbdd_maker.anime_service - [92mINFO[0m - Starting to fetch anime data from ID 1 to 100
+2025-05-04 16:55:53 - genetic_rule_miner.bbdd_maker.anime_service - [93mWARNING[0m - Anime with ID 2 not found (404). Skipping further attempts.
+2025-05-04 16:55:53 - genetic_rule_miner.bbdd_maker.anime_service - [92mINFO[0m - No data found for anime ID 2
+2025-05-04 16:55:54 - genetic_rule_miner.bbdd_maker.anime_service - [93mWARNING[0m - Anime with ID 3 not found (404). Skipping further attempts.
+2025-05-04 16:55:54 - genetic_rule_miner.bbdd_maker.anime_service - [92mINFO[0m - No data found for anime ID 3
+2025-05-04 16:55:55 - genetic_rule_miner.bbdd_maker.anime_service - [93mWARNING[0m - Anime with ID 4 not found (404). Skipping further attempts.
+2025-05-04 16:55:55 - genetic_rule_miner.bbdd_maker.anime_service - [92mINFO[0m - No data found for anime ID 4
+2025-05-04 16:55:56 - genetic_rule_miner.bbdd_maker.anime_service - [93mWARNING[0m - Failed to fetch anime with ID 7 on attempt 1: 429 Client Error: Too Many Requests for url: https://api.jikan.moe/v4/anime/7
+2025-05-04 16:55:59 - genetic_rule_miner.bbdd_maker.anime_service - [93mWARNING[0m - Anime with ID 9 not found (404). Skipping further attempts.
+2025-05-04 16:55:59 - genetic_rule_miner.bbdd_maker.anime_service - [92mINFO[0m - No data found for anime ID 9

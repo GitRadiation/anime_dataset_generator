@@ -141,6 +141,10 @@ class GeneticRuleMiner:
             return (col, "==", str(self.rng.choice(all_vals)))
 
     def _add_condition(self, rule, existing_cols, column_pool):
+        """
+        Adds a new condition to the given rule by selecting a column not already used.
+        """
+        
         available_cols = [c for c in column_pool if c not in existing_cols]
         if not available_cols:
             return None
@@ -149,6 +153,7 @@ class GeneticRuleMiner:
         rule["conditions"].append(condition)
         existing_cols.add(col)
         return condition
+
 
     def _complete_conditions(
         self, rule: dict, min_user_conds: int, max_conditions: int
@@ -180,6 +185,11 @@ class GeneticRuleMiner:
 
     def fitness(self, rule: dict) -> float:
         """Calculate rule fitness (support * confidence)."""
+        # Soporte de la lista de condiciones asociadas a una regla
+        # Se calcula como la proporción de filas que cumplen las condiciones
+        # y la confianza como la proporción de filas que cumplen
+        # las condiciones y también el objetivo
+        
         return self._vectorized_support(
             rule["conditions"]
         ) * self._vectorized_confidence(rule)
@@ -255,7 +265,7 @@ class GeneticRuleMiner:
             len(new_rule["conditions"]) > 0
             and self.rng.random() < self.mutation_rate
         ):
-            action = self.rng.choice(["replace", "add", "remove", "swap"])
+            action = self.rng.choice(["replace", "add", "remove"])
 
             if action == "replace" and len(new_rule["conditions"]) > 0:
                 # Reemplazar una condición con una nueva aleatoria
@@ -281,17 +291,7 @@ class GeneticRuleMiner:
             elif action == "remove" and len(new_rule["conditions"]) > 1:
                 # Eliminar una condición aleatoria
                 idx = self.rng.integers(len(new_rule["conditions"]))
-                del new_rule["conditions"][idx]
-
-            elif action == "swap" and len(new_rule["conditions"]) > 1:
-                # Intercambiar dos condiciones aleatorias
-                idx1, idx2 = self.rng.choice(
-                    range(len(new_rule["conditions"])), 2
-                )
-                new_rule["conditions"][idx1], new_rule["conditions"][idx2] = (
-                    new_rule["conditions"][idx2],
-                    new_rule["conditions"][idx1],
-                )
+  
 
         return new_rule
 
@@ -339,7 +339,6 @@ class GeneticRuleMiner:
         selected = []
         tournament_size = 3
         for _ in range(self.pop_size):
-            # Selecciona un torneo de padres mediante fitness
             # Escoge los padres aleatoriamente
             # y selecciona el mejor de ellos
             tournament = self.rng.choice(
@@ -359,7 +358,7 @@ class GeneticRuleMiner:
             child1, child2 = self.crossover(parents[i], parents[i + 1])
             new_population.extend([self.mutate(child1), self.mutate(child2)])
 
-        # Si hay un padre sobrante, lo copias o mutas directamente
+        # Si hay un padre sobrante, se copia o mutac directamente
         if len(parents) % 2 == 1:
             new_population.append(self.mutate(parents[-1]))
 
@@ -392,7 +391,7 @@ class GeneticRuleMiner:
 
     def evolve(self) -> dict:
         """Evolves the population over a number of generations with forced diversity."""
-        stagnation = 0
+        stagnation = 0 # Estancamiento : Control de mejora del modelo
         best_fitness = -np.inf
 
         for generation in range(self.generations):
@@ -407,25 +406,18 @@ class GeneticRuleMiner:
                 f"Generation {generation}: {unique_rules} unique rules"
             )
 
-            if hasattr(self, "_build_condition_mask_cache"):
-                input(
-                    "Press Enter to clear the cache..."
-                )  # Solo es necesario para depuración, puedes eliminarlo después
 
             # Selección de padres para el siguiente ciclo de evolución
             parents = self._select_parents()
             new_population = self._create_new_generation(parents)
 
-            # Introducir diversidad forzada (mutación aleatoria de parte de la población)
-            diversity_count = int(self.pop_size * 0.1)
-            for i in range(self.pop_size - diversity_count, self.pop_size):
-                new_population[i] = self._create_rule()
-
             # Preservar los mejores individuos de la generación anterior (elitismo)
             if generation > 0:
                 # Top-5% élite
-                num_elite = max(1, self.pop_size // 20)
-                elite_indices = np.argsort(fitness_scores)[::-1][:num_elite]
+                num_elite = max(1, int(self.pop_size * 0.05))
+                # Se ordenan los índices de los individuos según sus fitness scores en orden ascendente 
+                # [::-1]: invierte ese orden para obtenerlos de mayor a menor 
+                elite_indices = np.argsort(fitness_scores)[::-1][:num_elite] 
                 elites = [self.population[i] for i in elite_indices]
                 new_population[:num_elite] = elites
 

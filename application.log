@@ -19880,3 +19880,731 @@ Fitness: 0.3670
 2025-04-30 12:12:22 - __main__ - [92mINFO[0m - Support: 0.6880733944954128
 2025-04-30 12:12:22 - __main__ - [92mINFO[0m - Confidence: 0.5333333333333333
 2025-04-30 12:12:22 - genetic_rule_miner.data.database - [92mINFO[0m - SQLAlchemy engine closed
+2025-05-04 16:57:23 - __main__ - [92mINFO[0m - 🔧 Phase 1: Initialization
+2025-05-04 16:57:23 - __main__ - [92mINFO[0m - 📡 Phase 2: Data Retrieval
+2025-05-04 16:57:23 - __main__ - [92mINFO[0m - 🤔 Attempt 1 to retrieve base data...
+2025-05-04 16:57:23 - __main__ - [92mINFO[0m - 📡 Retrieving anime data...
+2025-05-04 16:57:23 - genetic_rule_miner.bbdd_maker.anime_service - [92mINFO[0m - AnimeService initialized with config: APIConfig(base_url='https://api.jikan.moe/v4/', max_retries=3, timeout=10.0, request_delay=0.35, rate_limit=3)
+2025-05-04 16:57:23 - genetic_rule_miner.bbdd_maker.anime_service - [92mINFO[0m - Starting to fetch anime data from ID 1 to 100
+2025-05-04 16:57:24 - genetic_rule_miner.bbdd_maker.anime_service - [93mWARNING[0m - Anime with ID 2 not found (404). Skipping further attempts.
+2025-05-04 16:57:24 - genetic_rule_miner.bbdd_maker.anime_service - [92mINFO[0m - No data found for anime ID 2
+2025-05-04 16:57:24 - genetic_rule_miner.bbdd_maker.anime_service - [93mWARNING[0m - Anime with ID 3 not found (404). Skipping further attempts.
+2025-05-04 16:57:24 - genetic_rule_miner.bbdd_maker.anime_service - [92mINFO[0m - No data found for anime ID 3
+2025-05-04 16:57:24 - genetic_rule_miner.bbdd_maker.anime_service - [93mWARNING[0m - Failed to fetch anime with ID 4 on attempt 1: 429 Client Error: Too Many Requests for url: https://api.jikan.moe/v4/anime/4
+2025-05-04 16:57:25 - genetic_rule_miner.bbdd_maker.anime_service - [93mWARNING[0m - Anime with ID 4 not found (404). Skipping further attempts.
+2025-05-04 16:57:25 - genetic_rule_miner.bbdd_maker.anime_service - [92mINFO[0m - No data found for anime ID 4
+2025-05-04 16:57:26 - genetic_rule_miner.bbdd_maker.anime_service - [93mWARNING[0m - Failed to fetch anime with ID 6 on attempt 1: 429 Client Error: Too Many Requests for url: https://api.jikan.moe/v4/anime/6
+2025-05-04 16:57:28 - genetic_rule_miner.bbdd_maker.anime_service - [93mWARNING[0m - Failed to fetch anime with ID 8 on attempt 1: 429 Client Error: Too Many Requests for url: https://api.jikan.moe/v4/anime/8
+2025-05-04 16:57:29 - genetic_rule_miner.bbdd_maker.anime_service - [93mWARNING[0m - Failed to fetch anime with ID 9 on attempt 1: 429 Client Error: Too Many Requests for url: https://api.jikan.moe/v4/anime/9
+2025-05-04 16:57:31 - genetic_rule_miner.bbdd_maker.anime_service - [93mWARNING[0m - Anime with ID 9 not found (404). Skipping further attempts.
+2025-05-04 16:57:31 - genetic_rule_miner.bbdd_maker.anime_service - [92mINFO[0m - No data found for anime ID 9
+2025-05-04 16:57:32 - genetic_rule_miner.bbdd_maker.anime_service - [93mWARNING[0m - Anime with ID 10 not found (404). Skipping further attempts.
+2025-05-04 16:57:32 - genetic_rule_miner.bbdd_maker.anime_service - [92mINFO[0m - No data found for anime ID 10
+2025-05-04 16:57:32 - genetic_rule_miner.bbdd_maker.anime_service - [93mWARNING[0m - Anime with ID 11 not found (404). Skipping further attempts.
+2025-05-04 16:57:32 - genetic_rule_miner.bbdd_maker.anime_service - [92mINFO[0m - No data found for anime ID 11
+2025-05-04 16:57:34 - genetic_rule_miner.bbdd_maker.anime_service - [93mWARNING[0m - Anime with ID 12 not found (404). Skipping further attempts.
+2025-05-04 16:57:34 - genetic_rule_miner.bbdd_maker.anime_service - [92mINFO[0m - No data found for anime ID 12
+2025-05-04 16:57:35 - genetic_rule_miner.bbdd_maker.anime_service - [93mWARNING[0m - Anime with ID 13 not found (404). Skipping further attempts.
+2025-05-04 16:57:35 - genetic_rule_miner.bbdd_maker.anime_service - [92mINFO[0m - No data found for anime ID 13
+2025-05-04 16:57:36 - genetic_rule_miner.bbdd_maker.anime_service - [93mWARNING[0m - Anime with ID 14 not found (404). Skipping further attempts.
+2025-05-04 16:57:36 - genetic_rule_miner.bbdd_maker.anime_service - [92mINFO[0m - No data found for anime ID 14
+2025-05-04 16:57:36 - genetic_rule_miner.bbdd_maker.anime_service - [93mWARNING[0m - Failed to fetch anime with ID 16 on attempt 1: 429 Client Error: Too Many Requests for url: https://api.jikan.moe/v4/anime/16
+2025-05-04 16:57:38 - genetic_rule_miner.bbdd_maker.anime_service - [93mWARNING[0m - Failed to fetch anime with ID 18 on attempt 1: 429 Client Error: Too Many Requests for url: https://api.jikan.moe/v4/anime/18
+2025-05-04 16:57:41 - genetic_rule_miner.bbdd_maker.anime_service - [93mWARNING[0m - Failed to fetch anime with ID 21 on attempt 1: 429 Client Error: Too Many Requests for url: https://api.jikan.moe/v4/anime/21
+2025-05-04 16:57:42 - genetic_rule_miner.bbdd_maker.anime_service - [93mWARNING[0m - Failed to fetch anime with ID 22 on attempt 1: 429 Client Error: Too Many Requests for url: https://api.jikan.moe/v4/anime/22
+2025-05-04 16:57:45 - genetic_rule_miner.bbdd_maker.anime_service - [93mWARNING[0m - Failed to fetch anime with ID 25 on attempt 1: 429 Client Error: Too Many Requests for url: https://api.jikan.moe/v4/anime/25
+2025-05-04 16:57:47 - genetic_rule_miner.bbdd_maker.anime_service - [93mWARNING[0m - Failed to fetch anime with ID 27 on attempt 1: 429 Client Error: Too Many Requests for url: https://api.jikan.moe/v4/anime/27
+2025-05-04 16:57:49 - genetic_rule_miner.bbdd_maker.anime_service - [93mWARNING[0m - Failed to fetch anime with ID 29 on attempt 1: 429 Client Error: Too Many Requests for url: https://api.jikan.moe/v4/anime/29
+2025-05-04 16:57:51 - genetic_rule_miner.bbdd_maker.anime_service - [93mWARNING[0m - Failed to fetch anime with ID 31 on attempt 1: 429 Client Error: Too Many Requests for url: https://api.jikan.moe/v4/anime/31
+2025-05-04 16:57:53 - genetic_rule_miner.bbdd_maker.anime_service - [93mWARNING[0m - Failed to fetch anime with ID 33 on attempt 1: 429 Client Error: Too Many Requests for url: https://api.jikan.moe/v4/anime/33
+2025-05-04 16:57:55 - genetic_rule_miner.bbdd_maker.anime_service - [93mWARNING[0m - Anime with ID 34 not found (404). Skipping further attempts.
+2025-05-04 16:57:55 - genetic_rule_miner.bbdd_maker.anime_service - [92mINFO[0m - No data found for anime ID 34
+2025-05-04 16:57:56 - genetic_rule_miner.bbdd_maker.anime_service - [93mWARNING[0m - Anime with ID 35 not found (404). Skipping further attempts.
+2025-05-04 16:57:56 - genetic_rule_miner.bbdd_maker.anime_service - [92mINFO[0m - No data found for anime ID 35
+2025-05-04 16:57:57 - genetic_rule_miner.bbdd_maker.anime_service - [93mWARNING[0m - Anime with ID 36 not found (404). Skipping further attempts.
+2025-05-04 16:57:57 - genetic_rule_miner.bbdd_maker.anime_service - [92mINFO[0m - No data found for anime ID 36
+2025-05-04 16:57:59 - genetic_rule_miner.bbdd_maker.anime_service - [93mWARNING[0m - Anime with ID 37 not found (404). Skipping further attempts.
+2025-05-04 16:57:59 - genetic_rule_miner.bbdd_maker.anime_service - [92mINFO[0m - No data found for anime ID 37
+2025-05-04 16:58:00 - genetic_rule_miner.bbdd_maker.anime_service - [93mWARNING[0m - Anime with ID 38 not found (404). Skipping further attempts.
+2025-05-04 16:58:00 - genetic_rule_miner.bbdd_maker.anime_service - [92mINFO[0m - No data found for anime ID 38
+2025-05-04 16:58:01 - genetic_rule_miner.bbdd_maker.anime_service - [93mWARNING[0m - Anime with ID 39 not found (404). Skipping further attempts.
+2025-05-04 16:58:01 - genetic_rule_miner.bbdd_maker.anime_service - [92mINFO[0m - No data found for anime ID 39
+2025-05-04 16:58:02 - genetic_rule_miner.bbdd_maker.anime_service - [93mWARNING[0m - Anime with ID 40 not found (404). Skipping further attempts.
+2025-05-04 16:58:02 - genetic_rule_miner.bbdd_maker.anime_service - [92mINFO[0m - No data found for anime ID 40
+2025-05-04 16:58:03 - genetic_rule_miner.bbdd_maker.anime_service - [93mWARNING[0m - Anime with ID 41 not found (404). Skipping further attempts.
+2025-05-04 16:58:03 - genetic_rule_miner.bbdd_maker.anime_service - [92mINFO[0m - No data found for anime ID 41
+2025-05-04 16:58:04 - genetic_rule_miner.bbdd_maker.anime_service - [93mWARNING[0m - Anime with ID 42 not found (404). Skipping further attempts.
+2025-05-04 16:58:04 - genetic_rule_miner.bbdd_maker.anime_service - [92mINFO[0m - No data found for anime ID 42
+2025-05-04 16:58:04 - genetic_rule_miner.bbdd_maker.anime_service - [93mWARNING[0m - Failed to fetch anime with ID 44 on attempt 1: 429 Client Error: Too Many Requests for url: https://api.jikan.moe/v4/anime/44
+2025-05-04 16:58:06 - genetic_rule_miner.bbdd_maker.anime_service - [93mWARNING[0m - Failed to fetch anime with ID 46 on attempt 1: 429 Client Error: Too Many Requests for url: https://api.jikan.moe/v4/anime/46
+2025-05-04 16:58:09 - genetic_rule_miner.bbdd_maker.anime_service - [93mWARNING[0m - Failed to fetch anime with ID 49 on attempt 1: 429 Client Error: Too Many Requests for url: https://api.jikan.moe/v4/anime/49
+2025-05-04 16:58:11 - genetic_rule_miner.bbdd_maker.anime_service - [93mWARNING[0m - Failed to fetch anime with ID 51 on attempt 1: 429 Client Error: Too Many Requests for url: https://api.jikan.moe/v4/anime/51
+2025-05-04 16:58:13 - genetic_rule_miner.bbdd_maker.anime_service - [93mWARNING[0m - Failed to fetch anime with ID 53 on attempt 1: 429 Client Error: Too Many Requests for url: https://api.jikan.moe/v4/anime/53
+2025-05-04 16:58:14 - genetic_rule_miner.bbdd_maker.anime_service - [93mWARNING[0m - Failed to fetch anime with ID 54 on attempt 1: 429 Client Error: Too Many Requests for url: https://api.jikan.moe/v4/anime/54
+2025-05-04 16:58:16 - genetic_rule_miner.bbdd_maker.anime_service - [93mWARNING[0m - Failed to fetch anime with ID 56 on attempt 1: 429 Client Error: Too Many Requests for url: https://api.jikan.moe/v4/anime/56
+2025-05-04 16:58:18 - genetic_rule_miner.bbdd_maker.anime_service - [93mWARNING[0m - Failed to fetch anime with ID 58 on attempt 1: 429 Client Error: Too Many Requests for url: https://api.jikan.moe/v4/anime/58
+2025-05-04 16:58:20 - genetic_rule_miner.bbdd_maker.anime_service - [93mWARNING[0m - Failed to fetch anime with ID 60 on attempt 1: 429 Client Error: Too Many Requests for url: https://api.jikan.moe/v4/anime/60
+2025-05-04 16:58:22 - genetic_rule_miner.bbdd_maker.anime_service - [93mWARNING[0m - Failed to fetch anime with ID 62 on attempt 1: 429 Client Error: Too Many Requests for url: https://api.jikan.moe/v4/anime/62
+2025-05-04 16:58:24 - genetic_rule_miner.bbdd_maker.anime_service - [93mWARNING[0m - Failed to fetch anime with ID 64 on attempt 1: 429 Client Error: Too Many Requests for url: https://api.jikan.moe/v4/anime/64
+2025-05-04 16:58:26 - genetic_rule_miner.bbdd_maker.anime_service - [93mWARNING[0m - Failed to fetch anime with ID 66 on attempt 1: 429 Client Error: Too Many Requests for url: https://api.jikan.moe/v4/anime/66
+2025-05-04 16:58:28 - genetic_rule_miner.bbdd_maker.anime_service - [93mWARNING[0m - Failed to fetch anime with ID 68 on attempt 1: 429 Client Error: Too Many Requests for url: https://api.jikan.moe/v4/anime/68
+2025-05-04 16:58:30 - genetic_rule_miner.bbdd_maker.anime_service - [93mWARNING[0m - Failed to fetch anime with ID 70 on attempt 1: 429 Client Error: Too Many Requests for url: https://api.jikan.moe/v4/anime/70
+2025-05-04 16:58:32 - genetic_rule_miner.bbdd_maker.anime_service - [93mWARNING[0m - Anime with ID 70 not found (404). Skipping further attempts.
+2025-05-04 16:58:32 - genetic_rule_miner.bbdd_maker.anime_service - [92mINFO[0m - No data found for anime ID 70
+2025-05-04 16:58:33 - genetic_rule_miner.bbdd_maker.anime_service - [93mWARNING[0m - Failed to fetch anime with ID 73 on attempt 1: 429 Client Error: Too Many Requests for url: https://api.jikan.moe/v4/anime/73
+2025-05-04 16:58:35 - genetic_rule_miner.bbdd_maker.anime_service - [93mWARNING[0m - Failed to fetch anime with ID 75 on attempt 1: 429 Client Error: Too Many Requests for url: https://api.jikan.moe/v4/anime/75
+2025-05-04 16:58:37 - genetic_rule_miner.bbdd_maker.anime_service - [93mWARNING[0m - Failed to fetch anime with ID 77 on attempt 1: 429 Client Error: Too Many Requests for url: https://api.jikan.moe/v4/anime/77
+2025-05-04 16:58:40 - genetic_rule_miner.bbdd_maker.anime_service - [93mWARNING[0m - Anime with ID 78 not found (404). Skipping further attempts.
+2025-05-04 16:58:40 - genetic_rule_miner.bbdd_maker.anime_service - [92mINFO[0m - No data found for anime ID 78
+2025-05-04 16:58:43 - genetic_rule_miner.bbdd_maker.anime_service - [93mWARNING[0m - Failed to fetch anime with ID 83 on attempt 1: 429 Client Error: Too Many Requests for url: https://api.jikan.moe/v4/anime/83
+2025-05-04 16:58:45 - genetic_rule_miner.bbdd_maker.anime_service - [93mWARNING[0m - Failed to fetch anime with ID 85 on attempt 1: 429 Client Error: Too Many Requests for url: https://api.jikan.moe/v4/anime/85
+2025-05-04 16:58:47 - genetic_rule_miner.bbdd_maker.anime_service - [93mWARNING[0m - Failed to fetch anime with ID 87 on attempt 1: 429 Client Error: Too Many Requests for url: https://api.jikan.moe/v4/anime/87
+2025-05-04 16:58:49 - genetic_rule_miner.bbdd_maker.anime_service - [93mWARNING[0m - Failed to fetch anime with ID 89 on attempt 1: 429 Client Error: Too Many Requests for url: https://api.jikan.moe/v4/anime/89
+2025-05-04 16:58:51 - genetic_rule_miner.bbdd_maker.anime_service - [93mWARNING[0m - Failed to fetch anime with ID 91 on attempt 1: 429 Client Error: Too Many Requests for url: https://api.jikan.moe/v4/anime/91
+2025-05-04 16:58:53 - genetic_rule_miner.bbdd_maker.anime_service - [93mWARNING[0m - Failed to fetch anime with ID 93 on attempt 1: 429 Client Error: Too Many Requests for url: https://api.jikan.moe/v4/anime/93
+2025-05-04 16:58:55 - genetic_rule_miner.bbdd_maker.anime_service - [93mWARNING[0m - Failed to fetch anime with ID 95 on attempt 1: 429 Client Error: Too Many Requests for url: https://api.jikan.moe/v4/anime/95
+2025-05-04 16:58:57 - genetic_rule_miner.bbdd_maker.anime_service - [93mWARNING[0m - Failed to fetch anime with ID 97 on attempt 1: 429 Client Error: Too Many Requests for url: https://api.jikan.moe/v4/anime/97
+2025-05-04 16:58:59 - genetic_rule_miner.bbdd_maker.anime_service - [93mWARNING[0m - Failed to fetch anime with ID 99 on attempt 1: 429 Client Error: Too Many Requests for url: https://api.jikan.moe/v4/anime/99
+2025-05-04 16:59:01 - genetic_rule_miner.bbdd_maker.anime_service - [92mINFO[0m - Finished fetching anime data. Total records: 80
+2025-05-04 16:59:01 - genetic_rule_miner.bbdd_maker.anime_service - [92mINFO[0m - Anime data written to buffer
+2025-05-04 16:59:01 - __main__ - [92mINFO[0m - 📡 Generating user list...
+2025-05-04 16:59:01 - genetic_rule_miner.bbdd_maker.user_service - [92mINFO[0m - UserService initialized with configuration: APIConfig(base_url='https://api.jikan.moe/v4/', max_retries=3, timeout=10.0, request_delay=0.35, rate_limit=3)
+2025-05-04 16:59:01 - genetic_rule_miner.bbdd_maker.user_service - [92mINFO[0m - Starting user list generation for IDs 1 to 100
+2025-05-04 16:59:01 - genetic_rule_miner.bbdd_maker.user_service - [91mERROR[0m - Error on attempt 1 for user_id 1: 429 Client Error: Too Many Requests for url: https://api.jikan.moe/v4/users/userbyid/1
+2025-05-04 16:59:03 - genetic_rule_miner.bbdd_maker.user_service - [92mINFO[0m - User ID 1 successfully found
+2025-05-04 16:59:03 - genetic_rule_miner.bbdd_maker.user_service - [92mINFO[0m - User ID 1 added to the list
+2025-05-04 16:59:05 - genetic_rule_miner.bbdd_maker.user_service - [93mWARNING[0m - User ID 2 not found (404)
+2025-05-04 16:59:05 - genetic_rule_miner.bbdd_maker.user_service - [93mWARNING[0m - User ID 2 has no valid data
+2025-05-04 16:59:06 - genetic_rule_miner.bbdd_maker.user_service - [92mINFO[0m - User ID 3 successfully found
+2025-05-04 16:59:06 - genetic_rule_miner.bbdd_maker.user_service - [92mINFO[0m - User ID 3 added to the list
+2025-05-04 16:59:08 - genetic_rule_miner.bbdd_maker.user_service - [92mINFO[0m - User ID 4 successfully found
+2025-05-04 16:59:08 - genetic_rule_miner.bbdd_maker.user_service - [92mINFO[0m - User ID 4 added to the list
+2025-05-04 16:59:10 - genetic_rule_miner.bbdd_maker.user_service - [93mWARNING[0m - User ID 5 not found (404)
+2025-05-04 16:59:10 - genetic_rule_miner.bbdd_maker.user_service - [93mWARNING[0m - User ID 5 has no valid data
+2025-05-04 16:59:11 - genetic_rule_miner.bbdd_maker.user_service - [93mWARNING[0m - User ID 6 not found (404)
+2025-05-04 16:59:11 - genetic_rule_miner.bbdd_maker.user_service - [93mWARNING[0m - User ID 6 has no valid data
+2025-05-04 16:59:12 - genetic_rule_miner.bbdd_maker.user_service - [93mWARNING[0m - User ID 7 not found (404)
+2025-05-04 16:59:12 - genetic_rule_miner.bbdd_maker.user_service - [93mWARNING[0m - User ID 7 has no valid data
+2025-05-04 16:59:14 - genetic_rule_miner.bbdd_maker.user_service - [93mWARNING[0m - User ID 8 not found (404)
+2025-05-04 16:59:14 - genetic_rule_miner.bbdd_maker.user_service - [93mWARNING[0m - User ID 8 has no valid data
+2025-05-04 16:59:15 - genetic_rule_miner.bbdd_maker.user_service - [92mINFO[0m - User ID 9 successfully found
+2025-05-04 16:59:15 - genetic_rule_miner.bbdd_maker.user_service - [92mINFO[0m - User ID 9 added to the list
+2025-05-04 16:59:17 - genetic_rule_miner.bbdd_maker.user_service - [93mWARNING[0m - User ID 10 not found (404)
+2025-05-04 16:59:17 - genetic_rule_miner.bbdd_maker.user_service - [93mWARNING[0m - User ID 10 has no valid data
+2025-05-04 16:59:18 - genetic_rule_miner.bbdd_maker.user_service - [93mWARNING[0m - User ID 11 not found (404)
+2025-05-04 16:59:18 - genetic_rule_miner.bbdd_maker.user_service - [93mWARNING[0m - User ID 11 has no valid data
+2025-05-04 16:59:20 - genetic_rule_miner.bbdd_maker.user_service - [93mWARNING[0m - User ID 12 not found (404)
+2025-05-04 16:59:20 - genetic_rule_miner.bbdd_maker.user_service - [93mWARNING[0m - User ID 12 has no valid data
+2025-05-04 16:59:21 - genetic_rule_miner.bbdd_maker.user_service - [93mWARNING[0m - User ID 13 not found (404)
+2025-05-04 16:59:21 - genetic_rule_miner.bbdd_maker.user_service - [93mWARNING[0m - User ID 13 has no valid data
+2025-05-04 16:59:22 - genetic_rule_miner.bbdd_maker.user_service - [93mWARNING[0m - User ID 14 not found (404)
+2025-05-04 16:59:22 - genetic_rule_miner.bbdd_maker.user_service - [93mWARNING[0m - User ID 14 has no valid data
+2025-05-04 16:59:24 - genetic_rule_miner.bbdd_maker.user_service - [93mWARNING[0m - User ID 15 not found (404)
+2025-05-04 16:59:24 - genetic_rule_miner.bbdd_maker.user_service - [93mWARNING[0m - User ID 15 has no valid data
+2025-05-04 16:59:26 - genetic_rule_miner.bbdd_maker.user_service - [93mWARNING[0m - User ID 16 not found (404)
+2025-05-04 16:59:26 - genetic_rule_miner.bbdd_maker.user_service - [93mWARNING[0m - User ID 16 has no valid data
+2025-05-04 16:59:27 - genetic_rule_miner.bbdd_maker.user_service - [93mWARNING[0m - User ID 17 not found (404)
+2025-05-04 16:59:27 - genetic_rule_miner.bbdd_maker.user_service - [93mWARNING[0m - User ID 17 has no valid data
+2025-05-04 16:59:29 - genetic_rule_miner.bbdd_maker.user_service - [92mINFO[0m - User ID 18 successfully found
+2025-05-04 16:59:29 - genetic_rule_miner.bbdd_maker.user_service - [92mINFO[0m - User ID 18 added to the list
+2025-05-04 16:59:30 - genetic_rule_miner.bbdd_maker.user_service - [93mWARNING[0m - User ID 19 not found (404)
+2025-05-04 16:59:30 - genetic_rule_miner.bbdd_maker.user_service - [93mWARNING[0m - User ID 19 has no valid data
+2025-05-04 16:59:32 - genetic_rule_miner.bbdd_maker.user_service - [92mINFO[0m - User ID 20 successfully found
+2025-05-04 16:59:32 - genetic_rule_miner.bbdd_maker.user_service - [92mINFO[0m - User ID 20 added to the list
+2025-05-04 16:59:33 - genetic_rule_miner.bbdd_maker.user_service - [93mWARNING[0m - User ID 21 not found (404)
+2025-05-04 16:59:33 - genetic_rule_miner.bbdd_maker.user_service - [93mWARNING[0m - User ID 21 has no valid data
+2025-05-04 16:59:34 - genetic_rule_miner.bbdd_maker.user_service - [93mWARNING[0m - User ID 22 not found (404)
+2025-05-04 16:59:34 - genetic_rule_miner.bbdd_maker.user_service - [93mWARNING[0m - User ID 22 has no valid data
+2025-05-04 16:59:36 - genetic_rule_miner.bbdd_maker.user_service - [92mINFO[0m - User ID 23 successfully found
+2025-05-04 16:59:36 - genetic_rule_miner.bbdd_maker.user_service - [92mINFO[0m - User ID 23 added to the list
+2025-05-04 16:59:37 - genetic_rule_miner.bbdd_maker.user_service - [93mWARNING[0m - User ID 24 not found (404)
+2025-05-04 16:59:37 - genetic_rule_miner.bbdd_maker.user_service - [93mWARNING[0m - User ID 24 has no valid data
+2025-05-04 16:59:38 - genetic_rule_miner.bbdd_maker.user_service - [93mWARNING[0m - User ID 25 not found (404)
+2025-05-04 16:59:38 - genetic_rule_miner.bbdd_maker.user_service - [93mWARNING[0m - User ID 25 has no valid data
+2025-05-04 16:59:40 - genetic_rule_miner.bbdd_maker.user_service - [93mWARNING[0m - User ID 26 not found (404)
+2025-05-04 16:59:40 - genetic_rule_miner.bbdd_maker.user_service - [93mWARNING[0m - User ID 26 has no valid data
+2025-05-04 16:59:41 - genetic_rule_miner.bbdd_maker.user_service - [93mWARNING[0m - User ID 27 not found (404)
+2025-05-04 16:59:41 - genetic_rule_miner.bbdd_maker.user_service - [93mWARNING[0m - User ID 27 has no valid data
+2025-05-04 16:59:43 - genetic_rule_miner.bbdd_maker.user_service - [93mWARNING[0m - User ID 28 not found (404)
+2025-05-04 16:59:43 - genetic_rule_miner.bbdd_maker.user_service - [93mWARNING[0m - User ID 28 has no valid data
+2025-05-04 16:59:44 - genetic_rule_miner.bbdd_maker.user_service - [93mWARNING[0m - User ID 29 not found (404)
+2025-05-04 16:59:44 - genetic_rule_miner.bbdd_maker.user_service - [93mWARNING[0m - User ID 29 has no valid data
+2025-05-04 16:59:46 - genetic_rule_miner.bbdd_maker.user_service - [93mWARNING[0m - User ID 30 not found (404)
+2025-05-04 16:59:46 - genetic_rule_miner.bbdd_maker.user_service - [93mWARNING[0m - User ID 30 has no valid data
+2025-05-04 16:59:47 - genetic_rule_miner.bbdd_maker.user_service - [93mWARNING[0m - User ID 31 not found (404)
+2025-05-04 16:59:47 - genetic_rule_miner.bbdd_maker.user_service - [93mWARNING[0m - User ID 31 has no valid data
+2025-05-04 16:59:48 - genetic_rule_miner.bbdd_maker.user_service - [93mWARNING[0m - User ID 32 not found (404)
+2025-05-04 16:59:48 - genetic_rule_miner.bbdd_maker.user_service - [93mWARNING[0m - User ID 32 has no valid data
+2025-05-04 16:59:50 - genetic_rule_miner.bbdd_maker.user_service - [93mWARNING[0m - User ID 33 not found (404)
+2025-05-04 16:59:50 - genetic_rule_miner.bbdd_maker.user_service - [93mWARNING[0m - User ID 33 has no valid data
+2025-05-04 16:59:51 - genetic_rule_miner.bbdd_maker.user_service - [93mWARNING[0m - User ID 34 not found (404)
+2025-05-04 16:59:51 - genetic_rule_miner.bbdd_maker.user_service - [93mWARNING[0m - User ID 34 has no valid data
+2025-05-04 16:59:52 - genetic_rule_miner.bbdd_maker.user_service - [93mWARNING[0m - User ID 35 not found (404)
+2025-05-04 16:59:52 - genetic_rule_miner.bbdd_maker.user_service - [93mWARNING[0m - User ID 35 has no valid data
+2025-05-04 16:59:54 - genetic_rule_miner.bbdd_maker.user_service - [92mINFO[0m - User ID 36 successfully found
+2025-05-04 16:59:54 - genetic_rule_miner.bbdd_maker.user_service - [92mINFO[0m - User ID 36 added to the list
+2025-05-04 16:59:55 - genetic_rule_miner.bbdd_maker.user_service - [92mINFO[0m - User ID 37 successfully found
+2025-05-04 16:59:55 - genetic_rule_miner.bbdd_maker.user_service - [92mINFO[0m - User ID 37 added to the list
+2025-05-04 16:59:57 - genetic_rule_miner.bbdd_maker.user_service - [93mWARNING[0m - User ID 38 not found (404)
+2025-05-04 16:59:57 - genetic_rule_miner.bbdd_maker.user_service - [93mWARNING[0m - User ID 38 has no valid data
+2025-05-04 16:59:59 - genetic_rule_miner.bbdd_maker.user_service - [93mWARNING[0m - User ID 39 not found (404)
+2025-05-04 16:59:59 - genetic_rule_miner.bbdd_maker.user_service - [93mWARNING[0m - User ID 39 has no valid data
+2025-05-04 17:00:00 - genetic_rule_miner.bbdd_maker.user_service - [93mWARNING[0m - User ID 40 not found (404)
+2025-05-04 17:00:00 - genetic_rule_miner.bbdd_maker.user_service - [93mWARNING[0m - User ID 40 has no valid data
+2025-05-04 17:00:02 - genetic_rule_miner.bbdd_maker.user_service - [93mWARNING[0m - User ID 41 not found (404)
+2025-05-04 17:00:02 - genetic_rule_miner.bbdd_maker.user_service - [93mWARNING[0m - User ID 41 has no valid data
+2025-05-04 17:00:03 - genetic_rule_miner.bbdd_maker.user_service - [93mWARNING[0m - User ID 42 not found (404)
+2025-05-04 17:00:03 - genetic_rule_miner.bbdd_maker.user_service - [93mWARNING[0m - User ID 42 has no valid data
+2025-05-04 17:00:05 - genetic_rule_miner.bbdd_maker.user_service - [93mWARNING[0m - User ID 43 not found (404)
+2025-05-04 17:00:05 - genetic_rule_miner.bbdd_maker.user_service - [93mWARNING[0m - User ID 43 has no valid data
+2025-05-04 17:00:06 - genetic_rule_miner.bbdd_maker.user_service - [92mINFO[0m - User ID 44 successfully found
+2025-05-04 17:00:06 - genetic_rule_miner.bbdd_maker.user_service - [92mINFO[0m - User ID 44 added to the list
+2025-05-04 17:00:08 - genetic_rule_miner.bbdd_maker.user_service - [93mWARNING[0m - User ID 45 not found (404)
+2025-05-04 17:00:08 - genetic_rule_miner.bbdd_maker.user_service - [93mWARNING[0m - User ID 45 has no valid data
+2025-05-04 17:00:10 - genetic_rule_miner.bbdd_maker.user_service - [93mWARNING[0m - User ID 46 not found (404)
+2025-05-04 17:00:10 - genetic_rule_miner.bbdd_maker.user_service - [93mWARNING[0m - User ID 46 has no valid data
+2025-05-04 17:00:11 - genetic_rule_miner.bbdd_maker.user_service - [92mINFO[0m - User ID 47 successfully found
+2025-05-04 17:00:11 - genetic_rule_miner.bbdd_maker.user_service - [92mINFO[0m - User ID 47 added to the list
+2025-05-04 17:00:13 - genetic_rule_miner.bbdd_maker.user_service - [92mINFO[0m - User ID 48 successfully found
+2025-05-04 17:00:13 - genetic_rule_miner.bbdd_maker.user_service - [92mINFO[0m - User ID 48 added to the list
+2025-05-04 17:00:14 - genetic_rule_miner.bbdd_maker.user_service - [93mWARNING[0m - User ID 49 not found (404)
+2025-05-04 17:00:14 - genetic_rule_miner.bbdd_maker.user_service - [93mWARNING[0m - User ID 49 has no valid data
+2025-05-04 17:00:16 - genetic_rule_miner.bbdd_maker.user_service - [93mWARNING[0m - User ID 50 not found (404)
+2025-05-04 17:00:16 - genetic_rule_miner.bbdd_maker.user_service - [93mWARNING[0m - User ID 50 has no valid data
+2025-05-04 17:00:17 - genetic_rule_miner.bbdd_maker.user_service - [93mWARNING[0m - User ID 51 not found (404)
+2025-05-04 17:00:17 - genetic_rule_miner.bbdd_maker.user_service - [93mWARNING[0m - User ID 51 has no valid data
+2025-05-04 17:00:18 - genetic_rule_miner.bbdd_maker.user_service - [93mWARNING[0m - User ID 52 not found (404)
+2025-05-04 17:00:18 - genetic_rule_miner.bbdd_maker.user_service - [93mWARNING[0m - User ID 52 has no valid data
+2025-05-04 17:00:20 - genetic_rule_miner.bbdd_maker.user_service - [92mINFO[0m - User ID 53 successfully found
+2025-05-04 17:00:20 - genetic_rule_miner.bbdd_maker.user_service - [92mINFO[0m - User ID 53 added to the list
+2025-05-04 17:00:22 - genetic_rule_miner.bbdd_maker.user_service - [93mWARNING[0m - User ID 54 not found (404)
+2025-05-04 17:00:22 - genetic_rule_miner.bbdd_maker.user_service - [93mWARNING[0m - User ID 54 has no valid data
+2025-05-04 17:00:23 - genetic_rule_miner.bbdd_maker.user_service - [93mWARNING[0m - User ID 55 not found (404)
+2025-05-04 17:00:23 - genetic_rule_miner.bbdd_maker.user_service - [93mWARNING[0m - User ID 55 has no valid data
+2025-05-04 17:00:24 - genetic_rule_miner.bbdd_maker.user_service - [93mWARNING[0m - User ID 56 not found (404)
+2025-05-04 17:00:24 - genetic_rule_miner.bbdd_maker.user_service - [93mWARNING[0m - User ID 56 has no valid data
+2025-05-04 17:00:26 - genetic_rule_miner.bbdd_maker.user_service - [93mWARNING[0m - User ID 57 not found (404)
+2025-05-04 17:00:26 - genetic_rule_miner.bbdd_maker.user_service - [93mWARNING[0m - User ID 57 has no valid data
+2025-05-04 17:00:27 - genetic_rule_miner.bbdd_maker.user_service - [93mWARNING[0m - User ID 58 not found (404)
+2025-05-04 17:00:27 - genetic_rule_miner.bbdd_maker.user_service - [93mWARNING[0m - User ID 58 has no valid data
+2025-05-04 17:00:28 - genetic_rule_miner.bbdd_maker.user_service - [93mWARNING[0m - User ID 59 not found (404)
+2025-05-04 17:00:28 - genetic_rule_miner.bbdd_maker.user_service - [93mWARNING[0m - User ID 59 has no valid data
+2025-05-04 17:00:29 - genetic_rule_miner.bbdd_maker.user_service - [93mWARNING[0m - User ID 60 not found (404)
+2025-05-04 17:00:29 - genetic_rule_miner.bbdd_maker.user_service - [93mWARNING[0m - User ID 60 has no valid data
+2025-05-04 17:00:31 - genetic_rule_miner.bbdd_maker.user_service - [93mWARNING[0m - User ID 61 not found (404)
+2025-05-04 17:00:31 - genetic_rule_miner.bbdd_maker.user_service - [93mWARNING[0m - User ID 61 has no valid data
+2025-05-04 17:00:32 - genetic_rule_miner.bbdd_maker.user_service - [93mWARNING[0m - User ID 62 not found (404)
+2025-05-04 17:00:32 - genetic_rule_miner.bbdd_maker.user_service - [93mWARNING[0m - User ID 62 has no valid data
+2025-05-04 17:00:34 - genetic_rule_miner.bbdd_maker.user_service - [93mWARNING[0m - User ID 63 not found (404)
+2025-05-04 17:00:34 - genetic_rule_miner.bbdd_maker.user_service - [93mWARNING[0m - User ID 63 has no valid data
+2025-05-04 17:00:35 - genetic_rule_miner.bbdd_maker.user_service - [93mWARNING[0m - User ID 64 not found (404)
+2025-05-04 17:00:35 - genetic_rule_miner.bbdd_maker.user_service - [93mWARNING[0m - User ID 64 has no valid data
+2025-05-04 17:00:36 - genetic_rule_miner.bbdd_maker.user_service - [93mWARNING[0m - User ID 65 not found (404)
+2025-05-04 17:00:36 - genetic_rule_miner.bbdd_maker.user_service - [93mWARNING[0m - User ID 65 has no valid data
+2025-05-04 17:00:38 - genetic_rule_miner.bbdd_maker.user_service - [92mINFO[0m - User ID 66 successfully found
+2025-05-04 17:00:38 - genetic_rule_miner.bbdd_maker.user_service - [92mINFO[0m - User ID 66 added to the list
+2025-05-04 17:00:39 - genetic_rule_miner.bbdd_maker.user_service - [92mINFO[0m - User ID 67 successfully found
+2025-05-04 17:00:39 - genetic_rule_miner.bbdd_maker.user_service - [92mINFO[0m - User ID 67 added to the list
+2025-05-04 17:00:41 - genetic_rule_miner.bbdd_maker.user_service - [93mWARNING[0m - User ID 68 not found (404)
+2025-05-04 17:00:41 - genetic_rule_miner.bbdd_maker.user_service - [93mWARNING[0m - User ID 68 has no valid data
+2025-05-04 17:00:42 - genetic_rule_miner.bbdd_maker.user_service - [93mWARNING[0m - User ID 69 not found (404)
+2025-05-04 17:00:42 - genetic_rule_miner.bbdd_maker.user_service - [93mWARNING[0m - User ID 69 has no valid data
+2025-05-04 17:00:44 - genetic_rule_miner.bbdd_maker.user_service - [92mINFO[0m - User ID 70 successfully found
+2025-05-04 17:00:44 - genetic_rule_miner.bbdd_maker.user_service - [92mINFO[0m - User ID 70 added to the list
+2025-05-04 17:00:45 - genetic_rule_miner.bbdd_maker.user_service - [92mINFO[0m - User ID 71 successfully found
+2025-05-04 17:00:45 - genetic_rule_miner.bbdd_maker.user_service - [92mINFO[0m - User ID 71 added to the list
+2025-05-04 17:00:46 - genetic_rule_miner.bbdd_maker.user_service - [92mINFO[0m - User ID 72 successfully found
+2025-05-04 17:00:46 - genetic_rule_miner.bbdd_maker.user_service - [92mINFO[0m - User ID 72 added to the list
+2025-05-04 17:00:48 - genetic_rule_miner.bbdd_maker.user_service - [93mWARNING[0m - User ID 73 not found (404)
+2025-05-04 17:00:48 - genetic_rule_miner.bbdd_maker.user_service - [93mWARNING[0m - User ID 73 has no valid data
+2025-05-04 17:00:49 - genetic_rule_miner.bbdd_maker.user_service - [93mWARNING[0m - User ID 74 not found (404)
+2025-05-04 17:00:49 - genetic_rule_miner.bbdd_maker.user_service - [93mWARNING[0m - User ID 74 has no valid data
+2025-05-04 17:00:51 - genetic_rule_miner.bbdd_maker.user_service - [93mWARNING[0m - User ID 75 not found (404)
+2025-05-04 17:00:51 - genetic_rule_miner.bbdd_maker.user_service - [93mWARNING[0m - User ID 75 has no valid data
+2025-05-04 17:00:52 - genetic_rule_miner.bbdd_maker.user_service - [93mWARNING[0m - User ID 76 not found (404)
+2025-05-04 17:00:52 - genetic_rule_miner.bbdd_maker.user_service - [93mWARNING[0m - User ID 76 has no valid data
+2025-05-04 17:00:53 - genetic_rule_miner.bbdd_maker.user_service - [92mINFO[0m - User ID 77 successfully found
+2025-05-04 17:00:53 - genetic_rule_miner.bbdd_maker.user_service - [92mINFO[0m - User ID 77 added to the list
+2025-05-04 17:00:55 - genetic_rule_miner.bbdd_maker.user_service - [93mWARNING[0m - User ID 78 not found (404)
+2025-05-04 17:00:55 - genetic_rule_miner.bbdd_maker.user_service - [93mWARNING[0m - User ID 78 has no valid data
+2025-05-04 17:00:56 - genetic_rule_miner.bbdd_maker.user_service - [93mWARNING[0m - User ID 79 not found (404)
+2025-05-04 17:00:56 - genetic_rule_miner.bbdd_maker.user_service - [93mWARNING[0m - User ID 79 has no valid data
+2025-05-04 17:00:58 - genetic_rule_miner.bbdd_maker.user_service - [92mINFO[0m - User ID 80 successfully found
+2025-05-04 17:00:58 - genetic_rule_miner.bbdd_maker.user_service - [92mINFO[0m - User ID 80 added to the list
+2025-05-04 17:01:00 - genetic_rule_miner.bbdd_maker.user_service - [92mINFO[0m - User ID 81 successfully found
+2025-05-04 17:01:00 - genetic_rule_miner.bbdd_maker.user_service - [92mINFO[0m - User ID 81 added to the list
+2025-05-04 17:01:01 - genetic_rule_miner.bbdd_maker.user_service - [92mINFO[0m - User ID 82 successfully found
+2025-05-04 17:01:01 - genetic_rule_miner.bbdd_maker.user_service - [92mINFO[0m - User ID 82 added to the list
+2025-05-04 17:01:03 - genetic_rule_miner.bbdd_maker.user_service - [92mINFO[0m - User ID 83 successfully found
+2025-05-04 17:01:03 - genetic_rule_miner.bbdd_maker.user_service - [92mINFO[0m - User ID 83 added to the list
+2025-05-04 17:01:04 - genetic_rule_miner.bbdd_maker.user_service - [93mWARNING[0m - User ID 84 not found (404)
+2025-05-04 17:01:04 - genetic_rule_miner.bbdd_maker.user_service - [93mWARNING[0m - User ID 84 has no valid data
+2025-05-04 17:01:06 - genetic_rule_miner.bbdd_maker.user_service - [93mWARNING[0m - User ID 85 not found (404)
+2025-05-04 17:01:06 - genetic_rule_miner.bbdd_maker.user_service - [93mWARNING[0m - User ID 85 has no valid data
+2025-05-04 17:01:07 - genetic_rule_miner.bbdd_maker.user_service - [93mWARNING[0m - User ID 86 not found (404)
+2025-05-04 17:01:07 - genetic_rule_miner.bbdd_maker.user_service - [93mWARNING[0m - User ID 86 has no valid data
+2025-05-04 17:01:09 - genetic_rule_miner.bbdd_maker.user_service - [93mWARNING[0m - User ID 87 not found (404)
+2025-05-04 17:01:09 - genetic_rule_miner.bbdd_maker.user_service - [93mWARNING[0m - User ID 87 has no valid data
+2025-05-04 17:01:11 - genetic_rule_miner.bbdd_maker.user_service - [92mINFO[0m - User ID 88 successfully found
+2025-05-04 17:01:11 - genetic_rule_miner.bbdd_maker.user_service - [92mINFO[0m - User ID 88 added to the list
+2025-05-04 17:01:12 - genetic_rule_miner.bbdd_maker.user_service - [93mWARNING[0m - User ID 89 not found (404)
+2025-05-04 17:01:12 - genetic_rule_miner.bbdd_maker.user_service - [93mWARNING[0m - User ID 89 has no valid data
+2025-05-04 17:01:14 - genetic_rule_miner.bbdd_maker.user_service - [92mINFO[0m - User ID 90 successfully found
+2025-05-04 17:01:14 - genetic_rule_miner.bbdd_maker.user_service - [92mINFO[0m - User ID 90 added to the list
+2025-05-04 17:01:15 - genetic_rule_miner.bbdd_maker.user_service - [92mINFO[0m - User ID 91 successfully found
+2025-05-04 17:01:15 - genetic_rule_miner.bbdd_maker.user_service - [92mINFO[0m - User ID 91 added to the list
+2025-05-04 17:01:17 - genetic_rule_miner.bbdd_maker.user_service - [93mWARNING[0m - User ID 92 not found (404)
+2025-05-04 17:01:17 - genetic_rule_miner.bbdd_maker.user_service - [93mWARNING[0m - User ID 92 has no valid data
+2025-05-04 17:01:18 - genetic_rule_miner.bbdd_maker.user_service - [93mWARNING[0m - User ID 93 not found (404)
+2025-05-04 17:01:18 - genetic_rule_miner.bbdd_maker.user_service - [93mWARNING[0m - User ID 93 has no valid data
+2025-05-04 17:01:20 - genetic_rule_miner.bbdd_maker.user_service - [93mWARNING[0m - User ID 94 not found (404)
+2025-05-04 17:01:20 - genetic_rule_miner.bbdd_maker.user_service - [93mWARNING[0m - User ID 94 has no valid data
+2025-05-04 17:01:21 - genetic_rule_miner.bbdd_maker.user_service - [92mINFO[0m - User ID 95 successfully found
+2025-05-04 17:01:21 - genetic_rule_miner.bbdd_maker.user_service - [92mINFO[0m - User ID 95 added to the list
+2025-05-04 17:01:23 - genetic_rule_miner.bbdd_maker.user_service - [93mWARNING[0m - User ID 96 not found (404)
+2025-05-04 17:01:23 - genetic_rule_miner.bbdd_maker.user_service - [93mWARNING[0m - User ID 96 has no valid data
+2025-05-04 17:01:25 - genetic_rule_miner.bbdd_maker.user_service - [93mWARNING[0m - User ID 97 not found (404)
+2025-05-04 17:01:25 - genetic_rule_miner.bbdd_maker.user_service - [93mWARNING[0m - User ID 97 has no valid data
+2025-05-04 17:01:27 - genetic_rule_miner.bbdd_maker.user_service - [93mWARNING[0m - User ID 98 not found (404)
+2025-05-04 17:01:27 - genetic_rule_miner.bbdd_maker.user_service - [93mWARNING[0m - User ID 98 has no valid data
+2025-05-04 17:01:28 - genetic_rule_miner.bbdd_maker.user_service - [93mWARNING[0m - User ID 99 not found (404)
+2025-05-04 17:01:28 - genetic_rule_miner.bbdd_maker.user_service - [93mWARNING[0m - User ID 99 has no valid data
+2025-05-04 17:01:30 - genetic_rule_miner.bbdd_maker.user_service - [93mWARNING[0m - User ID 100 not found (404)
+2025-05-04 17:01:30 - genetic_rule_miner.bbdd_maker.user_service - [93mWARNING[0m - User ID 100 has no valid data
+2025-05-04 17:01:30 - genetic_rule_miner.bbdd_maker.user_service - [92mINFO[0m - Progress: 100.0% (100/100)
+2025-05-04 17:01:30 - genetic_rule_miner.bbdd_maker.user_service - [92mINFO[0m - Generation completed. Valid users: 27/100
+2025-05-04 17:01:30 - __main__ - [92mINFO[0m - 📡 Preparing user data...
+2025-05-04 17:01:30 - __main__ - [92mINFO[0m - 📡 Retrieving user details...
+2025-05-04 17:01:30 - genetic_rule_miner.bbdd_maker.details_service - [92mINFO[0m - DetailsService initialized with default configuration.
+2025-05-04 17:01:30 - genetic_rule_miner.bbdd_maker.details_service - [92mINFO[0m - Starting processing for 27 users.
+2025-05-04 17:01:35 - genetic_rule_miner.bbdd_maker.details_service - [92mINFO[0m - Processed 3/27
+2025-05-04 17:01:40 - genetic_rule_miner.bbdd_maker.details_service - [92mINFO[0m - Processed 6/27
+2025-05-04 17:01:46 - genetic_rule_miner.bbdd_maker.details_service - [92mINFO[0m - Processed 9/27
+2025-05-04 17:01:51 - genetic_rule_miner.bbdd_maker.details_service - [92mINFO[0m - Processed 12/27
+2025-05-04 17:01:57 - genetic_rule_miner.bbdd_maker.details_service - [92mINFO[0m - Processed 15/27
+2025-05-04 17:02:02 - genetic_rule_miner.bbdd_maker.details_service - [92mINFO[0m - Processed 18/27
+2025-05-04 17:02:07 - genetic_rule_miner.bbdd_maker.details_service - [92mINFO[0m - Processed 21/27
+2025-05-04 17:02:12 - genetic_rule_miner.bbdd_maker.details_service - [92mINFO[0m - Processed 24/27
+2025-05-04 17:02:17 - genetic_rule_miner.bbdd_maker.details_service - [92mINFO[0m - Processed 27/27
+2025-05-04 17:02:18 - genetic_rule_miner.bbdd_maker.details_service - [92mINFO[0m - Total processing time: 47.53s
+2025-05-04 17:02:18 - __main__ - [92mINFO[0m - 📡 Retrieving user scores...
+2025-05-04 17:02:18 - genetic_rule_miner.bbdd_maker.score_service - [92mINFO[0m - ScoreService initialized with default configuration.
+2025-05-04 17:02:18 - genetic_rule_miner.bbdd_maker.score_service - [92mINFO[0m - Starting user processing to generate CSV.
+2025-05-04 17:02:18 - genetic_rule_miner.bbdd_maker.score_service - [92mINFO[0m - Total users to process: 27.
+2025-05-04 17:02:18 - genetic_rule_miner.bbdd_maker.score_service - [92mINFO[0m - Processing batch 1.
+2025-05-04 17:02:18 - genetic_rule_miner.bbdd_maker.score_service - [92mINFO[0m - Processing batch of 27 users.
+2025-05-04 17:02:19 - genetic_rule_miner.bbdd_maker.score_service - [92mINFO[0m - Data retrieved for Xinil.
+2025-05-04 17:02:20 - genetic_rule_miner.bbdd_maker.score_service - [93mWARNING[0m - No data for Aokaado.
+2025-05-04 17:02:21 - genetic_rule_miner.bbdd_maker.score_service - [92mINFO[0m - Data retrieved for Crystal.
+2025-05-04 17:02:22 - genetic_rule_miner.bbdd_maker.score_service - [92mINFO[0m - Data retrieved for Arcane.
+2025-05-04 17:02:23 - genetic_rule_miner.bbdd_maker.score_service - [93mWARNING[0m - No data for Mad.
+2025-05-04 17:02:23 - genetic_rule_miner.bbdd_maker.score_service - [92mINFO[0m - Data retrieved for vondur.
+2025-05-04 17:02:24 - genetic_rule_miner.bbdd_maker.score_service - [92mINFO[0m - Data retrieved for Amuro.
+2025-05-04 17:02:25 - genetic_rule_miner.bbdd_maker.score_service - [93mWARNING[0m - No data for Baman.
+2025-05-04 17:02:26 - genetic_rule_miner.bbdd_maker.score_service - [92mINFO[0m - Data retrieved for megan.
+2025-05-04 17:02:26 - genetic_rule_miner.bbdd_maker.score_service - [93mWARNING[0m - No data for beddan.
+2025-05-04 17:02:27 - genetic_rule_miner.bbdd_maker.score_service - [92mINFO[0m - Data retrieved for kei-clone.
+2025-05-04 17:02:28 - genetic_rule_miner.bbdd_maker.score_service - [92mINFO[0m - Data retrieved for seif.
+2025-05-04 17:02:29 - genetic_rule_miner.bbdd_maker.score_service - [92mINFO[0m - Data retrieved for Ladholyman.
+2025-05-04 17:02:30 - genetic_rule_miner.bbdd_maker.score_service - [92mINFO[0m - Data retrieved for Hiromi.
+2025-05-04 17:02:31 - genetic_rule_miner.bbdd_maker.score_service - [92mINFO[0m - Data retrieved for ShadowOz.
+2025-05-04 17:02:32 - genetic_rule_miner.bbdd_maker.score_service - [92mINFO[0m - Data retrieved for Cruzle.
+2025-05-04 17:02:32 - genetic_rule_miner.bbdd_maker.score_service - [92mINFO[0m - Data retrieved for Smoka.
+2025-05-04 17:02:33 - genetic_rule_miner.bbdd_maker.score_service - [92mINFO[0m - Data retrieved for james2k.
+2025-05-04 17:02:34 - genetic_rule_miner.bbdd_maker.score_service - [93mWARNING[0m - No data for Emp-.
+2025-05-04 17:02:35 - genetic_rule_miner.bbdd_maker.score_service - [92mINFO[0m - Data retrieved for koalatees.
+2025-05-04 17:02:35 - genetic_rule_miner.bbdd_maker.score_service - [92mINFO[0m - Data retrieved for Ramp.
+2025-05-04 17:02:36 - genetic_rule_miner.bbdd_maker.score_service - [92mINFO[0m - Data retrieved for Achtor.
+2025-05-04 17:02:37 - genetic_rule_miner.bbdd_maker.score_service - [92mINFO[0m - Data retrieved for jaames.
+2025-05-04 17:02:38 - genetic_rule_miner.bbdd_maker.score_service - [92mINFO[0m - Data retrieved for wicked2k.
+2025-05-04 17:02:39 - genetic_rule_miner.bbdd_maker.score_service - [93mWARNING[0m - No data for xich.
+2025-05-04 17:02:40 - genetic_rule_miner.bbdd_maker.score_service - [92mINFO[0m - Data retrieved for marvin_9martian.
+2025-05-04 17:02:40 - genetic_rule_miner.bbdd_maker.score_service - [92mINFO[0m - Data retrieved for sorairo.
+2025-05-04 17:02:40 - genetic_rule_miner.bbdd_maker.score_service - [92mINFO[0m - Batch processed with 3180 records retrieved.
+2025-05-04 17:02:40 - genetic_rule_miner.bbdd_maker.score_service - [92mINFO[0m - Processed: 27/27 (100.0%).
+2025-05-04 17:02:40 - genetic_rule_miner.bbdd_maker.score_service - [92mINFO[0m - Processing complete. Generating CSV file.
+2025-05-04 17:02:40 - __main__ - [92mINFO[0m - ✅ Successfully retrieved base data
+2025-05-04 17:02:40 - __main__ - [92mINFO[0m - 🔧 Phase 3: Preprocessing and Data Loading
+2025-05-04 17:02:40 - __main__ - [92mINFO[0m - 🔗 Connecting to the database...
+2025-05-04 17:02:41 - genetic_rule_miner.data.database - [92mINFO[0m - SQLAlchemy engine initialized
+2025-05-04 17:02:41 - __main__ - [92mINFO[0m - ✅ DatabaseManager loaded successfully
+2025-05-04 17:02:41 - __main__ - [92mINFO[0m - 📥 Starting data loading...
+2025-05-04 17:02:41 - __main__ - [92mINFO[0m - ✅ Data loading completed successfully
+2025-05-04 17:02:41 - __main__ - [92mINFO[0m - 🔗 Database connection closed
+2025-05-04 17:02:41 - genetic_rule_miner.data.database - [92mINFO[0m - SQLAlchemy engine closed
+2025-05-04 17:11:56 - __main__ - [92mINFO[0m - Starting rule mining pipeline
+2025-05-04 17:11:56 - genetic_rule_miner.data.database - [92mINFO[0m - SQLAlchemy engine initialized
+2025-05-04 17:11:56 - __main__ - [92mINFO[0m - Loading and preprocessing data...
+2025-05-04 17:11:56 - genetic_rule_miner.data.manager - [92mINFO[0m - [92mEntering load_and_preprocess_data...[0m
+2025-05-04 17:11:56 - genetic_rule_miner.data.preprocessing - [92mINFO[0m - [92mEntering preprocess_data...[0m
+2025-05-04 17:11:56 - genetic_rule_miner.data.preprocessing - [92mINFO[0m - [92mpreprocess_data completed in 0.0128s[0m
+2025-05-04 17:11:56 - genetic_rule_miner.data.preprocessing - [92mINFO[0m - [92mEntering preprocess_data...[0m
+2025-05-04 17:11:56 - genetic_rule_miner.data.preprocessing - [92mINFO[0m - [92mpreprocess_data completed in 0.0249s[0m
+2025-05-04 17:11:56 - genetic_rule_miner.data.preprocessing - [92mINFO[0m - [92mEntering preprocess_data...[0m
+2025-05-04 17:11:56 - genetic_rule_miner.data.preprocessing - [92mINFO[0m - [92mpreprocess_data completed in 0.0019s[0m
+2025-05-04 17:11:56 - genetic_rule_miner.data.manager - [92mINFO[0m - [92mload_and_preprocess_data completed in 0.0935s[0m
+2025-05-04 17:11:56 - __main__ - [92mINFO[0m - [92mEntering save_to_excel...[0m
+2025-05-04 17:11:56 - __main__ - [92mINFO[0m - Data successfully saved to raw_data.xlsx
+2025-05-04 17:11:56 - __main__ - [92mINFO[0m - [92msave_to_excel completed in 0.4435s[0m
+2025-05-04 17:11:56 - __main__ - [92mINFO[0m - Merging preprocessed data...
+2025-05-04 17:11:56 - genetic_rule_miner.data.manager - [92mINFO[0m - [92mEntering merge_data...[0m
+2025-05-04 17:11:56 - genetic_rule_miner.data.manager - [92mINFO[0m - [92mmerge_data completed in 0.0120s[0m
+2025-05-04 17:11:56 - __main__ - [92mINFO[0m - [92mEntering save_to_excel...[0m
+2025-05-04 17:11:57 - __main__ - [92mINFO[0m - Data successfully saved to processed_data.xlsx
+2025-05-04 17:11:57 - __main__ - [92mINFO[0m - [92msave_to_excel completed in 0.3821s[0m
+2025-05-04 17:11:57 - __main__ - [92mINFO[0m - Initializing genetic algorithm...
+2025-05-04 17:11:57 - genetic_rule_miner.data.preprocessing - [92mINFO[0m - [92mEntering preprocess_data...[0m
+2025-05-04 17:11:57 - genetic_rule_miner.data.preprocessing - [92mINFO[0m - [92mpreprocess_data completed in 0.0322s[0m
+2025-05-04 17:11:57 - __main__ - [92mINFO[0m - [92mEntering save_to_excel...[0m
+2025-05-04 17:11:57 - __main__ - [92mINFO[0m - Data successfully saved to datos_limpios.xlsx
+2025-05-04 17:11:57 - __main__ - [92mINFO[0m - [92msave_to_excel completed in 0.2690s[0m
+2025-05-04 17:11:57 - __main__ - [92mINFO[0m - Starting evolution process...
+2025-05-04 17:11:58 - genetic_rule_miner.models.genetic - [92mINFO[0m - Generation 0: 250 unique rules
+2025-05-04 17:11:58 - genetic_rule_miner.models.genetic - [92mINFO[0m - Generation 0: Best Fitness=0.1315, Support=0.2630, Confidence=0.5000, Rule: IF days_watched greater than 50.50 AND total_entries greater than 204.00 AND scored_by less than 232542.40 AND rewatched greater than 1.00 AND age_group equals 'adult' THEN rating = high
+2025-05-04 17:11:58 - genetic_rule_miner.models.genetic - [92mINFO[0m - Generation 1: 250 unique rules
+2025-05-04 17:11:58 - __main__ - [91mERROR[0m - Pipeline failed: slice indices must be integers or None or have an __index__ method
+Traceback (most recent call last):
+  File "/home/user/UNIVERSIDAD/TFG/anime_dataset_generator/project/genetic_rule_miner/main.py", line 81, in main
+    results = miner.evolve()
+              ^^^^^^^^^^^^^^
+  File "/home/user/UNIVERSIDAD/TFG/anime_dataset_generator/project/genetic_rule_miner/models/genetic.py", line 421, in evolve
+    elite_indices = np.argsort(fitness_scores)[::-1][:num_elite]
+                   ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~^^^^^^^^^^^^
+TypeError: slice indices must be integers or None or have an __index__ method
+2025-05-04 17:11:58 - genetic_rule_miner.data.database - [92mINFO[0m - SQLAlchemy engine closed
+2025-05-04 17:12:23 - __main__ - [92mINFO[0m - Starting rule mining pipeline
+2025-05-04 17:12:23 - genetic_rule_miner.data.database - [92mINFO[0m - SQLAlchemy engine initialized
+2025-05-04 17:12:23 - __main__ - [92mINFO[0m - Loading and preprocessing data...
+2025-05-04 17:12:23 - genetic_rule_miner.data.manager - [92mINFO[0m - [92mEntering load_and_preprocess_data...[0m
+2025-05-04 17:12:23 - genetic_rule_miner.data.preprocessing - [92mINFO[0m - [92mEntering preprocess_data...[0m
+2025-05-04 17:12:23 - genetic_rule_miner.data.preprocessing - [92mINFO[0m - [92mpreprocess_data completed in 0.0110s[0m
+2025-05-04 17:12:23 - genetic_rule_miner.data.preprocessing - [92mINFO[0m - [92mEntering preprocess_data...[0m
+2025-05-04 17:12:23 - genetic_rule_miner.data.preprocessing - [92mINFO[0m - [92mpreprocess_data completed in 0.0205s[0m
+2025-05-04 17:12:23 - genetic_rule_miner.data.preprocessing - [92mINFO[0m - [92mEntering preprocess_data...[0m
+2025-05-04 17:12:23 - genetic_rule_miner.data.preprocessing - [92mINFO[0m - [92mpreprocess_data completed in 0.0013s[0m
+2025-05-04 17:12:23 - genetic_rule_miner.data.manager - [92mINFO[0m - [92mload_and_preprocess_data completed in 0.0914s[0m
+2025-05-04 17:12:23 - __main__ - [92mINFO[0m - [92mEntering save_to_excel...[0m
+2025-05-04 17:12:23 - __main__ - [92mINFO[0m - Data successfully saved to raw_data.xlsx
+2025-05-04 17:12:23 - __main__ - [92mINFO[0m - [92msave_to_excel completed in 0.1621s[0m
+2025-05-04 17:12:23 - __main__ - [92mINFO[0m - Merging preprocessed data...
+2025-05-04 17:12:23 - genetic_rule_miner.data.manager - [92mINFO[0m - [92mEntering merge_data...[0m
+2025-05-04 17:12:23 - genetic_rule_miner.data.manager - [92mINFO[0m - [92mmerge_data completed in 0.0083s[0m
+2025-05-04 17:12:23 - __main__ - [92mINFO[0m - [92mEntering save_to_excel...[0m
+2025-05-04 17:12:23 - __main__ - [92mINFO[0m - Data successfully saved to processed_data.xlsx
+2025-05-04 17:12:23 - __main__ - [92mINFO[0m - [92msave_to_excel completed in 0.2172s[0m
+2025-05-04 17:12:23 - __main__ - [92mINFO[0m - Initializing genetic algorithm...
+2025-05-04 17:12:23 - genetic_rule_miner.data.preprocessing - [92mINFO[0m - [92mEntering preprocess_data...[0m
+2025-05-04 17:12:23 - genetic_rule_miner.data.preprocessing - [92mINFO[0m - [92mpreprocess_data completed in 0.0314s[0m
+2025-05-04 17:12:23 - __main__ - [92mINFO[0m - [92mEntering save_to_excel...[0m
+2025-05-04 17:12:24 - __main__ - [92mINFO[0m - Data successfully saved to datos_limpios.xlsx
+2025-05-04 17:12:24 - __main__ - [92mINFO[0m - [92msave_to_excel completed in 0.1742s[0m
+2025-05-04 17:12:24 - __main__ - [92mINFO[0m - Starting evolution process...
+2025-05-04 17:12:24 - genetic_rule_miner.models.genetic - [92mINFO[0m - Generation 0: 250 unique rules
+2025-05-04 17:12:24 - genetic_rule_miner.models.genetic - [92mINFO[0m - Generation 0: Best Fitness=0.1713, Support=0.2661, Confidence=0.6437, Rule: IF watching greater than 5.00 AND gender equals 'Male' AND duration_class equals 'standard' AND type equals 'TV' THEN rating = high
+2025-05-04 17:12:24 - genetic_rule_miner.models.genetic - [92mINFO[0m - Generation 1: 250 unique rules
+2025-05-04 17:12:25 - __main__ - [91mERROR[0m - Pipeline failed: slice indices must be integers or None or have an __index__ method
+Traceback (most recent call last):
+  File "/home/user/UNIVERSIDAD/TFG/anime_dataset_generator/project/genetic_rule_miner/main.py", line 81, in main
+    results = miner.evolve()
+              ^^^^^^^^^^^^^^
+  File "/home/user/UNIVERSIDAD/TFG/anime_dataset_generator/project/genetic_rule_miner/models/genetic.py", line 421, in evolve
+    elite_indices = np.argsort(fitness_scores)[::-1][:num_elite]
+                   ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~^^^^^^^^^^^^
+TypeError: slice indices must be integers or None or have an __index__ method
+2025-05-04 17:12:25 - genetic_rule_miner.data.database - [92mINFO[0m - SQLAlchemy engine closed
+2025-05-04 17:13:52 - __main__ - [92mINFO[0m - Starting rule mining pipeline
+2025-05-04 17:13:52 - genetic_rule_miner.data.database - [92mINFO[0m - SQLAlchemy engine initialized
+2025-05-04 17:13:52 - __main__ - [92mINFO[0m - Loading and preprocessing data...
+2025-05-04 17:13:52 - genetic_rule_miner.data.manager - [92mINFO[0m - [92mEntering load_and_preprocess_data...[0m
+2025-05-04 17:13:52 - genetic_rule_miner.data.preprocessing - [92mINFO[0m - [92mEntering preprocess_data...[0m
+2025-05-04 17:13:52 - genetic_rule_miner.data.preprocessing - [92mINFO[0m - [92mpreprocess_data completed in 0.0084s[0m
+2025-05-04 17:13:52 - genetic_rule_miner.data.preprocessing - [92mINFO[0m - [92mEntering preprocess_data...[0m
+2025-05-04 17:13:52 - genetic_rule_miner.data.preprocessing - [92mINFO[0m - [92mpreprocess_data completed in 0.0258s[0m
+2025-05-04 17:13:52 - genetic_rule_miner.data.preprocessing - [92mINFO[0m - [92mEntering preprocess_data...[0m
+2025-05-04 17:13:52 - genetic_rule_miner.data.preprocessing - [92mINFO[0m - [92mpreprocess_data completed in 0.0016s[0m
+2025-05-04 17:13:52 - genetic_rule_miner.data.manager - [92mINFO[0m - [92mload_and_preprocess_data completed in 0.0863s[0m
+2025-05-04 17:13:52 - __main__ - [92mINFO[0m - [92mEntering save_to_excel...[0m
+2025-05-04 17:13:52 - __main__ - [92mINFO[0m - Data successfully saved to raw_data.xlsx
+2025-05-04 17:13:52 - __main__ - [92mINFO[0m - [92msave_to_excel completed in 0.1566s[0m
+2025-05-04 17:13:52 - __main__ - [92mINFO[0m - Merging preprocessed data...
+2025-05-04 17:13:52 - genetic_rule_miner.data.manager - [92mINFO[0m - [92mEntering merge_data...[0m
+2025-05-04 17:13:52 - genetic_rule_miner.data.manager - [92mINFO[0m - [92mmerge_data completed in 0.0071s[0m
+2025-05-04 17:13:52 - __main__ - [92mINFO[0m - [92mEntering save_to_excel...[0m
+2025-05-04 17:13:52 - __main__ - [92mINFO[0m - Data successfully saved to processed_data.xlsx
+2025-05-04 17:13:52 - __main__ - [92mINFO[0m - [92msave_to_excel completed in 0.2360s[0m
+2025-05-04 17:13:52 - __main__ - [92mINFO[0m - Initializing genetic algorithm...
+2025-05-04 17:13:52 - genetic_rule_miner.data.preprocessing - [92mINFO[0m - [92mEntering preprocess_data...[0m
+2025-05-04 17:13:52 - genetic_rule_miner.data.preprocessing - [92mINFO[0m - [92mpreprocess_data completed in 0.0450s[0m
+2025-05-04 17:13:52 - __main__ - [92mINFO[0m - [92mEntering save_to_excel...[0m
+2025-05-04 17:13:52 - __main__ - [92mINFO[0m - Data successfully saved to datos_limpios.xlsx
+2025-05-04 17:13:52 - __main__ - [92mINFO[0m - [92msave_to_excel completed in 0.1800s[0m
+2025-05-04 17:13:53 - __main__ - [92mINFO[0m - Starting evolution process...
+2025-05-04 17:13:53 - genetic_rule_miner.models.genetic - [92mINFO[0m - Generation 0: 250 unique rules
+2025-05-04 17:13:53 - genetic_rule_miner.models.genetic - [92mINFO[0m - Generation 0: Best Fitness=0.1346, Support=0.2416, Confidence=0.5570, Rule: IF rewatched less than 50.00 AND days_watched less than 66.20 AND favorites less than 8558.00 AND members less than 512957.00 THEN rating = high
+2025-05-04 17:13:53 - genetic_rule_miner.models.genetic - [92mINFO[0m - Generation 1: 250 unique rules
+2025-05-04 17:13:53 - genetic_rule_miner.models.genetic - [92mINFO[0m - Generation 1: Best Fitness=0.1346, Support=0.2416, Confidence=0.5570, Rule: IF rewatched less than 50.00 AND days_watched less than 66.20 AND favorites less than 8558.00 AND members less than 512957.00 THEN rating = high
+2025-05-04 17:13:53 - genetic_rule_miner.models.genetic - [92mINFO[0m - Generation 2: 249 unique rules
+2025-05-04 17:13:54 - genetic_rule_miner.models.genetic - [92mINFO[0m - Generation 2: Best Fitness=0.1529, Support=0.2569, Confidence=0.5952, Rule: IF gender equals 'Male' AND days_watched less than 142.30 AND duration less than 25.00 AND plan_to_watch greater than 2.00 THEN rating = high
+2025-05-04 17:13:54 - genetic_rule_miner.models.genetic - [92mINFO[0m - Generation 3: 249 unique rules
+2025-05-04 17:13:54 - genetic_rule_miner.models.genetic - [92mINFO[0m - Generation 3: Best Fitness=0.2110, Support=0.3486, Confidence=0.6053, Rule: IF rewatched less than 15.00 AND type equals 'TV' AND completed less than 156.00 AND total_entries less than 204.00 THEN rating = high
+2025-05-04 17:13:54 - genetic_rule_miner.models.genetic - [92mINFO[0m - Generation 4: 249 unique rules
+2025-05-04 17:13:54 - genetic_rule_miner.models.genetic - [92mINFO[0m - Generation 4: Best Fitness=0.2232, Support=0.3731, Confidence=0.5984, Rule: IF status equals 'Finished Airing' AND type equals 'TV' AND plan_to_watch less than 45.00 AND favorites greater than 1710.24 THEN rating = high
+2025-05-04 17:13:54 - genetic_rule_miner.models.genetic - [92mINFO[0m - Generation 5: 250 unique rules
+2025-05-04 17:13:55 - genetic_rule_miner.models.genetic - [92mINFO[0m - Generation 5: Best Fitness=0.2324, Support=0.4465, Confidence=0.5205, Rule: IF dropped greater than 4.00 AND episodes_watched greater than 2120.50 AND status equals 'Finished Airing' AND completed greater than 97.00 AND type equals 'TV' THEN rating = high
+2025-05-04 17:13:55 - genetic_rule_miner.models.genetic - [92mINFO[0m - Generation 6: 250 unique rules
+2025-05-04 17:13:55 - genetic_rule_miner.models.genetic - [92mINFO[0m - Generation 6: Best Fitness=0.2446, Support=0.3517, Confidence=0.6957, Rule: IF total_entries less than 392.00 AND days_watched less than 142.30 AND score greater than 7.40 AND episodes_class equals 'long' THEN rating = high
+2025-05-04 17:13:55 - genetic_rule_miner.models.genetic - [92mINFO[0m - Generation 7: 250 unique rules
+2025-05-04 17:13:55 - genetic_rule_miner.models.genetic - [92mINFO[0m - Generation 7: Best Fitness=0.2691, Support=0.4465, Confidence=0.6027, Rule: IF duration greater than 23.00 AND status equals 'Finished Airing' AND type equals 'TV' AND episodes_class equals 'long' THEN rating = high
+2025-05-04 17:13:55 - genetic_rule_miner.models.genetic - [92mINFO[0m - Generation 8: 250 unique rules
+2025-05-04 17:13:56 - genetic_rule_miner.models.genetic - [92mINFO[0m - Generation 8: Best Fitness=0.2783, Support=0.4098, Confidence=0.6791, Rule: IF mean_score greater than 7.10 AND favorites greater than 1388.00 AND type equals 'TV' AND popularity less than 1546.00 THEN rating = high
+2025-05-04 17:13:56 - genetic_rule_miner.models.genetic - [92mINFO[0m - Generation 9: 250 unique rules
+2025-05-04 17:13:56 - genetic_rule_miner.models.genetic - [92mINFO[0m - Generation 9: Best Fitness=0.2783, Support=0.4098, Confidence=0.6791, Rule: IF mean_score greater than 7.10 AND favorites greater than 1388.00 AND type equals 'TV' AND popularity less than 1546.00 THEN rating = high
+2025-05-04 17:13:56 - genetic_rule_miner.models.genetic - [92mINFO[0m - Generation 10: 249 unique rules
+2025-05-04 17:13:56 - genetic_rule_miner.models.genetic - [92mINFO[0m - Generation 10: Best Fitness=0.2905, Support=0.4557, Confidence=0.6376, Rule: IF status equals 'Finished Airing' AND type equals 'TV' AND episodes_class equals 'long' AND completed less than 233.00 THEN rating = high
+2025-05-04 17:13:56 - genetic_rule_miner.models.genetic - [92mINFO[0m - Generation 11: 249 unique rules
+2025-05-04 17:13:56 - genetic_rule_miner.models.genetic - [92mINFO[0m - Generation 11: Best Fitness=0.3028, Support=0.5015, Confidence=0.6037, Rule: IF total_entries less than 392.00 AND days_watched less than 142.30 AND status equals 'Finished Airing' AND duration greater than 23.00 THEN rating = high
+2025-05-04 17:13:57 - genetic_rule_miner.models.genetic - [92mINFO[0m - Generation 12: 248 unique rules
+2025-05-04 17:13:57 - genetic_rule_miner.models.genetic - [92mINFO[0m - Generation 12: Best Fitness=0.3028, Support=0.5015, Confidence=0.6037, Rule: IF total_entries less than 392.00 AND days_watched less than 142.30 AND status equals 'Finished Airing' AND duration greater than 23.00 THEN rating = high
+2025-05-04 17:13:57 - genetic_rule_miner.models.genetic - [92mINFO[0m - Generation 13: 250 unique rules
+2025-05-04 17:13:57 - genetic_rule_miner.models.genetic - [92mINFO[0m - Generation 13: Best Fitness=0.3333, Support=0.5413, Confidence=0.6158, Rule: IF total_entries less than 392.00 AND status equals 'Finished Airing' AND days_watched less than 142.30 AND plan_to_watch less than 29.00 THEN rating = high
+2025-05-04 17:13:57 - genetic_rule_miner.models.genetic - [92mINFO[0m - Generation 14: 250 unique rules
+2025-05-04 17:13:58 - genetic_rule_miner.models.genetic - [92mINFO[0m - Generation 14: Best Fitness=0.3333, Support=0.5413, Confidence=0.6158, Rule: IF total_entries less than 392.00 AND status equals 'Finished Airing' AND days_watched less than 142.30 AND plan_to_watch less than 29.00 THEN rating = high
+2025-05-04 17:13:58 - genetic_rule_miner.models.genetic - [92mINFO[0m - Generation 15: 249 unique rules
+2025-05-04 17:13:58 - genetic_rule_miner.models.genetic - [92mINFO[0m - Generation 15: Best Fitness=0.3333, Support=0.5413, Confidence=0.6158, Rule: IF total_entries less than 392.00 AND status equals 'Finished Airing' AND days_watched less than 142.30 AND plan_to_watch less than 29.00 THEN rating = high
+2025-05-04 17:13:58 - genetic_rule_miner.models.genetic - [92mINFO[0m - Generation 16: 249 unique rules
+2025-05-04 17:13:58 - genetic_rule_miner.models.genetic - [92mINFO[0m - Generation 16: Best Fitness=0.3333, Support=0.5413, Confidence=0.6158, Rule: IF total_entries less than 392.00 AND status equals 'Finished Airing' AND days_watched less than 142.30 AND plan_to_watch less than 29.00 THEN rating = high
+2025-05-04 17:13:58 - genetic_rule_miner.models.genetic - [92mINFO[0m - Generation 17: 249 unique rules
+2025-05-04 17:13:58 - genetic_rule_miner.models.genetic - [92mINFO[0m - Generation 17: Best Fitness=0.3333, Support=0.5413, Confidence=0.6158, Rule: IF total_entries less than 392.00 AND status equals 'Finished Airing' AND days_watched less than 142.30 AND plan_to_watch less than 29.00 THEN rating = high
+2025-05-04 17:13:58 - genetic_rule_miner.models.genetic - [92mINFO[0m - Generation 18: 249 unique rules
+2025-05-04 17:13:59 - genetic_rule_miner.models.genetic - [92mINFO[0m - Generation 18: Best Fitness=0.3333, Support=0.5413, Confidence=0.6158, Rule: IF total_entries less than 392.00 AND status equals 'Finished Airing' AND days_watched less than 142.30 AND plan_to_watch less than 29.00 THEN rating = high
+2025-05-04 17:13:59 - genetic_rule_miner.models.genetic - [92mINFO[0m - Generation 19: 249 unique rules
+2025-05-04 17:13:59 - genetic_rule_miner.models.genetic - [92mINFO[0m - Generation 19: Best Fitness=0.3333, Support=0.5413, Confidence=0.6158, Rule: IF total_entries less than 392.00 AND status equals 'Finished Airing' AND days_watched less than 142.30 AND plan_to_watch less than 29.00 THEN rating = high
+2025-05-04 17:13:59 - genetic_rule_miner.models.genetic - [92mINFO[0m - Generation 20: 247 unique rules
+2025-05-04 17:13:59 - genetic_rule_miner.models.genetic - [92mINFO[0m - Generation 20: Best Fitness=0.3456, Support=0.5413, Confidence=0.6384, Rule: IF total_entries less than 392.00 AND status equals 'Finished Airing' AND completed less than 233.00 AND on_hold less than 22.00 THEN rating = high
+2025-05-04 17:13:59 - genetic_rule_miner.models.genetic - [92mINFO[0m - Generation 21: 248 unique rules
+2025-05-04 17:14:00 - genetic_rule_miner.models.genetic - [92mINFO[0m - Generation 21: Best Fitness=0.3456, Support=0.5413, Confidence=0.6384, Rule: IF total_entries less than 392.00 AND status equals 'Finished Airing' AND completed less than 233.00 AND on_hold less than 22.00 THEN rating = high
+2025-05-04 17:14:00 - genetic_rule_miner.models.genetic - [92mINFO[0m - Generation 22: 249 unique rules
+2025-05-04 17:14:00 - genetic_rule_miner.models.genetic - [92mINFO[0m - Generation 22: Best Fitness=0.3639, Support=0.6086, Confidence=0.5980, Rule: IF total_entries less than 392.00 AND days_watched less than 142.30 AND status equals 'Finished Airing' AND completed less than 156.00 THEN rating = high
+2025-05-04 17:14:00 - genetic_rule_miner.models.genetic - [92mINFO[0m - Generation 23: 248 unique rules
+2025-05-04 17:14:00 - genetic_rule_miner.models.genetic - [92mINFO[0m - Generation 23: Best Fitness=0.3639, Support=0.6086, Confidence=0.5980, Rule: IF total_entries less than 392.00 AND days_watched less than 142.30 AND status equals 'Finished Airing' AND completed less than 156.00 THEN rating = high
+2025-05-04 17:14:00 - genetic_rule_miner.models.genetic - [92mINFO[0m - Generation 24: 249 unique rules
+2025-05-04 17:14:01 - genetic_rule_miner.models.genetic - [92mINFO[0m - Generation 24: Best Fitness=0.3639, Support=0.6086, Confidence=0.5980, Rule: IF total_entries less than 392.00 AND days_watched less than 142.30 AND status equals 'Finished Airing' AND completed less than 156.00 THEN rating = high
+2025-05-04 17:14:01 - genetic_rule_miner.models.genetic - [92mINFO[0m - Generation 25: 250 unique rules
+2025-05-04 17:14:01 - genetic_rule_miner.models.genetic - [92mINFO[0m - Generation 25: Best Fitness=0.3884, Support=0.6514, Confidence=0.5962, Rule: IF total_entries less than 392.00 AND episodes_watched less than 8481.00 AND completed less than 233.00 AND status equals 'Finished Airing' THEN rating = high
+2025-05-04 17:14:01 - genetic_rule_miner.models.genetic - [92mINFO[0m - Generation 26: 248 unique rules
+2025-05-04 17:14:01 - genetic_rule_miner.models.genetic - [92mINFO[0m - Generation 26: Best Fitness=0.3884, Support=0.6514, Confidence=0.5962, Rule: IF total_entries less than 392.00 AND episodes_watched less than 8481.00 AND completed less than 233.00 AND status equals 'Finished Airing' THEN rating = high
+2025-05-04 17:14:01 - genetic_rule_miner.models.genetic - [92mINFO[0m - Generation 27: 250 unique rules
+2025-05-04 17:14:02 - genetic_rule_miner.models.genetic - [92mINFO[0m - Generation 27: Best Fitness=0.3884, Support=0.6514, Confidence=0.5962, Rule: IF total_entries less than 392.00 AND episodes_watched less than 8481.00 AND completed less than 233.00 AND status equals 'Finished Airing' THEN rating = high
+2025-05-04 17:14:02 - genetic_rule_miner.models.genetic - [92mINFO[0m - Generation 28: 248 unique rules
+2025-05-04 17:14:02 - genetic_rule_miner.models.genetic - [92mINFO[0m - Generation 28: Best Fitness=0.3884, Support=0.6514, Confidence=0.5962, Rule: IF total_entries less than 392.00 AND episodes_watched less than 8481.00 AND completed less than 233.00 AND status equals 'Finished Airing' THEN rating = high
+2025-05-04 17:14:02 - genetic_rule_miner.models.genetic - [92mINFO[0m - Generation 29: 249 unique rules
+2025-05-04 17:14:02 - genetic_rule_miner.models.genetic - [92mINFO[0m - Generation 29: Best Fitness=0.3884, Support=0.6514, Confidence=0.5962, Rule: IF days_watched less than 142.30 AND episodes_watched less than 8481.00 AND status equals 'Finished Airing' AND completed less than 233.00 THEN rating = high
+2025-05-04 17:14:02 - genetic_rule_miner.models.genetic - [92mINFO[0m - Generation 30: 249 unique rules
+2025-05-04 17:14:03 - genetic_rule_miner.models.genetic - [92mINFO[0m - Generation 30: Best Fitness=0.3884, Support=0.6514, Confidence=0.5962, Rule: IF days_watched less than 142.30 AND episodes_watched less than 8481.00 AND status equals 'Finished Airing' AND completed less than 233.00 THEN rating = high
+2025-05-04 17:14:03 - genetic_rule_miner.models.genetic - [92mINFO[0m - Generation 31: 249 unique rules
+2025-05-04 17:14:03 - genetic_rule_miner.models.genetic - [92mINFO[0m - Generation 31: Best Fitness=0.3884, Support=0.6514, Confidence=0.5962, Rule: IF days_watched less than 142.30 AND episodes_watched less than 8481.00 AND status equals 'Finished Airing' AND completed less than 233.00 THEN rating = high
+2025-05-04 17:14:03 - genetic_rule_miner.models.genetic - [92mINFO[0m - Generation 32: 249 unique rules
+2025-05-04 17:14:03 - genetic_rule_miner.models.genetic - [92mINFO[0m - Generation 32: Best Fitness=0.3884, Support=0.6514, Confidence=0.5962, Rule: IF total_entries less than 392.00 AND status equals 'Finished Airing' AND days_watched less than 142.30 AND completed less than 233.00 THEN rating = high
+2025-05-04 17:14:03 - genetic_rule_miner.models.genetic - [92mINFO[0m - Generation 33: 248 unique rules
+2025-05-04 17:14:03 - genetic_rule_miner.models.genetic - [92mINFO[0m - Generation 33: Best Fitness=0.3884, Support=0.6514, Confidence=0.5962, Rule: IF days_watched less than 142.30 AND episodes_watched less than 8481.00 AND status equals 'Finished Airing' AND completed less than 233.00 THEN rating = high
+2025-05-04 17:14:03 - genetic_rule_miner.models.genetic - [92mINFO[0m - Generation 34: 249 unique rules
+2025-05-04 17:14:04 - genetic_rule_miner.models.genetic - [92mINFO[0m - Generation 34: Best Fitness=0.3884, Support=0.6514, Confidence=0.5962, Rule: IF total_entries less than 392.00 AND episodes_watched less than 8481.00 AND completed less than 233.00 AND status equals 'Finished Airing' THEN rating = high
+2025-05-04 17:14:04 - genetic_rule_miner.models.genetic - [92mINFO[0m - Generation 35: 247 unique rules
+2025-05-04 17:14:04 - genetic_rule_miner.models.genetic - [92mINFO[0m - Generation 35: Best Fitness=0.3884, Support=0.6514, Confidence=0.5962, Rule: IF total_entries less than 392.00 AND status equals 'Finished Airing' AND days_watched less than 142.30 AND completed less than 233.00 THEN rating = high
+2025-05-04 17:14:04 - genetic_rule_miner.models.genetic - [92mINFO[0m - Generation 36: 248 unique rules
+2025-05-04 17:14:04 - genetic_rule_miner.models.genetic - [92mINFO[0m - Generation 36: Best Fitness=0.3884, Support=0.6514, Confidence=0.5962, Rule: IF total_entries less than 392.00 AND episodes_watched less than 8481.00 AND completed less than 233.00 AND status equals 'Finished Airing' AND days_watched less than 142.30 THEN rating = high
+2025-05-04 17:14:04 - genetic_rule_miner.models.genetic - [92mINFO[0m - Generation 37: 247 unique rules
+2025-05-04 17:14:05 - genetic_rule_miner.models.genetic - [92mINFO[0m - Generation 37: Best Fitness=0.4037, Support=0.6697, Confidence=0.6027, Rule: IF total_entries less than 392.00 AND episodes_watched less than 8481.00 AND completed less than 233.00 AND days_watched less than 142.30 THEN rating = high
+2025-05-04 17:14:05 - genetic_rule_miner.models.genetic - [92mINFO[0m - Generation 38: 245 unique rules
+2025-05-04 17:14:05 - genetic_rule_miner.models.genetic - [92mINFO[0m - Generation 38: Best Fitness=0.4037, Support=0.6697, Confidence=0.6027, Rule: IF total_entries less than 392.00 AND episodes_watched less than 8481.00 AND completed less than 233.00 AND days_watched less than 142.30 THEN rating = high
+2025-05-04 17:14:05 - genetic_rule_miner.models.genetic - [92mINFO[0m - Generation 39: 244 unique rules
+2025-05-04 17:14:05 - genetic_rule_miner.models.genetic - [92mINFO[0m - Generation 39: Best Fitness=0.4037, Support=0.6697, Confidence=0.6027, Rule: IF total_entries less than 392.00 AND episodes_watched less than 8481.00 AND completed less than 233.00 AND days_watched less than 142.30 THEN rating = high
+2025-05-04 17:14:05 - genetic_rule_miner.models.genetic - [92mINFO[0m - Generation 40: 242 unique rules
+2025-05-04 17:14:05 - genetic_rule_miner.models.genetic - [92mINFO[0m - Generation 40: Best Fitness=0.4037, Support=0.6697, Confidence=0.6027, Rule: IF total_entries less than 392.00 AND episodes_watched less than 8481.00 AND completed less than 233.00 AND days_watched less than 142.30 THEN rating = high
+2025-05-04 17:14:05 - genetic_rule_miner.models.genetic - [92mINFO[0m - Generation 41: 246 unique rules
+2025-05-04 17:14:06 - genetic_rule_miner.models.genetic - [92mINFO[0m - Generation 41: Best Fitness=0.4037, Support=0.6697, Confidence=0.6027, Rule: IF total_entries less than 392.00 AND episodes_watched less than 8481.00 AND completed less than 233.00 AND days_watched less than 142.30 THEN rating = high
+2025-05-04 17:14:06 - genetic_rule_miner.models.genetic - [92mINFO[0m - Generation 42: 246 unique rules
+2025-05-04 17:14:06 - genetic_rule_miner.models.genetic - [92mINFO[0m - Generation 42: Best Fitness=0.4037, Support=0.6697, Confidence=0.6027, Rule: IF total_entries less than 392.00 AND episodes_watched less than 8481.00 AND completed less than 233.00 AND days_watched less than 142.30 THEN rating = high
+2025-05-04 17:14:06 - genetic_rule_miner.models.genetic - [92mINFO[0m - Generation 43: 243 unique rules
+2025-05-04 17:14:06 - genetic_rule_miner.models.genetic - [92mINFO[0m - Generation 43: Best Fitness=0.4037, Support=0.6697, Confidence=0.6027, Rule: IF total_entries less than 392.00 AND episodes_watched less than 8481.00 AND completed less than 233.00 AND days_watched less than 142.30 THEN rating = high
+2025-05-04 17:14:06 - genetic_rule_miner.models.genetic - [92mINFO[0m - Generation 44: 244 unique rules
+2025-05-04 17:14:07 - genetic_rule_miner.models.genetic - [92mINFO[0m - Generation 44: Best Fitness=0.4037, Support=0.6697, Confidence=0.6027, Rule: IF total_entries less than 392.00 AND episodes_watched less than 8481.00 AND completed less than 233.00 AND days_watched less than 142.30 THEN rating = high
+2025-05-04 17:14:07 - genetic_rule_miner.models.genetic - [92mINFO[0m - Generation 45: 240 unique rules
+2025-05-04 17:14:07 - genetic_rule_miner.models.genetic - [92mINFO[0m - Generation 45: Best Fitness=0.4037, Support=0.6697, Confidence=0.6027, Rule: IF total_entries less than 392.00 AND episodes_watched less than 8481.00 AND completed less than 233.00 AND days_watched less than 142.30 THEN rating = high
+2025-05-04 17:14:07 - genetic_rule_miner.models.genetic - [92mINFO[0m - Generation 46: 240 unique rules
+2025-05-04 17:14:07 - genetic_rule_miner.models.genetic - [92mINFO[0m - Generation 46: Best Fitness=0.4037, Support=0.6697, Confidence=0.6027, Rule: IF total_entries less than 392.00 AND episodes_watched less than 8481.00 AND completed less than 233.00 AND days_watched less than 142.30 THEN rating = high
+2025-05-04 17:14:07 - genetic_rule_miner.models.genetic - [92mINFO[0m - Generation 47: 235 unique rules
+2025-05-04 17:14:07 - genetic_rule_miner.models.genetic - [92mINFO[0m - Generation 47: Best Fitness=0.4037, Support=0.6697, Confidence=0.6027, Rule: IF total_entries less than 392.00 AND episodes_watched less than 8481.00 AND completed less than 233.00 AND days_watched less than 142.30 THEN rating = high
+2025-05-04 17:14:07 - genetic_rule_miner.models.genetic - [92mINFO[0m - Generation 48: 236 unique rules
+2025-05-04 17:14:08 - genetic_rule_miner.models.genetic - [92mINFO[0m - Generation 48: Best Fitness=0.4037, Support=0.6697, Confidence=0.6027, Rule: IF total_entries less than 392.00 AND episodes_watched less than 8481.00 AND completed less than 233.00 AND days_watched less than 142.30 THEN rating = high
+2025-05-04 17:14:08 - genetic_rule_miner.models.genetic - [92mINFO[0m - Generation 49: 240 unique rules
+2025-05-04 17:14:08 - genetic_rule_miner.models.genetic - [92mINFO[0m - Generation 49: Best Fitness=0.4037, Support=0.6697, Confidence=0.6027, Rule: IF total_entries less than 392.00 AND episodes_watched less than 8481.00 AND completed less than 233.00 AND days_watched less than 142.30 THEN rating = high
+2025-05-04 17:14:08 - genetic_rule_miner.models.genetic - [92mINFO[0m - Generation 50: 242 unique rules
+2025-05-04 17:14:08 - genetic_rule_miner.models.genetic - [92mINFO[0m - Generation 50: Best Fitness=0.4037, Support=0.6697, Confidence=0.6027, Rule: IF total_entries less than 392.00 AND episodes_watched less than 8481.00 AND completed less than 233.00 AND days_watched less than 142.30 THEN rating = high
+2025-05-04 17:14:08 - genetic_rule_miner.models.genetic - [92mINFO[0m - Generation 51: 235 unique rules
+2025-05-04 17:14:08 - genetic_rule_miner.models.genetic - [92mINFO[0m - Generation 51: Best Fitness=0.4037, Support=0.6697, Confidence=0.6027, Rule: IF total_entries less than 392.00 AND episodes_watched less than 8481.00 AND completed less than 233.00 AND days_watched less than 142.30 THEN rating = high
+2025-05-04 17:14:09 - genetic_rule_miner.models.genetic - [92mINFO[0m - Generation 52: 236 unique rules
+2025-05-04 17:14:09 - genetic_rule_miner.models.genetic - [92mINFO[0m - Generation 52: Best Fitness=0.4037, Support=0.6697, Confidence=0.6027, Rule: IF total_entries less than 392.00 AND episodes_watched less than 8481.00 AND completed less than 233.00 AND days_watched less than 142.30 THEN rating = high
+2025-05-04 17:14:09 - genetic_rule_miner.models.genetic - [92mINFO[0m - Generation 53: 235 unique rules
+2025-05-04 17:14:09 - genetic_rule_miner.models.genetic - [92mINFO[0m - Generation 53: Best Fitness=0.4037, Support=0.6697, Confidence=0.6027, Rule: IF total_entries less than 392.00 AND episodes_watched less than 8481.00 AND completed less than 233.00 AND days_watched less than 142.30 THEN rating = high
+2025-05-04 17:14:09 - genetic_rule_miner.models.genetic - [92mINFO[0m - Generation 54: 236 unique rules
+2025-05-04 17:14:09 - genetic_rule_miner.models.genetic - [92mINFO[0m - Generation 54: Best Fitness=0.4037, Support=0.6697, Confidence=0.6027, Rule: IF total_entries less than 392.00 AND episodes_watched less than 8481.00 AND completed less than 233.00 AND days_watched less than 142.30 THEN rating = high
+2025-05-04 17:14:09 - genetic_rule_miner.models.genetic - [92mINFO[0m - Generation 55: 232 unique rules
+2025-05-04 17:14:10 - genetic_rule_miner.models.genetic - [92mINFO[0m - Generation 55: Best Fitness=0.4037, Support=0.6697, Confidence=0.6027, Rule: IF total_entries less than 392.00 AND episodes_watched less than 8481.00 AND completed less than 233.00 AND days_watched less than 142.30 THEN rating = high
+2025-05-04 17:14:10 - genetic_rule_miner.models.genetic - [92mINFO[0m - Generation 56: 236 unique rules
+2025-05-04 17:14:10 - genetic_rule_miner.models.genetic - [92mINFO[0m - Generation 56: Best Fitness=0.4037, Support=0.6697, Confidence=0.6027, Rule: IF total_entries less than 392.00 AND episodes_watched less than 8481.00 AND completed less than 233.00 AND days_watched less than 142.30 THEN rating = high
+2025-05-04 17:14:10 - genetic_rule_miner.models.genetic - [92mINFO[0m - Generation 57: 232 unique rules
+2025-05-04 17:14:10 - genetic_rule_miner.models.genetic - [92mINFO[0m - Generation 57: Best Fitness=0.4037, Support=0.6697, Confidence=0.6027, Rule: IF total_entries less than 392.00 AND episodes_watched less than 8481.00 AND completed less than 233.00 AND days_watched less than 142.30 THEN rating = high
+2025-05-04 17:14:10 - genetic_rule_miner.models.genetic - [92mINFO[0m - Generation 58: 239 unique rules
+2025-05-04 17:14:10 - genetic_rule_miner.models.genetic - [92mINFO[0m - Generation 58: Best Fitness=0.4037, Support=0.6697, Confidence=0.6027, Rule: IF total_entries less than 392.00 AND episodes_watched less than 8481.00 AND completed less than 233.00 AND days_watched less than 142.30 THEN rating = high
+2025-05-04 17:14:10 - genetic_rule_miner.models.genetic - [92mINFO[0m - Early stopping: no improvement in 20 generations.
+2025-05-04 17:14:10 - __main__ - [92mINFO[0m - 
+Best Rule Found:
+2025-05-04 17:14:10 - __main__ - [92mINFO[0m - IF total_entries less than 392.00 AND episodes_watched less than 8481.00 AND completed less than 233.00 AND days_watched less than 142.30 THEN rating = high
+2025-05-04 17:14:10 - __main__ - [92mINFO[0m - 
+Fitness: 0.4037
+2025-05-04 17:14:10 - __main__ - [92mINFO[0m - Support: 0.6697247706422018
+2025-05-04 17:14:10 - __main__ - [92mINFO[0m - Confidence: 0.6027397260273972
+2025-05-04 17:14:10 - genetic_rule_miner.data.database - [92mINFO[0m - SQLAlchemy engine closed
+2025-05-04 17:23:47 - __main__ - [92mINFO[0m - Starting rule mining pipeline
+2025-05-04 17:23:47 - genetic_rule_miner.data.database - [92mINFO[0m - SQLAlchemy engine initialized
+2025-05-04 17:23:47 - __main__ - [92mINFO[0m - Loading and preprocessing data...
+2025-05-04 17:23:47 - genetic_rule_miner.data.manager - [92mINFO[0m - [92mEntering load_and_preprocess_data...[0m
+2025-05-04 17:23:47 - genetic_rule_miner.data.preprocessing - [92mINFO[0m - [92mEntering preprocess_data...[0m
+2025-05-04 17:23:47 - genetic_rule_miner.data.preprocessing - [92mINFO[0m - [92mpreprocess_data completed in 0.0091s[0m
+2025-05-04 17:23:47 - genetic_rule_miner.data.preprocessing - [92mINFO[0m - [92mEntering preprocess_data...[0m
+2025-05-04 17:23:47 - genetic_rule_miner.data.preprocessing - [92mINFO[0m - [92mpreprocess_data completed in 0.0193s[0m
+2025-05-04 17:23:47 - genetic_rule_miner.data.preprocessing - [92mINFO[0m - [92mEntering preprocess_data...[0m
+2025-05-04 17:23:47 - genetic_rule_miner.data.preprocessing - [92mINFO[0m - [92mpreprocess_data completed in 0.0016s[0m
+2025-05-04 17:23:47 - genetic_rule_miner.data.manager - [92mINFO[0m - [92mload_and_preprocess_data completed in 0.0799s[0m
+2025-05-04 17:23:47 - __main__ - [92mINFO[0m - [92mEntering save_to_excel...[0m
+2025-05-04 17:23:47 - __main__ - [92mINFO[0m - Data successfully saved to raw_data.xlsx
+2025-05-04 17:23:47 - __main__ - [92mINFO[0m - [92msave_to_excel completed in 0.1787s[0m
+2025-05-04 17:23:47 - __main__ - [92mINFO[0m - Merging preprocessed data...
+2025-05-04 17:23:47 - genetic_rule_miner.data.manager - [92mINFO[0m - [92mEntering merge_data...[0m
+2025-05-04 17:23:47 - genetic_rule_miner.data.manager - [92mINFO[0m - [92mmerge_data completed in 0.0101s[0m
+2025-05-04 17:23:47 - __main__ - [92mINFO[0m - [92mEntering save_to_excel...[0m
+2025-05-04 17:23:47 - __main__ - [92mINFO[0m - Data successfully saved to processed_data.xlsx
+2025-05-04 17:23:47 - __main__ - [92mINFO[0m - [92msave_to_excel completed in 0.2513s[0m
+2025-05-04 17:23:47 - __main__ - [92mINFO[0m - Initializing genetic algorithm...
+2025-05-04 17:23:47 - genetic_rule_miner.data.preprocessing - [92mINFO[0m - [92mEntering preprocess_data...[0m
+2025-05-04 17:23:47 - genetic_rule_miner.data.preprocessing - [92mINFO[0m - [92mpreprocess_data completed in 0.0426s[0m
+2025-05-04 17:23:47 - __main__ - [92mINFO[0m - [92mEntering save_to_excel...[0m
+2025-05-04 17:23:47 - __main__ - [92mINFO[0m - Data successfully saved to datos_limpios.xlsx
+2025-05-04 17:23:47 - __main__ - [92mINFO[0m - [92msave_to_excel completed in 0.2491s[0m
+2025-05-04 17:23:48 - __main__ - [92mINFO[0m - Starting evolution process...
+2025-05-04 17:23:48 - genetic_rule_miner.models.genetic - [92mINFO[0m - Generation 0: 250 unique rules
+2025-05-04 17:23:48 - genetic_rule_miner.models.genetic - [92mINFO[0m - Generation 0: Best Fitness=0.0000, Support=0.0000, Confidence=0.0000, Rule: IF episodes_watched less than 4094.00 AND days_watched greater than 78.00 AND rewatched less than 0.00 AND watching less than 4.10 AND duration greater than 24.00 AND plan_to_watch less than 29.00 THEN rating = high
+2025-05-04 17:23:48 - genetic_rule_miner.models.genetic - [92mINFO[0m - Generation 1: 1 unique rules
+2025-05-04 17:23:48 - __main__ - [91mERROR[0m - Pipeline failed: Cannot take a larger sample than population when replace is False
+Traceback (most recent call last):
+  File "/home/user/UNIVERSIDAD/TFG/anime_dataset_generator/project/genetic_rule_miner/main.py", line 81, in main
+    results = miner.evolve()
+              ^^^^^^^^^^^^^^
+  File "/home/user/UNIVERSIDAD/TFG/anime_dataset_generator/project/genetic_rule_miner/models/genetic.py", line 409, in evolve
+    parents = self._select_parents()
+              ^^^^^^^^^^^^^^^^^^^^^^
+  File "/home/user/UNIVERSIDAD/TFG/anime_dataset_generator/project/genetic_rule_miner/models/genetic.py", line 342, in _select_parents
+    tournament = self.rng.choice(
+                 ^^^^^^^^^^^^^^^^
+  File "numpy/random/_generator.pyx", line 922, in numpy.random._generator.Generator.choice
+ValueError: Cannot take a larger sample than population when replace is False
+2025-05-04 17:23:48 - genetic_rule_miner.data.database - [92mINFO[0m - SQLAlchemy engine closed
+2025-05-04 17:27:17 - __main__ - [92mINFO[0m - Starting rule mining pipeline
+2025-05-04 17:27:17 - genetic_rule_miner.data.database - [92mINFO[0m - SQLAlchemy engine initialized
+2025-05-04 17:27:17 - __main__ - [92mINFO[0m - Loading and preprocessing data...
+2025-05-04 17:27:17 - genetic_rule_miner.data.manager - [92mINFO[0m - [92mEntering load_and_preprocess_data...[0m
+2025-05-04 17:27:17 - genetic_rule_miner.data.preprocessing - [92mINFO[0m - [92mEntering preprocess_data...[0m
+2025-05-04 17:27:17 - genetic_rule_miner.data.preprocessing - [92mINFO[0m - [92mpreprocess_data completed in 0.0149s[0m
+2025-05-04 17:27:17 - genetic_rule_miner.data.preprocessing - [92mINFO[0m - [92mEntering preprocess_data...[0m
+2025-05-04 17:27:17 - genetic_rule_miner.data.preprocessing - [92mINFO[0m - [92mpreprocess_data completed in 0.0724s[0m
+2025-05-04 17:27:17 - genetic_rule_miner.data.preprocessing - [92mINFO[0m - [92mEntering preprocess_data...[0m
+2025-05-04 17:27:17 - genetic_rule_miner.data.preprocessing - [92mINFO[0m - [92mpreprocess_data completed in 0.0042s[0m
+2025-05-04 17:27:17 - genetic_rule_miner.data.manager - [92mINFO[0m - [92mload_and_preprocess_data completed in 0.2141s[0m
+2025-05-04 17:27:17 - __main__ - [92mINFO[0m - [92mEntering save_to_excel...[0m
+2025-05-04 17:27:18 - __main__ - [92mINFO[0m - Data successfully saved to raw_data.xlsx
+2025-05-04 17:27:18 - __main__ - [92mINFO[0m - [92msave_to_excel completed in 0.6217s[0m
+2025-05-04 17:27:18 - __main__ - [92mINFO[0m - Merging preprocessed data...
+2025-05-04 17:27:18 - genetic_rule_miner.data.manager - [92mINFO[0m - [92mEntering merge_data...[0m
+2025-05-04 17:27:18 - genetic_rule_miner.data.manager - [92mINFO[0m - [92mmerge_data completed in 0.0225s[0m
+2025-05-04 17:27:18 - __main__ - [92mINFO[0m - [92mEntering save_to_excel...[0m
+2025-05-04 17:27:19 - __main__ - [92mINFO[0m - Data successfully saved to processed_data.xlsx
+2025-05-04 17:27:19 - __main__ - [92mINFO[0m - [92msave_to_excel completed in 0.8151s[0m
+2025-05-04 17:27:19 - __main__ - [92mINFO[0m - Initializing genetic algorithm...
+2025-05-04 17:27:19 - genetic_rule_miner.data.preprocessing - [92mINFO[0m - [92mEntering preprocess_data...[0m
+2025-05-04 17:27:19 - genetic_rule_miner.data.preprocessing - [92mINFO[0m - [92mpreprocess_data completed in 0.2634s[0m
+2025-05-04 17:27:19 - __main__ - [92mINFO[0m - [92mEntering save_to_excel...[0m
+2025-05-04 17:27:20 - __main__ - [92mINFO[0m - Data successfully saved to datos_limpios.xlsx
+2025-05-04 17:27:20 - __main__ - [92mINFO[0m - [92msave_to_excel completed in 1.1008s[0m
+2025-05-04 17:27:21 - __main__ - [92mINFO[0m - Starting evolution process...
+2025-05-04 17:27:22 - genetic_rule_miner.models.genetic - [92mINFO[0m - Generation 0: 250 unique rules
+2025-05-04 17:27:23 - genetic_rule_miner.models.genetic - [92mINFO[0m - Generation 0: Best Fitness=0.1988, Support=0.3180, Confidence=0.6250, Rule: IF episodes_watched less than 8481.00 AND total_entries less than 336.00 AND favorites greater than 2983.00 AND days_watched less than 142.30 AND members greater than 189276.00 THEN rating = high
+2025-05-04 17:27:23 - genetic_rule_miner.models.genetic - [92mINFO[0m - Generation 1: 249 unique rules
+2025-05-04 17:27:24 - genetic_rule_miner.models.genetic - [92mINFO[0m - Generation 1: Best Fitness=0.1988, Support=0.3180, Confidence=0.6250, Rule: IF episodes_watched less than 8481.00 AND total_entries less than 336.00 AND favorites greater than 2983.00 AND days_watched less than 142.30 AND members greater than 189276.00 THEN rating = high
+2025-05-04 17:27:24 - genetic_rule_miner.models.genetic - [92mINFO[0m - Generation 2: 250 unique rules
+2025-05-04 17:27:24 - genetic_rule_miner.models.genetic - [92mINFO[0m - Generation 2: Best Fitness=0.1988, Support=0.3180, Confidence=0.6250, Rule: IF episodes_watched less than 8481.00 AND total_entries less than 336.00 AND favorites greater than 2983.00 AND days_watched less than 142.30 AND members greater than 189276.00 THEN rating = high
+2025-05-04 17:27:24 - genetic_rule_miner.models.genetic - [92mINFO[0m - Generation 3: 249 unique rules
+2025-05-04 17:27:25 - genetic_rule_miner.models.genetic - [92mINFO[0m - Generation 3: Best Fitness=0.1988, Support=0.3180, Confidence=0.6250, Rule: IF episodes_watched less than 8481.00 AND total_entries less than 336.00 AND favorites greater than 2983.00 AND days_watched less than 142.30 AND members greater than 189276.00 THEN rating = high
+2025-05-04 17:27:25 - genetic_rule_miner.models.genetic - [92mINFO[0m - Generation 4: 247 unique rules
+2025-05-04 17:27:25 - genetic_rule_miner.models.genetic - [92mINFO[0m - Generation 4: Best Fitness=0.2355, Support=0.3700, Confidence=0.6364, Rule: IF episodes_watched greater than 2120.50 AND completed greater than 82.50 AND score greater than 7.39 AND favorites greater than 1297.00 AND members greater than 188790.00 THEN rating = high
+2025-05-04 17:27:25 - genetic_rule_miner.models.genetic - [92mINFO[0m - Generation 5: 247 unique rules
+2025-05-04 17:27:26 - genetic_rule_miner.models.genetic - [92mINFO[0m - Generation 5: Best Fitness=0.2355, Support=0.3700, Confidence=0.6364, Rule: IF episodes_watched greater than 2120.50 AND completed greater than 82.50 AND score greater than 7.39 AND favorites greater than 1297.00 AND members greater than 188790.00 THEN rating = high
+2025-05-04 17:27:26 - genetic_rule_miner.models.genetic - [92mINFO[0m - Generation 6: 247 unique rules
+2025-05-04 17:27:27 - genetic_rule_miner.models.genetic - [92mINFO[0m - Generation 6: Best Fitness=0.2599, Support=0.4281, Confidence=0.6071, Rule: IF episodes_watched less than 8481.00 AND total_entries less than 336.00 AND status equals 'Finished Airing' AND duration_class equals 'standard' AND completed less than 156.00 THEN rating = high
+2025-05-04 17:27:27 - genetic_rule_miner.models.genetic - [92mINFO[0m - Generation 7: 244 unique rules
+2025-05-04 17:27:27 - genetic_rule_miner.models.genetic - [92mINFO[0m - Generation 7: Best Fitness=0.3333, Support=0.5413, Confidence=0.6158, Rule: IF days_watched less than 142.30 AND plan_to_watch less than 29.00 AND status equals 'Finished Airing' AND completed less than 233.00 AND episodes_watched less than 8481.00 THEN rating = high
+2025-05-04 17:27:27 - genetic_rule_miner.models.genetic - [92mINFO[0m - Generation 8: 237 unique rules
+2025-05-04 17:27:27 - genetic_rule_miner.models.genetic - [92mINFO[0m - Generation 8: Best Fitness=0.3333, Support=0.5413, Confidence=0.6158, Rule: IF episodes_watched less than 8481.00 AND total_entries less than 336.00 AND plan_to_watch less than 29.00 AND status equals 'Finished Airing' AND completed less than 233.00 THEN rating = high
+2025-05-04 17:27:27 - genetic_rule_miner.models.genetic - [92mINFO[0m - Generation 9: 239 unique rules
+2025-05-04 17:27:28 - genetic_rule_miner.models.genetic - [92mINFO[0m - Generation 9: Best Fitness=0.3884, Support=0.6514, Confidence=0.5962, Rule: IF episodes_watched less than 8481.00 AND total_entries less than 392.00 AND status equals 'Finished Airing' AND days_watched less than 142.30 AND completed less than 233.00 THEN rating = high
+2025-05-04 17:27:28 - genetic_rule_miner.models.genetic - [92mINFO[0m - Generation 10: 221 unique rules
+2025-05-04 17:27:28 - genetic_rule_miner.models.genetic - [92mINFO[0m - Generation 10: Best Fitness=0.3884, Support=0.6514, Confidence=0.5962, Rule: IF episodes_watched less than 8481.00 AND total_entries less than 392.00 AND status equals 'Finished Airing' AND days_watched less than 142.30 AND completed less than 233.00 THEN rating = high
+2025-05-04 17:27:28 - genetic_rule_miner.models.genetic - [92mINFO[0m - Generation 11: 217 unique rules
+2025-05-04 17:27:29 - genetic_rule_miner.models.genetic - [92mINFO[0m - Generation 11: Best Fitness=0.3884, Support=0.6514, Confidence=0.5962, Rule: IF episodes_watched less than 8481.00 AND total_entries less than 392.00 AND status equals 'Finished Airing' AND days_watched less than 142.30 AND completed less than 233.00 THEN rating = high
+2025-05-04 17:27:29 - genetic_rule_miner.models.genetic - [92mINFO[0m - Generation 12: 212 unique rules
+2025-05-04 17:27:30 - genetic_rule_miner.models.genetic - [92mINFO[0m - Generation 12: Best Fitness=0.3884, Support=0.6514, Confidence=0.5962, Rule: IF episodes_watched less than 8481.00 AND total_entries less than 359.52 AND status equals 'Finished Airing' AND days_watched less than 142.30 AND completed less than 233.00 THEN rating = high
+2025-05-04 17:27:30 - genetic_rule_miner.models.genetic - [92mINFO[0m - Generation 13: 183 unique rules
+2025-05-04 17:27:30 - genetic_rule_miner.models.genetic - [92mINFO[0m - Generation 13: Best Fitness=0.3884, Support=0.6514, Confidence=0.5962, Rule: IF episodes_watched less than 8481.00 AND total_entries less than 392.00 AND status equals 'Finished Airing' AND days_watched less than 142.30 AND completed less than 233.00 THEN rating = high
+2025-05-04 17:27:30 - genetic_rule_miner.models.genetic - [92mINFO[0m - Generation 14: 180 unique rules
+2025-05-04 17:27:31 - genetic_rule_miner.models.genetic - [92mINFO[0m - Generation 14: Best Fitness=0.3884, Support=0.6514, Confidence=0.5962, Rule: IF episodes_watched less than 8481.00 AND total_entries less than 392.00 AND status equals 'Finished Airing' AND days_watched less than 142.30 AND completed less than 233.00 THEN rating = high
+2025-05-04 17:27:31 - genetic_rule_miner.models.genetic - [92mINFO[0m - Generation 15: 159 unique rules
+2025-05-04 17:27:31 - genetic_rule_miner.models.genetic - [92mINFO[0m - Generation 15: Best Fitness=0.3884, Support=0.6514, Confidence=0.5962, Rule: IF episodes_watched less than 8481.00 AND total_entries less than 392.00 AND status equals 'Finished Airing' AND days_watched less than 142.30 AND completed less than 233.00 THEN rating = high
+2025-05-04 17:27:31 - genetic_rule_miner.models.genetic - [92mINFO[0m - Generation 16: 140 unique rules
+2025-05-04 17:27:32 - genetic_rule_miner.models.genetic - [92mINFO[0m - Generation 16: Best Fitness=0.3884, Support=0.6514, Confidence=0.5962, Rule: IF episodes_watched less than 8481.00 AND total_entries less than 359.52 AND status equals 'Finished Airing' AND days_watched less than 142.30 AND completed less than 233.00 THEN rating = high
+2025-05-04 17:27:32 - genetic_rule_miner.models.genetic - [92mINFO[0m - Generation 17: 113 unique rules
+2025-05-04 17:27:32 - genetic_rule_miner.models.genetic - [92mINFO[0m - Generation 17: Best Fitness=0.3884, Support=0.6514, Confidence=0.5962, Rule: IF episodes_watched less than 8481.00 AND total_entries less than 359.52 AND status equals 'Finished Airing' AND days_watched less than 142.30 AND completed less than 233.00 THEN rating = high
+2025-05-04 17:27:32 - genetic_rule_miner.models.genetic - [92mINFO[0m - Generation 18: 119 unique rules
+2025-05-04 17:27:32 - genetic_rule_miner.models.genetic - [92mINFO[0m - Generation 18: Best Fitness=0.3884, Support=0.6514, Confidence=0.5962, Rule: IF episodes_watched less than 8481.00 AND total_entries less than 359.52 AND status equals 'Finished Airing' AND days_watched less than 142.30 AND completed less than 233.00 THEN rating = high
+2025-05-04 17:27:32 - genetic_rule_miner.models.genetic - [92mINFO[0m - Generation 19: 108 unique rules
+2025-05-04 17:27:32 - genetic_rule_miner.models.genetic - [92mINFO[0m - Generation 19: Best Fitness=0.3884, Support=0.6514, Confidence=0.5962, Rule: IF episodes_watched less than 8481.00 AND total_entries less than 359.52 AND status equals 'Finished Airing' AND days_watched less than 142.30 AND completed less than 233.00 THEN rating = high
+2025-05-04 17:27:33 - genetic_rule_miner.models.genetic - [92mINFO[0m - Generation 20: 113 unique rules
+2025-05-04 17:27:33 - genetic_rule_miner.models.genetic - [92mINFO[0m - Generation 20: Best Fitness=0.3884, Support=0.6514, Confidence=0.5962, Rule: IF episodes_watched less than 8481.00 AND total_entries less than 359.52 AND status equals 'Finished Airing' AND days_watched less than 142.30 AND completed less than 233.00 THEN rating = high
+2025-05-04 17:27:33 - genetic_rule_miner.models.genetic - [92mINFO[0m - Generation 21: 101 unique rules
+2025-05-04 17:27:33 - genetic_rule_miner.models.genetic - [92mINFO[0m - Generation 21: Best Fitness=0.3884, Support=0.6514, Confidence=0.5962, Rule: IF episodes_watched less than 8481.00 AND total_entries less than 392.00 AND status equals 'Finished Airing' AND days_watched less than 142.30 AND completed less than 233.00 THEN rating = high
+2025-05-04 17:27:33 - genetic_rule_miner.models.genetic - [92mINFO[0m - Generation 22: 97 unique rules
+2025-05-04 17:27:33 - genetic_rule_miner.models.genetic - [92mINFO[0m - Generation 22: Best Fitness=0.3884, Support=0.6514, Confidence=0.5962, Rule: IF episodes_watched less than 8481.00 AND total_entries less than 392.00 AND status equals 'Finished Airing' AND days_watched less than 142.30 AND completed less than 233.00 THEN rating = high
+2025-05-04 17:27:33 - genetic_rule_miner.models.genetic - [92mINFO[0m - Generation 23: 106 unique rules
+2025-05-04 17:27:34 - genetic_rule_miner.models.genetic - [92mINFO[0m - Generation 23: Best Fitness=0.3884, Support=0.6514, Confidence=0.5962, Rule: IF episodes_watched less than 8481.00 AND total_entries less than 392.00 AND status equals 'Finished Airing' AND days_watched less than 142.30 AND completed less than 233.00 THEN rating = high
+2025-05-04 17:27:34 - genetic_rule_miner.models.genetic - [92mINFO[0m - Generation 24: 105 unique rules
+2025-05-04 17:27:34 - genetic_rule_miner.models.genetic - [92mINFO[0m - Generation 24: Best Fitness=0.3884, Support=0.6514, Confidence=0.5962, Rule: IF episodes_watched less than 8481.00 AND total_entries less than 392.00 AND status equals 'Finished Airing' AND days_watched less than 142.30 AND completed less than 233.00 THEN rating = high
+2025-05-04 17:27:34 - genetic_rule_miner.models.genetic - [92mINFO[0m - Generation 25: 99 unique rules
+2025-05-04 17:27:34 - genetic_rule_miner.models.genetic - [92mINFO[0m - Generation 25: Best Fitness=0.3884, Support=0.6514, Confidence=0.5962, Rule: IF episodes_watched less than 8481.00 AND total_entries less than 359.52 AND status equals 'Finished Airing' AND days_watched less than 142.30 AND completed less than 233.00 THEN rating = high
+2025-05-04 17:27:34 - genetic_rule_miner.models.genetic - [92mINFO[0m - Generation 26: 115 unique rules
+2025-05-04 17:27:34 - genetic_rule_miner.models.genetic - [92mINFO[0m - Generation 26: Best Fitness=0.3884, Support=0.6514, Confidence=0.5962, Rule: IF episodes_watched less than 8481.00 AND total_entries less than 359.52 AND status equals 'Finished Airing' AND days_watched less than 142.30 AND completed less than 233.00 THEN rating = high
+2025-05-04 17:27:34 - genetic_rule_miner.models.genetic - [92mINFO[0m - Generation 27: 111 unique rules
+2025-05-04 17:27:34 - genetic_rule_miner.models.genetic - [92mINFO[0m - Generation 27: Best Fitness=0.3884, Support=0.6514, Confidence=0.5962, Rule: IF episodes_watched less than 8481.00 AND total_entries less than 392.00 AND status equals 'Finished Airing' AND days_watched less than 142.30 AND completed less than 233.00 THEN rating = high
+2025-05-04 17:27:34 - genetic_rule_miner.models.genetic - [92mINFO[0m - Generation 28: 103 unique rules
+2025-05-04 17:27:35 - genetic_rule_miner.models.genetic - [92mINFO[0m - Generation 28: Best Fitness=0.3884, Support=0.6514, Confidence=0.5962, Rule: IF episodes_watched less than 8481.00 AND total_entries less than 392.00 AND status equals 'Finished Airing' AND days_watched less than 142.30 AND completed less than 233.00 THEN rating = high
+2025-05-04 17:27:35 - genetic_rule_miner.models.genetic - [92mINFO[0m - Generation 29: 109 unique rules
+2025-05-04 17:27:35 - genetic_rule_miner.models.genetic - [92mINFO[0m - Generation 29: Best Fitness=0.3884, Support=0.6514, Confidence=0.5962, Rule: IF episodes_watched less than 8481.00 AND total_entries less than 392.00 AND status equals 'Finished Airing' AND days_watched less than 142.30 AND completed less than 233.00 THEN rating = high
+2025-05-04 17:27:35 - genetic_rule_miner.models.genetic - [92mINFO[0m - Generation 30: 106 unique rules
+2025-05-04 17:27:35 - genetic_rule_miner.models.genetic - [92mINFO[0m - Generation 30: Best Fitness=0.3884, Support=0.6514, Confidence=0.5962, Rule: IF episodes_watched less than 8481.00 AND total_entries less than 359.52 AND status equals 'Finished Airing' AND days_watched less than 142.30 AND completed less than 233.00 THEN rating = high
+2025-05-04 17:27:35 - genetic_rule_miner.models.genetic - [92mINFO[0m - Early stopping: no improvement in 20 generations.
+2025-05-04 17:27:35 - __main__ - [92mINFO[0m - 
+Best Rule Found:
+2025-05-04 17:27:35 - __main__ - [92mINFO[0m - IF episodes_watched less than 8481.00 AND total_entries less than 359.52 AND status equals 'Finished Airing' AND days_watched less than 142.30 AND completed less than 233.00 THEN rating = high
+2025-05-04 17:27:35 - __main__ - [92mINFO[0m - 
+Fitness: 0.3884
+2025-05-04 17:27:35 - __main__ - [92mINFO[0m - Support: 0.6513761467889908
+2025-05-04 17:27:35 - __main__ - [92mINFO[0m - Confidence: 0.596244131455399
+2025-05-04 17:27:35 - genetic_rule_miner.data.database - [92mINFO[0m - SQLAlchemy engine closed
