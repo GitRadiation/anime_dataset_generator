@@ -68,25 +68,41 @@ def main() -> None:
         # Genetic algorithm execution
         logger.info("Initializing genetic algorithm...")
         processed_df = preprocess_data(clean_string_columns(merged_data))
-        save_to_excel({"processed_data": processed_df}, "datos_limpios.xlsx")
+        # Filter to only 'high' ratings and drop the 'rating' column
+        logger.info("Filtering data to include only 'high' ratings...")
+        high_rating_data = processed_df[
+            processed_df["rating"] == "high"
+        ].copy()
+        high_rating_data = high_rating_data.drop(columns=["rating"])
+        save_to_excel(
+            {"high_rating_data": high_rating_data}, "high_rating_data.xlsx"
+        )
 
         miner = GeneticRuleMiner(
             df=processed_df,
-            target="rating",
+            target="anime_id",
             user_cols=user_details.columns.tolist(),
-            pop_size=250,
-            generations=100,
+            pop_size=1000,
+            generations=10000,
         )
-        logger.info("Starting evolution process...")
-        results = miner.evolve()
+        logger.info("Starting evolution process..."),
+        miner.evolve()
 
         # Output results
-        best_rule = results["best_rule"]
-        logger.info("\nBest Rule Found:")
-        logger.info(miner.format_rule(best_rule))
-        logger.info(f"\nFitness: {results['best_fitness']:.4f}")
-        logger.info(f"Support: {results['best_support']}")
-        logger.info(f"Confidence: {results['best_confidence']}")
+        high_fitness_rules = miner.get_high_fitness_rules(threshold=0.9)
+        rules, ids = high_fitness_rules
+        if high_fitness_rules:
+            logger.info("\nRules with Fitness >= 0.9:")
+            for idx, rule in enumerate(rules, start=1):
+                formatted_rule = miner.format_rule(rule)
+                fitness = miner.fitness(rule)
+                logger.info(
+                    f"Rule {idx}: {formatted_rule} (Fitness: {fitness:.4f})"
+                )
+        else:
+            logger.info("No rules with Fitness >= 0.9 were found.")
+
+        print(ids)
 
     except Exception as e:
         logger.error("Pipeline failed: %s", str(e), exc_info=True)

@@ -92,5 +92,5 @@ class DataManager:
 
         # Cleanup
         return result.drop(
-            columns=["user_id", "mal_id", "anime_id"], errors="ignore"
+            columns=["user_id", "mal_id"], errors="ignore"
         ).reset_index(drop=True)
