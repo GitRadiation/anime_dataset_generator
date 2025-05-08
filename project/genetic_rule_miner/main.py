@@ -3,6 +3,7 @@
 import pandas as pd
 
 from genetic_rule_miner.config import DBConfig
+from genetic_rule_miner.data.database import DatabaseManager
 from genetic_rule_miner.data.manager import DataManager
 from genetic_rule_miner.data.preprocessing import (
     clean_string_columns,
@@ -102,7 +103,11 @@ def main() -> None:
         else:
             logger.info("No rules with Fitness >= 0.9 were found.")
 
-        print(ids)
+        # Configuración de la base de datos
+        db_manager = DatabaseManager(config=db_config)
+
+        # Guardar las reglas en la tabla "rules"
+        db_manager.save_rules(rules)
 
     except Exception as e:
         logger.error("Pipeline failed: %s", str(e), exc_info=True)

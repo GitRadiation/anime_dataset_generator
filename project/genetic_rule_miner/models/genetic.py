@@ -96,10 +96,13 @@ class GeneticRuleMiner:
         self.population = self._init_population()
 
     def _deduplicate_conditions(self, conditions):
-        """Ensure conditions are unique within a rule."""
-        return list(
-            {(cond[0], cond[1], cond[2]): cond for cond in conditions}.values()
-        )
+        """Ensure conditions are unique within a rule, keeping the last occurrence."""
+        seen = {}
+        for cond in reversed(conditions):
+            col = cond[0]
+            if col != self.target:
+                seen[col] = cond
+        return list(seen.values())
 
     @lru_cache(maxsize=None)
     def _get_numeric_cols(self) -> Sequence[str]:
@@ -146,6 +149,7 @@ class GeneticRuleMiner:
             for col in self.df.columns
             if col not in self.user_cols and col != self.target
         ]
+
         if other_cols:
             other_condition = self._create_condition(
                 self.rng.choice(other_cols)
@@ -186,13 +190,20 @@ class GeneticRuleMiner:
 
     def _add_condition(self, rule, existing_cols, column_pool):
         """Add a new condition to the rule."""
-        available_cols = [c for c in column_pool if c not in existing_cols]
+        available_cols = [
+            c
+            for c in column_pool
+            if c not in existing_cols and c != self.target
+        ]
+
         if not available_cols:
             return None
         col = self.rng.choice(available_cols)
         condition = self._create_condition(col)
         rule["conditions"].append(condition)
         existing_cols.add(col)
+        rule["conditions"] = self._deduplicate_conditions(rule["conditions"])
+
         return condition
 
     def _complete_conditions(self, rule: dict, max_conditions: int) -> None:
@@ -204,6 +215,7 @@ class GeneticRuleMiner:
             condition = self._add_condition(rule, existing_cols, all_cols)
             if not condition:
                 break
+        rule["conditions"] = self._deduplicate_conditions(rule["conditions"])
 
     def fitness(self, rule: dict) -> float:
         """Calculate rule fitness (support * confidence)."""
@@ -308,11 +320,13 @@ class GeneticRuleMiner:
                 # Recreate the rule instead of deleting it
                 new_rule = self._create_rule()
             # Nueva mutación del target
-            if self.rng.random() < 0.1:  # 10% de probabilidad
+            elif self.rng.random() < 0.1:  # 10% de probabilidad
                 new_target = self.rng.choice(self.targets)
                 new_rule["target"] = (self.target, new_target)
 
-            return new_rule
+            new_rule["conditions"] = self._deduplicate_conditions(
+                new_rule["conditions"]
+            )
         return new_rule
 
     def crossover(self, parent1: dict, parent2: dict) -> tuple[dict, dict]:
@@ -463,18 +477,32 @@ class GeneticRuleMiner:
             # Evaluar la población para obtener los puntajes de aptitud (fitness)
             fitness_scores = self._evaluate_population()
 
-            # Reiniciar reglas con fitness distinto de 0
-            self._reset_population()
-
             # Contar cuántas reglas tienen un fitness superior a 0
             num_high_fitness = np.sum(fitness_scores > 0)
             logger.info(
                 f"Generation {generation}: {num_high_fitness} rules with fitness > 0"
             )
-            num_high_fitness = np.sum(fitness_scores > 0.9)
-            logger.info(
-                f"Generation {generation}: {num_high_fitness} rules with fitness > 0.9"
+
+            # Contar cuantos ids unicos con fitness superior a 0.9
+            high_fitness_rules, ids_set = self.get_high_fitness_rules(
+                threshold=0.9
             )
+            num_high_fitness = len(high_fitness_rules)
+            num_unique_ids = len(ids_set)
+            logger.info(
+                f"Generation {generation}: {num_high_fitness} rules with fitness > 0.9, "
+                f"{num_unique_ids} unique target IDs with fitness > 0.9"
+            )
+
+            # Verificar si el 90% de las reglas superan el umbral de fitness
+            threshold = 0.9
+            num_above_threshold = np.sum(fitness_scores >= threshold)
+            if num_above_threshold >= 0.05 * self.pop_size:
+                logger.info(
+                    f"Early stopping: {num_above_threshold} rules ({num_above_threshold / self.pop_size:.2%}) "
+                    f"have fitness >= {threshold} in generation {generation}."
+                )
+                break
 
             # Selección de padres para el siguiente ciclo de evolución
             parents = self._select_parents()
@@ -484,19 +512,17 @@ class GeneticRuleMiner:
             if generation > 0:
                 # Top-5% élite
                 num_elite = max(1, int(self.pop_size * 0.05))
-                # Se ordenan los índices de los individuos según sus fitness scores en orden ascendente
-                # [::-1]: invierte ese orden para obtenerlos de mayor a menor
                 elite_indices = np.argsort(fitness_scores)[::-1][:num_elite]
                 elites = [self.population[i] for i in elite_indices]
                 new_population[:num_elite] = elites
+            # Reiniciar reglas con fitness distinto de 0
+            self._reset_population()
 
             # Actualizar la población
             self.population = new_population
 
             # Actualizar el seguimiento de las estadísticas
             self._update_tracking(generation)
-
-        return self._compile_results()
 
     def get_high_fitness_rules(self, threshold: float = 0.9) -> list[dict]:
         """Retrieve all rules with fitness >= threshold."""

@@ -2,6 +2,7 @@
 DROP TABLE IF EXISTS user_score;
 DROP TABLE IF EXISTS user_details;
 DROP TABLE IF EXISTS anime_dataset;
+DROP TABLE IF EXISTS rules;
 
 CREATE TABLE anime_dataset (
     anime_id INTEGER PRIMARY KEY,
@@ -49,4 +50,11 @@ CREATE TABLE user_score (
     PRIMARY KEY (user_id, anime_id),  -- Clave primaria compuesta
     FOREIGN KEY (user_id) REFERENCES user_details(mal_id),
     FOREIGN KEY (anime_id) REFERENCES anime_dataset(anime_id)
+);
+
+CREATE TABLE rules (
+    rule_id UUID PRIMARY KEY,
+    conditions JSONB NOT NULL,
+    target_column TEXT NOT NULL,
+    target_value TEXT NOT NULL
 );
