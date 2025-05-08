@@ -319,14 +319,14 @@ class GeneticRuleMiner:
             elif action == "remove" and len(new_rule["conditions"]) > 2:
                 # Recreate the rule instead of deleting it
                 new_rule = self._create_rule()
-            # Nueva mutación del target
-            elif self.rng.random() < 0.1:  # 10% de probabilidad
-                new_target = self.rng.choice(self.targets)
-                new_rule["target"] = (self.target, new_target)
+        # Nueva mutación del target
+        elif self.rng.random() < 0.1:  # 10% de probabilidad
+            new_target = self.rng.choice(self.targets)
+            new_rule["target"] = (self.target, new_target)
 
-            new_rule["conditions"] = self._deduplicate_conditions(
-                new_rule["conditions"]
-            )
+        new_rule["conditions"] = self._deduplicate_conditions(
+            new_rule["conditions"]
+        )
         return new_rule
 
     def crossover(self, parent1: dict, parent2: dict) -> tuple[dict, dict]:
@@ -497,7 +497,7 @@ class GeneticRuleMiner:
             # Verificar si el 90% de las reglas superan el umbral de fitness
             threshold = 0.9
             num_above_threshold = np.sum(fitness_scores >= threshold)
-            if num_above_threshold >= 0.05 * self.pop_size:
+            if num_above_threshold >= 0.95 * self.pop_size:
                 logger.info(
                     f"Early stopping: {num_above_threshold} rules ({num_above_threshold / self.pop_size:.2%}) "
                     f"have fitness >= {threshold} in generation {generation}."
