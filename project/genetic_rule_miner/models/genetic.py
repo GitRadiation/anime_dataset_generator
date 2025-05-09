@@ -536,7 +536,10 @@ class GeneticRuleMiner:
         # Identificar reglas duplicadas
         seen_rules = set()
         for i, rule in enumerate(self.population):
-            rule_key = tuple(sorted(rule["conditions"])) + (rule["target"],)
+            # Crear una clave basada en las columnas y operadores, ignorando los valores
+            rule_key = tuple(
+                sorted((cond[0], cond[1]) for cond in rule["conditions"])
+            ) + (rule["target"],)
             if self.fitness(rule) == 0 or rule_key in seen_rules:
                 # Reinicializar reglas duplicadas o con fitness 0
                 self.population[i] = self._reset_rule()
@@ -568,7 +571,7 @@ class GeneticRuleMiner:
             num_above_threshold = np.sum(fitness_scores >= threshold)
             if num_above_threshold >= 0.63 * self.pop_size and len(
                 ids_set
-            ) >= 0.7 * len(self.targets):
+            ) >= 0.5 * len(self.targets):
                 logger.info(
                     f"Early stopping: {num_above_threshold} rules ({num_above_threshold / self.pop_size:.2%}) "
                     f"have fitness >= {threshold} in generation {generation}, "
@@ -576,7 +579,7 @@ class GeneticRuleMiner:
                 )
                 break
 
-            # Verificar estabilidad de reglas con fitness > 0.9
+            """# Verificar estabilidad de reglas con fitness > 0.9
             if num_high_fitness >= 100:
                 if reference_high_fitness is None:
                     reference_high_fitness = num_high_fitness
@@ -602,7 +605,7 @@ class GeneticRuleMiner:
                         reference_high_fitness = num_high_fitness
                         stable_high_fitness_start = generation
                         stable_generations = 1
-
+"""
             # Proceso de evolución continúa
             elite_rules_by_target = self.get_elite_rules_by_target(
                 threshold=0.9
