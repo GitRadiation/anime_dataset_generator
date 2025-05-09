@@ -3,7 +3,7 @@
 import copy
 import itertools
 from collections.abc import Mapping, MutableSequence, Sequence
-from functools import lru_cache, partial
+from functools import partial, wraps
 from typing import Optional, Tuple, Union
 
 import numpy as np
@@ -18,19 +18,31 @@ logger = LogManager.get_logger(__name__)
 Condition = Tuple[str, str, Union[float, str]]
 
 
+# El decorador para cachear las condiciones
+def make_hashable(obj):
+    """Recursivamente convierte listas/diccionarios/sets a tuplas para el hashing."""
+    if isinstance(obj, (tuple, list)):
+        return tuple(make_hashable(e) for e in obj)
+    elif isinstance(obj, dict):
+        return tuple(sorted((k, make_hashable(v)) for k, v in obj.items()))
+    elif isinstance(obj, set):
+        return tuple(sorted(make_hashable(e) for e in obj))
+    return obj  # caso base (int, str, etc.)
+
+
 def cache_conditions(method):
     cache_name = f"_{method.__name__}_cache"
 
+    @wraps(method)
     def wrapper(self, conditions):
-        key = tuple(conditions)
-        if not hasattr(self, cache_name):
-            setattr(self, cache_name, {})
-        cache = getattr(self, cache_name)
-        if key in cache:
-            return cache[key]
-        result = method(self, conditions)
-        cache[key] = result
-        return result
+        key = make_hashable(conditions)
+        cache = getattr(self, cache_name, None)
+        if cache is None:
+            cache = {}
+            setattr(self, cache_name, cache)
+        if key not in cache:
+            cache[key] = method(self, conditions)
+        return cache[key]
 
     return wrapper
 
@@ -104,7 +116,6 @@ class GeneticRuleMiner:
                 seen[col] = cond
         return list(seen.values())
 
-    @lru_cache(maxsize=None)
     def _get_numeric_cols(self) -> Sequence[str]:
         return [
             col
@@ -112,7 +123,6 @@ class GeneticRuleMiner:
             if col != self.target
         ]
 
-    @lru_cache(maxsize=None)
     def _get_categorical_cols(self) -> Sequence[str]:
         return [
             col
@@ -228,18 +238,18 @@ class GeneticRuleMiner:
 
     @cache_conditions
     def _build_condition_mask(
-        self, conditions: Sequence[Condition]
+        self, conditions: Sequence[Tuple[str, str, Union[float, str]]]
     ) -> np.ndarray:
-        # Crea una máscara booleana para las condiciones
-        # de las filas que cumplen las condiciones
         # Inicializa la máscara como True para todas las filas
         mask = np.ones(len(self.df), dtype=bool)
+
         for condition in conditions:
             if condition in self._condition_cache:
                 condition_mask = self._condition_cache[condition]
             else:
                 col, op, value = condition
                 col_data = self.df[col].values
+
                 if op == "<":
                     condition_mask = col_data < value
                 elif op == ">":
@@ -249,8 +259,24 @@ class GeneticRuleMiner:
                         condition_mask = self.df[col] == float(value)
                     else:
                         condition_mask = self.df[col].astype(str) == str(value)
+                elif op == "!=":
+                    if pd.api.types.is_numeric_dtype(self.df[col]):
+                        condition_mask = self.df[col] != float(value)
+                    else:
+                        condition_mask = self.df[col].astype(str) != str(value)
+                elif op == ">=":
+                    condition_mask = col_data >= value
+                elif op == "<=":
+                    condition_mask = col_data <= value
+                else:
+                    raise ValueError(f"Unsupported operator: {op}")
+
+                # Cachea el resultado de la condición
                 self._condition_cache[condition] = condition_mask
+
+            # Combina la nueva máscara con las anteriores (AND)
             mask &= condition_mask
+
         return mask
 
     def _vectorized_support(self, conditions: Sequence[Condition]) -> float:
@@ -327,6 +353,9 @@ class GeneticRuleMiner:
         new_rule["conditions"] = self._deduplicate_conditions(
             new_rule["conditions"]
         )
+
+        new_rule = self._ensure_min_user_and_other_conditions(new_rule)
+
         return new_rule
 
     def crossover(self, parent1: dict, parent2: dict) -> tuple[dict, dict]:
@@ -367,19 +396,55 @@ class GeneticRuleMiner:
         # y no se pueden evaluar
         self._complete_conditions(child1, max_conditions=10)
         self._complete_conditions(child2, max_conditions=10)
+        child1 = self._ensure_min_user_and_other_conditions(child1)
+        child2 = self._ensure_min_user_and_other_conditions(child2)
+
         return child1, child2
+
+    def _ensure_min_user_and_other_conditions(self, rule: dict) -> dict:
+        user_present = any(
+            cond[0] in self.user_cols for cond in rule["conditions"]
+        )
+        other_present = any(
+            cond[0] not in self.user_cols for cond in rule["conditions"]
+        )
+
+        if not user_present:
+            user_col = self.rng.choice(self.user_cols)
+            rule["conditions"].append(self._create_condition(user_col))
+
+        if not other_present:
+            other_cols = [
+                col
+                for col in self.df.columns
+                if col not in self.user_cols and col != self.target
+            ]
+            if other_cols:
+                other_col = self.rng.choice(other_cols)
+                rule["conditions"].append(self._create_condition(other_col))
+
+        rule["conditions"] = self._deduplicate_conditions(rule["conditions"])
+        return rule
 
     def _select_parents(self) -> Sequence[dict]:
         selected = []
         tournament_size = 3
+        loser_win_prob = 0.2  # ← Probabilidad de que NO gane el más apto
+
         for _ in range(self.pop_size):
-            # Escoge los padres aleatoriamente
-            # y selecciona el mejor de ellos
             tournament = self.rng.choice(
                 self.population, size=tournament_size, replace=False
             )
-            best = max(tournament, key=self.fitness)
-            selected.append(best)
+            tournament = sorted(tournament, key=self.fitness, reverse=True)
+
+            if self.rng.random() < loser_win_prob:
+                # Elige aleatoriamente uno que no sea el mejor
+                candidate = self.rng.choice(tournament[1:])
+            else:
+                candidate = tournament[0]
+
+            selected.append(candidate)
+
         return selected
 
     def _create_new_generation(
@@ -414,9 +479,16 @@ class GeneticRuleMiner:
         return new_population
 
     def _evaluate_population(self) -> np.ndarray:
-        return np.array([self.fitness(rule) for rule in self.population])
+        fitness_scores = []
+        for rule in self.population:
+            rule_key = tuple(sorted(rule["conditions"])) + (rule["target"],)
+            if rule_key not in self._fitness_cache:
+                self._fitness_cache[rule_key] = self._vectorized_confidence(
+                    rule
+                )
+            fitness_scores.append(self._fitness_cache[rule_key])
+        return np.array(fitness_scores)
 
-    @lru_cache(maxsize=None)
     def _get_best_individual(
         self, fitness_scores: Optional[tuple] = None
     ) -> dict:
@@ -474,15 +546,11 @@ class GeneticRuleMiner:
     def evolve(self) -> dict:
         """Evolves the population over a number of generations with forced diversity."""
         for generation in range(self.generations):
-            # Evaluar la población para obtener los puntajes de aptitud (fitness)
             fitness_scores = self._evaluate_population()
-
-            # Contar cuántas reglas tienen un fitness superior a 0
             num_high_fitness = np.sum(fitness_scores > 0)
             logger.info(
                 f"Generation {generation}: {num_high_fitness} rules with fitness > 0"
             )
-
             # Contar cuantos ids unicos con fitness superior a 0.9
             high_fitness_rules, ids_set = self.get_high_fitness_rules(
                 threshold=0.9
@@ -491,7 +559,7 @@ class GeneticRuleMiner:
             num_unique_ids = len(ids_set)
             logger.info(
                 f"Generation {generation}: {num_high_fitness} rules with fitness > 0.9, "
-                f"{num_unique_ids} unique target IDs with fitness > 0.9"
+                f"{num_unique_ids} unique target IDs with fitness > 0.9; {ids_set}"
             )
 
             # Verificar si el 90% de las reglas superan el umbral de fitness
@@ -503,26 +571,51 @@ class GeneticRuleMiner:
                     f"have fitness >= {threshold} in generation {generation}."
                 )
                 break
+            # → Extraer reglas élite (fitness ≥ 0.9)
+            # → Extraer todas las reglas élite agrupadas por target_id
+            elite_rules_by_target = self.get_elite_rules_by_target(
+                threshold=0.9
+            )
 
-            # Selección de padres para el siguiente ciclo de evolución
+            # → Seleccionar padres y generar nueva población
             parents = self._select_parents()
             new_population = self._create_new_generation(parents)
 
-            # Preservar los mejores individuos de la generación anterior (elitismo)
-            if generation > 0:
-                # Top-5% élite
-                num_elite = max(1, int(self.pop_size * 0.05))
-                elite_indices = np.argsort(fitness_scores)[::-1][:num_elite]
-                elites = [self.population[i] for i in elite_indices]
-                new_population[:num_elite] = elites
-            # Reiniciar reglas con fitness distinto de 0
+            # → Insertar reglas élite de vuelta (una por target_id)
+            # → Insertar todas las reglas élite válidas de vuelta (múltiples por target_id)
+            for target_id, elite_rules in elite_rules_by_target.items():
+                for elite_rule in elite_rules:
+                    # Evita duplicados exactos
+                    if all(
+                        tuple(sorted(elite_rule["conditions"]))
+                        != tuple(sorted(rule["conditions"]))
+                        or elite_rule["target"] != rule["target"]
+                        for rule in new_population
+                    ):
+                        # Inserta aleatoriamente en la población
+                        new_population[
+                            self.rng.integers(len(new_population))
+                        ] = elite_rule
+            self.population = new_population
+            self._update_tracking(generation)
             self._reset_population()
 
-            # Actualizar la población
-            self.population = new_population
+    def get_elite_rules_by_target(self, threshold: float = 0.9) -> dict:
+        """
+        Devuelve un diccionario donde cada clave es un target_id (valor del objetivo)
+        y el valor es una lista de reglas con fitness >= threshold.
+        """
+        elite_rules = {}
+        for rule in self.population:
+            fitness_val = self.fitness(rule)
+            target_id = rule["target"][1]
 
-            # Actualizar el seguimiento de las estadísticas
-            self._update_tracking(generation)
+            if fitness_val >= threshold:
+                if target_id not in elite_rules:
+                    elite_rules[target_id] = []
+                elite_rules[target_id].append(rule)
+
+        return elite_rules
 
     def get_high_fitness_rules(self, threshold: float = 0.9) -> list[dict]:
         """Retrieve all rules with fitness >= threshold."""
