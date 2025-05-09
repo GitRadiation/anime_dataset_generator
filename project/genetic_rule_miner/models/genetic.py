@@ -545,57 +545,82 @@ class GeneticRuleMiner:
 
     def evolve(self) -> dict:
         """Evolves the population over a number of generations with forced diversity."""
+        stable_high_fitness_start = None
+        reference_high_fitness = None
+        stable_generations = 0
+        stable_threshold = 50  # ±50 reglas
+        required_stable_generations = (
+            5  # puedes ajustar esto si quieres más robustez
+        )
+
         for generation in range(self.generations):
             fitness_scores = self._evaluate_population()
-            num_high_fitness = np.sum(fitness_scores > 0)
-            logger.info(
-                f"Generation {generation}: {num_high_fitness} rules with fitness > 0"
-            )
-            # Contar cuantos ids unicos con fitness superior a 0.9
             high_fitness_rules, ids_set = self.get_high_fitness_rules(
                 threshold=0.9
             )
             num_high_fitness = len(high_fitness_rules)
             num_unique_ids = len(ids_set)
+
             logger.info(
                 f"Generation {generation}: {num_high_fitness} rules with fitness > 0.9, "
                 f"{num_unique_ids} unique target IDs with fitness > 0.9; {ids_set}"
             )
 
-            # Verificar si el 90% de las reglas superan el umbral de fitness
+            # Early stopping si se cubre un gran porcentaje
             threshold = 0.9
             num_above_threshold = np.sum(fitness_scores >= threshold)
-            if num_above_threshold >= 0.95 * self.pop_size:
+            if num_above_threshold >= 0.63 * self.pop_size and len(
+                ids_set
+            ) >= 0.7 * len(self.targets):
                 logger.info(
                     f"Early stopping: {num_above_threshold} rules ({num_above_threshold / self.pop_size:.2%}) "
-                    f"have fitness >= {threshold} in generation {generation}."
+                    f"have fitness >= {threshold} in generation {generation}, "
+                    f"covering {len(ids_set) / len(self.targets):.2%} of target IDs."
                 )
                 break
-            # → Extraer reglas élite (fitness ≥ 0.9)
-            # → Extraer todas las reglas élite agrupadas por target_id
+
+            # Verificar estabilidad de reglas con fitness > 0.9
+            if num_high_fitness >= 100:
+                if reference_high_fitness is None:
+                    reference_high_fitness = num_high_fitness
+                    stable_high_fitness_start = generation
+                    stable_generations = 1
+                elif (
+                    abs(num_high_fitness - reference_high_fitness)
+                    <= stable_threshold
+                ):
+                    stable_generations += 1
+                    if stable_generations >= required_stable_generations:
+                        logger.info(
+                            f"Stopping due to stable high-fitness rules: variation within ±{stable_threshold} "
+                            f"for {stable_generations} generations since generation {stable_high_fitness_start}."
+                        )
+                        break
+                else:
+                    # Reset stability tracking if variation is too high
+                    reference_high_fitness = num_high_fitness
+                    stable_high_fitness_start = generation
+                    stable_generations = 1
+
+            # Proceso de evolución continúa
             elite_rules_by_target = self.get_elite_rules_by_target(
                 threshold=0.9
             )
-
-            # → Seleccionar padres y generar nueva población
             parents = self._select_parents()
             new_population = self._create_new_generation(parents)
 
-            # → Insertar reglas élite de vuelta (una por target_id)
-            # → Insertar todas las reglas élite válidas de vuelta (múltiples por target_id)
             for target_id, elite_rules in elite_rules_by_target.items():
                 for elite_rule in elite_rules:
-                    # Evita duplicados exactos
                     if all(
                         tuple(sorted(elite_rule["conditions"]))
                         != tuple(sorted(rule["conditions"]))
                         or elite_rule["target"] != rule["target"]
                         for rule in new_population
                     ):
-                        # Inserta aleatoriamente en la población
                         new_population[
                             self.rng.integers(len(new_population))
                         ] = elite_rule
+
             self.population = new_population
             self._update_tracking(generation)
             self._reset_population()
