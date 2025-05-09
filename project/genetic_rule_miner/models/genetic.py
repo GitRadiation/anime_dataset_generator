@@ -549,10 +549,7 @@ class GeneticRuleMiner:
         reference_high_fitness = None
         stable_generations = 0
         stable_threshold = 50  # ±50 reglas
-        required_stable_generations = (
-            5  # puedes ajustar esto si quieres más robustez
-        )
-
+        required_stable_generations = 25
         for generation in range(self.generations):
             fitness_scores = self._evaluate_population()
             high_fitness_rules, ids_set = self.get_high_fitness_rules(
@@ -598,9 +595,13 @@ class GeneticRuleMiner:
                         break
                 else:
                     # Reset stability tracking if variation is too high
-                    reference_high_fitness = num_high_fitness
-                    stable_high_fitness_start = generation
-                    stable_generations = 1
+                    if (
+                        abs(num_high_fitness - reference_high_fitness)
+                        > stable_threshold
+                    ):
+                        reference_high_fitness = num_high_fitness
+                        stable_high_fitness_start = generation
+                        stable_generations = 1
 
             # Proceso de evolución continúa
             elite_rules_by_target = self.get_elite_rules_by_target(
