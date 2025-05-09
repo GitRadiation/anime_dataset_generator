@@ -613,6 +613,7 @@ class GeneticRuleMiner:
             parents = self._select_parents()
             new_population = self._create_new_generation(parents)
 
+            used_indices = set()
             for target_id, elite_rules in elite_rules_by_target.items():
                 for elite_rule in elite_rules:
                     if all(
@@ -621,9 +622,14 @@ class GeneticRuleMiner:
                         or elite_rule["target"] != rule["target"]
                         for rule in new_population
                     ):
-                        new_population[
-                            self.rng.integers(len(new_population))
-                        ] = elite_rule
+                        while True:
+                            random_index = self.rng.integers(
+                                len(new_population)
+                            )
+                            if random_index not in used_indices:
+                                used_indices.add(random_index)
+                                break
+                        new_population[random_index] = elite_rule
 
             self.population = new_population
             self._update_tracking(generation)
