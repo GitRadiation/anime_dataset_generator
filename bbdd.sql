@@ -60,7 +60,6 @@ CREATE TABLE rules (
     conditions JSONB NOT NULL,
     target_value TEXT NOT NULL
 );
-
 DROP FUNCTION IF EXISTS get_matching_rules(jsonb);
 
 CREATE OR REPLACE FUNCTION get_matching_rules(input JSONB)
@@ -72,28 +71,52 @@ BEGIN
     JOIN anime_dataset ad
     ON ad.anime_id = r.target_value
     WHERE (
-    -- Condiciones de user_conditions
-    SELECT bool_and(
-        CASE
-        WHEN cond->>'operator' = '>=' THEN (input->'user_conditions'->>(cond->>'column'))::numeric >= (cond->>'value')::numeric
-        WHEN cond->>'operator' = '<' THEN (input->'user_conditions'->>(cond->>'column'))::numeric < (cond->>'value')::numeric
-        WHEN cond->>'operator' = '==' THEN input->'user_conditions'->>(cond->>'column') = cond->>'value'
-        ELSE false
-        END
-    )
-    FROM jsonb_array_elements(r.conditions->'user_conditions') AS cond
+        -- Condiciones de user_conditions
+        SELECT bool_and(
+            CASE
+            WHEN cond->>'operator' = '>=' THEN 
+                (input->'user_conditions'->>(cond->>'column'))::numeric >= (cond->>'value')::numeric
+            WHEN cond->>'operator' = '<' THEN 
+                (input->'user_conditions'->>(cond->>'column'))::numeric < (cond->>'value')::numeric
+            WHEN cond->>'operator' = '==' THEN 
+                CASE 
+                WHEN jsonb_typeof(input->'user_conditions'->(cond->>'column')) = 'array' THEN
+                    EXISTS (
+                        SELECT 1
+                        FROM jsonb_array_elements_text(input->'user_conditions'->(cond->>'column')) AS val
+                        WHERE val = cond->>'value'
+                    )
+                ELSE
+                    input->'user_conditions'->>(cond->>'column') = cond->>'value'
+                END
+            ELSE false
+            END
+        )
+        FROM jsonb_array_elements(r.conditions->'user_conditions') AS cond
     )
     AND (
-    -- Condiciones de other_conditions
-    SELECT bool_and(
-        CASE
-        WHEN cond->>'operator' = '>=' THEN (input->'other_conditions'->>(cond->>'column'))::numeric >= (cond->>'value')::numeric
-        WHEN cond->>'operator' = '<' THEN (input->'other_conditions'->>(cond->>'column'))::numeric < (cond->>'value')::numeric
-        WHEN cond->>'operator' = '==' THEN input->'other_conditions'->>(cond->>'column') = cond->>'value'
-        ELSE false
-        END
-    )
-    FROM jsonb_array_elements(r.conditions->'other_conditions') AS cond
+        -- Condiciones de other_conditions
+        SELECT bool_and(
+            CASE
+            WHEN cond->>'operator' = '>=' THEN 
+                (input->'other_conditions'->>(cond->>'column'))::numeric >= (cond->>'value')::numeric
+            WHEN cond->>'operator' = '<' THEN 
+                (input->'other_conditions'->>(cond->>'column'))::numeric < (cond->>'value')::numeric
+            WHEN cond->>'operator' = '==' THEN 
+                CASE 
+                WHEN jsonb_typeof(input->'other_conditions'->(cond->>'column')) = 'array' THEN
+                    EXISTS (
+                        SELECT 1
+                        FROM jsonb_array_elements_text(input->'other_conditions'->(cond->>'column')) AS val
+                        WHERE val = cond->>'value'
+                    )
+                ELSE
+                    input->'other_conditions'->>(cond->>'column') = cond->>'value'
+                END
+            ELSE false
+            END
+        )
+        FROM jsonb_array_elements(r.conditions->'other_conditions') AS cond
     );
 END;
 $$ LANGUAGE plpgsql;
