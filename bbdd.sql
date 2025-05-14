@@ -2,59 +2,98 @@
 DROP TABLE IF EXISTS user_score;
 DROP TABLE IF EXISTS user_details;
 DROP TABLE IF EXISTS anime_dataset;
-DROP TABLE IF EXISTS rules;
 
 CREATE TABLE anime_dataset (
     anime_id INTEGER PRIMARY KEY,
-    score NUMERIC(3,2),
-    genres VARCHAR(255),
-    keywords TEXT,
+    name VARCHAR(255),
+    score NUMERIC(4,2), -- Para valores como 8.75
+    genres TEXT, -- Lista de géneros como string
+    keywords TEXT, -- Lista larga de palabras clave
     type VARCHAR(50),
-    episodes INTEGER,
-    aired VARCHAR(100),
-    premiered VARCHAR(50),
+    episodes REAL, -- Puede ser decimal como 26.0
+    aired SMALLINT, -- Año como '1998'
+    premiered VARCHAR(20), -- Ej: 'spring'
     status VARCHAR(50),
-    producers VARCHAR(255),
-    studios VARCHAR(255),
+    producers TEXT, -- Lista de productores
+    studios VARCHAR(100),
     source VARCHAR(50),
-    duration INTEGER,
-    rating VARCHAR(50),
+    rating VARCHAR(100),
     rank INTEGER,
     popularity INTEGER,
     favorites INTEGER,
     scored_by INTEGER,
-    members INTEGER
+    members INTEGER,
+    duration_class VARCHAR(20), -- Nueva columna basada en ejemplo
+    episodes_class VARCHAR(20)  -- Nueva columna basada en ejemplo
 );
 
 CREATE TABLE user_details (
     mal_id INTEGER PRIMARY KEY,
     gender VARCHAR(10),
-    birthday DATE,
-    days_watched NUMERIC(10,2),
-    mean_score NUMERIC(4,2),
-    watching INTEGER,
-    completed INTEGER,
-    on_hold INTEGER,
-    dropped INTEGER,
-    plan_to_watch INTEGER,
-    total_entries INTEGER,
-    rewatched INTEGER,
-    episodes_watched INTEGER
+    age_group VARCHAR(10), -- Grupo de edad: "young", "adult", "senior"
+    days_watched NUMERIC(10,2), -- Tiempo en días que el usuario ha visto anime
+    mean_score NUMERIC(4,2), -- Promedio de calificación
+    watching INTEGER, -- Número de animes que está viendo
+    completed INTEGER, -- Número de animes que ha completado
+    on_hold INTEGER, -- Número de animes en espera
+    dropped INTEGER, -- Número de animes descartados
+    plan_to_watch INTEGER, -- Número de animes que planea ver
+    total_entries INTEGER, -- Total de entradas en su lista
+    rewatched INTEGER, -- Número de animes que ha vuelto a ver
+    episodes_watched INTEGER -- Número total de episodios vistos
 );
 
 -- Crear tabla user_score (tabla intermedia para la relación N:N entre user_details y anime_dataset)
 CREATE TABLE user_score (
     user_id INTEGER,
     anime_id INTEGER,
-    rating INTEGER,
+    rating VARCHAR(10), -- Calificación categorizada: "low", "medium", "high"
     PRIMARY KEY (user_id, anime_id),  -- Clave primaria compuesta
     FOREIGN KEY (user_id) REFERENCES user_details(mal_id),
     FOREIGN KEY (anime_id) REFERENCES anime_dataset(anime_id)
 );
 
+DROP TABLE IF EXISTS rules;
+
 CREATE TABLE rules (
     rule_id UUID PRIMARY KEY,
     conditions JSONB NOT NULL,
-    target_column TEXT NOT NULL,
     target_value TEXT NOT NULL
 );
+
+DROP FUNCTION IF EXISTS get_matching_rules(jsonb);
+
+CREATE OR REPLACE FUNCTION get_matching_rules(input JSONB)
+RETURNS TABLE(name VARCHAR) AS $$
+BEGIN
+    RETURN QUERY
+    SELECT ad.name
+    FROM rules r
+    JOIN anime_dataset ad
+    ON ad.anime_id = r.target_value
+    WHERE (
+    -- Condiciones de user_conditions
+    SELECT bool_and(
+        CASE
+        WHEN cond->>'operator' = '>=' THEN (input->'user_conditions'->>(cond->>'column'))::numeric >= (cond->>'value')::numeric
+        WHEN cond->>'operator' = '<' THEN (input->'user_conditions'->>(cond->>'column'))::numeric < (cond->>'value')::numeric
+        WHEN cond->>'operator' = '==' THEN input->'user_conditions'->>(cond->>'column') = cond->>'value'
+        ELSE false
+        END
+    )
+    FROM jsonb_array_elements(r.conditions->'user_conditions') AS cond
+    )
+    AND (
+    -- Condiciones de other_conditions
+    SELECT bool_and(
+        CASE
+        WHEN cond->>'operator' = '>=' THEN (input->'other_conditions'->>(cond->>'column'))::numeric >= (cond->>'value')::numeric
+        WHEN cond->>'operator' = '<' THEN (input->'other_conditions'->>(cond->>'column'))::numeric < (cond->>'value')::numeric
+        WHEN cond->>'operator' = '==' THEN input->'other_conditions'->>(cond->>'column') = cond->>'value'
+        ELSE false
+        END
+    )
+    FROM jsonb_array_elements(r.conditions->'other_conditions') AS cond
+    );
+END;
+$$ LANGUAGE plpgsql;

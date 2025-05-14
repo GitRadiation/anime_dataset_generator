@@ -10,6 +10,7 @@ from sqlalchemy.engine import Engine
 from genetic_rule_miner.config import DBConfig
 from genetic_rule_miner.utils.exceptions import DatabaseError
 from genetic_rule_miner.utils.logging import LogManager
+from genetic_rule_miner.utils.rule import Rule
 
 logger = LogManager.get_logger(__name__)
 
@@ -131,24 +132,34 @@ class DatabaseManager:
             )
             conn.execute(text(sql), cleaned_row)
 
-    def save_rules(self, rules: list[dict], table: str = "rules") -> None:
+    def save_rules(self, rules: Rule, table: str = "rules") -> None:
         """
-        Save rules to the PostgreSQL database.
+        Save Rule objects to the PostgreSQL database.
         """
         with self.connection() as conn:
             for rule in rules:
                 rule_id = str(uuid.uuid4())
-                target_column, target_value = rule["target"]
+                # rule.target is a single value (target value)
+                target_value = rule.target
+                # Serialize both user_conditions and other_conditions
+                user_conditions = [
+                    {"column": col, "operator": op, "value": value}
+                    for col, (op, value) in rule.conditions[0]
+                ]
+                other_conditions = [
+                    {"column": col, "operator": op, "value": value}
+                    for col, (op, value) in rule.conditions[1]
+                ]
                 conditions_json = json.dumps(
-                    [
-                        {"column": col, "operator": op, "value": value}
-                        for col, op, value in rule["conditions"]
-                    ]
+                    {
+                        "user_conditions": user_conditions,
+                        "other_conditions": other_conditions,
+                    }
                 )
 
                 sql = f"""
-                    INSERT INTO {table} (rule_id, conditions, target_column, target_value)
-                    VALUES (:rule_id, :conditions, :target_column, :target_value)
+                    INSERT INTO {table} (rule_id, conditions, target_value)
+                    VALUES (:rule_id, :conditions, :target_value)
                 """
 
                 conn.execute(
@@ -156,11 +167,10 @@ class DatabaseManager:
                     {
                         "rule_id": rule_id,
                         "conditions": conditions_json,
-                        "target_column": target_column,
-                        "target_value": str(target_value),
+                        "target_value": target_value,
                     },
                 )
-            conn.commit()  # Ensure data is saved
+            conn.commit()
 
     def _get_conflict_columns(self, table: str) -> list:
         if table == "user_score":
