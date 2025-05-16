@@ -71,7 +71,7 @@ def main() -> None:
             pop_size=720,
             generations=10000,
         )
-        logger.info("Starting evolution process..."),
+        logger.info("Starting evolution process...")
         miner.evolve()
 
         # Output results
@@ -79,9 +79,13 @@ def main() -> None:
         rules, ids = high_fitness_rules
         if high_fitness_rules:
             logger.info("\nRules with Fitness >= 0.9:")
-            for idx, rule in enumerate(rules, start=1):
-                fitness = miner.fitness(rule)
-                logger.info(f"Rule {idx}: {rule} (Fitness: {fitness:.4f})")
+            if isinstance(rules, list):
+                for idx, rule in enumerate(rules, start=1):
+                    fitness = miner.fitness(rule)
+                    logger.info(f"Rule {idx}: {rule} (Fitness: {fitness:.4f})")
+            else:
+                fitness = miner.fitness(rules)
+                logger.info(f"Rule 1: {rules} (Fitness: {fitness:.4f})")
         else:
             logger.info("No rules with Fitness >= 0.9 were found.")
 

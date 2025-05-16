@@ -2,10 +2,11 @@
 
 import copy
 import itertools
+import random
 from collections import defaultdict
 from collections.abc import Mapping, MutableSequence, Sequence
 from functools import partial, wraps
-from typing import Optional, Tuple, Union
+from typing import Optional
 
 import numpy as np
 import pandas as pd
@@ -17,7 +18,10 @@ from genetic_rule_miner.utils.rule import Rule
 logger = LogManager.get_logger(__name__)
 
 
-Condition = Tuple[str, str, Union[float, str]]
+# Una condición es un diccionario con keys: column, operator, value
+Condition = (
+    dict  # Ejemplo: {"column": "scored_by", "operator": ">=", "value": 178927}
+)
 
 
 # El decorador para cachear las condiciones
@@ -81,7 +85,7 @@ class GeneticRuleMiner:
         self.pop_size = pop_size
         self.generations = generations
         self.mutation_rate = mutation_rate
-        self._fitness_cache: dict[tuple, float] = {}
+        self._fitness_cache: dict[int, float] = {}
         self._condition_cache: dict[tuple, np.ndarray] = {}
 
         self.user_cols = [col for col in user_cols if col in df.columns]
@@ -103,7 +107,9 @@ class GeneticRuleMiner:
         # Se calculan los percentiles para las columnas numéricas
         # para crear las condiciones de  < y >=
         self._percentiles: Mapping[str, np.ndarray] = {
-            col: np.percentile(self.df[col].dropna().values, np.arange(25, 76))
+            col: np.percentile(
+                self.df[col].dropna().to_numpy(dtype=float), np.arange(25, 76)
+            )
             for col in self._numeric_cols
         }
 
@@ -183,7 +189,10 @@ class GeneticRuleMiner:
         chosen_target = self.rng.choice(self.targets)
         rule = Rule(
             columns=[col for col, _ in user_conditions + other_conditions],
-            conditions=(user_conditions, other_conditions),
+            conditions={
+                "user_conditions": user_conditions,
+                "other_conditions": other_conditions,
+            },
             target=chosen_target,
         )
 
@@ -443,12 +452,18 @@ class GeneticRuleMiner:
 
         child1 = Rule(
             columns=[col for col, _ in child1_user + child1_other],
-            conditions=(child1_user, child1_other),
+            conditions={
+                "user_conditions": child1_user,
+                "other_conditions": child1_other,
+            },
             target=parent1.target,
         )
         child2 = Rule(
             columns=[col for col, _ in child2_user + child2_other],
-            conditions=(child2_user, child2_other),
+            conditions={
+                "user_conditions": child2_user,
+                "other_conditions": child2_other,
+            },
             target=parent2.target,
         )
         self._complete_conditions(child1, max_conditions=10)
@@ -487,9 +502,7 @@ class GeneticRuleMiner:
         tournament_size = 3
         loser_win_prob = 0.2
         for _ in range(self.pop_size):
-            tournament = self.rng.choice(
-                self.population, size=tournament_size, replace=False
-            )
+            tournament = random.sample(self.population, tournament_size)
             tournament = sorted(
                 tournament,
                 key=lambda rule: self.fitness(rule)
@@ -497,7 +510,7 @@ class GeneticRuleMiner:
                 reverse=True,
             )
             if self.rng.random() < loser_win_prob and len(tournament) > 1:
-                candidate = self.rng.choice(tournament[1:])
+                candidate = random.choice(tournament[1:])
             else:
                 candidate = tournament[0]
             selected.append(candidate)
@@ -548,7 +561,10 @@ class GeneticRuleMiner:
             if score > best_score:
                 best_score = score
                 best_index = i
-        return self.population[best_index]
+        if best_index is not None:
+            return self.population[best_index]
+        else:
+            raise ValueError("No best individual found in the population.")
 
     def _reset_rule(self) -> Rule:
         return self._create_rule()
@@ -578,7 +594,7 @@ class GeneticRuleMiner:
             else:
                 seen_rules.add(rule_key)
 
-    def _get_best_rule_per_target(self, rules: list[Rule]) -> dict:
+    def _get_best_rule_per_target(self, rules: Sequence[Rule]) -> dict:
         best_rules = defaultdict(list)
         best_scores = {}
         for rule in rules:
@@ -594,7 +610,7 @@ class GeneticRuleMiner:
             result[target_id] = self.rng.choice(rule_list)
         return result
 
-    def evolve(self) -> dict:
+    def evolve(self) -> None:
         """Evolves the population over a number of generations with forced diversity.
         If the number of high-fitness rules stabilizes, reinitialize the population
         keeping the best rule per target_id (by fitness*support), random if tie.
@@ -729,7 +745,7 @@ class GeneticRuleMiner:
                             )
                             if not available_indices:
                                 break
-                        new_population[random_index] = elite_rule
+                        new_population[int(random_index)] = elite_rule
 
             self.population = new_population
             self._update_tracking(generation)
@@ -751,7 +767,9 @@ class GeneticRuleMiner:
 
         return elite_rules
 
-    def get_high_fitness_rules(self, threshold: float = 0.9) -> list[Rule]:
+    def get_high_fitness_rules(
+        self, threshold: float = 0.9
+    ) -> tuple[list[Rule], set]:
         """Retrieve all rules with fitness >= threshold."""
         high_fitness_rules = []
         ids_set = set()

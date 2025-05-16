@@ -2,8 +2,9 @@ import csv
 import json
 import uuid
 from contextlib import contextmanager
-from typing import Generator
+from typing import Generator, Optional
 
+import numpy as np
 from sqlalchemy import Connection, create_engine, text
 from sqlalchemy.engine import Engine
 
@@ -19,7 +20,8 @@ class DatabaseManager:
     """Singleton Database Manager using SQLAlchemy for PostgreSQL."""
 
     _instance = None
-    _engine: Engine = None
+
+    _engine: Optional[Engine] = None
 
     def __new__(cls, config: DBConfig) -> "DatabaseManager":
         if cls._instance is None:
@@ -132,16 +134,14 @@ class DatabaseManager:
             )
             conn.execute(text(sql), cleaned_row)
 
-    def save_rules(self, rules: Rule, table: str = "rules") -> None:
+    def save_rules(self, rules: list[Rule], table: str = "rules") -> None:
         """
         Save Rule objects to the PostgreSQL database.
         """
         with self.connection() as conn:
+            # Preparar todos los datos primero
+            insert_data = []
             for rule in rules:
-                rule_id = str(uuid.uuid4())
-                # rule.target is a single value (target value)
-                target_value = rule.target
-                # Serialize both user_conditions and other_conditions
                 user_conditions = [
                     {"column": col, "operator": op, "value": value}
                     for col, (op, value) in rule.conditions[0]
@@ -150,26 +150,30 @@ class DatabaseManager:
                     {"column": col, "operator": op, "value": value}
                     for col, (op, value) in rule.conditions[1]
                 ]
-                conditions_json = json.dumps(
+
+                insert_data.append(
                     {
-                        "user_conditions": user_conditions,
-                        "other_conditions": other_conditions,
+                        "rule_id": str(uuid.uuid4()),
+                        "conditions": json.dumps(
+                            {
+                                "user_conditions": user_conditions,
+                                "other_conditions": other_conditions,
+                            }
+                        ),
+                        "target_value": rule.target.item(),
                     }
                 )
 
-                sql = f"""
+            # Insertar todo en una sola operación
+            conn.execute(
+                text(
+                    f"""
                     INSERT INTO {table} (rule_id, conditions, target_value)
                     VALUES (:rule_id, :conditions, :target_value)
                 """
-
-                conn.execute(
-                    text(sql),
-                    {
-                        "rule_id": rule_id,
-                        "conditions": conditions_json,
-                        "target_value": target_value,
-                    },
-                )
+                ),
+                insert_data,  # Ejecución como batch
+            )
             conn.commit()
 
     def _get_conflict_columns(self, table: str) -> list:

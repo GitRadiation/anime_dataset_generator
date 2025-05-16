@@ -1,3 +1,6 @@
+import numpy as np
+
+
 class Rule:
     """
     Representa una regla para clasificación basada en condiciones sobre columnas.
@@ -11,18 +14,28 @@ class Rule:
     def __init__(
         self,
         columns: list[str],
-        conditions: tuple[
-            list[tuple[str, tuple[str, object]]],
-            list[tuple[str, tuple[str, object]]],
-        ],
-        target: object,
+        conditions: dict,
+        target: np.int64,
     ):
         # columns is now just for compatibility, not used for logic
         self.columns = list(columns)
-        self.conditions = (
-            list(conditions[0]),  # user_conditions
-            list(conditions[1]),  # other_conditions
-        )
+
+        def parse_conds(cond_list):
+            parsed = []
+            for cond in cond_list:
+                if isinstance(cond, dict):
+                    parsed.append(
+                        (cond["column"], (cond["operator"], cond["value"]))
+                    )
+                elif isinstance(cond, tuple) and isinstance(cond[1], tuple):
+                    parsed.append(cond)
+                else:
+                    raise TypeError(f"Condición en formato inesperado: {cond}")
+            return parsed
+
+        user_conditions = parse_conds(conditions.get("user_conditions", []))
+        other_conditions = parse_conds(conditions.get("other_conditions", []))
+        self.conditions = (user_conditions, other_conditions)
         self.target = target
 
     def __repr__(self):
@@ -44,6 +57,12 @@ class Rule:
 
     def __hash__(self):
         return hash((tuple(tuple(x) for x in self.conditions), self.target))
+
+    def __len__(self):
+        """
+        Devuelve el número de condiciones en la regla.
+        """
+        return len(self.conditions[0]) + len(self.conditions[1])
 
     def match(self, instance: dict) -> bool:
         """
