@@ -120,3 +120,157 @@ BEGIN
     );
 END;
 $$ LANGUAGE plpgsql;
+
+CREATE OR REPLACE FUNCTION check_and_purge_rules()
+RETURNS TABLE(deleted_rule_id UUID, deleted_confidence FLOAT) AS $$
+DECLARE
+    rule_record RECORD;
+    current_confidence FLOAT;
+    user_conds TEXT;
+    other_conds TEXT;
+BEGIN
+    CREATE TEMP TABLE rules_to_delete (
+        rule_id UUID,
+        confidence FLOAT
+    ) ON COMMIT DROP;
+
+    FOR rule_record IN SELECT rule_id, conditions, target_value FROM rules LOOP
+        user_conds := build_user_conditions(rule_record.conditions);
+        other_conds := build_other_conditions(rule_record.conditions);
+
+        EXECUTE format('
+            WITH combined_matches AS (
+                SELECT COUNT(*) AS total
+                FROM user_details ud
+                CROSS JOIN anime_dataset ad
+                WHERE %s AND %s
+            ),
+            target_matches AS (
+                SELECT COUNT(*) AS total
+                FROM user_details ud
+                CROSS JOIN anime_dataset ad
+                WHERE %s AND %s
+                AND ad.anime_id = %L
+            )
+            SELECT 
+                CASE 
+                    WHEN cm.total = 0 THEN 0
+                    ELSE tm.total::FLOAT / NULLIF(cm.total, 0)::FLOAT
+                END AS confidence
+            FROM combined_matches cm, target_matches tm',
+            user_conds, other_conds,
+            user_conds, other_conds,
+            rule_record.target_value
+        ) INTO current_confidence;
+
+        IF current_confidence < 0.9 THEN
+            INSERT INTO rules_to_delete VALUES (rule_record.rule_id, current_confidence);
+        END IF;
+    END LOOP;
+
+    RETURN QUERY
+    DELETE FROM rules r
+    USING rules_to_delete d
+    WHERE r.rule_id = d.rule_id
+    RETURNING 
+    r.rule_id AS "Rule ID",
+    d.confidence AS "Confidence Score";
+END;
+$$ LANGUAGE plpgsql;
+
+CREATE OR REPLACE FUNCTION build_user_conditions(conditions JSONB)
+RETURNS TEXT AS $$
+DECLARE
+    condition_text TEXT := '';
+    cond JSONB;
+    column_name TEXT;
+    operator TEXT;
+    value TEXT;
+BEGIN
+    FOR cond IN SELECT * FROM jsonb_array_elements(conditions->'user_conditions') LOOP
+        column_name := cond->>'column';
+        operator := cond->>'operator';
+        value := cond->>'value';
+
+        -- Corregir '==' por '='
+        IF operator = '==' THEN
+            operator := '=';
+        END IF;
+
+        -- (Opcional) Validar operadores permitidos
+        IF operator NOT IN ('=', '<', '<=', '>', '>=', '!=') THEN
+            RAISE EXCEPTION 'Operador no permitido: %', operator;
+        END IF;
+
+        IF condition_text <> '' THEN
+            condition_text := condition_text || ' AND ';
+        END IF;
+
+        -- Detectar si el valor es numérico
+        IF value ~ '^\d+(\.\d+)?$' THEN
+            condition_text := condition_text || format('ud.%I %s %s', column_name, operator, value);
+        ELSE
+            condition_text := condition_text || format('ud.%I %s %L', column_name, operator, value);
+        END IF;
+    END LOOP;
+    RETURN condition_text;
+END;
+$$ LANGUAGE plpgsql;
+
+CREATE OR REPLACE FUNCTION build_other_conditions(conditions JSONB)
+RETURNS TEXT AS $$
+DECLARE
+    condition_text TEXT := '';
+    cond JSONB;
+    column_name TEXT;
+    operator TEXT;
+    value TEXT;
+BEGIN
+    FOR cond IN SELECT * FROM jsonb_array_elements(conditions->'other_conditions') LOOP
+        column_name := cond->>'column';
+        operator := cond->>'operator';
+        value := cond->>'value';
+
+        -- Corregir '==' por '='
+        IF operator = '==' THEN
+            operator := '=';
+        END IF;
+
+        -- (Opcional) Validar operadores permitidos
+        IF operator NOT IN ('=', '<', '<=', '>', '>=', '!=') THEN
+            RAISE EXCEPTION 'Operador no permitido: %', operator;
+        END IF;
+
+        IF condition_text <> '' THEN
+            condition_text := condition_text || ' AND ';
+        END IF;
+
+        -- Detectar si el valor es numérico
+        IF value ~ '^\d+(\.\d+)?$' THEN
+            condition_text := condition_text || format('ad.%I %s %s', column_name, operator, value);
+        ELSE
+            condition_text := condition_text || format('ad.%I %s %L', column_name, operator, value);
+        END IF;
+    END LOOP;
+    RETURN condition_text;
+END;
+$$ LANGUAGE plpgsql;
+
+CREATE OR REPLACE FUNCTION trigger_check_fitness()
+RETURNS TRIGGER AS $$
+BEGIN
+    PERFORM check_and_purge_rules();
+    RETURN NULL;
+END;
+$$ LANGUAGE plpgsql;
+
+-- Triggers mejorados con control de frecuencia
+CREATE OR REPLACE TRIGGER user_details_update_trigger
+AFTER INSERT OR UPDATE OR DELETE ON user_details
+FOR EACH STATEMENT
+EXECUTE FUNCTION trigger_check_fitness();
+
+CREATE OR REPLACE TRIGGER anime_dataset_update_trigger
+AFTER INSERT OR UPDATE OR DELETE ON anime_dataset
+FOR EACH STATEMENT
+EXECUTE FUNCTION trigger_check_fitness();
