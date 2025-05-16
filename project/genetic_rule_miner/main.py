@@ -1,37 +1,10 @@
 """Main execution pipeline for genetic rule mining."""
 
-import pandas as pd
-
 from genetic_rule_miner.config import DBConfig
+from genetic_rule_miner.data.database import DatabaseManager
 from genetic_rule_miner.data.manager import DataManager
-from genetic_rule_miner.data.preprocessing import (
-    clean_string_columns,
-    preprocess_data,
-)
 from genetic_rule_miner.models.genetic import GeneticRuleMiner
-from genetic_rule_miner.utils.logging import LogManager, log_execution
-
-
-@log_execution
-def save_to_excel(
-    df_dict: dict, output_path: str = "processed_data.xlsx"
-) -> None:
-    """Save the DataFrames to an Excel file with different sheets.
-
-    Args:
-        df_dict: Dictionary where keys are sheet names and values are DataFrames to save.
-        output_path: Path to save the Excel file.
-    """
-    try:
-        # Save the dictionary of DataFrames to an Excel file with each DataFrame in a separate sheet
-        with pd.ExcelWriter(output_path) as writer:
-            for sheet_name, df in df_dict.items():
-                df.to_excel(writer, sheet_name=sheet_name, index=False)
-        logger.info(f"Data successfully saved to {output_path}")
-    except Exception as e:
-        logger.error(f"Failed to save data to Excel: {str(e)}")
-        raise
-
+from genetic_rule_miner.utils.logging import LogManager
 
 LogManager.configure()
 logger = LogManager.get_logger(__name__)
@@ -51,42 +24,76 @@ def main() -> None:
         user_details, anime_data, user_scores = (
             data_manager.load_and_preprocess_data()
         )
-        save_to_excel(
-            {
-                "user_details": user_details,
-                "anime_data": anime_data,
-                "user_scores": user_scores,
-            },
-            "raw_data.xlsx",
-        )
+        # Remove 'rating' column from user_scores if it exists
+        if "rating" in user_scores.columns:
+            user_scores = user_scores.drop(columns=["rating"])
+
         logger.info("Merging preprocessed data...")
         merged_data = DataManager.merge_data(
             user_scores, user_details, anime_data
         )
-        save_to_excel({"merged_data": merged_data}, "processed_data.xlsx")
 
         # Genetic algorithm execution
         logger.info("Initializing genetic algorithm...")
-        processed_df = preprocess_data(clean_string_columns(merged_data))
-        save_to_excel({"processed_data": processed_df}, "datos_limpios.xlsx")
+        # Drop rows with unknown rating (if the 'rating' column exists)
+        if "rating" in merged_data.columns:
+            logger.info("Dropping rows with unknown ratings...")
+            merged_data = merged_data[merged_data["rating"] != "unknown"]
+
+        # Drop unnecessary columns: 'rating_x' and 'age' if they exist
+        logger.info("Dropping unnecessary columns...")
+        import ast
+
+        for col in ["producers", "genres", "keywords"]:
+            if col in merged_data.columns:
+                merged_data[col] = (
+                    merged_data[col]
+                    .fillna("[]")  # String de lista vacía
+                    .astype(str)
+                    .apply(
+                        lambda x: (
+                            ast.literal_eval(x) if x.startswith("[") else [x]
+                        )
+                    )
+                    .apply(
+                        lambda x: (
+                            [i.strip() for i in x if i.strip()]
+                            if isinstance(x, list)
+                            else []
+                        )
+                    )
+                )
 
         miner = GeneticRuleMiner(
-            df=processed_df,
-            target="rating",
+            df=merged_data,
+            target="anime_id",
             user_cols=user_details.columns.tolist(),
-            pop_size=250,
-            generations=100,
+            pop_size=720,
+            generations=10000,
         )
         logger.info("Starting evolution process...")
-        results = miner.evolve()
+        miner.evolve()
 
         # Output results
-        best_rule = results["best_rule"]
-        logger.info("\nBest Rule Found:")
-        logger.info(miner.format_rule(best_rule))
-        logger.info(f"\nFitness: {results['best_fitness']:.4f}")
-        logger.info(f"Support: {results['best_support']}")
-        logger.info(f"Confidence: {results['best_confidence']}")
+        high_fitness_rules = miner.get_high_fitness_rules(threshold=0.9)
+        rules, ids = high_fitness_rules
+        if high_fitness_rules:
+            logger.info("\nRules with Fitness >= 0.9:")
+            if isinstance(rules, list):
+                for idx, rule in enumerate(rules, start=1):
+                    fitness = miner.fitness(rule)
+                    logger.info(f"Rule {idx}: {rule} (Fitness: {fitness:.4f})")
+            else:
+                fitness = miner.fitness(rules)
+                logger.info(f"Rule 1: {rules} (Fitness: {fitness:.4f})")
+        else:
+            logger.info("No rules with Fitness >= 0.9 were found.")
+
+        # Configuración de la base de datos
+        db_manager = DatabaseManager(config=db_config)
+
+        # Guardar las reglas en la tabla "rules"
+        db_manager.save_rules(rules)
 
     except Exception as e:
         logger.error("Pipeline failed: %s", str(e), exc_info=True)

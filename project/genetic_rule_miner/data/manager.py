@@ -7,10 +7,7 @@ import pandas as pd
 
 from genetic_rule_miner.config import DBConfig
 from genetic_rule_miner.data.database import DatabaseManager
-from genetic_rule_miner.data.preprocessing import (
-    clean_string_columns,
-    preprocess_data,
-)
+from genetic_rule_miner.data.preprocessing import clean_string_columns
 from genetic_rule_miner.utils.exceptions import DataValidationError
 from genetic_rule_miner.utils.logging import log_execution
 
@@ -18,16 +15,26 @@ from genetic_rule_miner.utils.logging import log_execution
 class DataManager:
     """High-performance data loading and transformation manager."""
 
+    _instance = None
+
+    def __new__(cls, db_config: DBConfig) -> "DataManager":
+        if cls._instance is None:
+            cls._instance = super(DataManager, cls).__new__(cls)
+            cls._instance._initialized = False
+        return cls._instance
+
     def __init__(self, db_config: DBConfig) -> None:
-        """Initialize with database configuration."""
+        if self._initialized:
+            return
         self.db_manager = DatabaseManager(db_config)
+        self._initialized = True
 
     def _load_and_clean_data(
         self, table_name: str, conn: object
     ) -> pd.DataFrame:
         """Load data from a table and preprocess it."""
         data = pd.read_sql(f"SELECT * FROM {table_name}", conn)
-        return preprocess_data(clean_string_columns(data))
+        return clean_string_columns(data)
 
     @log_execution
     def load_and_preprocess_data(
@@ -41,6 +48,7 @@ class DataManager:
                 user_details_cleaned = self._load_and_clean_data(
                     tables[0], conn
                 )
+
                 anime_data_cleaned = self._load_and_clean_data(tables[1], conn)
                 user_scores_cleaned = self._load_and_clean_data(
                     tables[2], conn
@@ -89,8 +97,9 @@ class DataManager:
             how="inner",
             validate="many_to_one",
         )
-
+        if "rating_x" in result.columns:
+            result.rename(columns={"rating_x": "rating"}, inplace=True)
         # Cleanup
         return result.drop(
-            columns=["user_id", "mal_id", "anime_id"], errors="ignore"
+            columns=["user_id", "mal_id"], errors="ignore"
         ).reset_index(drop=True)

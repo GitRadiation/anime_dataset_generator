@@ -11,6 +11,7 @@ from genetic_rule_miner.bbdd_maker.score_service import ScoreService
 from genetic_rule_miner.bbdd_maker.user_service import UserService
 from genetic_rule_miner.config import APIConfig, DBConfig
 from genetic_rule_miner.data.database import DatabaseManager
+from genetic_rule_miner.data.preprocessing import preprocess_data
 from genetic_rule_miner.utils.logging import LogManager
 
 # Configure logging
@@ -73,7 +74,7 @@ def convert_duration_to_minutes(duration):
 
 
 def preprocess_to_memory(
-    df, columns_to_keep, integer_columns, float_columns=None
+    df: pd.DataFrame, columns_to_keep, integer_columns, float_columns=None
 ):
     """Preprocesses and converts data types according to the database schema"""
     df = df.copy()
@@ -102,6 +103,7 @@ def preprocess_to_memory(
             if col in df.columns:
                 df[col] = pd.to_numeric(df[col], errors="coerce")
 
+    df = preprocess_data(df)
     df.dropna(how="all", inplace=True)
     df = df.where(pd.notnull(df), None)
     csv_buffer = StringIO()
@@ -154,6 +156,7 @@ def main():
     max_retries = 3
     retry_delay = 5  # in seconds
 
+    conn = None
     # ==========================
     # Phase 2: Data Retrieval
     # ==========================
@@ -163,13 +166,13 @@ def main():
 
         # 1. Retrieve anime data
         logger.info("📡 Retrieving anime data...")
-        anime_buffer = AnimeService(api_config).get_anime_data(1, 100)
+        anime_buffer = AnimeService(api_config).get_anime_data(1, 200)
 
         # 2. Generate user list
         logger.info("📡 Generating user list...")
         user_service = UserService(api_config)
         userlist_buffer = user_service.generate_userlist(
-            start_id=1, end_id=100
+            start_id=1, end_id=200
         )
 
         # 3. Prepare data for ScoreService
@@ -234,6 +237,7 @@ def main():
             anime_df,
             columns_to_keep=[
                 "anime_id",
+                "name",
                 "score",
                 "type",
                 "episodes",
@@ -320,18 +324,22 @@ def main():
             columns={
                 "User ID": "user_id",
                 "Anime ID": "anime_id",
-                "Score": "rating",
+                "Score": "rating_x",
             },
             inplace=True,
         )
+
+        scores_df = preprocess_data(scores_df)
+        scores_df = scores_df[scores_df["rating"] == "high"]
 
         valid_anime_ids = anime_df["anime_id"].dropna().unique().tolist()
         scores_buffer = preprocess_user_score(
             scores_df,
             columns_to_keep=["user_id", "anime_id", "rating"],
-            integer_columns=["user_id", "anime_id", "rating"],
+            integer_columns=["user_id", "anime_id"],
             valid_anime_ids=valid_anime_ids,
         )
+
         with db.connection() as conn:
             with conn.begin():
                 db.copy_from_buffer(conn, anime_buffer, "anime_dataset")

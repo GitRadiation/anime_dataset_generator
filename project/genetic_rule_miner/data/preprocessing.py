@@ -6,6 +6,13 @@ from genetic_rule_miner.utils.logging import LogManager, log_execution
 logger = LogManager.get_logger(__name__)
 
 
+def safe_astype(column, dtype):
+    """Convert a column to a specified dtype if it's not empty."""
+    if column is not None and not column.isna().all():
+        return column.astype(dtype)
+    return column
+
+
 def clean_string_columns(df: pd.DataFrame) -> pd.DataFrame:
     """Clean string columns by stripping whitespace and replacing placeholders with NA.
 
@@ -30,7 +37,7 @@ def clean_string_columns(df: pd.DataFrame) -> pd.DataFrame:
             df[col]
             .str.strip()  # Remove whitespace
             .replace(
-                ["\\N", "nan", "null", "None"], pd.NA
+                ["\\N", "nan", "null", "None", "<NA>"], pd.NA
             )  # Replace placeholders
         )
 
@@ -61,8 +68,9 @@ def clean_and_bin_column(
         df[column] = (
             df[column]
             .astype(str)
-            .replace(["", "nan", "None", "Unknown", "N/A"], np.nan)
+            .replace(["", "nan", "None", "Unknown", "N/A", "<NA>"], np.nan)
         )
+
         df[column] = df[column].astype(float)
 
         # Fill missing values
@@ -79,15 +87,12 @@ def clean_and_bin_column(
 
 @log_execution
 def preprocess_data(df: pd.DataFrame) -> pd.DataFrame:
-    """Preprocess data with robust handling of edge cases and domain-specific enhancements."""
     df = df.copy()
-
     try:
-        # Clean string columns
         df = clean_string_columns(df)
 
         if "duration" in df.columns:
-            # Clean and bin 'duration' column
+            df["duration"] = pd.to_numeric(df["duration"], errors="coerce")
             df = clean_and_bin_column(
                 df,
                 "duration",
@@ -95,8 +100,8 @@ def preprocess_data(df: pd.DataFrame) -> pd.DataFrame:
                 ["short", "standard", "long"],
             )
 
-        # Clean and bin 'episodes' column
         if "episodes" in df.columns:
+            df["episodes"] = pd.to_numeric(df["episodes"], errors="coerce")
             df = clean_and_bin_column(
                 df,
                 "episodes",
@@ -104,8 +109,8 @@ def preprocess_data(df: pd.DataFrame) -> pd.DataFrame:
                 ["short", "medium", "long"],
             )
 
-        # Clean 'rating_x' and create 'rating' column
         if "rating_x" in df.columns:
+            df["rating_x"] = pd.to_numeric(df["rating_x"], errors="coerce")
             df["rating"] = (
                 pd.cut(
                     df["rating_x"],
@@ -117,10 +122,17 @@ def preprocess_data(df: pd.DataFrame) -> pd.DataFrame:
                 .fillna("unknown")
             )
 
-        # Process 'birthday' column and create 'age' and 'age_group'
         if "birthday" in df.columns:
-            today = pd.Timestamp("now").normalize()
+            # Ensure both today and birthday are tz-naive
+            today = pd.Timestamp("now").tz_localize(
+                None
+            )  # This is already tz-naive
+
             df["birthday"] = pd.to_datetime(df["birthday"], errors="coerce")
+
+            # Ensure birthday is tz-naive as well
+            df["birthday"] = df["birthday"].dt.tz_localize(None)
+
             df["age"] = (today - df["birthday"]).dt.days // 365
 
             df["age_group"] = pd.cut(
@@ -129,26 +141,24 @@ def preprocess_data(df: pd.DataFrame) -> pd.DataFrame:
                 labels=["young", "adult", "senior"],
                 include_lowest=True,
             )
-            # Drop 'birthday' column after processing
-            df = df.drop(columns=["birthday"], errors="ignore")
 
-        # Process 'aired' column and extract start year
+            df.drop(columns=["birthday"], errors="ignore", inplace=True)
+
         if "aired" in df.columns:
             df["aired"] = (
                 df["aired"]
                 .astype(str)
                 .str.extract(r"(\d{4})")[0]
-                .astype(float)
+                .pipe(safe_astype, float)
                 .fillna(0)
-                .astype(int)
+                .pipe(safe_astype, int)
             )
 
-        # Convert 'producers', 'genres', 'keywords' to lists if they exist
         for col in ["producers", "genres", "keywords"]:
             if col in df.columns:
                 df[col] = (
                     df[col]
-                    .fillna(" ")
+                    .fillna(" ")  # ✅ FIXED: no inplace
                     .astype(str)
                     .str.split(r",\s*")
                     .apply(
@@ -160,12 +170,14 @@ def preprocess_data(df: pd.DataFrame) -> pd.DataFrame:
                     )
                 )
 
-        # Drop rows with unknown rating (if the 'rating' column exists)
         if "rating" in df.columns:
             df = df[df["rating"] != "unknown"]
 
-        # Drop unnecessary columns: 'rating_x' and 'age' if they exist
-        df = df.drop(columns=["rating_x", "age"], errors="ignore")
+        df.drop(
+            columns=["rating_x", "age", "duration", "birthday", "age"],
+            errors="ignore",
+            inplace=True,
+        )
 
         return df
 

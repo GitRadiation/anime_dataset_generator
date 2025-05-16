@@ -1,54 +1,73 @@
 import csv
+import json
+import uuid
 from contextlib import contextmanager
-from typing import Generator
+from typing import Generator, Optional
 
+import numpy as np
 from sqlalchemy import Connection, create_engine, text
+from sqlalchemy.engine import Engine
 
 from genetic_rule_miner.config import DBConfig
 from genetic_rule_miner.utils.exceptions import DatabaseError
 from genetic_rule_miner.utils.logging import LogManager
+from genetic_rule_miner.utils.rule import Rule
 
 logger = LogManager.get_logger(__name__)
 
 
 class DatabaseManager:
-    """Unified database interface using SQLAlchemy with PostgreSQL."""
+    """Singleton Database Manager using SQLAlchemy for PostgreSQL."""
+
+    _instance = None
+
+    _engine: Optional[Engine] = None
+
+    def __new__(cls, config: DBConfig) -> "DatabaseManager":
+        if cls._instance is None:
+            cls._instance = super(DatabaseManager, cls).__new__(cls)
+            cls._instance._initialized = False
+        return cls._instance
 
     def __init__(self, config: DBConfig) -> None:
-        """Initialize with configuration."""
+        if self._initialized:
+            return
         self.config = config
         self._engine = None
         self._session_factory = None
         self.initialize()
+        self._initialized = True
 
     def __del__(self) -> None:
-        """Clean up resources on destruction."""
         if self._engine:
             logger.info("SQLAlchemy engine closed")
 
     @contextmanager
     def connection(self) -> Generator[Connection, None, None]:
-        """Provide a database connection from the SQLAlchemy engine."""
         connection = None
         try:
             if self._engine:
-                connection = self._engine.connect()  # Create a raw connection
-                yield connection  # Yield the connection
+                connection = self._engine.connect()
+                yield connection
+                connection.commit()  # Commit to persist changes
             else:
                 raise DatabaseError("Database engine not initialized")
         except Exception as e:
             logger.error("Database connection error", exc_info=True)
             raise DatabaseError("Connection failed") from e
+        finally:
+            if connection:
+                connection.close()
 
     def initialize(self) -> None:
-        """Initialize SQLAlchemy engine and session factory."""
         self._init_sqlalchemy_engine()
 
     def _init_sqlalchemy_engine(self) -> None:
-        """Initialize SQLAlchemy engine with PostgreSQL connection."""
         try:
-            # Create the SQLAlchemy engine for PostgreSQL
-            conn_str = f"postgresql+psycopg2://{self.config.user}:{self.config.password}@{self.config.host}:{self.config.port}/{self.config.database}"
+            conn_str = (
+                f"postgresql+psycopg2://{self.config.user}:{self.config.password}"
+                f"@{self.config.host}:{self.config.port}/{self.config.database}"
+            )
             self._engine = create_engine(conn_str)
             logger.info("SQLAlchemy engine initialized")
         except Exception as e:
@@ -67,7 +86,6 @@ class DatabaseManager:
         conflict_action,
         update_clause=None,
     ) -> str:
-        """Construct the SQL query for inserting or updating data."""
         placeholders = ", ".join([f":{col}" for col in columns])
 
         if conflict_columns:
@@ -101,12 +119,9 @@ class DatabaseManager:
     def copy_from_buffer(
         self, conn: Connection, buffer, table: str, conflict_action="DO UPDATE"
     ) -> None:
-        """Copy data from the buffer to the PostgreSQL table."""
         buffer.seek(0)
         reader = csv.DictReader(buffer)
         columns = reader.fieldnames
-
-        # Determine conflict columns based on table
         table_conflict_columns = self._get_conflict_columns(table)
 
         for row in reader:
@@ -114,17 +129,54 @@ class DatabaseManager:
                 key: None if value == "\\N" else value
                 for key, value in row.items()
             }
-
-            # Construct the SQL query for the insert or update operation
             sql = self._construct_sql(
                 table, columns, table_conflict_columns, conflict_action
             )
-
-            # Execute the query using the raw connection
             conn.execute(text(sql), cleaned_row)
 
+    def save_rules(self, rules: list[Rule], table: str = "rules") -> None:
+        """
+        Save Rule objects to the PostgreSQL database.
+        """
+        with self.connection() as conn:
+            # Preparar todos los datos primero
+            insert_data = []
+            for rule in rules:
+                user_conditions = [
+                    {"column": col, "operator": op, "value": value}
+                    for col, (op, value) in rule.conditions[0]
+                ]
+                other_conditions = [
+                    {"column": col, "operator": op, "value": value}
+                    for col, (op, value) in rule.conditions[1]
+                ]
+
+                insert_data.append(
+                    {
+                        "rule_id": str(uuid.uuid4()),
+                        "conditions": json.dumps(
+                            {
+                                "user_conditions": user_conditions,
+                                "other_conditions": other_conditions,
+                            }
+                        ),
+                        "target_value": rule.target.item(),
+                    }
+                )
+
+            # Insertar todo en una sola operación
+            conn.execute(
+                text(
+                    f"""
+                    INSERT INTO {table} (rule_id, conditions, target_value)
+                    VALUES (:rule_id, :conditions, :target_value)
+                """
+                ),
+                insert_data,  # Ejecución como batch
+            )
+            conn.commit()
+
     def _get_conflict_columns(self, table: str) -> list:
-        """Return the list of conflict columns based on the table."""
         if table == "user_score":
             return ["user_id", "anime_id"]
         elif table == "anime_dataset":
@@ -132,4 +184,4 @@ class DatabaseManager:
         elif table == "user_details":
             return ["mal_id"]
         else:
-            return []  # Default to no conflict resolution
+            return []
