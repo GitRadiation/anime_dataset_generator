@@ -129,7 +129,7 @@ DECLARE
     user_conds TEXT;
     other_conds TEXT;
 BEGIN
-    CREATE TEMP TABLE rules_to_delete (
+    CREATE TEMP TABLE IF NOT EXISTS rules_to_delete (
         rule_id UUID,
         confidence FLOAT
     ) ON COMMIT DROP;

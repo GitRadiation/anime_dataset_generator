@@ -166,13 +166,13 @@ def main():
 
         # 1. Retrieve anime data
         logger.info("📡 Retrieving anime data...")
-        anime_buffer = AnimeService(api_config).get_anime_data(1, 100)
+        anime_buffer = AnimeService(api_config).get_anime_data(1, 200)
 
         # 2. Generate user list
         logger.info("📡 Generating user list...")
         user_service = UserService(api_config)
         userlist_buffer = user_service.generate_userlist(
-            start_id=1, end_id=100
+            start_id=1, end_id=200
         )
 
         # 3. Prepare data for ScoreService
