@@ -98,7 +98,7 @@ class GeneticRuleMiner:
         self._condition_cache: dict[tuple, tuple[np.ndarray, float]] = (
             {}
         )  # {condition: (mask, timestamp)}
-        self.cache_expiration = 300  # 5 minutos en segundos
+        self.cache_expiration = 150  # 2'5 minutos en segundos
 
     def _check_cache_expiration(self, cache_dict, key):
         """Verifica si una entrada del caché ha expirado y la elimina si es así."""
@@ -668,7 +668,7 @@ class GeneticRuleMiner:
             # Early stopping si se cubre un gran porcentaje
             threshold = 0.9
             num_above_threshold = np.sum(fitness_scores >= threshold)
-            if num_above_threshold >= 0.9 * self.pop_size and len(
+            if num_above_threshold >= threshold * self.pop_size and len(
                 ids_set
             ) >= 0.4 * len(self.targets):
                 logger.info(
@@ -732,52 +732,19 @@ class GeneticRuleMiner:
             used_indices = set()
             for target_id, elite_rules in elite_rules_by_target.items():
                 for elite_rule in elite_rules:
-                    if all(
-                        tuple(
-                            [
-                                col
-                                for col, _ in elite_rule.conditions[0]
-                                + elite_rule.conditions[1]
-                            ]
+                    while True:
+                        random_index = self.rng.integers(
+                            len(new_population)
                         )
-                        + tuple(
-                            [
-                                cond
-                                for _, cond in elite_rule.conditions[0]
-                                + elite_rule.conditions[1]
-                            ]
+                        if random_index not in used_indices:
+                            used_indices.add(random_index)
+                            break
+                        available_indices = (
+                            set(range(len(new_population))) - used_indices
                         )
-                        + (elite_rule.target,)
-                        != tuple(
-                            [
-                                col
-                                for col, _ in rule.conditions[0]
-                                + rule.conditions[1]
-                            ]
-                        )
-                        + tuple(
-                            [
-                                cond
-                                for _, cond in rule.conditions[0]
-                                + rule.conditions[1]
-                            ]
-                        )
-                        + (rule.target,)
-                        for rule in new_population
-                    ):
-                        while True:
-                            random_index = self.rng.integers(
-                                len(new_population)
-                            )
-                            if random_index not in used_indices:
-                                used_indices.add(random_index)
-                                break
-                            available_indices = (
-                                set(range(len(new_population))) - used_indices
-                            )
-                            if not available_indices:
-                                break
-                        new_population[int(random_index)] = elite_rule
+                        if not available_indices:
+                            break
+                    new_population[int(random_index)] = elite_rule
 
             self.population = new_population
             self._update_tracking(generation)
