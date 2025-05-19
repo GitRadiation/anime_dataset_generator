@@ -647,7 +647,7 @@ class GeneticRuleMiner:
 
             logger.info(
                 f"Generation {generation}: {num_high_fitness} rules with fitness >= 0.9, "
-                f"{num_unique_ids} unique target IDs with fitness >= 0.9; {ids_set}"
+                f"{num_unique_ids}/{len(self.targets)} unique target IDs with fitness >= 0.9; {ids_set}"
             )
 
             # Early stopping si se cubre un gran porcentaje
