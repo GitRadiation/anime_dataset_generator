@@ -174,7 +174,8 @@ def main():
         userlist_buffer = user_service.generate_userlist(
             start_id=1, end_id=200
         )
-
+        # Save userlist as XML for external use
+        userlist_buffer.seek(0)
         # 3. Prepare data for ScoreService
         logger.info("📡 Preparing user data...")
         userlist_df = pd.read_csv(userlist_buffer)
@@ -189,12 +190,7 @@ def main():
         details_service = DetailsService(api_config)
         details_buffer = details_service.get_user_details(usernames)
 
-        # 5. Retrieve scores
-        logger.info("📡 Retrieving user scores...")
-        score_service = ScoreService(api_config)
-        scores_buffer = score_service.get_scores(modified_userlist_buffer)
-
-        if all([anime_buffer, details_buffer, scores_buffer]):
+        if all([anime_buffer, details_buffer]):
             logger.info("✅ Successfully retrieved base data")
             break
         else:
@@ -226,9 +222,6 @@ def main():
         )
         details_df = pd.read_csv(
             StringIO(details_buffer.getvalue().decode("utf-8"))
-        )
-        scores_df = pd.read_csv(
-            StringIO(scores_buffer.getvalue().decode("utf-8"))
         )
         # Processing
         anime_df["premiered"] = anime_df["premiered"].apply(clean_premiered)
@@ -273,6 +266,7 @@ def main():
         details_df.rename(
             columns={
                 "Mal ID": "mal_id",
+                "Username": "username",
                 "Days Watched": "days_watched",
                 "Mean Score": "mean_score",
                 "Total Entries": "total_entries",
@@ -296,6 +290,7 @@ def main():
                 "gender",
                 "days_watched",
                 "mean_score",
+                "username",
                 "birthday",
                 "watching",
                 "completed",
@@ -320,33 +315,55 @@ def main():
             float_columns=["days_watched", "mean_score"],
         )
 
-        scores_df.rename(
-            columns={
-                "User ID": "user_id",
-                "Anime ID": "anime_id",
-                "Score": "rating_x",
-            },
-            inplace=True,
-        )
-
-        scores_df = preprocess_data(scores_df)
-        scores_df = scores_df[scores_df["rating"] == "high"]
-
-        valid_anime_ids = anime_df["anime_id"].dropna().unique().tolist()
-        scores_buffer = preprocess_user_score(
-            scores_df,
-            columns_to_keep=["user_id", "anime_id", "rating"],
-            integer_columns=["user_id", "anime_id"],
-            valid_anime_ids=valid_anime_ids,
-        )
-
         with db.connection() as conn:
             with conn.begin():
                 db.copy_from_buffer(conn, anime_buffer, "anime_dataset")
                 db.copy_from_buffer(conn, details_buffer, "user_details")
+
+            users_csv_buffer = db.export_users_to_csv_buffer()
+            # 5. Retrieve scores
+            for attempt in range(1, max_retries + 1):
+                logger.info("📡 Retrieving user scores...")
+                score_service = ScoreService(api_config)
+                scores_buffer = score_service.get_scores(users_csv_buffer)
+                if all(scores_buffer):
+                    logger.info("✅ Successfully retrieved scores data")
+                    break
+                else:
+                    logger.warning(
+                        f"⚠️ Empty data on attempt {attempt}. Retrying in {retry_delay} seconds..."
+                    )
+                    time.sleep(retry_delay)
+            else:
+                logger.error(
+                    "🚨 Failed to retrieve base data after multiple attempts. Exiting program."
+                )
+                return
+            scores_df = pd.read_csv(
+                StringIO(scores_buffer.getvalue().decode("utf-8"))
+            )
+            scores_df.rename(
+                columns={
+                    "User ID": "user_id",
+                    "Anime ID": "anime_id",
+                    "Score": "rating_x",
+                },
+                inplace=True,
+            )
+
+            scores_df = preprocess_data(scores_df)
+            scores_df = scores_df[scores_df["rating"] == "high"]
+
+            valid_anime_ids = anime_df["anime_id"].dropna().unique().tolist()
+            scores_buffer = preprocess_user_score(
+                scores_df,
+                columns_to_keep=["user_id", "anime_id", "rating"],
+                integer_columns=["user_id", "anime_id"],
+                valid_anime_ids=valid_anime_ids,
+            )
+            with conn.begin():
                 db.copy_from_buffer(conn, scores_buffer, "user_score")
 
-        logger.info("✅ Data loading completed successfully")
     except Exception as e:
         logger.error(f"🚨 Critical error: {e}")
         raise

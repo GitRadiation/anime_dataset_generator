@@ -123,9 +123,9 @@ class UserService:
     def get_users(self, user_ids: List[int]) -> BytesIO:
         """Existing method to fetch multiple users (compatibility)"""
         logger.info("Starting user retrieval for IDs: %s", user_ids)
-        buffer = BytesIO()
+        text_buffer = StringIO()
         writer = csv.DictWriter(
-            buffer, fieldnames=["user_id", "username", "user_url"]
+            text_buffer, fieldnames=["user_id", "username", "user_url"]
         )
         writer.writeheader()
 
@@ -144,6 +144,28 @@ class UserService:
             else:
                 logger.warning("User ID %d has no valid data", user_id)
 
-        buffer.seek(0)
+        text_buffer.seek(0)
+        byte_buffer = BytesIO(text_buffer.getvalue().encode("utf-8"))
         logger.info("User retrieval completed")
-        return buffer
+        return byte_buffer
+
+    def userlist_to_xml(self, userlist_buffer):
+        """
+        Converts a CSV buffer of userlist to XML format.
+        """
+        import xml.etree.ElementTree as ET
+
+        import pandas as pd
+
+        userlist_buffer.seek(0)
+        df = pd.read_csv(userlist_buffer)
+        root = ET.Element("users")
+        for _, row in df.iterrows():
+            user_elem = ET.SubElement(root, "user")
+            for col in df.columns:
+                child = ET.SubElement(user_elem, col)
+                child.text = str(row[col])
+        xml_bytes = ET.tostring(root, encoding="utf-8")
+        from io import BytesIO
+
+        return BytesIO(xml_bytes)

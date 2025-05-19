@@ -133,7 +133,7 @@ def preprocess_data(df: pd.DataFrame) -> pd.DataFrame:
             # Ensure birthday is tz-naive as well
             df["birthday"] = df["birthday"].dt.tz_localize(None)
 
-            df["age"] = (today - df["birthday"]).dt.days // 365
+            df["age"] = (today - pd.to_datetime(df["birthday"])).dt.days // 365
 
             df["age_group"] = pd.cut(
                 df["age"],

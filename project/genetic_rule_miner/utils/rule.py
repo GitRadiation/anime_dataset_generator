@@ -1,13 +1,20 @@
+from typing import TypedDict
+
 import numpy as np
+
+
+class Condition(TypedDict):
+    column: str
+    operator: str
+    value: str | int | float
 
 
 class Rule:
     """
     Representa una regla para clasificación basada en condiciones sobre columnas.
     - columns: lista de nombres de columnas de entrada (sin incluir target)
-    - conditions: tuple (user_conditions, other_conditions)
-        - user_conditions: list of tuples (col, (op, value)) for user columns
-        - other_conditions: list of tuples (col, (op, value)) for other columns
+    - conditions: dict con claves "user_conditions" y "other_conditions", cada una lista de tuplas (col, (op, value))
+        o lista de Condition (TypedDict) para compatibilidad.
     - target: valor objetivo al que apunta la regla
     """
 
@@ -24,6 +31,7 @@ class Rule:
             parsed = []
             for cond in cond_list:
                 if isinstance(cond, dict):
+                    # Assume Condition TypedDict
                     parsed.append(
                         (cond["column"], (cond["operator"], cond["value"]))
                     )

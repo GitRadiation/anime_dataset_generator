@@ -29,6 +29,7 @@ CREATE TABLE anime_dataset (
 
 CREATE TABLE user_details (
     mal_id INTEGER PRIMARY KEY,
+    username VARCHAR(255), -- Necesario para la relación con user_score,
     gender VARCHAR(10),
     age_group VARCHAR(10), -- Grupo de edad: "young", "adult", "senior"
     days_watched NUMERIC(10,2), -- Tiempo en días que el usuario ha visto anime

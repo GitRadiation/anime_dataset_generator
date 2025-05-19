@@ -2,11 +2,12 @@ import csv
 import json
 import uuid
 from contextlib import contextmanager
+from io import BytesIO, StringIO
 from typing import Generator, Optional
 
-import numpy as np
 from sqlalchemy import Connection, create_engine, text
 from sqlalchemy.engine import Engine
+from sqlalchemy.exc import IntegrityError
 
 from genetic_rule_miner.config import DBConfig
 from genetic_rule_miner.utils.exceptions import DatabaseError
@@ -117,7 +118,11 @@ class DatabaseManager:
         return sql
 
     def copy_from_buffer(
-        self, conn: Connection, buffer, table: str, conflict_action="DO UPDATE"
+        self,
+        conn: Connection,
+        buffer: StringIO,
+        table: str,
+        conflict_action="DO UPDATE",
     ) -> None:
         buffer.seek(0)
         reader = csv.DictReader(buffer)
@@ -132,7 +137,20 @@ class DatabaseManager:
             sql = self._construct_sql(
                 table, columns, table_conflict_columns, conflict_action
             )
-            conn.execute(text(sql), cleaned_row)
+            try:
+                conn.execute(text(sql), cleaned_row)
+            except IntegrityError as e:
+                # Detectar errores de clave foránea (puedes ajustar según el mensaje)
+                if "foreign key constraint" in str(e.orig).lower():
+                    logger.warning(
+                        f"Skipping row due to foreign key violation: {cleaned_row}"
+                    )
+                    continue
+                else:
+                    # Para otros errores, relanzar o manejar según necesites
+                    logger.error(f"Database error on row {cleaned_row}: {e}")
+                    raise
+        logger.info("✅ Data loading completed successfully")
 
     def save_rules(self, rules: list[Rule], table: str = "rules") -> None:
         """
@@ -185,3 +203,30 @@ class DatabaseManager:
             return ["mal_id"]
         else:
             return []
+
+    def export_users_to_csv_buffer(
+        self, table: str = "user_details"
+    ) -> BytesIO:
+        """
+        Export mal_id, username y user_url desde la tabla indicada a un buffer CSV en memoria.
+        """
+        # Ajusta los nombres de columnas según tu tabla real
+        columns = ["mal_id", "username"]
+        query = f"SELECT {', '.join(columns)} FROM {table}"
+
+        buffer = StringIO()
+        writer = csv.writer(buffer)
+        writer.writerow(["mal_id", "username", "user_url"])
+
+        with self.connection() as conn:
+            result = conn.execute(text(query))
+            print(result)
+            for row in result.mappings():
+                mal_id = row.get("mal_id")
+                username = row.get("username")
+
+                user_url = f"https://myanimelist.net/profile/{username}"
+                writer.writerow([mal_id, username, user_url])
+
+        buffer.seek(0)
+        return BytesIO(buffer.getvalue().encode("utf-8"))
