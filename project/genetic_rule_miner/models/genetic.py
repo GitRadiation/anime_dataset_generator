@@ -5,13 +5,13 @@ import itertools
 import random
 import time
 from collections import defaultdict
-from collections.abc import Mapping, MutableSequence, Sequence
+from collections.abc import MutableSequence, Sequence
 from functools import partial, wraps
 from typing import Optional
 
 import numpy as np
 import pandas as pd
-from numpy.random import Generator
+from cachetools import LRUCache
 
 from genetic_rule_miner.utils.logging import LogManager
 from genetic_rule_miner.utils.rule import Condition, Rule
@@ -21,14 +21,13 @@ logger = LogManager.get_logger(__name__)
 
 # El decorador para cachear las condiciones
 def make_hashable(obj):
-    """Recursivamente convierte listas/diccionarios/sets a tuplas para el hashing."""
-    if isinstance(obj, (tuple, list)):
-        return tuple(make_hashable(e) for e in obj)
+    if isinstance(obj, (list, tuple)):
+        return tuple(make_hashable(x) for x in obj)
     elif isinstance(obj, dict):
         return tuple(sorted((k, make_hashable(v)) for k, v in obj.items()))
-    elif isinstance(obj, set):
-        return tuple(sorted(make_hashable(e) for e in obj))
-    return obj  # caso base (int, str, etc.)
+    elif isinstance(obj, np.ndarray):
+        return obj.tobytes()  # Más eficiente para arrays
+    return obj
 
 
 def cache_conditions(method):
@@ -49,12 +48,6 @@ def cache_conditions(method):
 
 
 class GeneticRuleMiner:
-    OPERATOR_MAP = {
-        "<": "less than",
-        ">=": "greater or equal than",
-        "==": "equals",
-    }
-
     def __init__(
         self,
         df: pd.DataFrame,
@@ -65,41 +58,37 @@ class GeneticRuleMiner:
         mutation_rate: float = 0.10,
         random_seed: Optional[int] = None,
     ):
-        # Drop the 'rating' column
-        df = df.drop(columns=["rating"])
-
-        # Set the target to a randomly selected series ID
+        # Optimizar DataFrame primero
+        df = self._optimize_dataframe(df.drop(columns=["rating"]))
+        
         self.target = target
-        if self.target not in df.columns:
-            raise ValueError(
-                "The DataFrame must contain a 'series_id' column."
-            )
-
         self.targets = df[target].unique()
         self.df = df
         self.pop_size = pop_size
         self.generations = generations
         self.mutation_rate = mutation_rate
-
         self.user_cols = [col for col in user_cols if col in df.columns]
 
-        if not self.user_cols:
-            raise ValueError("No valid user columns provided.")
-
-        self.rng: Generator = np.random.default_rng(random_seed)
-
-        self.population: MutableSequence[Rule] = []
-        self.best_fitness_history: MutableSequence[float] = []
-
+        self.rng = np.random.default_rng(random_seed)
+        
+        # Estructuras más eficientes
+        self.population = np.empty(pop_size, dtype=object)
+        self.best_fitness_history = np.zeros(generations)
+        
+        # Cachés con límite de tamaño
+        self._fitness_cache = LRUCache(maxsize=1000)  # Limitar a 1000 entradas
+        self._condition_cache = LRUCache(maxsize=5000)  # Limitar a 5000 entradas
+        self.cache_expiration = 60 * 2.5
+        
         self._initialize_data_structures()
-        self._fitness_cache: dict[int, tuple[float, float]] = (
-            {}
-        )  # {hash: (fitness, timestamp)}
-        self._condition_cache: dict[tuple, tuple[np.ndarray, float]] = (
-            {}
-        )  # {condition: (mask, timestamp)}
-        self.cache_expiration = 150  # 2'5 minutos en segundos
-
+    
+    def _optimize_dataframe(self, df):
+        for col in df.select_dtypes(include=['int64']):
+            df[col] = pd.to_numeric(df[col], downcast='integer')
+        for col in df.select_dtypes(include=['float64']):
+            df[col] = pd.to_numeric(df[col], downcast='float')
+        return df
+    
     def _check_cache_expiration(self, cache_dict, key):
         """Verifica si una entrada del caché ha expirado y la elimina si es así."""
         if key in cache_dict:
@@ -110,21 +99,23 @@ class GeneticRuleMiner:
             return value
         return None
 
-    def _initialize_data_structures(self) -> None:
+    def _initialize_data_structures(self):
         self._numeric_cols = self._get_numeric_cols()
         self._categorical_cols = self._get_categorical_cols()
-
-        # Se calculan los percentiles para las columnas numéricas
-        # para crear las condiciones de  < y >=
-        self._percentiles: Mapping[str, np.ndarray] = {
+        
+        # Usar float32 para percentiles
+        self._percentiles = {
             col: np.percentile(
-                self.df[col].dropna().to_numpy(dtype=float),
+                self.df[col].dropna().to_numpy(dtype=np.float32),
                 np.arange(25, 76, 25),
+                method='midpoint'
             )
             for col in self._numeric_cols
         }
-
-        self.population = self._init_population()
+        
+        # Inicializar población usando array NumPy
+        for i in range(self.pop_size):
+            self.population[i] = self._create_rule()
 
     def _deduplicate_conditions(self, user_conditions, other_conditions):
         """Ensure conditions are unique within each group, keeping the last occurrence."""
@@ -347,16 +338,9 @@ class GeneticRuleMiner:
         support_conditions_and_target = np.sum(conditions_mask & target_mask)
         return support_conditions_and_target / support_conditions
 
-    def _format_condition(self, col: str, op: str, value: object) -> str:
-        readable_op = self.OPERATOR_MAP.get(op, op)
-        return (
-            f"{col} {readable_op} {value:.2f}"
-            if col in self._numeric_cols
-            else f"{col} {readable_op} '{value}'"
-        )
-
     def mutate(self, rule: Rule) -> Rule:
-        new_rule = copy.deepcopy(rule)
+        new_rule = copy.copy(rule)  # Usar copy() en lugar de deepcopy()
+        new_rule.conditions = copy.deepcopy(rule.conditions)
         total_conds = len(new_rule.conditions[0]) + len(new_rule.conditions[1])
         if total_conds > 0 and self.rng.random() < self.mutation_rate:
             action = self.rng.choice(
@@ -532,8 +516,9 @@ class GeneticRuleMiner:
         selected = []
         tournament_size = 3
         loser_win_prob = 0.2
+        
         for _ in range(self.pop_size):
-            tournament = random.sample(self.population, tournament_size)
+            tournament = random.sample(list(self.population), tournament_size)
             tournament = sorted(
                 tournament,
                 key=lambda rule: self.fitness(rule)
@@ -670,7 +655,7 @@ class GeneticRuleMiner:
             num_above_threshold = np.sum(fitness_scores >= threshold)
             if num_above_threshold >= threshold * self.pop_size and len(
                 ids_set
-            ) >= 0.4 * len(self.targets):
+            ) >= 0.1 * len(self.targets):
                 logger.info(
                     f"Early stopping: {num_above_threshold} rules ({num_above_threshold / self.pop_size:.2%}) "
                     f"have fitness >= {threshold} in generation {generation}, "
@@ -732,19 +717,19 @@ class GeneticRuleMiner:
             used_indices = set()
             for target_id, elite_rules in elite_rules_by_target.items():
                 for elite_rule in elite_rules:
-                    while True:
-                        random_index = self.rng.integers(
-                            len(new_population)
-                        )
-                        if random_index not in used_indices:
-                            used_indices.add(random_index)
-                            break
-                        available_indices = (
-                            set(range(len(new_population))) - used_indices
-                        )
-                        if not available_indices:
-                            break
-                    new_population[int(random_index)] = elite_rule
+                        while True:
+                            random_index = self.rng.integers(
+                                len(new_population)
+                            )
+                            if random_index not in used_indices:
+                                used_indices.add(random_index)
+                                break
+                            available_indices = (
+                                set(range(len(new_population))) - used_indices
+                            )
+                            if not available_indices:
+                                break
+                        new_population[int(random_index)] = elite_rule
 
             self.population = new_population
             self._update_tracking(generation)
@@ -804,9 +789,8 @@ class GeneticRuleMiner:
         fitness_scores = tuple(self._evaluate_population())  # Convert to tuple
         best_rule = self._get_best_individual(fitness_scores)
         best_support = self._vectorized_support(best_rule)
-        self.best_fitness_history.append(
-            fitness_scores[np.argmax(fitness_scores)]
-        )
+        self.best_fitness_history = np.append(self.best_fitness_history, fitness_scores[np.argmax(fitness_scores)])
+
         logger.info(
             f"Generation {generation}: Best Fitness={fitness_scores[np.argmax(fitness_scores)]:.4f}, "
             f"Support={best_support:.4f} "

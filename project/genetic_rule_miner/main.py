@@ -1,5 +1,7 @@
 """Main execution pipeline for genetic rule mining."""
 
+import ast
+
 from genetic_rule_miner.config import DBConfig
 from genetic_rule_miner.data.database import DatabaseManager
 from genetic_rule_miner.data.manager import DataManager
@@ -9,6 +11,36 @@ from genetic_rule_miner.utils.logging import LogManager
 LogManager.configure()
 logger = LogManager.get_logger(__name__)
 
+def convert_text_to_list_column(df, column_name):
+    """
+    Convierte una columna que contiene strings representando listas
+    en una lista real de Python. Si el valor no es una lista válida,
+    la convierte en lista con un solo elemento.
+    """
+    def parse_cell(x):
+        try:
+            # Si es string y comienza con '[', intenta parsear
+            if isinstance(x, str) and x.startswith("["):
+                parsed = ast.literal_eval(x)
+                if isinstance(parsed, list):
+                    # Limpiar elementos vacíos o espacios
+                    return [str(i).strip() for i in parsed if str(i).strip()]
+                else:
+                    return [str(parsed).strip()]
+            elif isinstance(x, str):
+                # No es lista, pero es string: lo convierte en lista de un elemento
+                return [x.strip()] if x.strip() else []
+            elif isinstance(x, list):
+                # Ya es lista
+                return [str(i).strip() for i in x if str(i).strip()]
+            else:
+                # Cualquier otro tipo, convertir a str y poner en lista
+                return [str(x).strip()] if x else []
+        except Exception as e:
+            logger.warning(f"Error parsing column {column_name} value '{x}': {e}")
+            return []
+
+    df[column_name] = df[column_name].fillna("[]").apply(parse_cell)
 
 def main() -> None:
     """Execute the complete rule mining pipeline."""
@@ -33,39 +65,23 @@ def main() -> None:
             user_scores, user_details, anime_data
         )
 
-        # Genetic algorithm execution
-        logger.info("Initializing genetic algorithm...")
-        # Drop rows with unknown rating (if the 'rating' column exists)
+        # Clean merged_data
         if "rating" in merged_data.columns:
             logger.info("Dropping rows with unknown ratings...")
             merged_data = merged_data[merged_data["rating"] != "unknown"]
 
-        # Drop unnecessary columns: 'rating_x' and 'age' if they exist
         logger.info("Dropping unnecessary columns...")
-        import ast
-
-        for col in ["producers", "genres", "keywords"]:
-            if col in merged_data.columns:
-                merged_data[col] = (
-                    merged_data[col]
-                    .fillna("[]")  # String de lista vacía
-                    .astype(str)
-                    .apply(
-                        lambda x: (
-                            ast.literal_eval(x) if x.startswith("[") else [x]
-                        )
-                    )
-                    .apply(
-                        lambda x: (
-                            [i.strip() for i in x if i.strip()]
-                            if isinstance(x, list)
-                            else []
-                        )
-                    )
-                )
         merged_data = merged_data.drop(
             columns=["username", "name", "mal_id", "user_id"], errors="ignore"
         )
+
+        # Convert text columns to list columns
+        for col in ["producers", "genres", "keywords"]:
+            if col in merged_data.columns:
+                logger.info(f"Converting column '{col}' from text to list...")
+                convert_text_to_list_column(merged_data, col)
+
+        # Initialize genetic rule miner
         miner = GeneticRuleMiner(
             df=merged_data,
             target="anime_id",
@@ -91,10 +107,8 @@ def main() -> None:
         else:
             logger.info("No rules with Fitness >= 0.9 were found.")
 
-        # Configuración de la base de datos
+        # Database config and save rules
         db_manager = DatabaseManager(config=db_config)
-
-        # Guardar las reglas en la tabla "rules"
         db_manager.save_rules(rules)
 
     except Exception as e:
