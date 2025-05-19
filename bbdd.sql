@@ -62,63 +62,88 @@ CREATE TABLE rules (
     target_value TEXT NOT NULL
 );
 
-DROP FUNCTION IF EXISTS get_matching_rules(jsonb);
+drop FUNCTION IF EXISTS get_rules_series;
 
-CREATE OR REPLACE FUNCTION get_matching_rules(input JSONB)
-RETURNS TABLE(name VARCHAR) AS $$
+CREATE OR REPLACE FUNCTION get_rules_series(input_data JSONB)
+RETURNS TABLE(nombre TEXT, cantidad INTEGER)
+LANGUAGE plpgsql AS
+$$
+DECLARE
+    regla RECORD;
+    condicion JSONB;
+    cumple BOOLEAN;
+    user_data JSONB;
+    anime_data JSONB;
+    valor_input TEXT;
+    operador TEXT;
+    columna TEXT;
+    valor_regla TEXT;
+    target_id INT;
 BEGIN
+    user_data := input_data->'user';
+
+    CREATE TEMP TABLE reglas_disparadas (
+        target_id INT
+    ) ON COMMIT DROP;
+
+    FOR anime_data IN SELECT * FROM jsonb_array_elements(input_data->'anime_list') LOOP
+        FOR regla IN SELECT * FROM rules LOOP
+            cumple := TRUE;
+
+            -- Verificar condiciones de usuario
+            FOR condicion IN SELECT * FROM jsonb_array_elements(regla.conditions->'user_conditions') LOOP
+                valor_input := user_data->>(condicion->>'column');
+                operador := condicion->>'operator';
+                valor_regla := condicion->>'value';
+
+                IF operador = '<' THEN
+                    IF NOT (valor_input::numeric < valor_regla::numeric) THEN cumple := FALSE; EXIT; END IF;
+                ELSIF operador = '<=' THEN
+                    IF NOT (valor_input::numeric <= valor_regla::numeric) THEN cumple := FALSE; EXIT; END IF;
+                ELSIF operador = '>' THEN
+                    IF NOT (valor_input::numeric > valor_regla::numeric) THEN cumple := FALSE; EXIT; END IF;
+                ELSIF operador = '>=' THEN
+                    IF NOT (valor_input::numeric >= valor_regla::numeric) THEN cumple := FALSE; EXIT; END IF;
+                ELSIF operador = '==' THEN
+                    IF NOT (valor_input = valor_regla) THEN cumple := FALSE; EXIT; END IF;
+                END IF;
+            END LOOP;
+
+            -- Verificar condiciones de anime
+            IF cumple THEN
+                FOR condicion IN SELECT * FROM jsonb_array_elements(regla.conditions->'other_conditions') LOOP
+                    valor_input := anime_data->>(condicion->>'column');
+                    operador := condicion->>'operator';
+                    valor_regla := condicion->>'value';
+
+                    IF operador = '<' THEN
+                        IF NOT (valor_input::numeric < valor_regla::numeric) THEN cumple := FALSE; EXIT; END IF;
+                    ELSIF operador = '<=' THEN
+                        IF NOT (valor_input::numeric <= valor_regla::numeric) THEN cumple := FALSE; EXIT; END IF;
+                    ELSIF operador = '>' THEN
+                        IF NOT (valor_input::numeric > valor_regla::numeric) THEN cumple := FALSE; EXIT; END IF;
+                    ELSIF operador = '>=' THEN
+                        IF NOT (valor_input::numeric >= valor_regla::numeric) THEN cumple := FALSE; EXIT; END IF;
+                    ELSIF operador = '==' THEN
+                        IF NOT (valor_input = valor_regla) THEN cumple := FALSE; EXIT; END IF;
+                    END IF;
+                END LOOP;
+            END IF;
+
+            IF cumple THEN
+                target_id := regla.target_value::int;
+                INSERT INTO reglas_disparadas VALUES (target_id);
+            END IF;
+        END LOOP;
+    END LOOP;
+
     RETURN QUERY
-    SELECT ad.name
-    FROM rules r
-    JOIN anime_dataset ad
-    ON ad.anime_id = r.target_value
-    WHERE (
-        -- Condiciones de user_conditions
-        SELECT bool_and(
-            CASE
-            WHEN cond->>'operator' = '>=' THEN 
-                (input->'user_conditions'->>(cond->>'column'))::numeric >= (cond->>'value')::numeric
-            WHEN cond->>'operator' = '<' THEN 
-                (input->'user_conditions'->>(cond->>'column'))::numeric < (cond->>'value')::numeric
-            WHEN cond->>'operator' = '==' THEN 
-                CASE 
-                WHEN jsonb_typeof(input->'user_conditions'->(cond->>'column')) = 'array' THEN
-                    EXISTS (
-                        SELECT 1
-                        FROM jsonb_array_elements_text(input->'user_conditions'->(cond->>'column')) AS val
-                        WHERE val = cond->>'value'
-                    )
-                ELSE
-                    input->'user_conditions'->>(cond->>'column') = cond->>'value'
-                END
-            ELSE false
-            END
-        )
-        FROM jsonb_array_elements(r.conditions->'user_conditions') AS cond
-    )
-    AND (
-        -- Condiciones de other_conditions
-        SELECT bool_and(
-            CASE
-            WHEN cond->>'operator' = '>=' THEN 
-                (input->'other_conditions'->>(cond->>'column'))::numeric >= (cond->>'value')::numeric
-            WHEN cond->>'operator' = '<' THEN 
-                (input->'other_conditions'->>(cond->>'column'))::numeric < (cond->>'value')::numeric
-            WHEN cond->>'operator' = '==' THEN 
-                CASE 
-                WHEN jsonb_typeof(input->'other_conditions'->(cond->>'column')) = 'array' THEN
-                    EXISTS (
-                        SELECT 1
-                        FROM jsonb_array_elements_text(input->'other_conditions'->(cond->>'column')) AS val
-                        WHERE val = cond->>'value'
-                    )
-                ELSE
-                    input->'other_conditions'->>(cond->>'column') = cond->>'value'
-                END
-            ELSE false
-            END
-        )
-        FROM jsonb_array_elements(r.conditions->'other_conditions') AS cond
-    );
+    SELECT a.name::TEXT, COUNT(*)::INTEGER AS cantidad
+    FROM reglas_disparadas r
+    JOIN anime_dataset a ON a.anime_id = r.target_id
+    GROUP BY a.name
+    ORDER BY cantidad DESC;
+
+
 END;
-$$ LANGUAGE plpgsql;
+$$;

@@ -73,7 +73,6 @@ class GeneticRuleMiner:
         
         # Estructuras más eficientes
         self.population = np.empty(pop_size, dtype=object)
-        self.best_fitness_history = np.zeros(generations)
         
         # Cachés con límite de tamaño
         self._fitness_cache = LRUCache(maxsize=1000)  # Limitar a 1000 entradas
@@ -732,7 +731,6 @@ class GeneticRuleMiner:
                         new_population[int(random_index)] = elite_rule
 
             self.population = new_population
-            self._update_tracking(generation)
             self._reset_population()
 
     def clear_expired_cache(self):
@@ -784,15 +782,3 @@ class GeneticRuleMiner:
                 high_fitness_rules.append(rule)
                 ids_set.add(rule.target)
         return high_fitness_rules, ids_set
-
-    def _update_tracking(self, generation: int) -> None:
-        fitness_scores = tuple(self._evaluate_population())  # Convert to tuple
-        best_rule = self._get_best_individual(fitness_scores)
-        best_support = self._vectorized_support(best_rule)
-        self.best_fitness_history = np.append(self.best_fitness_history, fitness_scores[np.argmax(fitness_scores)])
-
-        logger.info(
-            f"Generation {generation}: Best Fitness={fitness_scores[np.argmax(fitness_scores)]:.4f}, "
-            f"Support={best_support:.4f} "
-            f"Rule: {(best_rule)}"
-        )
