@@ -732,6 +732,7 @@ class GeneticRuleMiner:
 
             self.population = new_population
             self._reset_population()
+            self._update_tracking(generation)
 
     def clear_expired_cache(self):
         """Limpia todas las entradas expiradas de los cachés."""
@@ -782,3 +783,14 @@ class GeneticRuleMiner:
                 high_fitness_rules.append(rule)
                 ids_set.add(rule.target)
         return high_fitness_rules, ids_set
+    
+    def _update_tracking(self, generation: int) -> None:
+        fitness_scores = tuple(self._evaluate_population())  # Convert to tuple
+        best_rule = self._get_best_individual(fitness_scores)
+        best_support = self._vectorized_support(best_rule)
+
+        logger.info(
+            f"Generation {generation}: Best Fitness={fitness_scores[np.argmax(fitness_scores)]:.4f}, "
+            f"Support={best_support:.4f} "
+            f"Rule: {(best_rule)}"
+        )
