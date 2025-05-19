@@ -3,6 +3,7 @@
 import copy
 import itertools
 import random
+import time
 from collections import defaultdict
 from collections.abc import Mapping, MutableSequence, Sequence
 from functools import partial, wraps
@@ -13,15 +14,9 @@ import pandas as pd
 from numpy.random import Generator
 
 from genetic_rule_miner.utils.logging import LogManager
-from genetic_rule_miner.utils.rule import Rule
+from genetic_rule_miner.utils.rule import Condition, Rule
 
 logger = LogManager.get_logger(__name__)
-
-
-# Una condición es un diccionario con keys: column, operator, value
-Condition = (
-    dict  # Ejemplo: {"column": "scored_by", "operator": ">=", "value": 178927}
-)
 
 
 # El decorador para cachear las condiciones
@@ -85,8 +80,6 @@ class GeneticRuleMiner:
         self.pop_size = pop_size
         self.generations = generations
         self.mutation_rate = mutation_rate
-        self._fitness_cache: dict[int, float] = {}
-        self._condition_cache: dict[tuple, np.ndarray] = {}
 
         self.user_cols = [col for col in user_cols if col in df.columns]
 
@@ -99,6 +92,23 @@ class GeneticRuleMiner:
         self.best_fitness_history: MutableSequence[float] = []
 
         self._initialize_data_structures()
+        self._fitness_cache: dict[int, tuple[float, float]] = (
+            {}
+        )  # {hash: (fitness, timestamp)}
+        self._condition_cache: dict[tuple, tuple[np.ndarray, float]] = (
+            {}
+        )  # {condition: (mask, timestamp)}
+        self.cache_expiration = 300  # 5 minutos en segundos
+
+    def _check_cache_expiration(self, cache_dict, key):
+        """Verifica si una entrada del caché ha expirado y la elimina si es así."""
+        if key in cache_dict:
+            value, timestamp = cache_dict[key]
+            if time.time() - timestamp > self.cache_expiration:
+                del cache_dict[key]
+                return None
+            return value
+        return None
 
     def _initialize_data_structures(self) -> None:
         self._numeric_cols = self._get_numeric_cols()
@@ -108,7 +118,8 @@ class GeneticRuleMiner:
         # para crear las condiciones de  < y >=
         self._percentiles: Mapping[str, np.ndarray] = {
             col: np.percentile(
-                self.df[col].dropna().to_numpy(dtype=float), np.arange(25, 76)
+                self.df[col].dropna().to_numpy(dtype=float),
+                np.arange(25, 76, 25),
             )
             for col in self._numeric_cols
         }
@@ -164,7 +175,9 @@ class GeneticRuleMiner:
             self.user_cols, size=num_user_conds, replace=False
         )
         user_conditions = [
-            (col, self._create_condition_tuple(col)) for col in user_cols
+            (col, (cond["operator"], cond["value"]))
+            for col in user_cols
+            for cond in [self._create_condition_tuple(col)]
         ]
 
         # Asegura al menos una condición de otra columna
@@ -176,8 +189,9 @@ class GeneticRuleMiner:
         other_conditions = []
         if other_cols:
             other_col = self.rng.choice(other_cols)
+            cond = self._create_condition_tuple(other_col)
             other_conditions.append(
-                (other_col, self._create_condition_tuple(other_col))
+                (other_col, (cond["operator"], cond["value"]))
             )
 
         # Deduplicar
@@ -199,12 +213,11 @@ class GeneticRuleMiner:
         self._complete_conditions(rule, max_conditions)
         return rule
 
-    def _create_condition_tuple(self, col: str) -> tuple[str, object]:
+    def _create_condition_tuple(self, col: str) -> Condition:
         if col in self._numeric_cols:
             op = self.rng.choice(["<", ">="])
             value = round(float(self.rng.choice(self._percentiles[col])), 2)
-            return (op, value)
-
+            return Condition(column=col, operator=op, value=value)
         else:
             raw_values = self.df[col].dropna()
             all_vals = (
@@ -214,8 +227,10 @@ class GeneticRuleMiner:
             )
             if not all_vals:
                 logger.warning(f"No unique values found for column '{col}'")
-                return ("==", "UNKNOWN")
-            return ("==", str(self.rng.choice(all_vals)))
+                return Condition(column=col, operator="==", value="UNKNOWN")
+            return Condition(
+                column=col, operator="==", value=str(self.rng.choice(all_vals))
+            )
 
     def _add_condition(
         self, rule: Rule, existing_cols, column_pool, user=False
@@ -230,9 +245,9 @@ class GeneticRuleMiner:
         col = self.rng.choice(available_cols)
         cond = self._create_condition_tuple(col)
         if user:
-            rule.conditions[0].append((col, cond))
+            rule.conditions[0].append((col, (cond["operator"], cond["value"])))
         else:
-            rule.conditions[1].append((col, cond))
+            rule.conditions[1].append((col, (cond["operator"], cond["value"])))
         # Deduplicar
         rule.conditions = self._deduplicate_conditions(
             rule.conditions[0], rule.conditions[1]
@@ -268,10 +283,14 @@ class GeneticRuleMiner:
 
     def fitness(self, rule: Rule) -> float:
         rule_key = hash(rule)
-        if rule_key in self._fitness_cache:
-            return self._fitness_cache[rule_key]
+        cached_value = self._check_cache_expiration(
+            self._fitness_cache, rule_key
+        )
+        if cached_value is not None:
+            return cached_value
+
         fitness_value = self._vectorized_confidence(rule)
-        self._fitness_cache[rule_key] = fitness_value
+        self._fitness_cache[rule_key] = (fitness_value, time.time())
         return fitness_value
 
     @cache_conditions
@@ -280,8 +299,11 @@ class GeneticRuleMiner:
         for cond_list in rule.conditions:
             for col, (op, value) in cond_list:
                 condition = (col, op, value)
-                if condition in self._condition_cache:
-                    condition_mask = self._condition_cache[condition]
+                cached_mask = self._check_cache_expiration(
+                    self._condition_cache, condition
+                )
+                if cached_mask is not None:
+                    condition_mask = cached_mask
                 else:
                     col_data = self.df[col].values
                     if op == "<":
@@ -304,7 +326,11 @@ class GeneticRuleMiner:
                             )
                     else:
                         raise ValueError(f"Unsupported operator: {op}")
-                    self._condition_cache[condition] = condition_mask
+
+                    self._condition_cache[condition] = (
+                        condition_mask,
+                        time.time(),
+                    )
                 mask &= condition_mask
         return mask
 
@@ -352,9 +378,10 @@ class GeneticRuleMiner:
                     cond_type = 1 - cond_type
                 idx = self.rng.integers(len(new_rule.conditions[cond_type]))
                 col, _ = new_rule.conditions[cond_type][idx]
+                cond = self._create_condition_tuple(col)
                 new_rule.conditions[cond_type][idx] = (
                     col,
-                    self._create_condition_tuple(col),
+                    (cond["operator"], cond["value"]),
                 )
             elif action == "add":
                 used_cols = set(
@@ -378,13 +405,15 @@ class GeneticRuleMiner:
                 ]
                 if self.rng.random() < 0.5 and unused_user_cols:
                     new_col = self.rng.choice(unused_user_cols)
+                    cond = self._create_condition_tuple(new_col)
                     new_rule.conditions[0].append(
-                        (new_col, self._create_condition_tuple(new_col))
+                        (new_col, (cond["operator"], cond["value"]))
                     )
                 elif unused_other_cols:
                     new_col = self.rng.choice(unused_other_cols)
+                    cond = self._create_condition_tuple(new_col)
                     new_rule.conditions[1].append(
-                        (new_col, self._create_condition_tuple(new_col))
+                        (new_col, (cond["operator"], cond["value"]))
                     )
             elif action == "remove" and total_conds > 2:
                 # Remove from user or other
@@ -477,8 +506,9 @@ class GeneticRuleMiner:
         other_present = len(rule.conditions[1]) > 0
         if not user_present:
             user_col = self.rng.choice(self.user_cols)
+            cond = self._create_condition_tuple(user_col)
             rule.conditions[0].append(
-                (user_col, self._create_condition_tuple(user_col))
+                (user_col, (cond["operator"], cond["value"]))
             )
         if not other_present:
             other_cols = [
@@ -488,8 +518,9 @@ class GeneticRuleMiner:
             ]
             if other_cols:
                 other_col = self.rng.choice(other_cols)
+                cond = self._create_condition_tuple(other_col)
                 rule.conditions[1].append(
-                    (other_col, self._create_condition_tuple(other_col))
+                    (other_col, (cond["operator"], cond["value"]))
                 )
         # Deduplicar
         rule.conditions = self._deduplicate_conditions(
@@ -542,10 +573,11 @@ class GeneticRuleMiner:
         for rule in self.population:
             rule_key = hash(rule)
             if rule_key not in self._fitness_cache:
-                self._fitness_cache[rule_key] = self._vectorized_confidence(
-                    rule
+                self._fitness_cache[rule_key] = (
+                    self._vectorized_confidence(rule),
+                    time.time(),
                 )
-            fitness_scores.append(self._fitness_cache[rule_key])
+            fitness_scores.append(self._fitness_cache[rule_key][0])
         return np.array(fitness_scores)
 
     def _get_best_individual(
@@ -750,6 +782,28 @@ class GeneticRuleMiner:
             self.population = new_population
             self._update_tracking(generation)
             self._reset_population()
+
+    def clear_expired_cache(self):
+        """Limpia todas las entradas expiradas de los cachés."""
+        current_time = time.time()
+
+        # Limpiar _fitness_cache
+        expired_keys = [
+            k
+            for k, (_, timestamp) in self._fitness_cache.items()
+            if current_time - timestamp > self.cache_expiration
+        ]
+        for k in expired_keys:
+            del self._fitness_cache[k]
+
+        # Limpiar _condition_cache
+        expired_keys = [
+            k
+            for k, (_, timestamp) in self._condition_cache.items()
+            if current_time - timestamp > self.cache_expiration
+        ]
+        for k in expired_keys:
+            del self._condition_cache[k]
 
     def get_elite_rules_by_target(self, threshold: float = 0.9) -> dict:
         """

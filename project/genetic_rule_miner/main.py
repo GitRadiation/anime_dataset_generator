@@ -63,7 +63,9 @@ def main() -> None:
                         )
                     )
                 )
-
+        merged_data = merged_data.drop(
+            columns=["username", "name", "mal_id", "user_id"], errors="ignore"
+        )
         miner = GeneticRuleMiner(
             df=merged_data,
             target="anime_id",

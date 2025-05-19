@@ -4,6 +4,7 @@ from typing import Tuple
 
 import numpy as np
 import pandas as pd
+from sqlalchemy.engine.base import Connection
 
 from genetic_rule_miner.config import DBConfig
 from genetic_rule_miner.data.database import DatabaseManager
@@ -30,7 +31,7 @@ class DataManager:
         self._initialized = True
 
     def _load_and_clean_data(
-        self, table_name: str, conn: object
+        self, table_name: str, conn: Connection
     ) -> pd.DataFrame:
         """Load data from a table and preprocess it."""
         data = pd.read_sql(f"SELECT * FROM {table_name}", conn)
