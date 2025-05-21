@@ -513,64 +513,6 @@ class GeneticRuleMiner:
             selected.append(candidate)
         return selected
 
-    def _create_new_generation(
-        self,
-        parents: Sequence[Rule],
-        best_rule: Optional[Rule] = None,
-        valid_rules: Sequence[Rule] = (),
-    ) -> MutableSequence[Rule]:
-        new_population: MutableSequence[Rule] = []
-        seen_rules = set()
-
-        # 1. Añadir la mejor regla sin mutar (elitismo)
-        if best_rule is not None:
-            new_population.append(best_rule)
-            seen_rules.add(best_rule)
-
-        # 2. Añadir reglas válidas únicas (sin mutar)
-        for rule in valid_rules:
-            if rule not in seen_rules and rule != best_rule:
-                new_population.append(rule)
-                seen_rules.add(rule)
-
-        # 3. Generar hijos por crossover y mutación hasta llenar población
-        i = 0
-        while len(new_population) < self.pop_size and i < len(parents) - 1:
-            child1, child2 = self.crossover(parents[i], parents[i + 1])
-            child1 = self.mutate(child1)
-            child2 = self.mutate(child2)
-
-            if (
-                child1 not in seen_rules
-                and len(new_population) < self.pop_size
-            ):
-                new_population.append(child1)
-                seen_rules.add(child1)
-            if (
-                child2 not in seen_rules
-                and len(new_population) < self.pop_size
-            ):
-                new_population.append(child2)
-                seen_rules.add(child2)
-            i += 2
-
-        # 4. Si hay padres sin usar y aún falta población, mutar y agregar
-        if len(new_population) < self.pop_size and i == len(parents) - 1:
-            last_parent = self.mutate(parents[-1])
-            if last_parent not in seen_rules:
-                new_population.append(last_parent)
-
-        # 5. Si aún falta población (raro), rellena con nuevas reglas aleatorias
-        while len(new_population) < self.pop_size:
-            new_rule = self._create_rule(
-                best_rule.target if best_rule else parents[0].target
-            )
-            if new_rule not in seen_rules:
-                new_population.append(new_rule)
-                seen_rules.add(new_rule)
-
-        return new_population
-
     def _evaluate_population(self, population: Sequence[Rule]) -> np.ndarray:
         fitness_scores = []
         for rule in population:
@@ -603,11 +545,60 @@ class GeneticRuleMiner:
         else:
             raise ValueError("No best individual found in the population.")
 
+    def _create_new_generation(
+        self,
+        parents: Sequence[Rule],
+        valid_rules: Sequence[Rule] = (),
+    ) -> MutableSequence[Rule]:
+        new_population: MutableSequence[Rule] = []
+        seen_rules = set()
+
+        # 1. Añadir reglas válidas únicas sin mutar
+        for rule in valid_rules:
+            if rule not in seen_rules:
+                new_population.append(rule)
+                seen_rules.add(rule)
+
+        # 2. Generar hijos por crossover y mutación hasta llenar población
+        i = 0
+        while len(new_population) < self.pop_size and i < len(parents) - 1:
+            child1, child2 = self.crossover(parents[i], parents[i + 1])
+            child1 = self.mutate(child1)
+            child2 = self.mutate(child2)
+
+            if (
+                child1 not in seen_rules
+                and len(new_population) < self.pop_size
+            ):
+                new_population.append(child1)
+                seen_rules.add(child1)
+            if (
+                child2 not in seen_rules
+                and len(new_population) < self.pop_size
+            ):
+                new_population.append(child2)
+                seen_rules.add(child2)
+            i += 2
+
+        # 3. Si hay padres sin usar y aún falta población, mutar y agregar
+        if len(new_population) < self.pop_size and i == len(parents) - 1:
+            last_parent = self.mutate(parents[-1])
+            if last_parent not in seen_rules:
+                new_population.append(last_parent)
+
+        # 4. Si aún falta población, rellena con nuevas reglas aleatorias
+        while len(new_population) < self.pop_size:
+            new_rule = self._create_rule(parents[0].target)
+            if new_rule not in seen_rules:
+                new_population.append(new_rule)
+                seen_rules.add(new_rule)
+
+        return new_population
+
     def _reset_population(
         self,
         population: Sequence[Rule],
         target_id: int | np.int64,
-        best_rule: Optional[Rule] = None,
     ) -> Sequence[Rule]:
 
         self._fitness_cache.clear()
@@ -615,9 +606,6 @@ class GeneticRuleMiner:
         seen_rules = set()
         new_population = []
         for rule in population:
-            if best_rule is not None and rule == best_rule:
-                new_population.append(rule)
-                continue
             rule_key = (
                 tuple(
                     [col for col, _ in rule.conditions[0] + rule.conditions[1]]
@@ -632,7 +620,7 @@ class GeneticRuleMiner:
             )
             if self.fitness(rule) == 0 or (
                 rule_key in seen_rules
-                and len(rule_key) == len(next(iter(seen_rules)))
+                and len(rule_key) == len(next(iter(seen_rules), ()))
             ):
                 new_population.append(self._create_rule(target_id))
             else:
@@ -651,9 +639,6 @@ class GeneticRuleMiner:
         generation = 0
         stagnation_counter = 0
         max_stagnation = 250
-        best_rule = None
-        best_fitness = -float("inf")
-        best_confidence = 0.0
         seen_rule_hashes = set()
 
         # Inicializar población específica para este target
@@ -670,19 +655,10 @@ class GeneticRuleMiner:
                 fit = self.fitness(rule)
                 conf = self._vectorized_confidence(rule)
 
-                # Solo reglas válidas
                 if (
                     abs(fit - fitness_threshold) < 1e-6
                     and conf >= confidence_threshold
                 ):
-                    if (
-                        best_rule is None
-                        or fit > best_fitness
-                        or (fit == best_fitness and conf > best_confidence)
-                    ):
-                        best_rule = rule
-                        best_fitness = fit
-                        best_confidence = conf
                     rule_hash = hash(rule)
                     if rule_hash not in seen_rule_hashes:
                         rules_for_target.append(rule)
@@ -707,28 +683,13 @@ class GeneticRuleMiner:
                     f"[Target {target_id}] Estancamiento detectado. Terminando búsqueda."
                 )
                 break
+
             parents = self._select_parents(population)
-            population = self._create_new_generation(
-                parents, best_rule, rules_for_target
-            )
-            population = self._reset_population(
-                population, target_id, best_rule
-            )
+            population = self._create_new_generation(parents, rules_for_target)
+            population = self._reset_population(population, target_id)
             generation += 1
 
         return rules_for_target
-
-    def get_high_fitness_rules(
-        self, population: Sequence[Rule], threshold: float = 0.9
-    ) -> tuple[list[Rule], set]:
-        """Retrieve all rules with fitness >= threshold."""
-        high_fitness_rules = []
-        ids_set = set()
-        for rule in population:
-            if self.fitness(rule) >= threshold:
-                high_fitness_rules.append(rule)
-                ids_set.add(rule.target)
-        return high_fitness_rules, ids_set
 
     def _update_tracking(
         self, generation: int, population: Sequence[Rule]
