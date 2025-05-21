@@ -5,7 +5,6 @@ import itertools
 import random
 import time
 from collections.abc import MutableSequence, Sequence
-from functools import wraps
 from typing import Optional
 
 import numpy as np
@@ -16,34 +15,6 @@ from genetic_rule_miner.utils.logging import LogManager
 from genetic_rule_miner.utils.rule import Condition, Rule
 
 logger = LogManager.get_logger(__name__)
-
-
-# El decorador para cachear las condiciones
-def make_hashable(obj):
-    if isinstance(obj, (list, tuple)):
-        return tuple(make_hashable(x) for x in obj)
-    elif isinstance(obj, dict):
-        return tuple(sorted((k, make_hashable(v)) for k, v in obj.items()))
-    elif isinstance(obj, np.ndarray):
-        return obj.tobytes()  # Más eficiente para arrays
-    return obj
-
-
-def cache_conditions(method):
-    cache_name = f"_{method.__name__}_cache"
-
-    @wraps(method)
-    def wrapper(self, conditions):
-        key = make_hashable(conditions)
-        cache = getattr(self, cache_name, None)
-        if cache is None:
-            cache = {}
-            setattr(self, cache_name, cache)
-        if key not in cache:
-            cache[key] = method(self, conditions)
-        return cache[key]
-
-    return wrapper
 
 
 class GeneticRuleMiner:
@@ -267,17 +238,15 @@ class GeneticRuleMiner:
         self._fitness_cache[rule_key] = (fitness_value, time.time())
         return fitness_value
 
-    @cache_conditions
     def _build_condition_mask(self, rule: Rule) -> np.ndarray:
         mask = np.ones(len(self.df), dtype=bool)
         for cond_list in rule.conditions:
             for col, (op, value) in cond_list:
                 condition = (col, op, value)
-                cached_mask = self._check_cache_expiration(
-                    self._condition_cache, condition
-                )
-                if cached_mask is not None:
-                    condition_mask = cached_mask
+                cached_entry = self._check_cache_expiration(self._condition_cache, condition)
+                if cached_entry is not None:
+                    packed_mask = cached_entry
+                    condition_mask = np.unpackbits(packed_mask)[:len(self.df)].astype(bool)
                 else:
                     col_data = self.df[col].values
                     if op == "<":
@@ -288,23 +257,19 @@ class GeneticRuleMiner:
                         if pd.api.types.is_numeric_dtype(self.df[col]):
                             condition_mask = self.df[col] == float(value)
                         else:
-                            condition_mask = self.df[col].astype(str) == str(
-                                value
-                            )
+                            condition_mask = self.df[col].astype(str) == str(value)
                     elif op == "!=":
                         if pd.api.types.is_numeric_dtype(self.df[col]):
                             condition_mask = self.df[col] != float(value)
                         else:
-                            condition_mask = self.df[col].astype(str) != str(
-                                value
-                            )
+                            condition_mask = self.df[col].astype(str) != str(value)
                     else:
                         raise ValueError(f"Unsupported operator: {op}")
 
-                    self._condition_cache[condition] = (
-                        condition_mask,
-                        time.time(),
-                    )
+                    # Comprimir máscara y guardar
+                    packed_mask = np.packbits(condition_mask.astype(np.uint8))
+                    self._condition_cache[condition] = (packed_mask, time.time())
+
                 mask &= condition_mask
         return mask
 
@@ -681,10 +646,7 @@ class GeneticRuleMiner:
                         rules_for_target.append(rule)
                         seen_rule_keys.add(rule_key)
                         found_new = True
-                        logger.info(
-                            f"[Target {target_id}] Regla válida encontrada en generación {generation}: "
-                            f"Fitness = {fit:.4f}, Confianza = {conf:.4f}, Total acumulado: {len(rules_for_target)}"
-                        )
+                        
 
                         if len(rules_for_target) >= max_rules:
                             break
@@ -692,6 +654,10 @@ class GeneticRuleMiner:
             # Control de estancamiento
             if found_new:
                 stagnation_counter = 0
+                logger.info(
+                            f"[Target {target_id}] Regla válida encontrada en generación {generation}: "
+                            f"Fitness = {fit:.4f}, Confianza = {conf:.4f}, Total acumulado: {len(rules_for_target)}"
+                        )
             else:
                 stagnation_counter += 1
 

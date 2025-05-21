@@ -4,7 +4,7 @@ import ast
 import math
 import time
 import traceback
-from concurrent.futures import ThreadPoolExecutor, as_completed
+from concurrent.futures import ProcessPoolExecutor, as_completed
 
 from genetic_rule_miner.config import DBConfig
 from genetic_rule_miner.data.database import DatabaseManager
@@ -103,7 +103,7 @@ def main() -> None:
             len(targets) / batch_size
         )  # Redondea hacia arriba
         start_time = time.perf_counter()
-        with ThreadPoolExecutor(max_workers=6) as executor:
+        with ProcessPoolExecutor(max_workers=6) as executor:
             for batch_num in range(total_batches):
                 batch_targets = targets[
                     batch_num * batch_size : (batch_num + 1) * batch_size
