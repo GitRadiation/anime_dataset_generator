@@ -95,7 +95,7 @@ def main() -> None:
         # Para almacenar reglas finales
         all_rules = []
 
-        batch_size = 50
+        batch_size = 6
         targets = list(merged_data["anime_id"].unique())
         logger.info(
             f"Total targets to process: {len(targets)}. Batch size: {batch_size}."
