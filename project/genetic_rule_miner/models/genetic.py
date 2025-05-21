@@ -514,30 +514,61 @@ class GeneticRuleMiner:
         return selected
 
     def _create_new_generation(
-        self, parents: Sequence[Rule], best_rule: Optional[Rule] = None
+        self,
+        parents: Sequence[Rule],
+        best_rule: Optional[Rule] = None,
+        valid_rules: Sequence[Rule] = (),
     ) -> MutableSequence[Rule]:
-
         new_population: MutableSequence[Rule] = []
         seen_rules = set()
 
+        # 1. Añadir la mejor regla sin mutar (elitismo)
         if best_rule is not None:
             new_population.append(best_rule)
             seen_rules.add(best_rule)
-        seen_rules = set()
-        for i in range(0, len(parents) - 1, 2):
+
+        # 2. Añadir reglas válidas únicas (sin mutar)
+        for rule in valid_rules:
+            if rule not in seen_rules and rule != best_rule:
+                new_population.append(rule)
+                seen_rules.add(rule)
+
+        # 3. Generar hijos por crossover y mutación hasta llenar población
+        i = 0
+        while len(new_population) < self.pop_size and i < len(parents) - 1:
             child1, child2 = self.crossover(parents[i], parents[i + 1])
             child1 = self.mutate(child1)
             child2 = self.mutate(child2)
-            if child1 not in seen_rules:
+
+            if (
+                child1 not in seen_rules
+                and len(new_population) < self.pop_size
+            ):
                 new_population.append(child1)
                 seen_rules.add(child1)
-            if child2 not in seen_rules:
+            if (
+                child2 not in seen_rules
+                and len(new_population) < self.pop_size
+            ):
                 new_population.append(child2)
                 seen_rules.add(child2)
-        if len(parents) % 2 == 1:
+            i += 2
+
+        # 4. Si hay padres sin usar y aún falta población, mutar y agregar
+        if len(new_population) < self.pop_size and i == len(parents) - 1:
             last_parent = self.mutate(parents[-1])
             if last_parent not in seen_rules:
                 new_population.append(last_parent)
+
+        # 5. Si aún falta población (raro), rellena con nuevas reglas aleatorias
+        while len(new_population) < self.pop_size:
+            new_rule = self._create_rule(
+                best_rule.target if best_rule else parents[0].target
+            )
+            if new_rule not in seen_rules:
+                new_population.append(new_rule)
+                seen_rules.add(new_rule)
+
         return new_population
 
     def _evaluate_population(self, population: Sequence[Rule]) -> np.ndarray:
@@ -633,8 +664,6 @@ class GeneticRuleMiner:
         while (
             len(rules_for_target) < max_rules and generation < self.generations
         ):
-            parents = self._select_parents(population)
-            population = self._create_new_generation(parents, best_rule)
 
             found_new = False
             for rule in population:
@@ -678,7 +707,10 @@ class GeneticRuleMiner:
                     f"[Target {target_id}] Estancamiento detectado. Terminando búsqueda."
                 )
                 break
-
+            parents = self._select_parents(population)
+            population = self._create_new_generation(
+                parents, best_rule, rules_for_target
+            )
             population = self._reset_population(
                 population, target_id, best_rule
             )
