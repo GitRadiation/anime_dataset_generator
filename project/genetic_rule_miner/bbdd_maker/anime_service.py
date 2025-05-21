@@ -58,16 +58,19 @@ class AnimeService:
         )
         return None
 
-    def get_anime_data(self, start_id: int, end_id: int) -> BytesIO:
-        logger.info(
-            "Starting to fetch anime data from ID %d to %d", start_id, end_id
-        )
+    def get_anime_by_id(self, mal_id: int) -> Optional[dict]:
+        """Obtiene los datos de un solo anime por su MAL ID."""
+        return self._fetch_anime(mal_id)
+
+    def get_anime_by_ids(self, mal_ids: list[int]) -> BytesIO:
+        """Obtiene datos de anime por una lista de MAL IDs y los devuelve como CSV en un buffer."""
+        logger.info("Fetching anime data for %d IDs", len(mal_ids))
         buffer = BytesIO()
         records = []
-        r = Rake()  # Inicializar RAKE una sola vez
+        r = Rake()
 
-        for anime_id in range(start_id, end_id + 1):
-            logger.debug("Processing anime with ID %d", anime_id)
+        for anime_id in mal_ids:
+            logger.debug("Processing anime ID %d", anime_id)
             data = self._fetch_anime(anime_id)
             if data:
                 synopsis = data.get("synopsis", "")
@@ -76,12 +79,9 @@ class AnimeService:
                     try:
                         r.extract_keywords_from_text(synopsis)
                         keywords = ", ".join(r.get_ranked_phrases())
-                        logger.debug(
-                            "Extracted keywords for anime ID %d", anime_id
-                        )
                     except Exception as e:
                         logger.error(
-                            "Error extracting keywords for anime ID %d: %s",
+                            "Keyword extraction failed for anime ID %d: %s",
                             anime_id,
                             e,
                         )
@@ -118,14 +118,12 @@ class AnimeService:
                         "members": data.get("members"),
                     }
                 )
-            else:
-                logger.info("No data found for anime ID %d", anime_id)
 
-        logger.info(
-            "Finished fetching anime data. Total records: %d", len(records)
-        )
         df = pd.DataFrame(records)
         df.to_csv(buffer, index=False)
         buffer.seek(0)
         logger.info("Anime data written to buffer")
         return buffer
+
+    def get_anime_data(self, start_id: int, end_id: int) -> BytesIO:
+        return self.get_anime_by_ids(list(range(start_id, end_id + 1)))

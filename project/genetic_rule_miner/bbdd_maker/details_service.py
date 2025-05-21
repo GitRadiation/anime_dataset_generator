@@ -142,3 +142,11 @@ class DetailsService:
                 f"Applying a delay of {self.batch_delay}s to respect API rate limits."
             )
             time.sleep(self.batch_delay)
+
+    def get_user_detail(self, username: str) -> Optional[list]:
+        """Obtiene los detalles de un solo usuario."""
+        return self._fetch_user_data(username)
+
+    def get_users_details(self, usernames: List[str]) -> list:
+        """Obtiene los detalles de múltiples usuarios."""
+        return [self._fetch_user_data(u) for u in usernames]

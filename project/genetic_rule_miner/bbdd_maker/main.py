@@ -174,7 +174,6 @@ def main():
         userlist_buffer = user_service.generate_userlist(
             start_id=1, end_id=200
         )
-        # Save userlist as XML for external use
         userlist_buffer.seek(0)
         # 3. Prepare data for ScoreService
         logger.info("📡 Preparing user data...")
