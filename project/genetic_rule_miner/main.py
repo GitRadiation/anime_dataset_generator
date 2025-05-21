@@ -1,7 +1,6 @@
 """Main execution pipeline for genetic rule mining."""
 
 import ast
-import math
 import time
 import traceback
 from concurrent.futures import ProcessPoolExecutor, as_completed
@@ -50,7 +49,6 @@ def convert_text_to_list_column(df, column_name):
 
     df[column_name] = df[column_name].fillna("[]").apply(parse_cell)
 
-
 def main() -> None:
     """Execute the complete rule mining pipeline."""
     try:
@@ -60,103 +58,101 @@ def main() -> None:
         db_config = DBConfig()
         data_manager = DataManager(db_config)
 
-        # Data loading and preparation
         logger.info("Loading and preprocessing data...")
-        user_details, anime_data, user_scores = (
-            data_manager.load_and_preprocess_data()
-        )
-        # Remove 'rating' column from user_scores if it exists
+        user_details, anime_data, user_scores = data_manager.load_and_preprocess_data()
         if "rating" in user_scores.columns:
             user_scores = user_scores.drop(columns=["rating"])
 
         logger.info("Merging preprocessed data...")
-        merged_data = DataManager.merge_data(
-            user_scores, user_details, anime_data
-        )
+        merged_data = DataManager.merge_data(user_scores, user_details, anime_data)
 
-        # Clean merged_data
         if "rating" in merged_data.columns:
-            logger.info("Dropping rows with unknown ratings...")
             merged_data = merged_data[merged_data["rating"] != "unknown"]
 
-        logger.info("Dropping unnecessary columns...")
         merged_data = merged_data.drop(
             columns=["username", "name", "mal_id", "user_id"], errors="ignore"
         )
 
-        # Convert text columns to list columns
         for col in ["producers", "genres", "keywords"]:
             if col in merged_data.columns:
                 logger.info(f"Converting column '{col}' from text to list...")
                 convert_text_to_list_column(merged_data, col)
 
-        logger.info("Starting evolution process...")
+        logger.info("Preparing rule mining tasks...")
+        db_manager = DatabaseManager(config=db_config)
+        targets = db_manager.get_anime_ids_without_rules()
 
-        # Para almacenar reglas finales
+        total_targets = len(targets)
+        logger.info(f"Total targets to process: {total_targets}")
 
-        batch_size = 6
-        targets = list(merged_data["anime_id"].unique())
-        logger.info(
-            f"Total targets to process: {len(targets)}. Batch size: {batch_size}."
-        )
-        total_batches = math.ceil(
-            len(targets) / batch_size
-        )  # Redondea hacia arriba
         start_time = time.perf_counter()
-        with ProcessPoolExecutor(max_workers=6) as executor:
-            for batch_num in range(total_batches):
-                batch_targets = targets[
-                    batch_num * batch_size : (batch_num + 1) * batch_size
-                ]
+        completed = 0
+        submitted = 0
+        max_workers = 4
+        pending_targets = iter(targets)
 
-                future_to_id = {
-                    executor.submit(
-                        GeneticRuleMiner(
-                            df=merged_data,
-                            target_column="anime_id",
-                            user_cols=user_details.columns.tolist(),
-                            pop_size=720,
-                            generations=10000,
-                        ).evolve_per_target,
-                        target_id,
-                    ): target_id
-                    for target_id in batch_targets
-                }
+        with ProcessPoolExecutor(max_workers=max_workers) as executor:
+            future_to_tid = {}
 
-                try:
-                    for future in as_completed(future_to_id):
-                        tid = future_to_id[future]
-                        try:
-                            result = future.result()
-                            if result:
-                                db_manager = DatabaseManager(config=db_config)
-                                db_manager.save_rules(result)
-                                logger.info(
-                                    f"Target {tid} finished and saved {len(result)} rules."
-                                )
-                            else:
-                                logger.info(
-                                    f"Target {tid} finished with no rules."
-                                )
-                        except Exception as exc:
-                            logger.error(
-                                f"Target {tid} generated an exception: {type(exc).__name__}: {exc}"
-                            )
-                            logger.error(traceback.format_exc())
-                except KeyboardInterrupt:
-                    logger.warning("Proceso interrumpido por usuario (Ctrl+C)")
-                    for future in future_to_id:
-                        future.cancel()
-                    return
-
-                logger.info(
-                    f"Batch {batch_num + 1}/{total_batches} completed."
+            # Lanzamos los primeros hasta completar el pool
+            while submitted < max_workers and submitted < total_targets:
+                tid = next(pending_targets)
+                future = executor.submit(
+                    GeneticRuleMiner(
+                        df=merged_data,
+                        target_column="anime_id",
+                        user_cols=user_details.columns.tolist(),
+                        pop_size=720,
+                        generations=10000,
+                    ).evolve_per_target,
+                    tid,
                 )
+                future_to_tid[future] = tid
+                submitted += 1
+
+            while future_to_tid:
+                for future in as_completed(future_to_tid):
+                    tid = future_to_tid.pop(future)
+                    try:
+                        result = future.result()
+                        if result:
+                            db_manager.save_rules(result)
+                            logger.info(f"✅ Target {tid} finished and saved {len(result)} rules.")
+                        else:
+                            logger.info(f"⚠️ Target {tid} finished with no rules.")
+                    except Exception as exc:
+                        logger.error(f"❌ Target {tid} failed: {type(exc).__name__}: {exc}")
+                        logger.error(traceback.format_exc())
+
+                    completed += 1
+                    if completed % 4 == 0:
+                        logger.info(f"✅ {completed} targets completed.")
+
+                    # Lanzar siguiente target si queda
+                    try:
+                        tid = next(pending_targets)
+                        future = executor.submit(
+                            GeneticRuleMiner(
+                                df=merged_data,
+                                target_column="anime_id",
+                                user_cols=user_details.columns.tolist(),
+                                pop_size=720,
+                                generations=10000,
+                            ).evolve_per_target,
+                            tid,
+                        )
+                        future_to_tid[future] = tid
+                        submitted += 1
+                    except StopIteration:
+                        continue
+
         duration = time.perf_counter() - start_time
-        logger.info(f"Evolution process completed in {duration:.4f} seconds.")
+        logger.info(f"🎉 Evolution process completed in {duration:.2f} seconds. Total targets: {completed}")
+
     except Exception as e:
         logger.error("Pipeline failed: %s", str(e), exc_info=True)
         raise
+
 
 
 if __name__ == "__main__":

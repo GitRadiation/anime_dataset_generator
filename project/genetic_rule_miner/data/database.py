@@ -257,3 +257,16 @@ class DatabaseManager:
 
         buffer.seek(0)
         return BytesIO(buffer.getvalue().encode("utf-8"))
+    
+    def get_anime_ids_without_rules(self) -> list[int]:
+        query = """
+            SELECT a.anime_id
+            FROM anime_dataset a
+            LEFT JOIN rules r ON r.target_value = a.anime_id::TEXT
+            WHERE r.rule_id IS NULL
+        """
+        with self.connection() as conn:
+            result = conn.execute(text(query))
+            return [row["anime_id"] for row in result.mappings()]
+
+
