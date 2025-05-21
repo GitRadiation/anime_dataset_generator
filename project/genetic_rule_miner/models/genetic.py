@@ -514,9 +514,15 @@ class GeneticRuleMiner:
         return selected
 
     def _create_new_generation(
-        self, parents: Sequence[Rule]
+        self, parents: Sequence[Rule], best_rule: Optional[Rule] = None
     ) -> MutableSequence[Rule]:
+
         new_population: MutableSequence[Rule] = []
+        seen_rules = set()
+
+        if best_rule is not None:
+            new_population.append(best_rule)
+            seen_rules.add(best_rule)
         seen_rules = set()
         for i in range(0, len(parents) - 1, 2):
             child1, child2 = self.crossover(parents[i], parents[i + 1])
@@ -567,13 +573,20 @@ class GeneticRuleMiner:
             raise ValueError("No best individual found in the population.")
 
     def _reset_population(
-        self, population: Sequence[Rule], target_id: int | np.int64
+        self,
+        population: Sequence[Rule],
+        target_id: int | np.int64,
+        best_rule: Optional[Rule] = None,
     ) -> Sequence[Rule]:
+
         self._fitness_cache.clear()
         self._condition_cache.clear()
         seen_rules = set()
         new_population = []
         for rule in population:
+            if best_rule is not None and rule == best_rule:
+                new_population.append(rule)
+                continue
             rule_key = (
                 tuple(
                     [col for col, _ in rule.conditions[0] + rule.conditions[1]]
@@ -606,8 +619,10 @@ class GeneticRuleMiner:
         rules_for_target = []
         generation = 0
         stagnation_counter = 0
-        max_stagnation = 100
-
+        max_stagnation = 250
+        best_rule = None
+        best_fitness = -float("inf")
+        best_confidence = 0.0
         seen_rule_hashes = set()
 
         # Inicializar población específica para este target
@@ -619,7 +634,7 @@ class GeneticRuleMiner:
             len(rules_for_target) < max_rules and generation < self.generations
         ):
             parents = self._select_parents(population)
-            population = self._create_new_generation(parents)
+            population = self._create_new_generation(parents, best_rule)
 
             found_new = False
             for rule in population:
@@ -631,6 +646,14 @@ class GeneticRuleMiner:
                     abs(fit - fitness_threshold) < 1e-6
                     and conf >= confidence_threshold
                 ):
+                    if (
+                        best_rule is None
+                        or fit > best_fitness
+                        or (fit == best_fitness and conf > best_confidence)
+                    ):
+                        best_rule = rule
+                        best_fitness = fit
+                        best_confidence = conf
                     rule_hash = hash(rule)
                     if rule_hash not in seen_rule_hashes:
                         rules_for_target.append(rule)
@@ -656,7 +679,9 @@ class GeneticRuleMiner:
                 )
                 break
 
-            population = self._reset_population(population, target_id)
+            population = self._reset_population(
+                population, target_id, best_rule
+            )
             generation += 1
 
         return rules_for_target
