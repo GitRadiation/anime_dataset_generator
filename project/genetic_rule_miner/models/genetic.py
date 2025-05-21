@@ -72,6 +72,7 @@ class GeneticRuleMiner:
 
         # Cachés con límite de tamaño
         self._fitness_cache = LRUCache(maxsize=1000)  # Limitar a 1000 entradas
+
         self._condition_cache = LRUCache(
             maxsize=5000
         )  # Limitar a 5000 entradas

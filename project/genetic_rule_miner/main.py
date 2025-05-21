@@ -90,21 +90,13 @@ def main() -> None:
                 logger.info(f"Converting column '{col}' from text to list...")
                 convert_text_to_list_column(merged_data, col)
 
-        # Initialize genetic rule miner
-        miner = GeneticRuleMiner(
-            df=merged_data,
-            target_column="anime_id",
-            user_cols=user_details.columns.tolist(),
-            pop_size=720,
-            generations=10000,
-        )
         logger.info("Starting evolution process...")
 
         # Para almacenar reglas finales
         all_rules = []
 
         batch_size = 50
-        targets = list(miner.targets)
+        targets = list(merged_data["anime_id"].unique())
         logger.info(
             f"Total targets to process: {len(targets)}. Batch size: {batch_size}."
         )
@@ -117,9 +109,17 @@ def main() -> None:
                 batch_targets = targets[
                     batch_num * batch_size : (batch_num + 1) * batch_size
                 ]
+
                 future_to_id = {
                     executor.submit(
-                        miner.evolve_per_target, target_id
+                        GeneticRuleMiner(
+                            df=merged_data,
+                            target_column="anime_id",
+                            user_cols=user_details.columns.tolist(),
+                            pop_size=720,
+                            generations=10000,
+                        ).evolve_per_target,
+                        target_id,
                     ): target_id
                     for target_id in batch_targets
                 }
