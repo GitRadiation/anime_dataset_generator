@@ -605,7 +605,9 @@ class GeneticRuleMiner:
         stagnation_counter = 0
         max_stagnation = 250
         seen_rule_keys = set()
-
+        logger.info(
+            f"Starting evolution for target {target_id} with max rules {max_rules}"
+        )
         # Inicializar población específica para este target
         population = [
             self._create_rule(target_id) for _ in range(self.pop_size)
