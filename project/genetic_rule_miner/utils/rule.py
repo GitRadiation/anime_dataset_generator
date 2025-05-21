@@ -56,49 +56,8 @@ class Rule:
         conds = user_conds + other_conds
         return f"IF {' AND '.join(conds)} THEN target = {self.target!r}"
 
-    def __eq__(self, other):
-        if not isinstance(other, Rule):
-            return False
-        return (
-            self.conditions == other.conditions and self.target == other.target
-        )
-
-    def __hash__(self):
-        return hash((tuple(tuple(x) for x in self.conditions), self.target))
-
     def __len__(self):
         """
         Devuelve el número de condiciones en la regla.
         """
         return len(self.conditions[0]) + len(self.conditions[1])
-
-    def match(self, instance: dict) -> bool:
-        """
-        Verifica si una instancia (dict columna->valor) cumple la regla.
-        """
-        for cond_list in self.conditions:
-            for col, (op, val) in cond_list:
-                if col not in instance:
-                    return False
-                x = instance[col]
-                if op == "==":
-                    if x != val:
-                        return False
-                elif op == "!=":
-                    if x == val:
-                        return False
-                elif op == "<":
-                    if not x < val:
-                        return False
-                elif op == ">":
-                    if not x > val:
-                        return False
-                elif op == "<=":
-                    if not x <= val:
-                        return False
-                elif op == ">=":
-                    if not x >= val:
-                        return False
-                else:
-                    raise ValueError(f"Operador no soportado: {op}")
-        return True

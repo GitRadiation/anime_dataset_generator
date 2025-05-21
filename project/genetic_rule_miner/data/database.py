@@ -1,3 +1,4 @@
+import ast
 import csv
 import json
 import uuid
@@ -117,6 +118,9 @@ class DatabaseManager:
             """
         return sql
 
+    
+
+    
     def copy_from_buffer(
         self,
         conn: Connection,
@@ -124,16 +128,39 @@ class DatabaseManager:
         table: str,
         conflict_action="DO UPDATE",
     ) -> None:
+        def to_pg_array(arr):
+            def escape_element(el):
+                el = str(el).replace('\\', '\\\\').replace('"', '\\"')
+                # Si el elemento contiene comas, espacios o llaves, lo ponemos entre comillas
+                if any(c in el for c in [',', ' ', '{', '}', '"']):
+                    return f'"{el}"'
+                return el
+            return '{' + ','.join(escape_element(e) for e in arr) + '}'
         buffer.seek(0)
         reader = csv.DictReader(buffer)
         columns = reader.fieldnames
         table_conflict_columns = self._get_conflict_columns(table)
+
+        array_columns = ['genres', 'keywords', 'producers']  # agrega aquí todas las columnas array
 
         for row in reader:
             cleaned_row = {
                 key: None if value == "\\N" else value
                 for key, value in row.items()
             }
+
+            for col in array_columns:
+                if col in cleaned_row and cleaned_row[col]:
+                    try:
+                        # Intentar interpretar string como lista Python
+                        lst = ast.literal_eval(cleaned_row[col])
+                        if isinstance(lst, list):
+                            # Convertir a formato PostgreSQL array: {elem1,elem2,...}
+                            cleaned_row[col] = to_pg_array(lst)
+                    except Exception:
+                        # Si no puede interpretarse como lista, dejar valor tal cual
+                        pass
+
             sql = self._construct_sql(
                 table, columns, table_conflict_columns, conflict_action
             )
