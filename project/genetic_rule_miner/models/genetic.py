@@ -4,9 +4,8 @@ import copy
 import itertools
 import random
 import time
-from collections import defaultdict
 from collections.abc import MutableSequence, Sequence
-from functools import partial, wraps
+from functools import wraps
 from typing import Optional
 
 import numpy as np
@@ -51,7 +50,7 @@ class GeneticRuleMiner:
     def __init__(
         self,
         df: pd.DataFrame,
-        target: str,
+        target_column: str,
         user_cols: Sequence[str],
         pop_size: int = 50,
         generations: int = 100,
@@ -60,9 +59,9 @@ class GeneticRuleMiner:
     ):
         # Optimizar DataFrame primero
         df = self._optimize_dataframe(df.drop(columns=["rating"]))
-        
-        self.target = target
-        self.targets = df[target].unique()
+
+        self.target = target_column
+        self.targets = df[target_column].unique()
         self.df = df
         self.pop_size = pop_size
         self.generations = generations
@@ -70,24 +69,23 @@ class GeneticRuleMiner:
         self.user_cols = [col for col in user_cols if col in df.columns]
 
         self.rng = np.random.default_rng(random_seed)
-        
-        # Estructuras más eficientes
-        self.population = np.empty(pop_size, dtype=object)
-        
+
         # Cachés con límite de tamaño
         self._fitness_cache = LRUCache(maxsize=1000)  # Limitar a 1000 entradas
-        self._condition_cache = LRUCache(maxsize=5000)  # Limitar a 5000 entradas
+        self._condition_cache = LRUCache(
+            maxsize=5000
+        )  # Limitar a 5000 entradas
         self.cache_expiration = 60 * 2.5
-        
+
         self._initialize_data_structures()
-    
+
     def _optimize_dataframe(self, df):
-        for col in df.select_dtypes(include=['int64']):
-            df[col] = pd.to_numeric(df[col], downcast='integer')
-        for col in df.select_dtypes(include=['float64']):
-            df[col] = pd.to_numeric(df[col], downcast='float')
+        for col in df.select_dtypes(include=["int64"]):
+            df[col] = pd.to_numeric(df[col], downcast="integer")
+        for col in df.select_dtypes(include=["float64"]):
+            df[col] = pd.to_numeric(df[col], downcast="float")
         return df
-    
+
     def _check_cache_expiration(self, cache_dict, key):
         """Verifica si una entrada del caché ha expirado y la elimina si es así."""
         if key in cache_dict:
@@ -101,20 +99,16 @@ class GeneticRuleMiner:
     def _initialize_data_structures(self):
         self._numeric_cols = self._get_numeric_cols()
         self._categorical_cols = self._get_categorical_cols()
-        
+
         # Usar float32 para percentiles
         self._percentiles = {
             col: np.percentile(
                 self.df[col].dropna().to_numpy(dtype=np.float32),
                 np.arange(25, 76, 25),
-                method='midpoint'
+                method="midpoint",
             )
             for col in self._numeric_cols
         }
-        
-        # Inicializar población usando array NumPy
-        for i in range(self.pop_size):
-            self.population[i] = self._create_rule()
 
     def _deduplicate_conditions(self, user_conditions, other_conditions):
         """Ensure conditions are unique within each group, keeping the last occurrence."""
@@ -142,23 +136,15 @@ class GeneticRuleMiner:
             or isinstance(self.df[col].dropna().iloc[0], list)
         ]
 
-    def _init_population(self) -> MutableSequence[Rule]:
-        create_rule = partial(
-            self._create_rule,
-            min_user_conds=1,
-            max_user_conds=5,
-            max_conditions=10,
-        )
-        return [create_rule() for _ in range(self.pop_size)]
-
     def _create_rule(
         self,
+        target_id: int | np.int64,
         min_user_conds: int = 1,
         max_user_conds: int = 5,
         max_conditions: int = 10,
     ) -> Rule:
         """
-        Crea una instancia de Rule con condiciones aleatorias.
+        Crea una instancia de Rule con condiciones aleatorias para un target específico.
         """
         num_user_conds = self.rng.integers(min_user_conds, max_user_conds + 1)
         user_cols = self.rng.choice(
@@ -189,15 +175,13 @@ class GeneticRuleMiner:
             user_conditions, other_conditions
         )
 
-        # Target aleatorio
-        chosen_target = self.rng.choice(self.targets)
         rule = Rule(
             columns=[col for col, _ in user_conditions + other_conditions],
             conditions={
                 "user_conditions": user_conditions,
                 "other_conditions": other_conditions,
             },
-            target=chosen_target,
+            target=np.int64(target_id),
         )
 
         self._complete_conditions(rule, max_conditions)
@@ -338,12 +322,13 @@ class GeneticRuleMiner:
         return support_conditions_and_target / support_conditions
 
     def mutate(self, rule: Rule) -> Rule:
-        new_rule = copy.copy(rule)  # Usar copy() en lugar de deepcopy()
+        new_rule = copy.copy(rule)
         new_rule.conditions = copy.deepcopy(rule.conditions)
+        target = new_rule.target
         total_conds = len(new_rule.conditions[0]) + len(new_rule.conditions[1])
         if total_conds > 0 and self.rng.random() < self.mutation_rate:
             action = self.rng.choice(
-                ["replace", "add", "remove", "target", "regenerate"]
+                ["replace", "add", "remove", "regenerate"]
             )
             if action == "replace":
                 # Pick from user or other
@@ -414,12 +399,9 @@ class GeneticRuleMiner:
                     )
                     del new_rule.conditions[cond_type][idx]
                 else:
-                    new_rule = self._create_rule()
-            elif action == "target":
-                new_target = self.rng.choice(self.targets)
-                new_rule.target = new_target
+                    new_rule = self._create_rule(target)
             elif action == "regenerate":
-                new_rule = self._reset_rule()
+                new_rule = self._create_rule(target)
             # Deduplicar
             new_rule.conditions = self._deduplicate_conditions(
                 new_rule.conditions[0], new_rule.conditions[1]
@@ -511,13 +493,13 @@ class GeneticRuleMiner:
         )
         return rule
 
-    def _select_parents(self) -> Sequence[Rule]:
+    def _select_parents(self, population: Sequence[Rule]) -> Sequence[Rule]:
         selected = []
         tournament_size = 3
         loser_win_prob = 0.2
-        
-        for _ in range(self.pop_size):
-            tournament = random.sample(list(self.population), tournament_size)
+
+        for _ in range(len(population)):
+            tournament = random.sample(list(population), tournament_size)
             tournament = sorted(
                 tournament,
                 key=lambda rule: self.fitness(rule)
@@ -552,9 +534,9 @@ class GeneticRuleMiner:
                 new_population.append(last_parent)
         return new_population
 
-    def _evaluate_population(self) -> np.ndarray:
+    def _evaluate_population(self, population: Sequence[Rule]) -> np.ndarray:
         fitness_scores = []
-        for rule in self.population:
+        for rule in population:
             rule_key = hash(rule)
             if rule_key not in self._fitness_cache:
                 self._fitness_cache[rule_key] = (
@@ -565,31 +547,33 @@ class GeneticRuleMiner:
         return np.array(fitness_scores)
 
     def _get_best_individual(
-        self, fitness_scores: Optional[tuple] = None
+        self,
+        population: Sequence[Rule],
+        fitness_scores: Optional[tuple] = None,
     ) -> Rule:
         if fitness_scores is None:
-            fitness_scores = tuple(self._evaluate_population())
+            fitness_scores = tuple(self._evaluate_population(population))
         best_index = None
         best_score = -1
-        for i, rule in enumerate(self.population):
+        for i, rule in enumerate(population):
             support = self._vectorized_support(rule)
             score = support * fitness_scores[i]
             if score > best_score:
                 best_score = score
                 best_index = i
         if best_index is not None:
-            return self.population[best_index]
+            return population[best_index]
         else:
             raise ValueError("No best individual found in the population.")
 
-    def _reset_rule(self) -> Rule:
-        return self._create_rule()
-
-    def _reset_population(self) -> None:
+    def _reset_population(
+        self, population: Sequence[Rule], target_id: int | np.int64
+    ) -> Sequence[Rule]:
         self._fitness_cache.clear()
         self._condition_cache.clear()
         seen_rules = set()
-        for i, rule in enumerate(self.population):
+        new_population = []
+        for rule in population:
             rule_key = (
                 tuple(
                     [col for col, _ in rule.conditions[0] + rule.conditions[1]]
@@ -606,187 +590,94 @@ class GeneticRuleMiner:
                 rule_key in seen_rules
                 and len(rule_key) == len(next(iter(seen_rules)))
             ):
-                self.population[i] = self._reset_rule()
+                new_population.append(self._create_rule(target_id))
             else:
+                new_population.append(rule)
                 seen_rules.add(rule_key)
+        return new_population
 
-    def _get_best_rule_per_target(self, rules: Sequence[Rule]) -> dict:
-        best_rules = defaultdict(list)
-        best_scores = {}
-        for rule in rules:
-            target_id = rule.target
-            score = self.fitness(rule) * self._vectorized_support(rule)
-            if target_id not in best_scores or score > best_scores[target_id]:
-                best_scores[target_id] = score
-                best_rules[target_id] = [rule]
-            elif score == best_scores[target_id]:
-                best_rules[target_id].append(rule)
-        result = {}
-        for target_id, rule_list in best_rules.items():
-            result[target_id] = self.rng.choice(rule_list)
-        return result
+    def evolve_per_target(
+        self,
+        target_id: int | np.int64,
+        max_rules: int = 720,
+        fitness_threshold: float = 1.0,
+        confidence_threshold: float = 0.9,
+    ) -> list[Rule]:
+        rules_for_target = []
+        generation = 0
+        stagnation_counter = 0
+        max_stagnation = 100
 
-    def evolve(self) -> None:
-        """Evolves the population over a number of generations with forced diversity.
-        If the number of high-fitness rules stabilizes, reinitialize the population
-        keeping the best rule per target_id (by fitness*support), random if tie.
-        """
-        stable_high_fitness_start = None
-        reference_high_fitness = None
-        stable_generations = 0
-        stable_threshold = 50  # ±50 reglas
-        required_stable_generations = 25
-        for generation in range(self.generations):
-            fitness_scores = self._evaluate_population()
-            high_fitness_rules, ids_set = self.get_high_fitness_rules(
-                threshold=0.9
-            )
-            num_high_fitness = len(high_fitness_rules)
-            num_unique_ids = len(ids_set)
+        seen_rule_hashes = set()
 
-            logger.info(
-                f"Generation {generation}: {num_high_fitness} rules with fitness >= 0.9, "
-                f"{num_unique_ids}/{len(self.targets)} unique target IDs with fitness >= 0.9; {ids_set}"
-            )
+        # Inicializar población específica para este target
+        population = [
+            self._create_rule(target_id) for _ in range(self.pop_size)
+        ]
 
-            # Early stopping si se cubre un gran porcentaje
-            threshold = 0.9
-            num_above_threshold = np.sum(fitness_scores >= threshold)
-            if num_above_threshold >= threshold * self.pop_size and len(
-                ids_set
-            ) >= 0.1 * len(self.targets):
+        while (
+            len(rules_for_target) < max_rules and generation < self.generations
+        ):
+            parents = self._select_parents(population)
+            population = self._create_new_generation(parents)
+
+            found_new = False
+            for rule in population:
+                fit = self.fitness(rule)
+                conf = self._vectorized_confidence(rule)
+
+                # Solo reglas válidas
+                if (
+                    abs(fit - fitness_threshold) < 1e-6
+                    and conf >= confidence_threshold
+                ):
+                    rule_hash = hash(rule)
+                    if rule_hash not in seen_rule_hashes:
+                        rules_for_target.append(rule)
+                        seen_rule_hashes.add(rule_hash)
+                        found_new = True
+                        logger.info(
+                            f"[Target {target_id}] Regla válida encontrada en generación {generation}: "
+                            f"Fitness = {fit:.4f}, Confianza = {conf:.4f}, Total acumulado: {len(rules_for_target)}"
+                        )
+
+                        if len(rules_for_target) >= max_rules:
+                            break
+
+            # Control de estancamiento
+            if found_new:
+                stagnation_counter = 0
+            else:
+                stagnation_counter += 1
+
+            if stagnation_counter >= max_stagnation:
                 logger.info(
-                    f"Early stopping: {num_above_threshold} rules ({num_above_threshold / self.pop_size:.2%}) "
-                    f"have fitness >= {threshold} in generation {generation}, "
-                    f"covering {len(ids_set) / len(self.targets):.2%} of target IDs."
+                    f"[Target {target_id}] Estancamiento detectado. Terminando búsqueda."
                 )
                 break
 
-            # Verificar estabilidad de reglas con fitness > 0.9
-            if num_high_fitness >= 100:
-                if reference_high_fitness is None:
-                    reference_high_fitness = num_high_fitness
-                    stable_high_fitness_start = generation
-                    stable_generations = 1
-                elif (
-                    abs(num_high_fitness - reference_high_fitness)
-                    <= stable_threshold
-                ):
-                    stable_generations += 1
-                    if stable_generations >= required_stable_generations:
-                        logger.info(
-                            f"Stagnation detected: variation within ±{stable_threshold} "
-                            f"for {stable_generations} generations since generation {stable_high_fitness_start}. "
-                            f"Reinitializing population, keeping best rule per target_id."
-                        )
-                        # Mantener el mejor por target_id, reinicializar el resto
-                        best_per_target = self._get_best_rule_per_target(
-                            self.population
-                        )
-                        new_population = []
-                        # Mantener los mejores
-                        for rule in best_per_target.values():
-                            new_population.append(rule)
-                        # Rellenar el resto con reglas nuevas
-                        while len(new_population) < self.pop_size:
-                            new_population.append(self._create_rule())
-                        self.population = new_population[: self.pop_size]
-                        # Resetear contadores de estabilidad
-                        reference_high_fitness = None
-                        stable_high_fitness_start = None
-                        stable_generations = 0
-                        continue
-                else:
-                    # Reset stability tracking if variation is too high
-                    if (
-                        abs(num_high_fitness - reference_high_fitness)
-                        > stable_threshold
-                    ):
-                        reference_high_fitness = num_high_fitness
-                        stable_high_fitness_start = generation
-                        stable_generations = 1
+            population = self._reset_population(population, target_id)
+            generation += 1
 
-            # Proceso de evolución continúa
-            elite_rules_by_target = self.get_elite_rules_by_target(
-                threshold=0.9
-            )
-            parents = self._select_parents()
-            new_population = self._create_new_generation(parents)
-
-            used_indices = set()
-            for target_id, elite_rules in elite_rules_by_target.items():
-                for elite_rule in elite_rules:
-                        while True:
-                            random_index = self.rng.integers(
-                                len(new_population)
-                            )
-                            if random_index not in used_indices:
-                                used_indices.add(random_index)
-                                break
-                            available_indices = (
-                                set(range(len(new_population))) - used_indices
-                            )
-                            if not available_indices:
-                                break
-                        new_population[int(random_index)] = elite_rule
-
-            self.population = new_population
-            self._reset_population()
-            self._update_tracking(generation)
-
-    def clear_expired_cache(self):
-        """Limpia todas las entradas expiradas de los cachés."""
-        current_time = time.time()
-
-        # Limpiar _fitness_cache
-        expired_keys = [
-            k
-            for k, (_, timestamp) in self._fitness_cache.items()
-            if current_time - timestamp > self.cache_expiration
-        ]
-        for k in expired_keys:
-            del self._fitness_cache[k]
-
-        # Limpiar _condition_cache
-        expired_keys = [
-            k
-            for k, (_, timestamp) in self._condition_cache.items()
-            if current_time - timestamp > self.cache_expiration
-        ]
-        for k in expired_keys:
-            del self._condition_cache[k]
-
-    def get_elite_rules_by_target(self, threshold: float = 0.9) -> dict:
-        """
-        Devuelve un diccionario donde cada clave es un target_id (valor del objetivo)
-        y el valor es una lista de reglas con fitness >= threshold.
-        """
-        elite_rules = {}
-        for rule in self.population:
-            fitness_val = self.fitness(rule)
-            target_id = rule.target
-            if fitness_val >= threshold:
-                if target_id not in elite_rules:
-                    elite_rules[target_id] = []
-                elite_rules[target_id].append(rule)
-
-        return elite_rules
+        return rules_for_target
 
     def get_high_fitness_rules(
-        self, threshold: float = 0.9
+        self, population: Sequence[Rule], threshold: float = 0.9
     ) -> tuple[list[Rule], set]:
         """Retrieve all rules with fitness >= threshold."""
         high_fitness_rules = []
         ids_set = set()
-        for rule in self.population:
+        for rule in population:
             if self.fitness(rule) >= threshold:
                 high_fitness_rules.append(rule)
                 ids_set.add(rule.target)
         return high_fitness_rules, ids_set
-    
-    def _update_tracking(self, generation: int) -> None:
-        fitness_scores = tuple(self._evaluate_population())  # Convert to tuple
-        best_rule = self._get_best_individual(fitness_scores)
+
+    def _update_tracking(
+        self, generation: int, population: Sequence[Rule]
+    ) -> None:
+        fitness_scores = tuple(self._evaluate_population(population))
+        best_rule = self._get_best_individual(population, fitness_scores)
         best_support = self._vectorized_support(best_rule)
 
         logger.info(
