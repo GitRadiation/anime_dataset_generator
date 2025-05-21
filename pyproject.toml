@@ -20,6 +20,11 @@ requests = "^2.32.3"
 rake-nltk = "^1.0.6"
 beautifulsoup4 = "^4.13.4"
 cachetools = "^5.5.2"
+fastapi = "^0.115.12"
+uvicorn = "^0.34.2"
+diskcache = "^5.6.3"
+flet = "^0.28.3"
+flet-desktop = "^0.28.3"
 
 [tool.poetry.group.dev.dependencies]
 pytest = "^7.3.0"

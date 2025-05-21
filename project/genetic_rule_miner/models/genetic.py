@@ -639,7 +639,7 @@ class GeneticRuleMiner:
         generation = 0
         stagnation_counter = 0
         max_stagnation = 250
-        seen_rule_hashes = set()
+        seen_rule_keys = set()
 
         # Inicializar población específica para este target
         population = [
@@ -655,14 +655,31 @@ class GeneticRuleMiner:
                 fit = self.fitness(rule)
                 conf = self._vectorized_confidence(rule)
 
+                rule_key = (
+                    tuple(
+                        [
+                            col
+                            for col, _ in rule.conditions[0]
+                            + rule.conditions[1]
+                        ]
+                    )
+                    + tuple(
+                        [
+                            cond
+                            for _, cond in rule.conditions[0]
+                            + rule.conditions[1]
+                        ]
+                    )
+                    + (rule.target,)
+                )
+
                 if (
                     abs(fit - fitness_threshold) < 1e-6
                     and conf >= confidence_threshold
                 ):
-                    rule_hash = hash(rule)
-                    if rule_hash not in seen_rule_hashes:
+                    if rule_key not in seen_rule_keys:
                         rules_for_target.append(rule)
-                        seen_rule_hashes.add(rule_hash)
+                        seen_rule_keys.add(rule_key)
                         found_new = True
                         logger.info(
                             f"[Target {target_id}] Regla válida encontrada en generación {generation}: "
