@@ -61,7 +61,6 @@ class GeneticRuleMiner:
         df = self._optimize_dataframe(df.drop(columns=["rating"]))
 
         self.target = target_column
-        self.targets = df[target_column].unique()
         self.df = df
         self.pop_size = pop_size
         self.generations = generations
