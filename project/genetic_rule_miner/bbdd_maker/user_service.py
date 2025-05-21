@@ -19,6 +19,35 @@ class UserService:
             "UserService initialized with configuration: %s", self.config
         )
 
+    def _request(self, endpoint: str) -> dict:
+        """Generic GET request with retries and error handling."""
+        url = f"https://api.jikan.moe/v4{endpoint}"
+        for attempt in range(self.config.max_retries):
+            try:
+                logger.debug("Requesting %s (attempt %d)", url, attempt + 1)
+                response = requests.get(url, timeout=self.config.timeout)
+                if response.status_code == 200:
+                    return response.json()
+                elif response.status_code == 404:
+                    logger.warning("Resource not found: %s", url)
+                    return {}
+                response.raise_for_status()
+            except requests.RequestException as e:
+                logger.error(
+                    "Error on attempt %d for %s: %s",
+                    attempt + 1,
+                    url,
+                    str(e),
+                )
+                if attempt < self.config.max_retries - 1:
+                    time.sleep(2**attempt)
+        logger.error(
+            "Failed to get resource: %s after %d attempts",
+            url,
+            self.config.max_retries,
+        )
+        return {}
+
     def _fetch_with_retry(self, user_id: int) -> Optional[dict]:
         """Retry logic with error handling"""
         logger.debug("Starting _fetch_with_retry for user_id: %d", user_id)
@@ -149,23 +178,53 @@ class UserService:
         logger.info("User retrieval completed")
         return byte_buffer
 
-    def userlist_to_xml(self, userlist_buffer):
-        """
-        Converts a CSV buffer of userlist to XML format.
-        """
-        import xml.etree.ElementTree as ET
+    def get_user_by_id(self, user_id: int) -> Optional[dict]:
+        """Obtiene los datos de un usuario por su ID."""
+        return self._fetch_with_retry(user_id)
 
-        import pandas as pd
+    def get_users_by_ids(self, user_ids: List[int]) -> list:
+        """Obtiene los datos de múltiples usuarios por sus IDs."""
+        return [self._fetch_with_retry(uid) for uid in user_ids]
 
-        userlist_buffer.seek(0)
-        df = pd.read_csv(userlist_buffer)
-        root = ET.Element("users")
-        for _, row in df.iterrows():
-            user_elem = ET.SubElement(root, "user")
-            for col in df.columns:
-                child = ET.SubElement(user_elem, col)
-                child.text = str(row[col])
-        xml_bytes = ET.tostring(root, encoding="utf-8")
-        from io import BytesIO
+    def get_user_id_from_username(self, username: str) -> Optional[int]:
+        try:
+            response = requests.get(
+                f"https://api.jikan.moe/v4/users/{username}", timeout=10
+            )
+            if response.status_code == 200:
+                return response.json()["data"]["mal_id"]
+            else:
+                logger.warning(
+                    "No se pudo obtener el ID para el usuario %s", username
+                )
+        except Exception as e:
+            logger.error("Error obteniendo el ID de %s: %s", username, str(e))
+        return None
 
-        return BytesIO(xml_bytes)
+    def get_user_id_by_username(self, username: str) -> Optional[int]:
+        """Obtiene los datos de un usuario por su nombre de usuario."""
+        try:
+            response = requests.get(
+                f"https://api.jikan.moe/v4/users/{username}", timeout=10
+            )
+            if response.status_code == 200:
+                return response.json()["data"]["mal_id"]
+            else:
+                logger.warning("No se pudo obtener el usuario %s", username)
+        except Exception as e:
+            logger.error(
+                "Error obteniendo el usuario %s: %s", username, str(e)
+            )
+        return None
+
+    def get_user_favorites(self, username: str) -> dict:
+        return self._request(f"/users/{username}/favorites")
+
+    def get_user_updates(self, username: str) -> dict:
+        return self._request(f"/users/{username}/userupdates")
+
+    def get_user_history(self, username: str, type: str = "anime") -> dict:
+        return self._request(f"/users/{username}/history?type={type}")
+
+    def get_user_reviews(self, username: str) -> dict:
+        return self._request(f"/users/{username}/reviews")

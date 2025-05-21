@@ -194,3 +194,18 @@ class ScoreService:
         logger.info("Processing complete. Generating CSV file.")
         buffer.seek(0)
         return BytesIO(buffer.getvalue().encode("utf-8"))
+
+    def get_user_anime_score(
+        self, username: str, user_id: int, anime_id: int
+    ) -> Optional[int]:
+        """Obtiene el score de un usuario para un anime específico."""
+        scores = self._scrape_user_scores(username, user_id)
+        if scores:
+            for row in scores:
+                if int(row[2]) == anime_id:
+                    return int(row[4])
+        return None
+
+    def get_user_scores(self, username: str, user_id: int) -> Optional[list]:
+        """Obtiene todos los scores de un usuario."""
+        return self._scrape_user_scores(username, user_id)

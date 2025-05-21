@@ -36,9 +36,7 @@ def clean_string_columns(df: pd.DataFrame) -> pd.DataFrame:
         df[col] = (
             df[col]
             .str.strip()  # Remove whitespace
-            .replace(
-                ["\\N", "nan", "null", "None", "<NA>"], pd.NA
-            )  # Replace placeholders
+            .replace(["\\N", "nan", "null", "None", "<NA>"], pd.NA)
         )
 
     return df
@@ -87,16 +85,23 @@ def clean_and_bin_column(
 
 @log_execution
 def preprocess_data(df: pd.DataFrame) -> pd.DataFrame:
+    pd.set_option("future.no_silent_downcasting", True)
     df = df.copy()
     try:
         df = clean_string_columns(df)
 
         if "duration" in df.columns:
             df["duration"] = pd.to_numeric(df["duration"], errors="coerce")
+            max_duration = df["duration"].max(skipna=True)
+            if pd.isna(max_duration):
+                max_duration = 30
+            else:
+                max_duration = max(30, int(max_duration) + 1)
+
             df = clean_and_bin_column(
                 df,
                 "duration",
-                [0, 20, 25, max(30, df["duration"].max() + 1)],
+                [0, 20, 25, max_duration],
                 ["short", "standard", "long"],
             )
 

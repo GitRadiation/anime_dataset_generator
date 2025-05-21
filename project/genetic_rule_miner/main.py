@@ -93,7 +93,6 @@ def main() -> None:
         logger.info("Starting evolution process...")
 
         # Para almacenar reglas finales
-        all_rules = []
 
         batch_size = 6
         targets = list(merged_data["anime_id"].unique())
@@ -129,10 +128,16 @@ def main() -> None:
                         tid = future_to_id[future]
                         try:
                             result = future.result()
-                            all_rules.extend(result)
-                            logger.info(
-                                f"Target {tid} finished with {len(result)} rules."
-                            )
+                            if result:
+                                db_manager = DatabaseManager(config=db_config)
+                                db_manager.save_rules(result)
+                                logger.info(
+                                    f"Target {tid} finished and saved {len(result)} rules."
+                                )
+                            else:
+                                logger.info(
+                                    f"Target {tid} finished with no rules."
+                                )
                         except Exception as exc:
                             logger.error(
                                 f"Target {tid} generated an exception: {type(exc).__name__}: {exc}"
@@ -149,11 +154,6 @@ def main() -> None:
                 )
         duration = time.perf_counter() - start_time
         logger.info(f"Evolution process completed in {duration:.4f} seconds.")
-        # Guardar reglas si existen
-        if all_rules:
-            db_manager = DatabaseManager(config=db_config)
-            db_manager.save_rules(all_rules)
-
     except Exception as e:
         logger.error("Pipeline failed: %s", str(e), exc_info=True)
         raise
