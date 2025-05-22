@@ -6,6 +6,7 @@ from contextlib import contextmanager
 from io import BytesIO, StringIO
 from typing import Generator, Optional
 
+import pandas as pd
 from sqlalchemy import Connection, create_engine, text
 from sqlalchemy.engine import Engine
 from sqlalchemy.exc import IntegrityError
@@ -118,66 +119,66 @@ class DatabaseManager:
             """
         return sql
 
-    
-
-    
     def copy_from_buffer(
         self,
         conn: Connection,
         buffer: StringIO,
         table: str,
         conflict_action="DO UPDATE",
-    ) -> None:
+    ) -> bool:
         def to_pg_array(arr):
             def escape_element(el):
-                el = str(el).replace('\\', '\\\\').replace('"', '\\"')
-                # Si el elemento contiene comas, espacios o llaves, lo ponemos entre comillas
-                if any(c in el for c in [',', ' ', '{', '}', '"']):
+                el = str(el).replace("\\", "\\\\").replace('"', '\\"')
+                if any(c in el for c in [",", " ", "{", "}", '"']):
                     return f'"{el}"'
                 return el
-            return '{' + ','.join(escape_element(e) for e in arr) + '}'
+
+            return "{" + ",".join(escape_element(e) for e in arr) + "}"
+
         buffer.seek(0)
         reader = csv.DictReader(buffer)
         columns = reader.fieldnames
         table_conflict_columns = self._get_conflict_columns(table)
 
-        array_columns = ['genres', 'keywords', 'producers']  # agrega aquí todas las columnas array
+        array_columns = [
+            "genres",
+            "keywords",
+            "producers",
+        ]
 
+        rows_to_insert = []
         for row in reader:
             cleaned_row = {
                 key: None if value == "\\N" else value
                 for key, value in row.items()
             }
-
             for col in array_columns:
                 if col in cleaned_row and cleaned_row[col]:
                     try:
-                        # Intentar interpretar string como lista Python
-                        lst = ast.literal_eval(cleaned_row[col])
-                        if isinstance(lst, list):
-                            # Convertir a formato PostgreSQL array: {elem1,elem2,...}
-                            cleaned_row[col] = to_pg_array(lst)
+                        value = cleaned_row[col]
+                        if isinstance(value, str):
+                            lst = ast.literal_eval(value)
+                            if isinstance(lst, list):
+                                cleaned_row[col] = to_pg_array(lst)
                     except Exception:
-                        # Si no puede interpretarse como lista, dejar valor tal cual
                         pass
+            rows_to_insert.append(cleaned_row)
 
-            sql = self._construct_sql(
-                table, columns, table_conflict_columns, conflict_action
-            )
-            try:
-                conn.execute(text(sql), cleaned_row)
-            except IntegrityError as e:
-                # Detectar errores de clave foránea (puedes ajustar según el mensaje)
-                if "foreign key constraint" in str(e.orig).lower():
-                    logger.warning(
-                        f"Skipping row due to foreign key violation: {cleaned_row}"
-                    )
-                    continue
-                else:
-                    # Para otros errores, relanzar o manejar según necesites
-                    logger.error(f"Database error on row {cleaned_row}: {e}")
-                    raise
-        logger.info("✅ Data loading completed successfully")
+        if not rows_to_insert:
+            logger.info("No data loaded (empty or all rows skipped)")
+            return False
+
+        sql = self._construct_sql(
+            table, columns, table_conflict_columns, conflict_action
+        )
+        try:
+            conn.execute(text(sql), rows_to_insert)
+            conn.commit()
+            logger.info("✅ Data loading completed successfully")
+            return True
+        except IntegrityError as e:
+            logger.error(f"Database error: {e}")
+            raise
 
     def save_rules(self, rules: list[Rule], table: str = "rules") -> None:
         """
@@ -217,7 +218,7 @@ class DatabaseManager:
                     VALUES (:rule_id, :conditions, :target_value)
                 """
                 ),
-                insert_data,  # Ejecución como batch
+                insert_data,
             )
             conn.commit()
 
@@ -247,7 +248,6 @@ class DatabaseManager:
 
         with self.connection() as conn:
             result = conn.execute(text(query))
-            print(result)
             for row in result.mappings():
                 mal_id = row.get("mal_id")
                 username = row.get("username")
@@ -257,16 +257,48 @@ class DatabaseManager:
 
         buffer.seek(0)
         return BytesIO(buffer.getvalue().encode("utf-8"))
-    
-    def get_anime_ids_without_rules(self) -> list[int]:
-        query = """
-            SELECT a.anime_id
+
+    def get_anime_ids_without_rules(
+        self, export_path: Optional[str] = None
+    ) -> Optional[list[int]]:
+        # Consulta original: anime_ids sin reglas
+        query_no_rules = """
+            WITH rules_exist AS (
+                SELECT EXISTS (SELECT 1 FROM rules) AS has_rules
+            )
+            SELECT DISTINCT a.anime_id
             FROM anime_dataset a
-            LEFT JOIN rules r ON r.target_value = a.anime_id::TEXT
-            WHERE r.rule_id IS NULL
+            CROSS JOIN rules_exist
+            LEFT JOIN rules r ON CAST(r.target_value AS INTEGER) = a.anime_id
+            WHERE (rules_exist.has_rules = FALSE AND r.rule_id IS NULL)
+            OR rules_exist.has_rules = TRUE
+        """
+        # Nueva consulta: reglas cuyo target_value tenga <= 250 reglas
+        query_rules_targets = """
+            SELECT r.rule_id, r.target_value
+            FROM rules r
+            JOIN (
+                SELECT target_value
+                FROM rules
+                GROUP BY target_value
+                HAVING COUNT(*) <= 250
+            ) AS t ON r.target_value = t.target_value;
         """
         with self.connection() as conn:
-            result = conn.execute(text(query))
-            return [row["anime_id"] for row in result.mappings()]
+            # IDs de anime_dataset
+            result1 = conn.execute(text(query_no_rules))
+            anime_ids = {row["anime_id"] for row in result1.mappings()}
 
+            # IDs de target_value en rules
+            result2 = conn.execute(text(query_rules_targets))
+            rule_targets = {row["target_value"] for row in result2.mappings()}
 
+            # Unión sin repetidos
+            all_ids = list(anime_ids.union(rule_targets))
+
+            # Exportar a Excel si se proporciona la ruta
+            if export_path:
+                df = pd.DataFrame(all_ids, columns=["anime_id"])
+                df.to_excel(export_path, index=False)
+
+            return all_ids or []
