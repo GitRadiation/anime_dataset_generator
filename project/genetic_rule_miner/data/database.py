@@ -125,7 +125,7 @@ class DatabaseManager:
         buffer: StringIO,
         table: str,
         conflict_action="DO UPDATE",
-    ) -> None:
+    ) -> bool:
         def to_pg_array(arr):
             def escape_element(el):
                 el = str(el).replace("\\", "\\\\").replace('"', '\\"')
@@ -147,6 +147,8 @@ class DatabaseManager:
             "producers",
         ]  # agrega aquí todas las columnas array
 
+        inserted = 0  # contador de filas insertadas
+
         for row in reader:
             cleaned_row = {
                 key: None if value == "\\N" else value
@@ -156,15 +158,12 @@ class DatabaseManager:
             for col in array_columns:
                 if col in cleaned_row and cleaned_row[col]:
                     try:
-                        # Intentar interpretar string como lista Python
                         value = cleaned_row[col]
                         if isinstance(value, str):
                             lst = ast.literal_eval(value)
                             if isinstance(lst, list):
-                                # Convertir a formato PostgreSQL array: {elem1,elem2,...}
                                 cleaned_row[col] = to_pg_array(lst)
                     except Exception:
-                        # Si no puede interpretarse como lista, dejar valor tal cual
                         pass
 
             sql = self._construct_sql(
@@ -172,18 +171,23 @@ class DatabaseManager:
             )
             try:
                 conn.execute(text(sql), cleaned_row)
+                inserted += 1
             except IntegrityError as e:
-                # Detectar errores de clave foránea (puedes ajustar según el mensaje)
                 if "foreign key constraint" in str(e.orig).lower():
                     logger.warning(
                         f"Skipping row due to foreign key violation: {cleaned_row}"
                     )
                     continue
                 else:
-                    # Para otros errores, relanzar o manejar según necesites
                     logger.error(f"Database error on row {cleaned_row}: {e}")
                     raise
-        logger.info("✅ Data loading completed successfully")
+        if inserted > 0:
+            conn.commit()
+            logger.info("✅ Data loading completed successfully")
+            return True
+        else:
+            logger.info("No data loaded (empty or all rows skipped)")
+            return False
 
     def save_rules(self, rules: list[Rule], table: str = "rules") -> None:
         """
@@ -223,7 +227,7 @@ class DatabaseManager:
                     VALUES (:rule_id, :conditions, :target_value)
                 """
                 ),
-                insert_data,  # Ejecución como batch
+                insert_data,
             )
             conn.commit()
 
@@ -267,7 +271,8 @@ class DatabaseManager:
     def get_anime_ids_without_rules(
         self, export_path: Optional[str] = None
     ) -> Optional[list[int]]:
-        query = """
+        # Consulta original: anime_ids sin reglas
+        query_no_rules = """
             WITH rules_exist AS (
                 SELECT EXISTS (SELECT 1 FROM rules) AS has_rules
             )
@@ -278,15 +283,28 @@ class DatabaseManager:
             WHERE (rules_exist.has_rules = FALSE AND r.rule_id IS NULL)
             OR rules_exist.has_rules = TRUE
         """
+        # Nueva consulta: primeros 250 target_value de rules
+        query_rules_targets = """
+            SELECT DISTINCT ON (r.target_value) r.rule_id, r.target_value
+            FROM rules r
+            ORDER BY r.target_value, r.rule_id
+            LIMIT 250
+        """
         with self.connection() as conn:
-            result = conn.execute(text(query))
-            anime_ids = list(
-                {row["anime_id"] for row in result.mappings()}
-            )  # Unicos
+            # IDs de anime_dataset
+            result1 = conn.execute(text(query_no_rules))
+            anime_ids = {row["anime_id"] for row in result1.mappings()}
+
+            # IDs de target_value en rules
+            result2 = conn.execute(text(query_rules_targets))
+            rule_targets = {row["target_value"] for row in result2.mappings()}
+
+            # Unión sin repetidos
+            all_ids = list(anime_ids.union(rule_targets))
 
             # Exportar a Excel si se proporciona la ruta
             if export_path:
-                df = pd.DataFrame(anime_ids, columns=["anime_id"])
+                df = pd.DataFrame(all_ids, columns=["anime_id"])
                 df.to_excel(export_path, index=False)
 
-            return anime_ids or []
+            return all_ids or []

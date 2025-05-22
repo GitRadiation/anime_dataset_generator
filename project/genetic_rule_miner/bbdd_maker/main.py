@@ -4,6 +4,7 @@ import time
 from io import BytesIO, StringIO
 
 import nltk
+import numpy as np
 import pandas as pd
 from genetic_rule_miner.bbdd_maker.anime_service import AnimeService
 from genetic_rule_miner.bbdd_maker.details_service import DetailsService
@@ -12,7 +13,9 @@ from genetic_rule_miner.bbdd_maker.user_service import UserService
 from genetic_rule_miner.config import APIConfig, DBConfig
 from genetic_rule_miner.data.database import DatabaseManager
 from genetic_rule_miner.data.preprocessing import preprocess_data
+from genetic_rule_miner.models.genetic import GeneticRuleMiner
 from genetic_rule_miner.utils.logging import LogManager
+from genetic_rule_miner.utils.rule import Rule
 
 # Configure logging
 LogManager.configure()
@@ -144,6 +147,117 @@ def preprocess_user_score(
     return csv_buffer
 
 
+def validate_and_cleanup_rules(
+    db,
+    user_details,
+    anime_df,
+    user_scores,
+    logger,
+    fitness_threshold=0.95,
+    confidence_threshold=0.95,
+    skip=False,
+):
+    """
+    Valida las reglas en la base de datos y elimina aquellas que no cumplen los umbrales.
+    Si skip=True, no hace nada.
+    """
+    if skip:
+        logger.info(
+            "No changes detected in database. Skipping rule validation/cleanup."
+        )
+        return
+    # Cargar reglas desde la base de datos
+    with db.connection() as conn:
+        result = conn.execute(
+            "SELECT rule_id, conditions, target_value FROM rules"
+        )
+        rules = []
+        rule_ids = []
+        for row in result.mappings():
+            try:
+                conds = row["conditions"]
+                if isinstance(conds, str):
+                    import json
+
+                    conds = json.loads(conds)
+
+                rule = Rule(
+                    columns=[],  # No se usa para la lógica
+                    conditions=conds,
+                    target=np.int64(row["target_value"]),
+                )
+                rules.append(rule)
+                rule_ids.append(row["rule_id"])
+                rule_ids.append(row["rule_id"])
+            except Exception as e:
+                logger.warning(f"Error parsing rule {row['rule_id']}: {e}")
+
+    if not rules:
+        logger.info("No rules found in the database for validation.")
+        return
+
+    # Preparar datos para evaluación
+    merged_data = pd.merge(
+        user_scores,
+        user_details,
+        left_on="user_id",
+        right_on="mal_id",
+        how="left",
+    )
+    merged_data = pd.merge(
+        merged_data,
+        anime_df,
+        left_on="anime_id",
+        right_on="anime_id",
+        how="left",
+    )
+    # Eliminar columnas innecesarias
+    merged_data = merged_data.drop(
+        columns=["username", "name", "mal_id", "user_id"], errors="ignore"
+    )
+    for col in ["producers", "genres", "keywords"]:
+        if col in merged_data.columns:
+            # Convertir a lista si es string
+            merged_data[col] = merged_data[col].apply(
+                lambda x: (
+                    eval(x) if isinstance(x, str) and x.startswith("[") else x
+                )
+            )
+
+    # Instanciar el evaluador
+    user_details_columns = [col for col in user_details.columns]
+    miner = GeneticRuleMiner(
+        df=merged_data,
+        target_column="anime_id",
+        user_cols=user_details_columns,
+        pop_size=10,
+        generations=1,
+    )
+
+    # Evaluar reglas
+    to_delete = []
+    for rule, rule_id in zip(rules, rule_ids):
+        fitness = miner.fitness(rule)
+        confidence = miner._vectorized_confidence(rule)
+        if fitness < fitness_threshold or confidence < confidence_threshold:
+            logger.info(
+                f"Deleting rule {rule_id}: fitness={fitness:.3f}, confidence={confidence:.3f}"
+            )
+            to_delete.append(rule_id)
+
+    # Eliminar reglas no válidas
+    if to_delete:
+        with db.connection() as conn:
+            for rid in to_delete:
+                conn.execute(
+                    "DELETE FROM rules WHERE rule_id = :rid", {"rid": rid}
+                )
+            conn.commit()
+        logger.info(f"Deleted {len(to_delete)} rules not meeting thresholds.")
+    else:
+        logger.info("All rules meet the required thresholds.")
+
+
 def main():
     # ==========================
     # Phase 1: Initialization
@@ -166,10 +280,14 @@ def main():
 
         # 1. Retrieve anime data
         logger.info("📡 Retrieving anime data...")
-        anime_buffer = AnimeService(api_config).get_anime_data(1, 200)
+        anime_random_ids = np.random.randint(1, 5000000)
+        anime_buffer = AnimeService(api_config).get_anime_data(
+            anime_random_ids, anime_random_ids + 200
+        )
 
         # 2. Generate user list
         logger.info("📡 Generating user list...")
+        anime_random_ids = np.random.randint(1, 5000000)
         user_service = UserService(api_config)
         userlist_buffer = user_service.generate_userlist(
             start_id=1, end_id=200
@@ -212,8 +330,9 @@ def main():
     logger.info("✅ DatabaseManager loaded successfully")
 
     try:
-
         logger.info("📥 Starting data loading...")
+
+        # --- NEW: Get row counts before ---
 
         # Read and save original data
         anime_df = pd.read_csv(
@@ -316,8 +435,12 @@ def main():
 
         with db.connection() as conn:
             with conn.begin():
-                db.copy_from_buffer(conn, anime_buffer, "anime_dataset")
-                db.copy_from_buffer(conn, details_buffer, "user_details")
+                anime_changed = db.copy_from_buffer(
+                    conn, anime_buffer, "anime_dataset"
+                )
+                details_changed = db.copy_from_buffer(
+                    conn, details_buffer, "user_details"
+                )
 
             users_csv_buffer = db.export_users_to_csv_buffer()
             # 5. Retrieve scores
@@ -361,7 +484,28 @@ def main():
                 valid_anime_ids=valid_anime_ids,
             )
             with conn.begin():
-                db.copy_from_buffer(conn, scores_buffer, "user_score")
+                score_changed = db.copy_from_buffer(
+                    conn, scores_buffer, "user_score"
+                )
+
+        db_changed = anime_changed or details_changed or score_changed
+
+        # === VALIDAR Y LIMPIAR REGLAS DESPUÉS DE LA INSERCIÓN ===
+        if db_changed:
+            logger.info(
+                "🔎 Validating rules in the database (fitness/confidence > 0.95)..."
+            )
+            # Recargar los dataframes para asegurar consistencia
+            anime_df = pd.read_csv(StringIO(anime_buffer.getvalue()))
+            user_details = pd.read_csv(StringIO(details_buffer.getvalue()))
+            user_scores = pd.read_csv(StringIO(scores_buffer.getvalue()))
+            validate_and_cleanup_rules(
+                db, user_details, anime_df, user_scores, logger
+            )
+        else:
+            logger.info(
+                "No changes in database tables. Skipping rule validation/cleanup."
+            )
 
     except Exception as e:
         logger.error(f"🚨 Critical error: {e}")
