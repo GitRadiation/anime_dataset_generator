@@ -668,28 +668,17 @@ class GeneticRuleMiner:
         self._condition_cache.clear()
         seen_rules = set()
         new_population = []
+
         for rule in population:
-            rule_key = (
-                tuple(
-                    [col for col, _ in rule.conditions[0] + rule.conditions[1]]
-                )
-                + tuple(
-                    [
-                        cond
-                        for _, cond in rule.conditions[0] + rule.conditions[1]
-                    ]
-                )
-                + (rule.target,)
-            )
-            if self.fitness(rule) == 0 or (
-                rule_key in seen_rules
-                and len(rule_key) == len(next(iter(seen_rules), ()))
-            ):
+            rule_key = hash(rule)
+            if self.fitness(rule) == 0 or rule_key in seen_rules:
                 new_population.append(self._create_rule(target_id))
             else:
                 new_population.append(rule)
                 seen_rules.add(rule_key)
+
         return new_population
+
 
     def _filter_most_specific_rules(self, rules: list[Rule]) -> list[Rule]:
         """
@@ -746,12 +735,13 @@ class GeneticRuleMiner:
                 conf = self._vectorized_confidence(rule)
                 if (
                     abs(fit - fitness_threshold) < 1e-6
-                    and abs(conf - confidence_threshold) < 1e-6
+                    and conf >= confidence_threshold
                 ):
                     sig = rule.cond_signature()
                     if sig not in best_rules_by_signature or len(rule) > len(
                         best_rules_by_signature[sig]
                     ):
+                        logger.info("Regla encontrada: %s", rule)
                         best_rules_by_signature[sig] = rule
                         found_new = True
                         gen_fitness.append(fit)
@@ -786,6 +776,7 @@ class GeneticRuleMiner:
                 parents, filtered_valid_rules
             )
             population = self._reset_population(population, target_id)
+            logger.info("Generación %d: %d", generation, target_id)
             generation += 1
 
         self._fitness_cache.clear()
