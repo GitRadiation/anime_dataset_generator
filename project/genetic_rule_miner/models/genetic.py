@@ -46,7 +46,7 @@ class GeneticRuleMiner:
     ):
         # Optimizar DataFrame para acceso secuencial
         df = self._optimize_dataframe(df.drop(columns=["rating"]))
-        self.df = df.copy()  # Crear copia para evitar fragmentación de memoria
+        self.df = df.copy()
         self.target = target_column
 
         # Convertir columnas relevantes a arrays numpy para acceso más rápido
@@ -586,28 +586,6 @@ class GeneticRuleMiner:
         """Evalúa un chunk de la población."""
         return [self.fitness(rule) for rule in population_chunk]
 
-    def _check_convergence(self) -> bool:
-        """Verifica si el algoritmo ha convergido basado en el historial de fitness."""
-        if len(self._best_fitness_history) < 2:
-            return False
-
-        # Calcular mejora promedio en las últimas generaciones
-        improvements = [
-            self._best_fitness_history[i] - self._best_fitness_history[i - 1]
-            for i in range(1, len(self._best_fitness_history))
-        ]
-        avg_improvement = sum(improvements) / len(improvements)
-
-        if abs(avg_improvement) < self.convergence_threshold:
-            self._stagnation_counter += 1
-            if self._stagnation_counter >= self.max_stagnation:
-                logger.info("Convergence detected - stopping early")
-                return True
-        else:
-            self._stagnation_counter = 0
-
-        return False
-
     def _get_best_individual(
         self,
         population: Sequence[Rule],
@@ -795,9 +773,12 @@ class GeneticRuleMiner:
                 break
 
             parents = self._select_parents(population)
-            # Solo pasamos las reglas válidas actuales (más pequeñas por firma)
+            # Solo pasamos las reglas válidas actuales (más pequeñas por firma y específicas)
+            filtered_valid_rules = self._filter_most_specific_rules(
+                list(best_rules_by_signature.values())
+            )
             population = self._create_new_generation(
-                parents, list(best_rules_by_signature.values())
+                parents, filtered_valid_rules
             )
             population = self._reset_population(population, target_id)
             generation += 1
@@ -807,17 +788,19 @@ class GeneticRuleMiner:
         del self._fitness_cache
         del self._condition_cache
         # Solo devolvemos las reglas más pequeñas y válidas
-        return list(best_rules_by_signature.values())
-
-    def _update_tracking(
-        self, generation: int, population: Sequence[Rule]
-    ) -> None:
-        fitness_scores = tuple(self._parallel_evaluate_population(population))
-        best_rule = self._get_best_individual(population, fitness_scores)
-        best_support = self._vectorized_support(best_rule)
-
-        logger.info(
-            f"Generation {generation}: Best Fitness={fitness_scores[np.argmax(fitness_scores)]:.4f}, "
-            f"Support={best_support:.4f} "
-            f"Rule: {(best_rule)}"
+        return self._filter_most_specific_rules(
+            list(best_rules_by_signature.values())
         )
+
+    # def _update_tracking(
+    #     self, generation: int, population: Sequence[Rule]
+    # ) -> None:
+    #     fitness_scores = tuple(self._parallel_evaluate_population(population))
+    #     best_rule = self._get_best_individual(population, fitness_scores)
+    #     best_support = self._vectorized_support(best_rule)
+
+    #     logger.info(
+    #         f"Generation {generation}: Best Fitness={fitness_scores[np.argmax(fitness_scores)]:.4f}, "
+    #         f"Support={best_support:.4f} "
+    #         f"Rule: {(best_rule)}"
+    #     )
