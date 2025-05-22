@@ -744,7 +744,7 @@ class GeneticRuleMiner:
                 conf = self._vectorized_confidence(rule)
                 if (
                     abs(fit - fitness_threshold) < 1e-6
-                    and conf >= confidence_threshold
+                    and abs(conf - confidence_threshold) < 1e-6
                 ):
                     sig = rule.cond_signature()
                     # Si no hay regla para esta firma, o la nueva es más grande, la guardamos
