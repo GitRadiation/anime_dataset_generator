@@ -6,6 +6,7 @@ from contextlib import contextmanager
 from io import BytesIO, StringIO
 from typing import Generator, Optional
 
+import pandas as pd
 from sqlalchemy import Connection, create_engine, text
 from sqlalchemy.engine import Engine
 from sqlalchemy.exc import IntegrityError
@@ -118,9 +119,6 @@ class DatabaseManager:
             """
         return sql
 
-    
-
-    
     def copy_from_buffer(
         self,
         conn: Connection,
@@ -130,18 +128,24 @@ class DatabaseManager:
     ) -> None:
         def to_pg_array(arr):
             def escape_element(el):
-                el = str(el).replace('\\', '\\\\').replace('"', '\\"')
+                el = str(el).replace("\\", "\\\\").replace('"', '\\"')
                 # Si el elemento contiene comas, espacios o llaves, lo ponemos entre comillas
-                if any(c in el for c in [',', ' ', '{', '}', '"']):
+                if any(c in el for c in [",", " ", "{", "}", '"']):
                     return f'"{el}"'
                 return el
-            return '{' + ','.join(escape_element(e) for e in arr) + '}'
+
+            return "{" + ",".join(escape_element(e) for e in arr) + "}"
+
         buffer.seek(0)
         reader = csv.DictReader(buffer)
         columns = reader.fieldnames
         table_conflict_columns = self._get_conflict_columns(table)
 
-        array_columns = ['genres', 'keywords', 'producers']  # agrega aquí todas las columnas array
+        array_columns = [
+            "genres",
+            "keywords",
+            "producers",
+        ]  # agrega aquí todas las columnas array
 
         for row in reader:
             cleaned_row = {
@@ -153,10 +157,12 @@ class DatabaseManager:
                 if col in cleaned_row and cleaned_row[col]:
                     try:
                         # Intentar interpretar string como lista Python
-                        lst = ast.literal_eval(cleaned_row[col])
-                        if isinstance(lst, list):
-                            # Convertir a formato PostgreSQL array: {elem1,elem2,...}
-                            cleaned_row[col] = to_pg_array(lst)
+                        value = cleaned_row[col]
+                        if isinstance(value, str):
+                            lst = ast.literal_eval(value)
+                            if isinstance(lst, list):
+                                # Convertir a formato PostgreSQL array: {elem1,elem2,...}
+                                cleaned_row[col] = to_pg_array(lst)
                     except Exception:
                         # Si no puede interpretarse como lista, dejar valor tal cual
                         pass
@@ -257,16 +263,30 @@ class DatabaseManager:
 
         buffer.seek(0)
         return BytesIO(buffer.getvalue().encode("utf-8"))
-    
-    def get_anime_ids_without_rules(self) -> list[int]:
+
+    def get_anime_ids_without_rules(
+        self, export_path: Optional[str] = None
+    ) -> Optional[list[int]]:
         query = """
-            SELECT a.anime_id
+            WITH rules_exist AS (
+                SELECT EXISTS (SELECT 1 FROM rules) AS has_rules
+            )
+            SELECT DISTINCT a.anime_id
             FROM anime_dataset a
-            LEFT JOIN rules r ON r.target_value = a.anime_id::TEXT
-            WHERE r.rule_id IS NULL
+            CROSS JOIN rules_exist
+            LEFT JOIN rules r ON CAST(r.target_value AS INTEGER) = a.anime_id
+            WHERE (rules_exist.has_rules = FALSE AND r.rule_id IS NULL)
+            OR rules_exist.has_rules = TRUE
         """
         with self.connection() as conn:
             result = conn.execute(text(query))
-            return [row["anime_id"] for row in result.mappings()]
+            anime_ids = list(
+                {row["anime_id"] for row in result.mappings()}
+            )  # Unicos
 
+            # Exportar a Excel si se proporciona la ruta
+            if export_path:
+                df = pd.DataFrame(anime_ids, columns=["anime_id"])
+                df.to_excel(export_path, index=False)
 
+            return anime_ids or []

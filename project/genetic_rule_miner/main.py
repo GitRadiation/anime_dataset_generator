@@ -2,8 +2,8 @@
 
 import ast
 import time
-import traceback
-from concurrent.futures import ProcessPoolExecutor, as_completed
+
+from joblib import Parallel, delayed
 
 from genetic_rule_miner.config import DBConfig
 from genetic_rule_miner.data.database import DatabaseManager
@@ -49,8 +49,35 @@ def convert_text_to_list_column(df, column_name):
 
     df[column_name] = df[column_name].fillna("[]").apply(parse_cell)
 
+
+def process_target(tid, merged_data, user_details_columns, db_config):
+    """Procesa un target individual para minería genética de reglas."""
+    try:
+        rules = GeneticRuleMiner(
+            df=merged_data,
+            target_column="anime_id",
+            user_cols=user_details_columns,
+            pop_size=720,
+            generations=10000,
+        ).evolve_per_target(tid)
+
+        if rules:
+            db_manager = DatabaseManager(config=db_config)
+            db_manager.save_rules(rules)
+            logger.info(
+                f"✅ Target {tid} finished and saved {len(rules)} rules."
+            )
+        else:
+            logger.info(f"⚠️ Target {tid} finished with no rules.")
+
+        return (tid, True, None)
+    except Exception as e:
+        logger.error(f"❌ Target {tid} failed: {e}")
+        return (tid, False, str(e))
+
+
 def main() -> None:
-    """Execute the complete rule mining pipeline."""
+    """Execute the complete rule mining pipeline using sequential processing (no joblib)."""
     try:
         logger.info("Starting rule mining pipeline")
 
@@ -59,12 +86,16 @@ def main() -> None:
         data_manager = DataManager(db_config)
 
         logger.info("Loading and preprocessing data...")
-        user_details, anime_data, user_scores = data_manager.load_and_preprocess_data()
+        user_details, anime_data, user_scores = (
+            data_manager.load_and_preprocess_data()
+        )
         if "rating" in user_scores.columns:
             user_scores = user_scores.drop(columns=["rating"])
 
         logger.info("Merging preprocessed data...")
-        merged_data = DataManager.merge_data(user_scores, user_details, anime_data)
+        merged_data = DataManager.merge_data(
+            user_scores, user_details, anime_data
+        )
 
         if "rating" in merged_data.columns:
             merged_data = merged_data[merged_data["rating"] != "unknown"]
@@ -80,79 +111,34 @@ def main() -> None:
 
         logger.info("Preparing rule mining tasks...")
         db_manager = DatabaseManager(config=db_config)
-        targets = db_manager.get_anime_ids_without_rules()
+        targets = db_manager.get_anime_ids_without_rules() or []
 
         total_targets = len(targets)
         logger.info(f"Total targets to process: {total_targets}")
 
         start_time = time.perf_counter()
-        completed = 0
-        submitted = 0
-        max_workers = 4
-        pending_targets = iter(targets)
 
-        with ProcessPoolExecutor(max_workers=max_workers) as executor:
-            future_to_tid = {}
-
-            # Lanzamos los primeros hasta completar el pool
-            while submitted < max_workers and submitted < total_targets:
-                tid = next(pending_targets)
-                future = executor.submit(
-                    GeneticRuleMiner(
-                        df=merged_data,
-                        target_column="anime_id",
-                        user_cols=user_details.columns.tolist(),
-                        pop_size=720,
-                        generations=10000,
-                    ).evolve_per_target,
-                    tid,
+        # Procesamiento paralelo con joblib
+        results = list(
+            Parallel(n_jobs=-1, prefer="processes", verbose=10)(
+                delayed(process_target)(
+                    tid, merged_data, user_details.columns.tolist(), db_config
                 )
-                future_to_tid[future] = tid
-                submitted += 1
+                for tid in targets
+            )
+        )
 
-            while future_to_tid:
-                for future in as_completed(future_to_tid):
-                    tid = future_to_tid.pop(future)
-                    try:
-                        result = future.result()
-                        if result:
-                            db_manager.save_rules(result)
-                            logger.info(f"✅ Target {tid} finished and saved {len(result)} rules.")
-                        else:
-                            logger.info(f"⚠️ Target {tid} finished with no rules.")
-                    except Exception as exc:
-                        logger.error(f"❌ Target {tid} failed: {type(exc).__name__}: {exc}")
-                        logger.error(traceback.format_exc())
-
-                    completed += 1
-                    if completed % 4 == 0:
-                        logger.info(f"✅ {completed} targets completed.")
-
-                    # Lanzar siguiente target si queda
-                    try:
-                        tid = next(pending_targets)
-                        future = executor.submit(
-                            GeneticRuleMiner(
-                                df=merged_data,
-                                target_column="anime_id",
-                                user_cols=user_details.columns.tolist(),
-                                pop_size=720,
-                                generations=10000,
-                            ).evolve_per_target,
-                            tid,
-                        )
-                        future_to_tid[future] = tid
-                        submitted += 1
-                    except StopIteration:
-                        continue
+        completed = len(results)
+        logger.info(f"✅ {completed} targets completed.")
 
         duration = time.perf_counter() - start_time
-        logger.info(f"🎉 Evolution process completed in {duration:.2f} seconds. Total targets: {completed}")
+        logger.info(
+            f"🎉 Evolution process completed in {duration:.2f} seconds. Total targets: {completed}"
+        )
 
     except Exception as e:
         logger.error("Pipeline failed: %s", str(e), exc_info=True)
         raise
-
 
 
 if __name__ == "__main__":
