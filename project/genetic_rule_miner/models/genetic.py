@@ -693,23 +693,23 @@ class GeneticRuleMiner:
 
     def _filter_most_specific_rules(self, rules: list[Rule]) -> list[Rule]:
         """
-        Filtra reglas dejando solo las más específicas según el criterio de inclusión de (col, op).
-        Si una regla es subconjunto de otra, se queda la más específica (la que tiene más condiciones).
+        Filtra reglas dejando solo las más generales según el criterio de inclusión de (col, op).
+        Si una regla es subconjunto de otra, se queda la más grande (la que tiene más condiciones).
         """
         filtered = []
         for rule in rules:
             is_subsumed = False
             to_remove = []
             for i, other in enumerate(filtered):
-                if rule.is_subset_of(other):
-                    # rule es más general o igual, no la añadimos
+                if other.is_subset_of(rule):
+                    # other es más específica o igual, no la añadimos
                     is_subsumed = True
                     break
-                elif other.is_subset_of(rule):
-                    # other es más general, la quitamos
+                elif rule.is_subset_of(other):
+                    # rule es más general, quitamos la más pequeña
                     to_remove.append(i)
             if not is_subsumed:
-                # Eliminar reglas más generales
+                # Eliminar reglas más pequeñas
                 for idx in reversed(to_remove):
                     del filtered[idx]
                 filtered.append(rule)
@@ -747,8 +747,8 @@ class GeneticRuleMiner:
                     and conf >= confidence_threshold
                 ):
                     sig = rule.cond_signature()
-                    # Si no hay regla para esta firma, o la nueva es más pequeña, la guardamos
-                    if sig not in best_rules_by_signature or len(rule) < len(
+                    # Si no hay regla para esta firma, o la nueva es más grande, la guardamos
+                    if sig not in best_rules_by_signature or len(rule) > len(
                         best_rules_by_signature[sig]
                     ):
                         best_rules_by_signature[sig] = rule
