@@ -129,7 +129,6 @@ class DatabaseManager:
         def to_pg_array(arr):
             def escape_element(el):
                 el = str(el).replace("\\", "\\\\").replace('"', '\\"')
-                # Si el elemento contiene comas, espacios o llaves, lo ponemos entre comillas
                 if any(c in el for c in [",", " ", "{", "}", '"']):
                     return f'"{el}"'
                 return el
@@ -145,16 +144,14 @@ class DatabaseManager:
             "genres",
             "keywords",
             "producers",
-        ]  # agrega aquí todas las columnas array
+        ]
 
-        inserted = 0  # contador de filas insertadas
-
+        rows_to_insert = []
         for row in reader:
             cleaned_row = {
                 key: None if value == "\\N" else value
                 for key, value in row.items()
             }
-
             for col in array_columns:
                 if col in cleaned_row and cleaned_row[col]:
                     try:
@@ -165,29 +162,23 @@ class DatabaseManager:
                                 cleaned_row[col] = to_pg_array(lst)
                     except Exception:
                         pass
+            rows_to_insert.append(cleaned_row)
 
-            sql = self._construct_sql(
-                table, columns, table_conflict_columns, conflict_action
-            )
-            try:
-                conn.execute(text(sql), cleaned_row)
-                inserted += 1
-            except IntegrityError as e:
-                if "foreign key constraint" in str(e.orig).lower():
-                    logger.warning(
-                        f"Skipping row due to foreign key violation: {cleaned_row}"
-                    )
-                    continue
-                else:
-                    logger.error(f"Database error on row {cleaned_row}: {e}")
-                    raise
-        if inserted > 0:
+        if not rows_to_insert:
+            logger.info("No data loaded (empty or all rows skipped)")
+            return False
+
+        sql = self._construct_sql(
+            table, columns, table_conflict_columns, conflict_action
+        )
+        try:
+            conn.execute(text(sql), rows_to_insert)
             conn.commit()
             logger.info("✅ Data loading completed successfully")
             return True
-        else:
-            logger.info("No data loaded (empty or all rows skipped)")
-            return False
+        except IntegrityError as e:
+            logger.error(f"Database error: {e}")
+            raise
 
     def save_rules(self, rules: list[Rule], table: str = "rules") -> None:
         """
@@ -257,7 +248,6 @@ class DatabaseManager:
 
         with self.connection() as conn:
             result = conn.execute(text(query))
-            print(result)
             for row in result.mappings():
                 mal_id = row.get("mal_id")
                 username = row.get("username")
