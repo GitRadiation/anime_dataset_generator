@@ -725,7 +725,6 @@ class GeneticRuleMiner:
         generation = 0
         stagnation_counter = 0
         max_stagnation = 250
-        # Usamos un dict para guardar la regla más pequeña por firma
         best_rules_by_signature = {}
         logger.info(
             f"Starting evolution for target {target_id} with max rules {max_rules}"
@@ -739,6 +738,9 @@ class GeneticRuleMiner:
             and generation < self.generations
         ):
             found_new = False
+            # Para logging por generación
+            gen_fitness = []
+            gen_conf = []
             for rule in population:
                 fit = self.fitness(rule)
                 conf = self._vectorized_confidence(rule)
@@ -747,19 +749,23 @@ class GeneticRuleMiner:
                     and abs(conf - confidence_threshold) < 1e-6
                 ):
                     sig = rule.cond_signature()
-                    # Si no hay regla para esta firma, o la nueva es más grande, la guardamos
                     if sig not in best_rules_by_signature or len(rule) > len(
                         best_rules_by_signature[sig]
                     ):
                         best_rules_by_signature[sig] = rule
                         found_new = True
-                        logger.info(
-                            f"[Target {target_id}] Regla válida encontrada en generación {generation}: "
-                            f"Fitness = {fit:.4f}, Confianza = {conf:.4f}, Total acumulado: {len(best_rules_by_signature)}"
-                        )
+                        gen_fitness.append(fit)
+                        gen_conf.append(conf)
                         if len(best_rules_by_signature) >= max_rules:
                             break
-
+            # Log solo uno por generación
+            if gen_fitness and gen_conf:
+                logger.info(
+                    f"[Target {target_id}] Generación {generation}: "
+                    f"Fitness max={max(gen_fitness):.4f}, min={min(gen_fitness):.4f}, "
+                    f"Confianza max={max(gen_conf):.4f}, min={min(gen_conf):.4f}, "
+                    f"Total acumulado: {len(best_rules_by_signature)}"
+                )
             # Control de estancamiento
             if found_new:
                 stagnation_counter = 0
@@ -773,7 +779,6 @@ class GeneticRuleMiner:
                 break
 
             parents = self._select_parents(population)
-            # Solo pasamos las reglas válidas actuales (más pequeñas por firma y específicas)
             filtered_valid_rules = self._filter_most_specific_rules(
                 list(best_rules_by_signature.values())
             )
@@ -787,7 +792,6 @@ class GeneticRuleMiner:
         self._condition_cache.clear()
         del self._fitness_cache
         del self._condition_cache
-        # Solo devolvemos las reglas más pequeñas y válidas
         return self._filter_most_specific_rules(
             list(best_rules_by_signature.values())
         )
