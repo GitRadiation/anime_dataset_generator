@@ -280,14 +280,14 @@ def main():
 
         # 1. Retrieve anime data
         logger.info("📡 Retrieving anime data...")
-        anime_random_ids = np.random.randint(1, 5000000)
+        anime_random_ids = np.random.randint(1, 56500)
         anime_buffer = AnimeService(api_config).get_anime_data(
             anime_random_ids, anime_random_ids + 200
         )
 
         # 2. Generate user list
         logger.info("📡 Generating user list...")
-        anime_random_ids = np.random.randint(1, 5000000)
+        anime_random_ids = np.random.randint(1, 99800)
         user_service = UserService(api_config)
         userlist_buffer = user_service.generate_userlist(
             start_id=1, end_id=200
