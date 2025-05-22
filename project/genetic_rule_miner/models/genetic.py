@@ -741,7 +741,6 @@ class GeneticRuleMiner:
                     if sig not in best_rules_by_signature or len(rule) > len(
                         best_rules_by_signature[sig]
                     ):
-                        logger.info("Regla encontrada: %s", rule)
                         best_rules_by_signature[sig] = rule
                         found_new = True
                         gen_fitness.append(fit)
@@ -776,7 +775,7 @@ class GeneticRuleMiner:
                 parents, filtered_valid_rules
             )
             population = self._reset_population(population, target_id)
-            logger.info("Generación %d: %d", generation, target_id)
+            logger.info("Generación %d para el target %d", generation, target_id)
             generation += 1
 
         self._fitness_cache.clear()
