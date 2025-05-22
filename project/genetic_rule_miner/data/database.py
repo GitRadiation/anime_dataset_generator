@@ -273,12 +273,16 @@ class DatabaseManager:
             WHERE (rules_exist.has_rules = FALSE AND r.rule_id IS NULL)
             OR rules_exist.has_rules = TRUE
         """
-        # Nueva consulta: primeros 250 target_value de rules
+        # Nueva consulta: reglas cuyo target_value tenga <= 250 reglas
         query_rules_targets = """
-            SELECT DISTINCT ON (r.target_value) r.rule_id, r.target_value
+            SELECT r.rule_id, r.target_value
             FROM rules r
-            ORDER BY r.target_value, r.rule_id
-            LIMIT 250
+            JOIN (
+                SELECT target_value
+                FROM rules
+                GROUP BY target_value
+                HAVING COUNT(*) <= 250
+            ) AS t ON r.target_value = t.target_value;
         """
         with self.connection() as conn:
             # IDs de anime_dataset
