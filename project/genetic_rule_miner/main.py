@@ -56,8 +56,13 @@ def convert_text_to_list_column(df, column_name):
 def process_target(tid, merged_data, user_details_columns, db_config):
     """Procesa un target individual para minería genética de reglas."""
     try:
+        # Filtrar merged_data solo para el target actual
+        filtered_data = merged_data[merged_data["anime_id"] == tid].copy()
+        if filtered_data.empty:
+            logger.info(f"⚠️ Target {tid} has no data, skipping.")
+            return (tid, False, "No data for target")
         rules = GeneticRuleMiner(
-            df=merged_data,
+            df=filtered_data,
             target_column="anime_id",
             user_cols=user_details_columns,
             pop_size=720,
@@ -83,7 +88,7 @@ def remove_obsolete_rules(db_manager, merged_data, user_details):
     """
     Elimina reglas obsoletas:
     - cuyo target_value ya no existe en anime_dataset
-    - o cuyo fitness o confidence < 0.95
+    - o cuyo fitness < 0.95 o soporte < 0.005
     Muestra el fitness y score de cada regla eliminada.
     Borra en lotes para evitar problemas de demasiados parámetros.
     Procesa las reglas en lotes de 10,000.
@@ -105,7 +110,7 @@ def remove_obsolete_rules(db_manager, merged_data, user_details):
         rule_ids = [row[0] for row in obsolete_rules]
         rule_infos = []
 
-        # 2. Eliminar reglas con fitness o confidence < 0.95 en lotes de 10k
+        # 2. Eliminar reglas con fitness < 0.95 o soporte < 0.005 en lotes de 10k
         offset = 0
         batch_size_rules = 10000
 
@@ -154,10 +159,10 @@ def remove_obsolete_rules(db_manager, merged_data, user_details):
                 support_arr = miner.batch_vectorized_support(rules_list)
                 for idx, rule_id in enumerate(rule_id_list):
                     fitness = fitness_arr[idx]
-                    confidence = fitness_arr[idx]  # fitness == confidence aquí
-                    if fitness < 0.95 or support_arr < 0.005:
+                    support = support_arr[idx]  # fitness == confidence aquí
+                    if fitness < 0.95 or support < 0.005:
                         rule_ids.append(rule_id)
-                        rule_infos.append((rule_id, fitness, confidence))
+                        rule_infos.append((rule_id, fitness, support))
             offset += batch_size_rules
 
         # Eliminar todas las reglas obsoletas en masa y mostrar info

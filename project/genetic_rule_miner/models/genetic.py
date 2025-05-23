@@ -160,12 +160,24 @@ class GeneticRuleMiner:
         ]
 
     def _get_categorical_cols(self) -> Sequence[str]:
-        return [
-            col
-            for col in self.df.columns
-            if self.df[col].dtype == "object"
-            or isinstance(self.df[col].dropna().iloc[0], list)
-        ]
+        """
+        Devuelve las columnas categóricas (tipo object o listas).
+        Si la columna está vacía, la omite para evitar errores de indexación.
+        """
+        categorical_cols = []
+        for col in self.df.columns:
+            try:
+                # Evitar error si la columna está vacía
+                non_na = self.df[col].dropna()
+                if non_na.empty:
+                    continue
+                if self.df[col].dtype == "object" or isinstance(
+                    non_na.iloc[0], list
+                ):
+                    categorical_cols.append(col)
+            except Exception:
+                continue
+        return categorical_cols
 
     def _create_rule(
         self,
@@ -225,13 +237,16 @@ class GeneticRuleMiner:
             return Condition(column=col, operator=op, value=value)
         else:
             raw_values = self.df[col].dropna()
+            if raw_values.empty:
+                logger.debug(f"No values found for column '{col}'")
+                return Condition(column=col, operator="==", value="UNKNOWN")
             all_vals = (
                 list(set(itertools.chain.from_iterable(raw_values)))
                 if isinstance(raw_values.iloc[0], list)
                 else list(raw_values.astype(str).unique())
             )
             if not all_vals:
-                logger.warning(f"No unique values found for column '{col}'")
+                logger.debug(f"No unique values found for column '{col}'")
                 return Condition(column=col, operator="==", value="UNKNOWN")
             return Condition(
                 column=col, operator="==", value=str(self.rng.choice(all_vals))
@@ -690,7 +705,7 @@ class GeneticRuleMiner:
             key=lambda x: x[2],
             reverse=True,
         )
-        # Si no hay suficientes, completar con los mejores por score (fitness*support)
+        # Elitismo del 10%
         n_elite = max(1, int(0.1 * len(parents)))
         elites = elites_fit1[:n_elite]
         if len(elites) < n_elite:
@@ -807,12 +822,12 @@ class GeneticRuleMiner:
         target_id: int | np.int64,
         max_rules: int = 720,
         fitness_threshold: float = 1.0,
-        support_threshold: float = 0.0035,
+        support_threshold: float = 0.95,
     ) -> list[Rule]:
         generation = 0
         stagnation_counter = 0
+        valid_rules = []
         max_stagnation = self.max_stagnation
-        best_rules_by_signature = {}
         logger.info(
             f"Starting evolution for target {target_id} with max rules {max_rules}"
         )
@@ -820,33 +835,11 @@ class GeneticRuleMiner:
             self._create_rule(target_id) for _ in range(self.pop_size)
         ]
 
-        while (
-            len(best_rules_by_signature) < max_rules
-            and generation < self.generations
-        ):
+        while generation < self.generations:
             found_new = False
             # --- EVALUACIÓN BATCH ---
             fitness_arr = self.batch_vectorized_confidence(list(population))
             support_arr = self.batch_vectorized_support(list(population))
-            gen_fitness = []
-            gen_support = []
-            for idx, rule in enumerate(population):
-                fit = fitness_arr[idx]
-                support = support_arr[idx]
-                if (
-                    abs(fit - fitness_threshold) < 1e-6
-                    and support >= support_threshold
-                ):
-                    sig = rule.cond_signature()
-                    if sig not in best_rules_by_signature or len(rule) > len(
-                        best_rules_by_signature[sig]
-                    ):
-                        best_rules_by_signature[sig] = rule
-                        found_new = True
-                        gen_fitness.append(float(fit))
-                        gen_support.append(float(support))
-                        if len(best_rules_by_signature) >= max_rules:
-                            break
             # Control de estancamiento
             if found_new:
                 stagnation_counter = 0
@@ -858,35 +851,33 @@ class GeneticRuleMiner:
                     f"[Target {target_id}] Estancamiento detectado. Terminando búsqueda."
                 )
                 break
+            valid_rules = [
+                population[idx]
+                for idx, (fit, sup) in enumerate(zip(fitness_arr, support_arr))
+                if abs(fit - fitness_threshold) < 1e-6
+                and sup >= support_threshold
+            ]
+            valid_rules = self._filter_most_specific_rules(valid_rules)
 
-            parents = self._select_parents(population)
-            filtered_valid_rules = self._filter_most_specific_rules(
-                list(best_rules_by_signature.values())
-            )
-            population = self._create_new_generation(
-                parents, filtered_valid_rules
-            )
-            population = self._reset_population(population, target_id)
-            # Logging robusto: solo si hay reglas válidas en esta generación
-            if gen_fitness:
-                max_fitness = max(gen_fitness)
-                idx_max = gen_fitness.index(max_fitness)
-                max_support = gen_support[idx_max]
-            else:
-                max_fitness = float(np.max(fitness_arr))
-                idx_max = int(np.argmax(fitness_arr))
-                max_support = float(support_arr[idx_max])
+            max_fitness = float(np.max(fitness_arr))
+            idx_max = int(np.argmax(fitness_arr))
+            max_support = float(support_arr[idx_max])
             logger.info(
                 f"[Target {target_id}] Generación {generation}: "
                 f"Fitness max={max_fitness:.4f}, Support max={max_support:.4f}, "
-                f"Reglas guardadas: {len(best_rules_by_signature)}"
+                f"Reglas válidas en población: {len(valid_rules)}"
             )
+            if len(valid_rules) == max_rules:
+                break
             generation += 1
 
+            parents = self._select_parents(population)
+            # No se filtran reglas guardadas, solo se evoluciona la población
+            population = self._create_new_generation(parents)
+            population = self._reset_population(population, target_id)
         self._fitness_cache.clear()
         self._condition_cache.clear()
         del self._fitness_cache
         del self._condition_cache
-        return self._filter_most_specific_rules(
-            list(best_rules_by_signature.values())
-        )
+
+        return valid_rules
