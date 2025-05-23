@@ -160,12 +160,24 @@ class GeneticRuleMiner:
         ]
 
     def _get_categorical_cols(self) -> Sequence[str]:
-        return [
-            col
-            for col in self.df.columns
-            if self.df[col].dtype == "object"
-            or isinstance(self.df[col].dropna().iloc[0], list)
-        ]
+        """
+        Devuelve las columnas categóricas (tipo object o listas).
+        Si la columna está vacía, la omite para evitar errores de indexación.
+        """
+        categorical_cols = []
+        for col in self.df.columns:
+            try:
+                # Evitar error si la columna está vacía
+                non_na = self.df[col].dropna()
+                if non_na.empty:
+                    continue
+                if self.df[col].dtype == "object" or isinstance(
+                    non_na.iloc[0], list
+                ):
+                    categorical_cols.append(col)
+            except Exception:
+                continue
+        return categorical_cols
 
     def _create_rule(
         self,
@@ -225,13 +237,16 @@ class GeneticRuleMiner:
             return Condition(column=col, operator=op, value=value)
         else:
             raw_values = self.df[col].dropna()
+            if raw_values.empty:
+                logger.debug(f"No values found for column '{col}'")
+                return Condition(column=col, operator="==", value="UNKNOWN")
             all_vals = (
                 list(set(itertools.chain.from_iterable(raw_values)))
                 if isinstance(raw_values.iloc[0], list)
                 else list(raw_values.astype(str).unique())
             )
             if not all_vals:
-                logger.warning(f"No unique values found for column '{col}'")
+                logger.debug(f"No unique values found for column '{col}'")
                 return Condition(column=col, operator="==", value="UNKNOWN")
             return Condition(
                 column=col, operator="==", value=str(self.rng.choice(all_vals))
@@ -807,7 +822,7 @@ class GeneticRuleMiner:
         target_id: int | np.int64,
         max_rules: int = 720,
         fitness_threshold: float = 1.0,
-        support_threshold: float = 0.0035,
+        support_threshold: float = 0.95,
     ) -> list[Rule]:
         generation = 0
         stagnation_counter = 0

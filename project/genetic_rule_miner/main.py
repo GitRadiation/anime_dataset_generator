@@ -56,8 +56,13 @@ def convert_text_to_list_column(df, column_name):
 def process_target(tid, merged_data, user_details_columns, db_config):
     """Procesa un target individual para minería genética de reglas."""
     try:
+        # Filtrar merged_data solo para el target actual
+        filtered_data = merged_data[merged_data["anime_id"] == tid].copy()
+        if filtered_data.empty:
+            logger.info(f"⚠️ Target {tid} has no data, skipping.")
+            return (tid, False, "No data for target")
         rules = GeneticRuleMiner(
-            df=merged_data,
+            df=filtered_data,
             target_column="anime_id",
             user_cols=user_details_columns,
             pop_size=720,
