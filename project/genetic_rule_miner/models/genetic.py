@@ -41,7 +41,7 @@ class GeneticRuleMiner:
         generations: int = 500,
         mutation_rate: float = 0.10,
         random_seed: Optional[int] = None,
-        max_stagnation: int = 200,
+        max_stagnation: int = 250,
     ):
         # Optimizar DataFrame para acceso secuencial
         df = self._optimize_dataframe(df.drop(columns=["rating"]))
@@ -795,27 +795,28 @@ class GeneticRuleMiner:
 
     def _filter_most_specific_rules(self, rules: list[Rule]) -> list[Rule]:
         """
-        Filtra reglas dejando solo las más generales según el criterio de inclusión de (col, op).
-        Si una regla es subconjunto de otra, se queda la más grande (la que tiene más condiciones).
+        Filtra reglas dejando solo las más específicas (las que tienen más condiciones).
+        Si una regla es subconjunto de otra, se conserva la más específica (más condiciones).
         """
         filtered = []
         for rule in rules:
             is_subsumed = False
             to_remove = []
             for i, other in enumerate(filtered):
-                if other.is_subset_of(rule):
-                    # other es más específica o igual, no la añadimos
+                if rule.is_subset_of(other):
+                    # rule es más específica o igual, eliminamos la más general (other)
+                    to_remove.append(i)
+                elif other.is_subset_of(rule):
+                    # Ya hay una regla más específica o igual, descartamos esta
                     is_subsumed = True
                     break
-                elif rule.is_subset_of(other):
-                    # rule es más general, quitamos la más pequeña
-                    to_remove.append(i)
             if not is_subsumed:
-                # Eliminar reglas más pequeñas
                 for idx in reversed(to_remove):
                     del filtered[idx]
                 filtered.append(rule)
         return filtered
+
+
 
     def evolve_per_target(
         self,
