@@ -4,6 +4,7 @@ import ast
 import time
 
 import numpy as np
+import pandas as pd
 from joblib import Parallel, delayed
 from sqlalchemy import text
 
@@ -16,6 +17,25 @@ from genetic_rule_miner.utils.rule import Rule
 
 LogManager.configure()
 logger = LogManager.get_logger(__name__)
+
+
+def optimize_dataframe(df: pd.DataFrame) -> pd.DataFrame:
+    """Optimiza el DataFrame para acceso secuencial y reduce fragmentación de memoria."""
+    # Ordenar columnas por tipo para mejorar localidad
+    cols_ordered = [
+        col for col in df.columns if df[col].dtype.kind in "biufc"
+    ] + [  # Numéricos
+        col for col in df.columns if df[col].dtype.kind in "O"
+    ]  # Objetos
+    df = df[cols_ordered].copy()
+
+    # Convertir a tipos más eficientes
+    for col in df.select_dtypes(include=["int64"]):
+        df[col] = pd.to_numeric(df[col], downcast="integer")
+    for col in df.select_dtypes(include=["float64"]):
+        df[col] = pd.to_numeric(df[col], downcast="float")
+
+    return df
 
 
 def convert_text_to_list_column(df, column_name):
@@ -201,13 +221,13 @@ def main() -> None:
             if col in merged_data.columns:
                 logger.info(f"Converting column '{col}' from text to list...")
                 convert_text_to_list_column(merged_data, col)
+        merged_data = optimize_dataframe(merged_data.drop(columns=["rating"]))
 
         logger.info("Preparing rule mining tasks...")
         db_manager = DatabaseManager(config=db_config)
         # Eliminar reglas obsoletas antes de procesar
         remove_obsolete_rules(db_manager, merged_data, user_details)
         targets = db_manager.get_anime_ids_without_rules() or []
-
         total_targets = len(targets)
         logger.info(f"Total targets to process: {total_targets}")
 
