@@ -8,6 +8,7 @@ services:
             - POSTGRESQL_PORT_NUMBER=${DB_PORT:-5432}
         volumes:
             - postgres-data:/bitnami/postgresql
+            - ./init.sql:/docker-entrypoint-initdb.d/init.sql
         ports:
             - "5432:5432"
         networks:
@@ -15,14 +16,14 @@ services:
 
 
     pgadmin:
-        image: dpage/pgadmin4:latest  # Imagen corregida
+        image: dpage/pgadmin4:latest
         environment:
             - PGADMIN_DEFAULT_EMAIL=admin@example.com
             - PGADMIN_DEFAULT_PASSWORD=admin
         volumes:
             - pgadmin-data:/var/lib/pgadmin
         ports:
-            - "8080:80"  # Usualmente se expone por el puerto 80, aquí en 8080 para evitar conflictos
+            - "8080:80"
         networks:
             - shared_net
 
