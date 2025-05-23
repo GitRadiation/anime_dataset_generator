@@ -4,7 +4,6 @@ import ast
 import time
 
 import numpy as np
-import pandas as pd
 from joblib import Parallel, delayed
 from sqlalchemy import text
 
@@ -17,25 +16,6 @@ from genetic_rule_miner.utils.rule import Rule
 
 LogManager.configure()
 logger = LogManager.get_logger(__name__)
-
-
-def optimize_dataframe(df: pd.DataFrame) -> pd.DataFrame:
-    """Optimiza el DataFrame para acceso secuencial y reduce fragmentación de memoria."""
-    # Ordenar columnas por tipo para mejorar localidad
-    cols_ordered = [
-        col for col in df.columns if df[col].dtype.kind in "biufc"
-    ] + [  # Numéricos
-        col for col in df.columns if df[col].dtype.kind in "O"
-    ]  # Objetos
-    df = df[cols_ordered].copy()
-
-    # Convertir a tipos más eficientes
-    for col in df.select_dtypes(include=["int64"]):
-        df[col] = pd.to_numeric(df[col], downcast="integer")
-    for col in df.select_dtypes(include=["float64"]):
-        df[col] = pd.to_numeric(df[col], downcast="float")
-
-    return df
 
 
 def convert_text_to_list_column(df, column_name):
@@ -146,6 +126,10 @@ def remove_obsolete_rules(db_manager, merged_data, user_details):
             ).fetchall()
             if not rules_rows:
                 break
+
+            # --- BATCH: Construir reglas y evaluar en lote ---
+            rules_list = []
+            rule_id_list = []
             for row in rules_rows:
                 rule_id, conditions, target_value = row
                 try:
@@ -156,17 +140,24 @@ def remove_obsolete_rules(db_manager, merged_data, user_details):
                         conditions=conditions,
                         target=np.int64(target_value),
                     )
-                    fitness = miner.fitness(rule)
-                    confidence = miner._vectorized_confidence(rule)
-                    if fitness < 0.95 or confidence < 0.95:
-                        rule_ids.append(rule_id)
-                        rule_infos.append((rule_id, fitness, confidence))
+                    rules_list.append(rule)
+                    rule_id_list.append(rule_id)
                 except Exception as e:
                     logger.warning(
                         f"No se pudo evaluar la regla {rule_id}: {e}"
                     )
                     rule_ids.append(rule_id)
                     rule_infos.append((rule_id, "error", "error"))
+
+            if rules_list:
+                fitness_arr = miner.batch_vectorized_confidence(rules_list)
+                support_arr = miner.batch_vectorized_support(rules_list)
+                for idx, rule_id in enumerate(rule_id_list):
+                    fitness = fitness_arr[idx]
+                    confidence = fitness_arr[idx]  # fitness == confidence aquí
+                    if fitness < 0.95 or support_arr < 0.005:
+                        rule_ids.append(rule_id)
+                        rule_infos.append((rule_id, fitness, confidence))
             offset += batch_size_rules
 
         # Eliminar todas las reglas obsoletas en masa y mostrar info
@@ -221,13 +212,13 @@ def main() -> None:
             if col in merged_data.columns:
                 logger.info(f"Converting column '{col}' from text to list...")
                 convert_text_to_list_column(merged_data, col)
-        merged_data = optimize_dataframe(merged_data.drop(columns=["rating"]))
 
         logger.info("Preparing rule mining tasks...")
         db_manager = DatabaseManager(config=db_config)
         # Eliminar reglas obsoletas antes de procesar
         remove_obsolete_rules(db_manager, merged_data, user_details)
         targets = db_manager.get_anime_ids_without_rules() or []
+
         total_targets = len(targets)
         logger.info(f"Total targets to process: {total_targets}")
 
