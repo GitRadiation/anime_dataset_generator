@@ -795,28 +795,26 @@ class GeneticRuleMiner:
 
     def _filter_most_specific_rules(self, rules: list[Rule]) -> list[Rule]:
         """
-        Filtra reglas dejando solo las más específicas (las que tienen más condiciones).
-        Si una regla es subconjunto de otra, se conserva la más específica (más condiciones).
+        Filtra reglas dejando solo las más específicas (más condiciones).
+        Si una regla es más general (subconjunto de otra), se descarta.
         """
         filtered = []
         for rule in rules:
-            is_subsumed = False
+            is_more_general = False
             to_remove = []
             for i, other in enumerate(filtered):
-                if rule.is_subset_of(other):
-                    # rule es más específica o igual, eliminamos la más general (other)
+                if other.is_subset_of(rule):
+                    # other es más general, lo eliminamos
                     to_remove.append(i)
-                elif other.is_subset_of(rule):
-                    # Ya hay una regla más específica o igual, descartamos esta
-                    is_subsumed = True
+                elif rule.is_subset_of(other):
+                    # rule es más general, no la añadimos
+                    is_more_general = True
                     break
-            if not is_subsumed:
+            if not is_more_general:
                 for idx in reversed(to_remove):
                     del filtered[idx]
                 filtered.append(rule)
         return filtered
-
-
 
     def evolve_per_target(
         self,
