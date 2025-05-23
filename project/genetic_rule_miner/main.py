@@ -126,6 +126,10 @@ def remove_obsolete_rules(db_manager, merged_data, user_details):
             ).fetchall()
             if not rules_rows:
                 break
+
+            # --- BATCH: Construir reglas y evaluar en lote ---
+            rules_list = []
+            rule_id_list = []
             for row in rules_rows:
                 rule_id, conditions, target_value = row
                 try:
@@ -136,17 +140,24 @@ def remove_obsolete_rules(db_manager, merged_data, user_details):
                         conditions=conditions,
                         target=np.int64(target_value),
                     )
-                    fitness = miner.fitness(rule)
-                    confidence = miner._vectorized_confidence(rule)
-                    if fitness < 0.95 or confidence < 0.95:
-                        rule_ids.append(rule_id)
-                        rule_infos.append((rule_id, fitness, confidence))
+                    rules_list.append(rule)
+                    rule_id_list.append(rule_id)
                 except Exception as e:
                     logger.warning(
                         f"No se pudo evaluar la regla {rule_id}: {e}"
                     )
                     rule_ids.append(rule_id)
                     rule_infos.append((rule_id, "error", "error"))
+
+            if rules_list:
+                fitness_arr = miner.batch_vectorized_confidence(rules_list)
+                support_arr = miner.batch_vectorized_support(rules_list)
+                for idx, rule_id in enumerate(rule_id_list):
+                    fitness = fitness_arr[idx]
+                    confidence = fitness_arr[idx]  # fitness == confidence aquí
+                    if fitness < 0.95 or support_arr < 0.005:
+                        rule_ids.append(rule_id)
+                        rule_infos.append((rule_id, fitness, confidence))
             offset += batch_size_rules
 
         # Eliminar todas las reglas obsoletas en masa y mostrar info

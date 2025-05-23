@@ -6,13 +6,13 @@ import random
 import time
 from collections import deque
 from collections.abc import MutableSequence, Sequence
-from concurrent.futures import ProcessPoolExecutor, as_completed
 from sys import getsizeof
 from typing import List, Optional
 
 import numpy as np
 import pandas as pd
 from cachetools import LRUCache
+from joblib import Parallel, delayed
 
 from genetic_rule_miner.utils.logging import LogManager
 from genetic_rule_miner.utils.rule import Condition, Rule
@@ -37,12 +37,11 @@ class GeneticRuleMiner:
         df: pd.DataFrame,
         target_column: str,
         user_cols: Sequence[str],
-        pop_size: int = 50,
-        generations: int = 100,
+        pop_size: int = 720,
+        generations: int = 500,
         mutation_rate: float = 0.10,
         random_seed: Optional[int] = None,
-        convergence_threshold: float = 0.001,
-        max_stagnation: int = 20,
+        max_stagnation: int = 200,
     ):
         # Optimizar DataFrame para acceso secuencial
         df = self._optimize_dataframe(df.drop(columns=["rating"]))
@@ -63,7 +62,6 @@ class GeneticRuleMiner:
         self.pop_size = pop_size
         self.generations = generations
         self.mutation_rate = mutation_rate
-        self.convergence_threshold = convergence_threshold
         self.max_stagnation = max_stagnation
 
         self.rng = np.random.default_rng(random_seed)
@@ -300,15 +298,34 @@ class GeneticRuleMiner:
         self._fitness_cache[rule_key] = (fitness_value, time.time())
         return fitness_value
 
-    def _build_condition_mask(self, rule: Rule) -> np.ndarray:
-        """Versión optimizada de la construcción de máscaras."""
-        condition_masks = []
+    def _vectorized_support(self, rule: Rule) -> float:
+        """
+        Calcula el soporte de una sola regla de forma vectorizada.
+        """
+        mask = self._build_condition_mask_single(rule)
+        return np.sum(mask) / len(self.df)
 
+    def _vectorized_confidence(self, rule: Rule) -> float:
+        """
+        Calcula la confianza de una sola regla de forma vectorizada.
+        """
+        mask = self._build_condition_mask_single(rule)
+        support_count = mask.sum(dtype=np.float64)
+        if support_count == 0:
+            return 0.0
+        target_mask = self._target_values == rule.target
+        positives = np.count_nonzero(mask & target_mask)
+        return float(positives) / support_count
+
+    def _build_condition_mask_single(self, rule: Rule) -> np.ndarray:
+        """
+        Construye la máscara booleana para una sola regla (no batch).
+        """
+        condition_masks = []
         for cond_list in rule.conditions:
             for col, (op, value) in cond_list:
                 condition = (col, op, value)
                 cached_entry = self._condition_cache.get(condition)
-
                 if cached_entry is not None:
                     condition_mask = cached_entry
                 else:
@@ -342,32 +359,88 @@ class GeneticRuleMiner:
                             raise ValueError(
                                 f"Unsupported operator '{op}' for categorical column '{col}'"
                             )
-
-                    # Almacenar en caché
                     self._condition_cache[condition] = condition_mask
-
                 condition_masks.append(condition_mask)
-
-        # Combinar todas las máscaras con operación AND vectorizada
         if condition_masks:
             return np.logical_and.reduce(condition_masks)
         return np.ones(len(self.df), dtype=bool)
 
-    def _vectorized_support(self, rule: Rule) -> float:
-        condition_mask = self._build_condition_mask(rule)
-        return np.sum(condition_mask) / len(self.df)
+    def evaluate_rules_vectorized(self, rules: list[Rule]) -> np.ndarray:
+        """
+        Evalúa muchas reglas simultáneamente mediante operaciones vectorizadas.
+        Devuelve una máscara booleana de shape (n_rules, n_instances).
+        Optimizado para columnas numéricas y categóricas.
+        Usa self._condition_cache para cachear condiciones individuales.
+        """
+        n = len(self.df)
+        m = len(rules)
+        masks = np.ones((m, n), dtype=bool)
 
-    def _vectorized_confidence(self, rule: Rule) -> float:
-        """Versión optimizada del cálculo de confianza."""
-        conditions_mask = self._build_condition_mask(rule)
-        target_mask = self._target_values == rule.target
-        support_conditions = np.sum(conditions_mask)
+        # Precache data arrays para acelerar acceso
+        col_data_cache = {}
+        for rule in rules:
+            for col, _ in rule.conditions[0] + rule.conditions[1]:
+                if col not in col_data_cache:
+                    if col in self._numeric_cols_data:
+                        col_data_cache[col] = np.asarray(
+                            self._numeric_cols_data[col]
+                        )
+                    else:
+                        col_data_cache[col] = self.df[col].astype(str).values
 
-        if support_conditions == 0:
-            return 0.0
+        for i, rule in enumerate(rules):
+            rule_mask = np.ones(n, dtype=bool)
+            for col, (op, val) in rule.conditions[0] + rule.conditions[1]:
+                condition_key = (col, op, val)
+                cond_mask = self._condition_cache.get(condition_key)
+                if cond_mask is None:
+                    data = col_data_cache[col]
+                    if op == "<":
+                        cond_mask = data < val
+                    elif op == ">=":
+                        cond_mask = data >= val
+                    elif op == "==":
+                        cond_mask = data == val
+                    elif op == "!=":
+                        cond_mask = data != val
+                    else:
+                        raise NotImplementedError(
+                            f"Operador no soportado: {op}"
+                        )
+                    self._condition_cache[condition_key] = cond_mask
+                rule_mask &= cond_mask
+                if not np.any(rule_mask):
+                    break  # Early exit si ya es todo False
+            masks[i] = rule_mask
 
-        support_conditions_and_target = np.sum(conditions_mask & target_mask)
-        return support_conditions_and_target / support_conditions
+        return masks
+
+    def batch_vectorized_support(self, rules: list[Rule]) -> np.ndarray:
+        """
+        Calcula el soporte de múltiples reglas de forma vectorizada (batch).
+        Devuelve un array de soporte para cada regla.
+        """
+        masks = self.evaluate_rules_vectorized(rules)
+        supports = masks.sum(axis=1) / len(self.df)
+        return supports
+
+    def batch_vectorized_confidence(self, rules: list[Rule]) -> np.ndarray:
+        """
+        Calcula la confianza de múltiples reglas de forma vectorizada (batch).
+        Devuelve un array de confianza para cada regla.
+        """
+        masks = self.evaluate_rules_vectorized(rules)
+        supports = masks.sum(axis=1)
+        # Limpiar soportes negativos o NaN
+        supports = np.where(np.isnan(supports) | (supports <= 0), 1, supports)
+        targets = np.array([rule.target for rule in rules])
+        target_matrix = self._target_values[None, :] == targets[:, None]
+        positives = np.logical_and(masks, target_matrix).sum(axis=1)
+        confidences = positives / supports
+        confidences = np.where(
+            np.isnan(confidences) | (supports == 1), 0.0, confidences
+        )
+        return confidences
 
     def mutate(self, rule: Rule) -> Rule:
         new_rule = copy.copy(rule)
@@ -564,20 +637,9 @@ class GeneticRuleMiner:
         self, population: Sequence[Rule]
     ) -> np.ndarray:
         """Evalúa la población en paralelo usando ProcessPoolExecutor."""
-        chunk_size = max(1, len(population) // 4)  # Dividir en 4 chunks
-
-        with ProcessPoolExecutor() as executor:
-            futures = []
-            for i in range(0, len(population), chunk_size):
-                chunk = population[i : i + chunk_size]
-                futures.append(
-                    executor.submit(self._evaluate_population_chunk, chunk)
-                )
-
-            results = []
-            for future in as_completed(futures):
-                results.extend(future.result())
-
+        results = Parallel(n_jobs=-1, backend="loky")(
+            delayed(self.fitness)(rule) for rule in population
+        )
         return np.array(results)
 
     def _evaluate_population_chunk(
@@ -616,7 +678,44 @@ class GeneticRuleMiner:
         new_population: MutableSequence[Rule] = []
         seen_rules = set()
 
-        # 1. Añadir reglas válidas únicas sin mutar
+        # --- ELITISMO: priorizar reglas con fitness 1 ---
+        fitnesses = [self.fitness(rule) for rule in parents]
+        supports = [self._vectorized_support(rule) for rule in parents]
+        elite_candidates = [
+            (i, fitnesses[i], supports[i]) for i in range(len(parents))
+        ]
+        # Primero, elites con fitness 1, ordenados por soporte descendente
+        elites_fit1 = sorted(
+            [e for e in elite_candidates if abs(e[1] - 1.0) < 1e-6],
+            key=lambda x: x[2],
+            reverse=True,
+        )
+        # Si no hay suficientes, completar con los mejores por score (fitness*support)
+        n_elite = max(1, int(0.1 * len(parents)))
+        elites = elites_fit1[:n_elite]
+        if len(elites) < n_elite:
+            # Agregar el resto por score (sin duplicar)
+            remaining = [
+                e
+                for e in elite_candidates
+                if e not in elites
+                and e[0] not in [idx for idx, _, _ in elites]
+            ]
+            remaining = sorted(
+                remaining,
+                key=lambda x: x[1] * x[2],
+                reverse=True,
+            )
+            elites += remaining[: n_elite - len(elites)]
+        elite_indices = [e[0] for e in elites]
+        for i in elite_indices:
+            rule = parents[i]
+            if rule not in seen_rules:
+                new_population.append(rule)
+                seen_rules.add(rule)
+        # ---------------------------------------------------------------
+
+        # 1. Añadir reglas válidas únicas sin mutar (no duplicar elites)
         for rule in valid_rules:
             if rule not in seen_rules:
                 new_population.append(rule)
@@ -679,7 +778,6 @@ class GeneticRuleMiner:
 
         return new_population
 
-
     def _filter_most_specific_rules(self, rules: list[Rule]) -> list[Rule]:
         """
         Filtra reglas dejando solo las más generales según el criterio de inclusión de (col, op).
@@ -709,11 +807,11 @@ class GeneticRuleMiner:
         target_id: int | np.int64,
         max_rules: int = 720,
         fitness_threshold: float = 1.0,
-        confidence_threshold: float = 0.9,
+        support_threshold: float = 0.0035,
     ) -> list[Rule]:
         generation = 0
         stagnation_counter = 0
-        max_stagnation = 250
+        max_stagnation = self.max_stagnation
         best_rules_by_signature = {}
         logger.info(
             f"Starting evolution for target {target_id} with max rules {max_rules}"
@@ -727,15 +825,17 @@ class GeneticRuleMiner:
             and generation < self.generations
         ):
             found_new = False
-            # Para logging por generación
+            # --- EVALUACIÓN BATCH ---
+            fitness_arr = self.batch_vectorized_confidence(list(population))
+            support_arr = self.batch_vectorized_support(list(population))
             gen_fitness = []
-            gen_conf = []
-            for rule in population:
-                fit = self.fitness(rule)
-                conf = self._vectorized_confidence(rule)
+            gen_support = []
+            for idx, rule in enumerate(population):
+                fit = fitness_arr[idx]
+                support = support_arr[idx]
                 if (
                     abs(fit - fitness_threshold) < 1e-6
-                    and conf >= confidence_threshold
+                    and support >= support_threshold
                 ):
                     sig = rule.cond_signature()
                     if sig not in best_rules_by_signature or len(rule) > len(
@@ -743,18 +843,10 @@ class GeneticRuleMiner:
                     ):
                         best_rules_by_signature[sig] = rule
                         found_new = True
-                        gen_fitness.append(fit)
-                        gen_conf.append(conf)
+                        gen_fitness.append(float(fit))
+                        gen_support.append(float(support))
                         if len(best_rules_by_signature) >= max_rules:
                             break
-            # Log solo uno por generación
-            if gen_fitness and gen_conf:
-                logger.info(
-                    f"[Target {target_id}] Generación {generation}: "
-                    f"Fitness max={max(gen_fitness):.4f}, min={min(gen_fitness):.4f}, "
-                    f"Confianza max={max(gen_conf):.4f}, min={min(gen_conf):.4f}, "
-                    f"Total acumulado: {len(best_rules_by_signature)}"
-                )
             # Control de estancamiento
             if found_new:
                 stagnation_counter = 0
@@ -775,7 +867,20 @@ class GeneticRuleMiner:
                 parents, filtered_valid_rules
             )
             population = self._reset_population(population, target_id)
-            logger.info("Generación %d para el target %d", generation, target_id)
+            # Logging robusto: solo si hay reglas válidas en esta generación
+            if gen_fitness:
+                max_fitness = max(gen_fitness)
+                idx_max = gen_fitness.index(max_fitness)
+                max_support = gen_support[idx_max]
+            else:
+                max_fitness = float(np.max(fitness_arr))
+                idx_max = int(np.argmax(fitness_arr))
+                max_support = float(support_arr[idx_max])
+            logger.info(
+                f"[Target {target_id}] Generación {generation}: "
+                f"Fitness max={max_fitness:.4f}, Support max={max_support:.4f}, "
+                f"Reglas guardadas: {len(best_rules_by_signature)}"
+            )
             generation += 1
 
         self._fitness_cache.clear()
@@ -785,16 +890,3 @@ class GeneticRuleMiner:
         return self._filter_most_specific_rules(
             list(best_rules_by_signature.values())
         )
-
-    # def _update_tracking(
-    #     self, generation: int, population: Sequence[Rule]
-    # ) -> None:
-    #     fitness_scores = tuple(self._parallel_evaluate_population(population))
-    #     best_rule = self._get_best_individual(population, fitness_scores)
-    #     best_support = self._vectorized_support(best_rule)
-
-    #     logger.info(
-    #         f"Generation {generation}: Best Fitness={fitness_scores[np.argmax(fitness_scores)]:.4f}, "
-    #         f"Support={best_support:.4f} "
-    #         f"Rule: {(best_rule)}"
-    #     )
