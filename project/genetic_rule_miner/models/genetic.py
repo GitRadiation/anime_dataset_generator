@@ -5,9 +5,9 @@ import itertools
 import random
 import time
 from collections import deque
-from collections.abc import Sequence
+from collections.abc import MutableSequence, Sequence
 from sys import getsizeof
-from typing import Optional
+from typing import List, Optional
 
 import numpy as np
 import pandas as pd
@@ -37,14 +37,14 @@ class GeneticRuleMiner:
         df: pd.DataFrame,
         target_column: str,
         user_cols: Sequence[str],
-        pop_size: int = 50,
-        generations: int = 100,
+        pop_size: int = 720,
+        generations: int = 500,
         mutation_rate: float = 0.10,
         random_seed: Optional[int] = None,
-        convergence_threshold: float = 0.001,
-        max_stagnation: int = 20,
+        max_stagnation: int = 200,
     ):
         # Optimizar DataFrame para acceso secuencial
+        df = self._optimize_dataframe(df.drop(columns=["rating"]))
         self.df = df.copy()
         self.target = target_column
 
@@ -62,7 +62,6 @@ class GeneticRuleMiner:
         self.pop_size = pop_size
         self.generations = generations
         self.mutation_rate = mutation_rate
-        self.convergence_threshold = convergence_threshold
         self.max_stagnation = max_stagnation
 
         self.rng = np.random.default_rng(random_seed)
@@ -82,6 +81,24 @@ class GeneticRuleMiner:
         self._stagnation_counter = 0
 
         self._initialize_data_structures()
+
+    def _optimize_dataframe(self, df: pd.DataFrame) -> pd.DataFrame:
+        """Optimiza el DataFrame para acceso secuencial y reduce fragmentación de memoria."""
+        # Ordenar columnas por tipo para mejorar localidad
+        cols_ordered = [
+            col for col in df.columns if df[col].dtype.kind in "biufc"
+        ] + [  # Numéricos
+            col for col in df.columns if df[col].dtype.kind in "O"
+        ]  # Objetos
+        df = df[cols_ordered].copy()
+
+        # Convertir a tipos más eficientes
+        for col in df.select_dtypes(include=["int64"]):
+            df[col] = pd.to_numeric(df[col], downcast="integer")
+        for col in df.select_dtypes(include=["float64"]):
+            df[col] = pd.to_numeric(df[col], downcast="float")
+
+        return df
 
     def _check_cache_expiration(self, cache_dict, key):
         """Verifica si una entrada del caché ha expirado y la elimina si es así."""
@@ -281,15 +298,34 @@ class GeneticRuleMiner:
         self._fitness_cache[rule_key] = (fitness_value, time.time())
         return fitness_value
 
-    def _build_condition_mask(self, rule: Rule) -> np.ndarray:
-        """Versión optimizada de la construcción de máscaras."""
-        condition_masks = []
+    def _vectorized_support(self, rule: Rule) -> float:
+        """
+        Calcula el soporte de una sola regla de forma vectorizada.
+        """
+        mask = self._build_condition_mask_single(rule)
+        return np.sum(mask) / len(self.df)
 
+    def _vectorized_confidence(self, rule: Rule) -> float:
+        """
+        Calcula la confianza de una sola regla de forma vectorizada.
+        """
+        mask = self._build_condition_mask_single(rule)
+        support_count = mask.sum(dtype=np.float64)
+        if support_count == 0:
+            return 0.0
+        target_mask = self._target_values == rule.target
+        positives = np.count_nonzero(mask & target_mask)
+        return float(positives) / support_count
+
+    def _build_condition_mask_single(self, rule: Rule) -> np.ndarray:
+        """
+        Construye la máscara booleana para una sola regla (no batch).
+        """
+        condition_masks = []
         for cond_list in rule.conditions:
             for col, (op, value) in cond_list:
                 condition = (col, op, value)
                 cached_entry = self._condition_cache.get(condition)
-
                 if cached_entry is not None:
                     condition_mask = cached_entry
                 else:
@@ -323,32 +359,88 @@ class GeneticRuleMiner:
                             raise ValueError(
                                 f"Unsupported operator '{op}' for categorical column '{col}'"
                             )
-
-                    # Almacenar en caché
                     self._condition_cache[condition] = condition_mask
-
                 condition_masks.append(condition_mask)
-
-        # Combinar todas las máscaras con operación AND vectorizada
         if condition_masks:
             return np.logical_and.reduce(condition_masks)
         return np.ones(len(self.df), dtype=bool)
 
-    def _vectorized_support(self, rule: Rule) -> float:
-        condition_mask = self._build_condition_mask(rule)
-        return np.sum(condition_mask) / len(self.df)
+    def evaluate_rules_vectorized(self, rules: list[Rule]) -> np.ndarray:
+        """
+        Evalúa muchas reglas simultáneamente mediante operaciones vectorizadas.
+        Devuelve una máscara booleana de shape (n_rules, n_instances).
+        Optimizado para columnas numéricas y categóricas.
+        Usa self._condition_cache para cachear condiciones individuales.
+        """
+        n = len(self.df)
+        m = len(rules)
+        masks = np.ones((m, n), dtype=bool)
 
-    def _vectorized_confidence(self, rule: Rule) -> float:
-        """Versión optimizada del cálculo de confianza."""
-        conditions_mask = self._build_condition_mask(rule)
-        target_mask = self._target_values == rule.target
-        support_conditions = np.sum(conditions_mask)
+        # Precache data arrays para acelerar acceso
+        col_data_cache = {}
+        for rule in rules:
+            for col, _ in rule.conditions[0] + rule.conditions[1]:
+                if col not in col_data_cache:
+                    if col in self._numeric_cols_data:
+                        col_data_cache[col] = np.asarray(
+                            self._numeric_cols_data[col]
+                        )
+                    else:
+                        col_data_cache[col] = self.df[col].astype(str).values
 
-        if support_conditions == 0:
-            return 0.0
+        for i, rule in enumerate(rules):
+            rule_mask = np.ones(n, dtype=bool)
+            for col, (op, val) in rule.conditions[0] + rule.conditions[1]:
+                condition_key = (col, op, val)
+                cond_mask = self._condition_cache.get(condition_key)
+                if cond_mask is None:
+                    data = col_data_cache[col]
+                    if op == "<":
+                        cond_mask = data < val
+                    elif op == ">=":
+                        cond_mask = data >= val
+                    elif op == "==":
+                        cond_mask = data == val
+                    elif op == "!=":
+                        cond_mask = data != val
+                    else:
+                        raise NotImplementedError(
+                            f"Operador no soportado: {op}"
+                        )
+                    self._condition_cache[condition_key] = cond_mask
+                rule_mask &= cond_mask
+                if not np.any(rule_mask):
+                    break  # Early exit si ya es todo False
+            masks[i] = rule_mask
 
-        support_conditions_and_target = np.sum(conditions_mask & target_mask)
-        return support_conditions_and_target / support_conditions
+        return masks
+
+    def batch_vectorized_support(self, rules: list[Rule]) -> np.ndarray:
+        """
+        Calcula el soporte de múltiples reglas de forma vectorizada (batch).
+        Devuelve un array de soporte para cada regla.
+        """
+        masks = self.evaluate_rules_vectorized(rules)
+        supports = masks.sum(axis=1) / len(self.df)
+        return supports
+
+    def batch_vectorized_confidence(self, rules: list[Rule]) -> np.ndarray:
+        """
+        Calcula la confianza de múltiples reglas de forma vectorizada (batch).
+        Devuelve un array de confianza para cada regla.
+        """
+        masks = self.evaluate_rules_vectorized(rules)
+        supports = masks.sum(axis=1)
+        # Limpiar soportes negativos o NaN
+        supports = np.where(np.isnan(supports) | (supports <= 0), 1, supports)
+        targets = np.array([rule.target for rule in rules])
+        target_matrix = self._target_values[None, :] == targets[:, None]
+        positives = np.logical_and(masks, target_matrix).sum(axis=1)
+        confidences = positives / supports
+        confidences = np.where(
+            np.isnan(confidences) | (supports == 1), 0.0, confidences
+        )
+        return confidences
 
     def mutate(self, rule: Rule) -> Rule:
         new_rule = copy.copy(rule)
@@ -541,325 +633,150 @@ class GeneticRuleMiner:
             selected.append(candidate)
         return selected
 
-    def evaluate_rules_vectorized(self, rules: list[Rule]) -> np.ndarray:
-        """
-        Evalúa muchas reglas simultáneamente mediante operaciones vectorizadas.
-        Devuelve una máscara booleana de shape (n_rules, n_instances).
-        Corrige el error de conversión a bool cuando hay NaNs y soporta columnas pandas 'string[python]'.
-        """
-        n = len(self.df)
-        m = len(rules)
-        masks = np.ones((m, n), dtype=bool)
-        for i, rule in enumerate(rules):
-            for col, (op, val) in rule.conditions[0] + rule.conditions[1]:
-                if col in self._numeric_cols_data:
-                    data = self._numeric_cols_data[col]
-                    # Asegura tipo float para operaciones numéricas
-                    data = np.asarray(data, dtype=float)
-                    data = np.nan_to_num(data, nan=np.inf)
-                else:
-                    # Soporta columnas 'string[python]' y object
-                    data = self.df[col]
-                    # Si es pandas StringDtype, convertir a object/str
-                    if pd.api.types.is_string_dtype(data):
-                        data = data.astype("object")
-                    data = np.asarray(data)
-                    data = np.where(pd.isna(data), "__NAN__", data)
-                if op == "<":
-                    cond_mask = data < val
-                elif op == ">=":
-                    cond_mask = data >= val
-                elif op == "==":
-                    cond_mask = data == val
-                elif op == "!=":
-                    cond_mask = data != val
-                else:
-                    raise NotImplementedError(f"Operador no soportado: {op}")
-                masks[i] &= cond_mask
-        return masks
-
-    def genotype_to_rule(
-        self, geno: list[tuple[str, str, object]], target: int
-    ) -> Rule:
-        """
-        Convierte un genotipo (lista de tuplas) en un objeto Rule.
-        """
-        user_conditions = [c for c in geno if c[0] in self.user_cols]
-        other_conditions = [c for c in geno if c[0] not in self.user_cols]
-        return Rule(
-            columns=[c[0] for c in geno],
-            conditions={
-                "user_conditions": [
-                    (col, (op, val)) for col, op, val in user_conditions
-                ],
-                "other_conditions": [
-                    (col, (op, val)) for col, op, val in other_conditions
-                ],
-            },
-            target=np.int64(target),
+    def _parallel_evaluate_population(
+        self, population: Sequence[Rule]
+    ) -> np.ndarray:
+        """Evalúa la población en paralelo usando ProcessPoolExecutor."""
+        results = Parallel(n_jobs=-1, backend="loky")(
+            delayed(self.fitness)(rule) for rule in population
         )
+        return np.array(results)
 
-    def parallel_fitness_evaluation(self, rules: list[Rule]) -> np.ndarray:
-        """
-        Evalúa la aptitud de una lista de reglas en paralelo usando joblib.
-        """
-        return np.array(
-            Parallel(n_jobs=-1, backend="loky")(
-                delayed(self.fitness)(rule) for rule in rules
-            )
-        )
+    def _evaluate_population_chunk(
+        self, population_chunk: Sequence[Rule]
+    ) -> List[float]:
+        """Evalúa un chunk de la población."""
+        return [self.fitness(rule) for rule in population_chunk]
 
-    def hill_climb(self, rule: Rule, iterations: int = 5) -> Rule:
-        """
-        Aplica mutación guiada (búsqueda local) para refinar reglas de alto fitness.
-        """
-        best = rule
-        best_fitness = self.fitness(rule)
-        for _ in range(iterations):
-            neighbor = self.mutate(copy.deepcopy(rule))
-            f = self.fitness(neighbor)
-            if f > best_fitness:
-                best = neighbor
-                best_fitness = f
-        return best
-
-    def _rule_to_genotype(self, rule: Rule) -> list[tuple[str, str, object]]:
-        """
-        Convierte un Rule a su genotipo (lista de tuplas (col, op, val)).
-        """
-        return [
-            (col, op, val)
-            for col, (op, val) in rule.conditions[0] + rule.conditions[1]
-        ]
-
-    def _population_to_genotypes(
-        self, population: list[Rule]
-    ) -> list[list[tuple[str, str, object]]]:
-        return [self._rule_to_genotype(rule) for rule in population]
-
-    def _genotypes_to_rules(
-        self, genotypes: list[list[tuple[str, str, object]]], target: int
-    ) -> list[Rule]:
-        return [self.genotype_to_rule(geno, target) for geno in genotypes]
-
-    def _mutate_genotype(
-        self, geno: list[tuple[str, str, object]], target: int
-    ) -> list[tuple[str, str, object]]:
-        """
-        Aplica mutación sobre el genotipo y devuelve el nuevo genotipo.
-        """
-        rule = self.genotype_to_rule(geno, target)
-        mutated_rule = self.mutate(rule)
-        return self._rule_to_genotype(mutated_rule)
-
-    def _crossover_genotypes(self, geno1, geno2, target):
-        """
-        Realiza crossover entre dos genotipos y devuelve dos nuevos genotipos.
-        """
-        rule1 = self.genotype_to_rule(geno1, target)
-        rule2 = self.genotype_to_rule(geno2, target)
-        child1, child2 = self.crossover(rule1, rule2)
-        return self._rule_to_genotype(child1), self._rule_to_genotype(child2)
-
-    def _create_random_genotype(
-        self, target: int
-    ) -> list[tuple[str, str, object]]:
-        rule = self._create_rule(target)
-        return self._rule_to_genotype(rule)
-
-    def _adaptive_mutation_rate(
-        self, fitness_values: np.ndarray, base_rate: float = 0.10
-    ) -> float:
-        """
-        Ajusta la tasa de mutación dinámicamente según la diversidad de fitness.
-        """
-        if len(fitness_values) == 0 or np.mean(fitness_values) == 0:
-            return base_rate
-        diversity = float(np.std(fitness_values)) / float(
-            np.mean(fitness_values)
-        )
-        return min(0.8, max(0.01, float(base_rate) * (1 + diversity)))
-
-    def evolve_per_target(
+    def _get_best_individual(
         self,
-        target_id: int | np.int64,
-        max_rules: int = 720,
-        fitness_threshold: float = 1.0,
-        confidence_threshold: float = 0.9,
-    ) -> list[Rule]:
-        generation = 0
-        stagnation_counter = 0
-        max_stagnation = 250
-        best_rules_by_signature = {}
-        logger.info(
-            f"Starting evolution for target {target_id} with max rules {max_rules}"
-        )
-        # Inicializa población como genotipos
-        population_geno = [
-            self._create_random_genotype(int(target_id))
-            for _ in range(self.pop_size)
+        population: Sequence[Rule],
+        fitness_scores: Optional[tuple] = None,
+    ) -> Rule:
+        if fitness_scores is None:
+            fitness_scores = tuple(
+                self._parallel_evaluate_population(population)
+            )
+        best_index = None
+        best_score = -1
+        for i, rule in enumerate(population):
+            support = self._vectorized_support(rule)
+            score = support * fitness_scores[i]
+            if score > best_score:
+                best_score = score
+                best_index = i
+        if best_index is not None:
+            return population[best_index]
+        else:
+            raise ValueError("No best individual found in the population.")
+
+    def _create_new_generation(
+        self,
+        parents: Sequence[Rule],
+        valid_rules: Sequence[Rule] = (),
+    ) -> MutableSequence[Rule]:
+        new_population: MutableSequence[Rule] = []
+        seen_rules = set()
+
+        # --- ELITISMO: priorizar reglas con fitness 1 ---
+        fitnesses = [self.fitness(rule) for rule in parents]
+        supports = [self._vectorized_support(rule) for rule in parents]
+        elite_candidates = [
+            (i, fitnesses[i], supports[i]) for i in range(len(parents))
         ]
-
-        while (
-            len(best_rules_by_signature) < max_rules
-            and generation < self.generations
-        ):
-            found_new = False
-            # Convertir genotipos a reglas solo para evaluación
-            population_rules = [
-                self.genotype_to_rule(geno, int(target_id))
-                for geno in population_geno
+        # Primero, elites con fitness 1, ordenados por soporte descendente
+        elites_fit1 = sorted(
+            [e for e in elite_candidates if abs(e[1] - 1.0) < 1e-6],
+            key=lambda x: x[2],
+            reverse=True,
+        )
+        # Si no hay suficientes, completar con los mejores por score (fitness*support)
+        n_elite = max(1, int(0.1 * len(parents)))
+        elites = elites_fit1[:n_elite]
+        if len(elites) < n_elite:
+            # Agregar el resto por score (sin duplicar)
+            remaining = [
+                e
+                for e in elite_candidates
+                if e not in elites
+                and e[0] not in [idx for idx, _, _ in elites]
             ]
-            # Evaluación vectorizada
-            masks = self.evaluate_rules_vectorized(population_rules)
-            # Fitness: confianza (support & target)
-            supports = masks.sum(axis=1) / len(self.df)
-            targets = (masks & (self._target_values == target_id)).sum(axis=1)
-            fitness_scores = np.where(
-                supports > 0, targets / (masks.sum(axis=1) + 1e-12), 0.0
+            remaining = sorted(
+                remaining,
+                key=lambda x: x[1] * x[2],
+                reverse=True,
             )
-            # Ajuste adaptativo de tasa de mutación
-            self.mutation_rate = self._adaptive_mutation_rate(
-                fitness_scores, base_rate=0.10
-            )
-            # Hill climbing sobre el top 10% de la población
-            n_top = max(1, int(0.1 * len(population_geno)))
-            top_indices = np.argsort(fitness_scores)[-n_top:]
-            for idx in top_indices:
-                improved_rule = self.hill_climb(
-                    population_rules[idx], iterations=3
-                )
-                population_geno[idx] = self._rule_to_genotype(improved_rule)
+            elites += remaining[: n_elite - len(elites)]
+        elite_indices = [e[0] for e in elites]
+        for i in elite_indices:
+            rule = parents[i]
+            if rule not in seen_rules:
+                new_population.append(rule)
+                seen_rules.add(rule)
+        # ---------------------------------------------------------------
 
-            gen_fitness = []
-            gen_conf = []
-            for i, rule in enumerate(population_rules):
-                fit = fitness_scores[i]
-                conf = fit  # ya es confianza
-                if (
-                    abs(fit - fitness_threshold) < 1e-6
-                    and conf >= confidence_threshold
-                ):
-                    sig = rule.cond_signature()
-                    if sig not in best_rules_by_signature or len(rule) > len(
-                        best_rules_by_signature[sig]
-                    ):
-                        best_rules_by_signature[sig] = rule
-                        found_new = True
-                        gen_fitness.append(fit)
-                        gen_conf.append(conf)
-                        if len(best_rules_by_signature) >= max_rules:
-                            break
-            # Log solo uno por generación
-            if gen_fitness and gen_conf:
-                logger.info(
-                    f"[Target {target_id}] Generación {generation}: "
-                    f"Fitness max={max(gen_fitness):.4f}, min={min(gen_fitness):.4f}, "
-                    f"Confianza max={max(gen_conf):.4f}, min={min(gen_conf):.4f}, "
-                    f"Total acumulado: {len(best_rules_by_signature)}"
-                )
-            # Control de estancamiento
-            if found_new:
-                stagnation_counter = 0
-            else:
-                stagnation_counter += 1
+        # 1. Añadir reglas válidas únicas sin mutar (no duplicar elites)
+        for rule in valid_rules:
+            if rule not in seen_rules:
+                new_population.append(rule)
+                seen_rules.add(rule)
 
-            if stagnation_counter >= max_stagnation:
-                logger.info(
-                    f"[Target {target_id}] Estancamiento detectado. Terminando búsqueda."
-                )
-                break
+        # 2. Generar hijos por crossover y mutación hasta llenar población
+        i = 0
+        while len(new_population) < self.pop_size and i < len(parents) - 1:
+            child1, child2 = self.crossover(parents[i], parents[i + 1])
+            child1 = self.mutate(child1)
+            child2 = self.mutate(child2)
 
-            # Selección de padres (por torneo, usando fitness vectorizado)
-            tournament_size = 3
-            loser_win_prob = 0.2
-            selected_geno = []
-            for _ in range(len(population_geno)):
-                idxs = np.random.choice(
-                    len(population_geno), tournament_size, replace=False
-                )
-                tournament = sorted(
-                    idxs,
-                    key=lambda i: fitness_scores[i] * supports[i],
-                    reverse=True,
-                )
-                if self.rng.random() < loser_win_prob and len(tournament) > 1:
-                    candidate = np.random.choice(tournament[1:])
-                else:
-                    candidate = tournament[0]
-                selected_geno.append(population_geno[candidate])
-
-            # Generación de nueva población (crossover y mutación en genotipo)
-            new_population_geno = []
-            seen_signatures = set()
-            # Añadir reglas válidas únicas sin mutar
-            for rule in best_rules_by_signature.values():
-                sig = rule.cond_signature()
-                if sig not in seen_signatures:
-                    new_population_geno.append(self._rule_to_genotype(rule))
-                    seen_signatures.add(sig)
-            # Generar hijos por crossover y mutación
-            i = 0
-            while (
-                len(new_population_geno) < self.pop_size
-                and i < len(selected_geno) - 1
+            if (
+                child1 not in seen_rules
+                and len(new_population) < self.pop_size
             ):
-                child1_geno, child2_geno = self._crossover_genotypes(
-                    selected_geno[i], selected_geno[i + 1], target_id
-                )
-                # Mutación probabilística
-                if self.rng.random() < self.mutation_rate:
-                    child1_geno = self._mutate_genotype(
-                        child1_geno, int(target_id)
-                    )
-                if self.rng.random() < self.mutation_rate:
-                    child2_geno = self._mutate_genotype(
-                        child2_geno, int(target_id)
-                    )
-                # Unicidad por firma
-                rule1 = self.genotype_to_rule(child1_geno, int(target_id))
-                rule2 = self.genotype_to_rule(child2_geno, int(target_id))
-                sig1 = rule1.cond_signature()
-                sig2 = rule2.cond_signature()
-                if (
-                    sig1 not in seen_signatures
-                    and len(new_population_geno) < self.pop_size
-                ):
-                    new_population_geno.append(child1_geno)
-                    seen_signatures.add(sig1)
-                if (
-                    sig2 not in seen_signatures
-                    and len(new_population_geno) < self.pop_size
-                ):
-                    new_population_geno.append(child2_geno)
-                    seen_signatures.add(sig2)
-                i += 2
-            # Si falta población, rellena con nuevas reglas aleatorias
-            while len(new_population_geno) < self.pop_size:
-                geno = self._create_random_genotype(int(target_id))
-                rule = self.genotype_to_rule(geno, int(target_id))
-                sig = rule.cond_signature()
-                if sig not in seen_signatures:
-                    new_population_geno.append(geno)
-                    seen_signatures.add(sig)
-            population_geno = new_population_geno
-            logger.info(
-                "Generación %d para el target %d", generation, target_id
-            )
-            generation += 1
+                new_population.append(child1)
+                seen_rules.add(child1)
+            if (
+                child2 not in seen_rules
+                and len(new_population) < self.pop_size
+            ):
+                new_population.append(child2)
+                seen_rules.add(child2)
+            i += 2
+
+        # 3. Si hay padres sin usar y aún falta población, mutar y agregar
+        if len(new_population) < self.pop_size and i == len(parents) - 1:
+            last_parent = self.mutate(parents[-1])
+            if last_parent not in seen_rules:
+                new_population.append(last_parent)
+
+        # 4. Si aún falta población, rellena con nuevas reglas aleatorias
+        while len(new_population) < self.pop_size:
+            new_rule = self._create_rule(parents[0].target)
+            if new_rule not in seen_rules:
+                new_population.append(new_rule)
+                seen_rules.add(new_rule)
+
+        return new_population
+
+    def _reset_population(
+        self,
+        population: Sequence[Rule],
+        target_id: int | np.int64,
+    ) -> Sequence[Rule]:
 
         self._fitness_cache.clear()
         self._condition_cache.clear()
-        del self._fitness_cache
-        del self._condition_cache
-        # Solo reglas más específicas al final
-        final_rules = [
-            self.genotype_to_rule(geno, int(target_id))
-            for geno in population_geno
-        ]
-        return self._filter_most_specific_rules(
-            list(best_rules_by_signature.values()) + final_rules
-        )
+        seen_rules = set()
+        new_population = []
+
+        for rule in population:
+            rule_key = hash(rule)
+            if self.fitness(rule) == 0 or rule_key in seen_rules:
+                new_population.append(self._create_rule(target_id))
+            else:
+                new_population.append(rule)
+                seen_rules.add(rule_key)
+
+        return new_population
 
     def _filter_most_specific_rules(self, rules: list[Rule]) -> list[Rule]:
         """
@@ -885,15 +802,107 @@ class GeneticRuleMiner:
                 filtered.append(rule)
         return filtered
 
-    # def _update_tracking(
-    #     self, generation: int, population: Sequence[Rule]
-    # ) -> None:
-    #     fitness_scores = tuple(self._parallel_evaluate_population(population))
-    #     best_rule = self._get_best_individual(population, fitness_scores)
-    #     best_support = self._vectorized_support(best_rule)
+    def evolve_per_target(
+        self,
+        target_id: int | np.int64,
+        max_rules: int = 720,
+        fitness_threshold: float = 1.0,
+        support_threshold: float = 0.0035,
+    ) -> list[Rule]:
+        generation = 0
+        stagnation_counter = 0
+        max_stagnation = self.max_stagnation
+        best_rules_by_signature = {}
+        logger.info(
+            f"Starting evolution for target {target_id} with max rules {max_rules}"
+        )
+        population = [
+            self._create_rule(target_id) for _ in range(self.pop_size)
+        ]
 
-    #     logger.info(
-    #         f"Generation {generation}: Best Fitness={fitness_scores[np.argmax(fitness_scores)]:.4f}, "
-    #         f"Support={best_support:.4f} "
-    #         f"Rule: {(best_rule)}"
-    #     )
+        while (
+            len(best_rules_by_signature) < max_rules
+            and generation < self.generations
+        ):
+            found_new = False
+            # --- EVALUACIÓN BATCH ---
+            fitness_arr = self.batch_vectorized_confidence(list(population))
+            support_arr = self.batch_vectorized_support(list(population))
+            gen_fitness = []
+            gen_support = []
+
+            # 1. Buscar reglas con fitness 1
+            fit1_indices = [
+                idx
+                for idx, fit in enumerate(fitness_arr)
+                if abs(fit - fitness_threshold) < 1e-6
+            ]
+            # 2. De esas, priorizar las de mayor soporte (>= support_threshold)
+            fit1_support = [
+                (idx, support_arr[idx])
+                for idx in fit1_indices
+                if support_arr[idx] >= support_threshold
+            ]
+            # Ordenar por soporte descendente
+            fit1_support_sorted = sorted(
+                fit1_support, key=lambda x: x[1], reverse=True
+            )
+
+            for idx, support in fit1_support_sorted:
+                rule = population[idx]
+                fit = fitness_arr[idx]
+                sig = rule.cond_signature()
+                # Si ya existe una regla con ese signature, solo reemplazar si la nueva es más larga
+                if sig not in best_rules_by_signature or len(rule) > len(
+                    best_rules_by_signature[sig]
+                ):
+                    best_rules_by_signature[sig] = rule
+                    found_new = True
+                    gen_fitness.append(float(fit))
+                    gen_support.append(float(support))
+                    if len(best_rules_by_signature) >= max_rules:
+                        break
+
+            # Control de estancamiento
+            if found_new:
+                stagnation_counter = 0
+            else:
+                stagnation_counter += 1
+
+            if stagnation_counter >= max_stagnation:
+                logger.info(
+                    f"[Target {target_id}] Estancamiento detectado. Terminando búsqueda."
+                )
+                break
+
+            parents = self._select_parents(population)
+            filtered_valid_rules = self._filter_most_specific_rules(
+                list(best_rules_by_signature.values())
+            )
+            population = self._create_new_generation(
+                parents, filtered_valid_rules
+            )
+            population = self._reset_population(population, target_id)
+            # Logging robusto: solo si hay reglas válidas en esta generación
+            if gen_fitness:
+                max_fitness = max(gen_fitness)
+                idx_max = gen_fitness.index(max_fitness)
+                max_support = gen_support[idx_max]
+            else:
+                max_fitness = float(np.max(fitness_arr))
+                idx_max = int(np.argmax(fitness_arr))
+                max_support = float(support_arr[idx_max])
+            logger.info(
+                f"[Target {target_id}] Generación {generation}: "
+                f"Fitness max={max_fitness:.4f}, Support max={max_support:.4f}, "
+                f"Reglas guardadas: {len(best_rules_by_signature)}"
+            )
+            generation += 1
+
+        self._fitness_cache.clear()
+        self._condition_cache.clear()
+        del self._fitness_cache
+        del self._condition_cache
+        return self._filter_most_specific_rules(
+            list(best_rules_by_signature.values())
+        )
