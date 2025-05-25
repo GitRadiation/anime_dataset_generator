@@ -51,7 +51,8 @@ def convert_text_to_list_column(df, column_name):
     df[column_name] = df[column_name].fillna("[]").apply(parse_cell)
 
 
-def process_target(tid, merged_data, user_details_columns, db_manager: DatabaseManager):
+def process_target(tid, merged_data, user_details_columns, db_config: DBConfig):
+    db_manager = DatabaseManager(config=db_config)
     """Procesa un target individual para minería genética de reglas."""
     try:
         # Filtrar merged_data solo para el target actual
@@ -79,7 +80,8 @@ def process_target(tid, merged_data, user_details_columns, db_manager: DatabaseM
         logger.error(f"❌ Target {tid} failed: {e}")
         return (tid, False, str(e))
     
-def remove_obsolete_rules_for_target(target_id, merged_data, user_details, db_manager: DatabaseManager):
+def remove_obsolete_rules_for_target(target_id, merged_data, user_details, db_config: DBConfig):
+    db_manager = DatabaseManager(config=db_config)
     try:
         with db_manager.connection() as conn:
             # Si el target ya no está en el dataset, eliminar todas sus reglas
@@ -172,7 +174,7 @@ def main() -> None:
         # Eliminar reglas obsoletas por target (paralelo)
         Parallel(n_jobs=-1, prefer="processes", verbose=10)(
             delayed(remove_obsolete_rules_for_target)(
-                int(tid), merged_data, user_details, db_manager
+                int(tid), merged_data, user_details, db_config
             )
             for tid in merged_data["anime_id"].unique()
         )
@@ -188,7 +190,7 @@ def main() -> None:
         results = list(
             Parallel(n_jobs=-1, prefer="processes", verbose=10)(
                 delayed(process_target)(
-                    tid, merged_data, user_details.columns.tolist(), db_manager
+                    tid, merged_data, user_details.columns.tolist(), db_config
                 )
                 for tid in targets
             )
