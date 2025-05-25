@@ -43,7 +43,7 @@ class GeneticRuleMiner:
         generations: int = 720,
         mutation_rate: float = 0.10,
         random_seed: Optional[int] = None,
-        max_stagnation: int = 250,
+        max_stagnation: int = 100,
     ):
         # Optimizar DataFrame para acceso secuencial
         df = self._optimize_dataframe(df.drop(columns=["rating"]))
