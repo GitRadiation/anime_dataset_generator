@@ -101,13 +101,13 @@ def remove_obsolete_rules_for_target(target_id, merged_data, user_details, db_co
 
             # Obtener rule_id desde otro método, o con una consulta separada si se requiere
             rule_id_rows = conn.execute(
-                text("SELECT rule_id FROM rules WHERE target_value::integer = :target_id"),
+                text("SELECT rule_id FROM rules WHERE target_value::integer = :target_id group by rule_id"),
                 {"target_id": target_id},
             ).fetchall()
             rule_id_list = [row[0] for row in rule_id_rows]
-
+            filtered_data = merged_data[merged_data["anime_id"] == target_id].copy()
             miner = GeneticRuleMiner(
-                df=merged_data,
+                df=filtered_data,
                 target_column="anime_id",
                 user_cols=user_details.columns.tolist(),
                 pop_size=1,
