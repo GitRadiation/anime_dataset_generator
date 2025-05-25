@@ -3,7 +3,6 @@
 import ast
 import time
 
-import numpy as np
 from joblib import Parallel, delayed
 from sqlalchemy import text
 
@@ -12,7 +11,6 @@ from genetic_rule_miner.data.database import DatabaseManager
 from genetic_rule_miner.data.manager import DataManager
 from genetic_rule_miner.models.genetic import GeneticRuleMiner
 from genetic_rule_miner.utils.logging import LogManager
-from genetic_rule_miner.utils.rule import Rule
 
 LogManager.configure()
 logger = LogManager.get_logger(__name__)
@@ -53,7 +51,7 @@ def convert_text_to_list_column(df, column_name):
     df[column_name] = df[column_name].fillna("[]").apply(parse_cell)
 
 
-def process_target(tid, merged_data, user_details_columns, db_config):
+def process_target(tid, merged_data, user_details_columns, db_manager: DatabaseManager):
     """Procesa un target individual para minería genética de reglas."""
     try:
         # Filtrar merged_data solo para el target actual
@@ -65,12 +63,10 @@ def process_target(tid, merged_data, user_details_columns, db_config):
             df=filtered_data,
             target_column="anime_id",
             user_cols=user_details_columns,
-            pop_size=720,
-            generations=10000,
+            db_manager=db_manager,
         ).evolve_per_target(tid)
 
         if rules:
-            db_manager = DatabaseManager(config=db_config)
             db_manager.save_rules(rules)
             logger.info(
                 f"✅ Target {tid} finished and saved {len(rules)} rules."
@@ -82,107 +78,60 @@ def process_target(tid, merged_data, user_details_columns, db_config):
     except Exception as e:
         logger.error(f"❌ Target {tid} failed: {e}")
         return (tid, False, str(e))
-
-
-def remove_obsolete_rules(db_manager, merged_data, user_details):
-    """
-    Elimina reglas obsoletas:
-    - cuyo target_value ya no existe en anime_dataset
-    - o cuyo fitness < 0.95 o soporte < 0.005
-    Muestra el fitness y score de cada regla eliminada.
-    Borra en lotes para evitar problemas de demasiados parámetros.
-    Procesa las reglas en lotes de 10,000.
-    """
-
-    with db_manager.connection() as conn:
-        # 1. Eliminar reglas cuyo target_value no existe
-        obsolete_rules = conn.execute(
-            text(
-                """
-                SELECT rule_id FROM rules
-                WHERE NOT EXISTS (
-                    SELECT 1 FROM anime_dataset
-                    WHERE anime_id = rules.target_value::integer
-                )
-                """
-            )
-        ).fetchall()
-        rule_ids = [row[0] for row in obsolete_rules]
-        rule_infos = []
-
-        # 2. Eliminar reglas con fitness < 0.95 o soporte < 0.005 en lotes de 10k
-        offset = 0
-        batch_size_rules = 10000
-
-        miner = GeneticRuleMiner(
-            df=merged_data,
-            target_column="anime_id",
-            user_cols=user_details.columns.tolist(),
-            pop_size=10,
-            generations=1,
-        )
-
-        while True:
-            rules_rows = conn.execute(
-                text(
-                    "SELECT rule_id, conditions, target_value FROM rules ORDER BY rule_id OFFSET :offset LIMIT :limit"
-                ),
-                {"offset": offset, "limit": batch_size_rules},
-            ).fetchall()
-            if not rules_rows:
-                break
-
-            # --- BATCH: Construir reglas y evaluar en lote ---
-            rules_list = []
-            rule_id_list = []
-            for row in rules_rows:
-                rule_id, conditions, target_value = row
-                try:
-                    if isinstance(conditions, str):
-                        conditions = ast.literal_eval(conditions)
-                    rule = Rule(
-                        columns=[],
-                        conditions=conditions,
-                        target=np.int64(target_value),
-                    )
-                    rules_list.append(rule)
-                    rule_id_list.append(rule_id)
-                except Exception as e:
-                    logger.warning(
-                        f"No se pudo evaluar la regla {rule_id}: {e}"
-                    )
-                    rule_ids.append(rule_id)
-                    rule_infos.append((rule_id, "error", "error"))
-
-            if rules_list:
-                fitness_arr = miner.batch_vectorized_confidence(rules_list)
-                support_arr = miner.batch_vectorized_support(rules_list)
-                for idx, rule_id in enumerate(rule_id_list):
-                    fitness = fitness_arr[idx]
-                    support = support_arr[idx]  # fitness == confidence aquí
-                    if fitness < 0.95 or support < 0.005:
-                        rule_ids.append(rule_id)
-                        rule_infos.append((rule_id, fitness, support))
-            offset += batch_size_rules
-
-        # Eliminar todas las reglas obsoletas en masa y mostrar info
-        if rule_ids:
-            logger.info(
-                "Eliminando reglas obsoletas (rule_id, fitness, confidence):"
-            )
-            for info in rule_infos:
-                logger.info(f"  {info}")
-            # Borrado por lotes para evitar demasiados parámetros
-            batch_size = 1000
-            for i in range(0, len(rule_ids), batch_size):
-                batch = rule_ids[i : i + batch_size]
+    
+def remove_obsolete_rules_for_target(target_id, merged_data, user_details, db_manager: DatabaseManager):
+    try:
+        with db_manager.connection() as conn:
+            # Si el target ya no está en el dataset, eliminar todas sus reglas
+            if target_id not in merged_data["anime_id"].values:
                 conn.execute(
-                    text("DELETE FROM rules WHERE rule_id = ANY(:batch)"),
-                    {"batch": batch},
+                    text("DELETE FROM rules WHERE target_value::integer = :target_id"),
+                    {"target_id": target_id},
                 )
-            logger.info(f"Eliminadas {len(rule_ids)} reglas obsoletas.")
-        else:
-            logger.info("No se encontraron reglas obsoletas para eliminar.")
+                logger.info(f"Eliminadas todas las reglas del target_id {target_id} (no existe en dataset)")
+                return
+
+            # Obtener reglas ya parseadas para este target
+            rules = db_manager.get_rules_by_target_value(target_id)
+
+            if not rules:
+                return
+
+            # Obtener rule_id desde otro método, o con una consulta separada si se requiere
+            rule_id_rows = conn.execute(
+                text("SELECT rule_id FROM rules WHERE target_value::integer = :target_id"),
+                {"target_id": target_id},
+            ).fetchall()
+            rule_id_list = [row[0] for row in rule_id_rows]
+
+            miner = GeneticRuleMiner(
+                df=merged_data,
+                target_column="anime_id",
+                user_cols=user_details.columns.tolist(),
+                pop_size=1,
+            )
+
+            fitness_arr = miner.batch_vectorized_confidence(rules)
+            support_arr = miner.batch_vectorized_support(rules)
+
+            to_delete = []
+            for idx, rule_id in enumerate(rule_id_list):
+                fitness = fitness_arr[idx]
+                support = support_arr[idx]
+                if fitness < 0.95 or support < 0.005:
+                    to_delete.append(rule_id)
+                    logger.info(f"Eliminando regla {rule_id} (fitness: {fitness:.4f}, soporte: {support:.4f})")
+
+            if to_delete:
+                conn.execute(
+                    text("DELETE FROM rules WHERE rule_id = ANY(:ids)"),
+                    {"ids": to_delete},
+                )
+                logger.info(f"Eliminadas {len(to_delete)} reglas obsoletas para target {target_id}")
+
+    except Exception as e:
+        logger.error(f"Fallo al eliminar reglas para target {target_id}: {e}", exc_info=True)
+
 
 
 def main() -> None:
@@ -220,8 +169,14 @@ def main() -> None:
 
         logger.info("Preparing rule mining tasks...")
         db_manager = DatabaseManager(config=db_config)
-        # Eliminar reglas obsoletas antes de procesar
-        remove_obsolete_rules(db_manager, merged_data, user_details)
+        # Eliminar reglas obsoletas por target (paralelo)
+        Parallel(n_jobs=-1, prefer="processes", verbose=10)(
+            delayed(remove_obsolete_rules_for_target)(
+                int(tid), merged_data, user_details, db_manager
+            )
+            for tid in merged_data["anime_id"].unique()
+        )
+
         targets = db_manager.get_anime_ids_without_rules() or []
 
         total_targets = len(targets)
@@ -233,11 +188,12 @@ def main() -> None:
         results = list(
             Parallel(n_jobs=-1, prefer="processes", verbose=10)(
                 delayed(process_target)(
-                    tid, merged_data, user_details.columns.tolist(), db_config
+                    tid, merged_data, user_details.columns.tolist(), db_manager
                 )
                 for tid in targets
             )
         )
+
 
         completed = len(results)
         logger.info(f"✅ {completed} targets completed.")

@@ -6,6 +6,7 @@ from contextlib import contextmanager
 from io import BytesIO, StringIO
 from typing import Generator, Optional
 
+import numpy as np
 import pandas as pd
 from sqlalchemy import Connection, create_engine, text
 from sqlalchemy.engine import Engine
@@ -302,3 +303,27 @@ class DatabaseManager:
                 df.to_excel(export_path, index=False)
 
             return all_ids or []
+        
+    def get_rules_by_target_value(self, target_value: int) -> list[Rule]:
+        """
+        Devuelve todas las reglas asociadas a un target_value específico,
+        en forma de lista de objetos Rule.
+        """
+        with self.connection() as conn:
+            result = conn.execute(
+                text("SELECT conditions, target_value FROM rules WHERE target_value::integer = :tid"),
+                {"tid": target_value},
+            ).fetchall()
+
+            rules = []
+            for row in result:
+                try:
+                    conditions = row["conditions"]
+                    if isinstance(conditions, str):
+                        conditions = ast.literal_eval(conditions)
+                    rule = Rule(columns=[], conditions=conditions, target=np.int64(row["target_value"]))
+                    rules.append(rule)
+                except Exception as e:
+                    logger.warning(f"No se pudo construir Rule para target {target_value}: {e}")
+            return rules
+

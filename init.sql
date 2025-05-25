@@ -59,7 +59,7 @@ DROP TABLE IF EXISTS rules;
 CREATE TABLE rules (
     rule_id UUID PRIMARY KEY,
     conditions JSONB NOT NULL,
-    target_value TEXT NOT NULL
+    target_value INTEGER NOT NULL
 );
 
 drop FUNCTION IF EXISTS get_rules_series;
