@@ -311,9 +311,10 @@ class DatabaseManager:
         """
         with self.connection() as conn:
             result = conn.execute(
-                text("SELECT conditions, target_value FROM rules WHERE target_value::integer = :tid"),
-                {"tid": target_value},
-            ).fetchall()
+            text("SELECT conditions, target_value FROM rules WHERE target_value::integer = :tid"),
+            {"tid": target_value},
+        ).mappings().all()
+
 
             rules = []
             for row in result:
