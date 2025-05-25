@@ -3,6 +3,7 @@
 import ast
 import time
 
+import pandas as pd
 from joblib import Parallel, delayed
 from sqlalchemy import text
 
@@ -16,7 +17,7 @@ LogManager.configure()
 logger = LogManager.get_logger(__name__)
 
 
-def convert_text_to_list_column(df, column_name):
+def convert_text_to_list_column(df: pd.DataFrame, column_name: str) -> None:
     """
     Convierte una columna que contiene strings representando listas
     en una lista real de Python. Si el valor no es una lista válida,
@@ -51,7 +52,12 @@ def convert_text_to_list_column(df, column_name):
     df[column_name] = df[column_name].fillna("[]").apply(parse_cell)
 
 
-def process_target(tid, merged_data, user_details_columns, db_config: DBConfig):
+def process_target(
+    tid: int,
+    merged_data: pd.DataFrame,
+    user_details_columns: list[str],
+    db_config: DBConfig
+) -> tuple[int, bool, str | None]:
     db_manager = DatabaseManager(config=db_config)
     """Procesa un target individual para minería genética de reglas."""
     try:
@@ -79,8 +85,13 @@ def process_target(tid, merged_data, user_details_columns, db_config: DBConfig):
     except Exception as e:
         logger.error(f"❌ Target {tid} failed: {e}")
         return (tid, False, str(e))
-    
-def remove_obsolete_rules_for_target(target_id, merged_data, user_details, db_config: DBConfig):
+
+def remove_obsolete_rules_for_target(
+    target_id: int,
+    merged_data: pd.DataFrame,
+    user_details: pd.DataFrame,
+    db_config: DBConfig
+) -> None:
     db_manager = DatabaseManager(config=db_config)
     try:
         with db_manager.connection() as conn:
@@ -172,7 +183,7 @@ def main() -> None:
         logger.info("Preparing rule mining tasks...")
         db_manager = DatabaseManager(config=db_config)
         # Eliminar reglas obsoletas por target (paralelo)
-        Parallel(n_jobs=-1, prefer="processes", verbose=10)(
+        Parallel(n_jobs=-1, prefer="threads", verbose=10)(
             delayed(remove_obsolete_rules_for_target)(
                 int(tid), merged_data, user_details, db_config
             )
@@ -188,7 +199,7 @@ def main() -> None:
 
         # Procesamiento paralelo con joblib
         results = list(
-            Parallel(n_jobs=-1, prefer="processes", verbose=10)(
+            Parallel(n_jobs=-1, prefer="threads", verbose=10)(
                 delayed(process_target)(
                     tid, merged_data, user_details.columns.tolist(), db_config
                 )

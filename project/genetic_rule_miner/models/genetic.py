@@ -654,7 +654,7 @@ class GeneticRuleMiner:
         self, population: Sequence[Rule]
     ) -> np.ndarray:
         """Evalúa la población en paralelo usando ProcessPoolExecutor."""
-        results = Parallel(n_jobs=-1, backend="loky")(
+        results = Parallel(n_jobs=-1, backend="threads")(
             delayed(self.fitness)(rule) for rule in population
         )
         return np.array(results)
