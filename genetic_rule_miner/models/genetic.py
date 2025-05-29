@@ -39,7 +39,7 @@ class GeneticRuleMiner:
         target_column: str,
         user_cols: Sequence[str],
         db_manager: Optional[DatabaseManager] = None,
-        pop_size: int =512,
+        pop_size: int = 512,
         generations: int = 720,
         mutation_rate: float = 0.10,
         random_seed: Optional[int] = None,
@@ -880,10 +880,12 @@ class GeneticRuleMiner:
         self._condition_cache.clear()
         del self._fitness_cache
         del self._condition_cache
-        
+
         # --- COMPARACIÓN CON REGLAS EN BBDD ---
         if self.db_manager is not None:
-            existing_rules = self.db_manager.get_rules_by_target_value(target_id)
+            existing_rules = self.db_manager.get_rules_by_target_value(
+                int(target_id)
+            )
             existing_conditions_set = {
                 tuple(sorted(str(cond) for cond in rule.conditions))
                 for rule in existing_rules
@@ -891,9 +893,13 @@ class GeneticRuleMiner:
 
             # Solo conservar las reglas que no están en la base de datos
             unique_rules = [
-                rule for rule in valid_rules
-                if tuple(sorted(str(cond) for cond in rule.conditions)) not in existing_conditions_set
+                rule
+                for rule in valid_rules
+                if tuple(sorted(str(cond) for cond in rule.conditions))
+                not in existing_conditions_set
             ]
-            logger.info(f"[Target {target_id}] {len(unique_rules)} nuevas reglas encontradas (no repetidas)")
+            logger.info(
+                f"[Target {target_id}] {len(unique_rules)} nuevas reglas encontradas (no repetidas)"
+            )
             return unique_rules
         return valid_rules

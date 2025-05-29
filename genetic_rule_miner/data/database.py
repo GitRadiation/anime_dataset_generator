@@ -8,7 +8,8 @@ from typing import Generator, Optional
 
 import numpy as np
 import pandas as pd
-from sqlalchemy import Connection, create_engine, text
+from sqlalchemy import Connection, bindparam, create_engine, text
+from sqlalchemy.dialects.postgresql import JSONB
 from sqlalchemy.engine import Engine
 from sqlalchemy.exc import IntegrityError
 
@@ -27,13 +28,15 @@ class DatabaseManager:
 
     _engine: Optional[Engine] = None
 
-    def __new__(cls, config: DBConfig) -> "DatabaseManager":
+    def __new__(
+        cls, config: Optional[DBConfig] = DBConfig()
+    ) -> "DatabaseManager":
         if cls._instance is None:
             cls._instance = super(DatabaseManager, cls).__new__(cls)
             cls._instance._initialized = False
         return cls._instance
 
-    def __init__(self, config: DBConfig) -> None:
+    def __init__(self, config: Optional[DBConfig] = DBConfig()) -> None:
         if self._initialized:
             return
         self.config = config
@@ -68,12 +71,22 @@ class DatabaseManager:
 
     def _init_sqlalchemy_engine(self) -> None:
         try:
-            conn_str = (
-                f"postgresql+psycopg2://{self.config.user}:{self.config.password}"
-                f"@{self.config.host}:{self.config.port}/{self.config.database}"
-            )
-            self._engine = create_engine(conn_str)
-            logger.info("SQLAlchemy engine initialized")
+            if (
+                self.config
+                and self.config.password
+                and self.config.user
+                and self.config.host
+                and self.config.port
+                and self.config.database
+            ):
+                conn_str = (
+                    f"postgresql+psycopg2://{self.config.user}:{self.config.password}"
+                    f"@{self.config.host}:{self.config.port}/{self.config.database}"
+                )
+                self._engine = create_engine(conn_str)
+                logger.info("SQLAlchemy engine initialized")
+            else:
+                logger.error("Config is empty")
         except Exception as e:
             logger.critical(
                 "Failed to initialize SQLAlchemy engine", exc_info=True
@@ -303,18 +316,23 @@ class DatabaseManager:
                 df.to_excel(export_path, index=False)
 
             return all_ids or []
-        
+
     def get_rules_by_target_value(self, target_value: int) -> list[Rule]:
         """
         Devuelve todas las reglas asociadas a un target_value específico,
         en forma de lista de objetos Rule.
         """
         with self.connection() as conn:
-            result = conn.execute(
-            text("SELECT conditions, target_value FROM rules WHERE target_value::integer = :tid"),
-            {"tid": target_value},
-        ).mappings().all()
-
+            result = (
+                conn.execute(
+                    text(
+                        "SELECT conditions, target_value FROM rules WHERE target_value::integer = :tid"
+                    ),
+                    {"tid": target_value},
+                )
+                .mappings()
+                .all()
+            )
 
             rules = []
             for row in result:
@@ -322,9 +340,32 @@ class DatabaseManager:
                     conditions = row["conditions"]
                     if isinstance(conditions, str):
                         conditions = ast.literal_eval(conditions)
-                    rule = Rule(columns=[], conditions=conditions, target=np.int64(row["target_value"]))
+                    rule = Rule(
+                        columns=[],
+                        conditions=conditions,
+                        target=np.int64(row["target_value"]),
+                    )
                     rules.append(rule)
                 except Exception as e:
-                    logger.warning(f"No se pudo construir Rule para target {target_value}: {e}")
+                    logger.warning(
+                        f"No se pudo construir Rule para target {target_value}: {e}"
+                    )
             return rules
 
+    def get_rules_series_by_json(self, json_objeto: dict):
+        """
+        Ejecuta la función SQL get_rules_series pasando el JSON completo obtenido de la API.
+
+        :param json_objeto: Diccionario completo del JSON recibido desde la API.
+        :return: Lista de tuplas (nombre, cantidad) con los resultados.
+        """
+        with self.connection() as conn:
+            result = conn.execute(
+                text("SELECT * FROM get_rules_series(:input_json)").bindparams(
+                    bindparam("input_json", type_=JSONB)
+                ),
+                {
+                    "input_json": json_objeto
+                },  # La clave debe coincidir EXACTAMENTE
+            )
+        return result
