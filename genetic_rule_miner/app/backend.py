@@ -6,15 +6,24 @@ import diskcache
 import numpy as np
 import pandas as pd
 from fastapi import FastAPI, HTTPException
+from pydantic import BaseModel, Field
+
 from genetic_rule_miner.bbdd_maker.anime_service import AnimeService
 from genetic_rule_miner.bbdd_maker.details_service import DetailsService
 from genetic_rule_miner.bbdd_maker.score_service import ScoreService
 from genetic_rule_miner.bbdd_maker.user_service import UserService
 from genetic_rule_miner.config import APIConfig
+from genetic_rule_miner.data.database import DatabaseManager
 from genetic_rule_miner.data.preprocessing import preprocess_data
 
 logger = logging.getLogger(__name__)
 logging.basicConfig(level=logging.INFO)
+
+
+class RuleResult(BaseModel):
+    name: str = Field(alias="nombre")
+    cantidad: int  # ajusta los campos a los que devuelva tu función SQL
+
 
 # --- Inicialización de servicios ---
 api_config = APIConfig()
@@ -22,7 +31,7 @@ user_service = UserService(api_config)
 details_service = DetailsService(api_config)
 score_service = ScoreService(api_config)
 anime_service = AnimeService(api_config)
-
+db = DatabaseManager()
 # --- Cache persistente ---
 USER_CACHE_TTL = 30 * 60  # 30 minutos
 ANIME_CACHE_TTL = 7 * 24 * 3600  # 1 semana
@@ -305,10 +314,17 @@ def api_get_user_full_profile(username: str):
     anime_ids = get_relevant_anime_ids_cached(username, int(user_id))
     anime_df = get_anime_data_cached(anime_ids)
     return {
-        "profile": profile,
-        "anime_data": anime_df.to_dict(orient="records"),
-        "anime_count": len(anime_df),
+        "user": profile,
+        "anime_list": anime_df.to_dict(orient="records"),
     }
+
+
+@app.get("/users/{username}/recomendation")
+def api_get_user_recomendations(username: str):
+    full_profile = api_get_user_full_profile(username)
+    result = db.get_rules_series_by_json(full_profile)
+    logger.debug(result)
+    return [RuleResult(**dict(row._mapping)) for row in result.fetchall()]
 
 
 @app.get("/health")
