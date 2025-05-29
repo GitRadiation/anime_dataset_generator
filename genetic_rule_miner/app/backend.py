@@ -22,7 +22,7 @@ logging.basicConfig(level=logging.INFO)
 
 class RuleResult(BaseModel):
     name: str = Field(alias="nombre")
-    cantidad: int  # ajusta los campos a los que devuelva tu función SQL
+    cantidad: int
 
 
 # --- Inicialización de servicios ---
