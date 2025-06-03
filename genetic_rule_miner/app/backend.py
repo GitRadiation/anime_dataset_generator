@@ -21,6 +21,7 @@ logging.basicConfig(level=logging.INFO)
 
 
 class RuleResult(BaseModel):
+    anime_id: int
     name: str = Field(alias="nombre")
     cantidad: int
 
@@ -199,11 +200,19 @@ def get_relevant_anime_ids_cached(username: str, user_id: int) -> Set[int]:
     # Reseñas
     reviews = user_service.get_user_reviews(username)
     for review in reviews.get("data", []):
+        entries = review.get("entry", [])
+        if isinstance(entries, dict):
+            entries = [entries]
+        elif not isinstance(entries, list):
+            # Si no es lista ni dict, lo descartamos
+            entries = []
+
         review_ids = {
             entry.get("mal_id")
-            for entry in review.get("entry", [])
-            if isinstance(entry.get("mal_id"), int)
+            for entry in entries
+            if isinstance(entry, dict) and isinstance(entry.get("mal_id"), int)
         }
+        review_ids = {x for x in review_ids if isinstance(x, int)}
         ids.update(review_ids)
 
     if not ids:
@@ -319,12 +328,12 @@ def api_get_user_full_profile(username: str):
     }
 
 
-@app.get("/users/{username}/recomendation")
-def api_get_user_recomendations(username: str):
+@app.get("/users/{username}/recommendation")
+def api_get_user_recommendations(username: str):
     full_profile = api_get_user_full_profile(username)
     result = db.get_rules_series_by_json(full_profile)
     logger.debug(result)
-    return [RuleResult(**dict(row._mapping)) for row in result.fetchall()]
+    return [RuleResult(**row) for row in result]
 
 
 @app.get("/health")

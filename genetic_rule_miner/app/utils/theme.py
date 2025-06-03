@@ -1,4 +1,4 @@
-from flet import Colors, ColorScheme, Page, Theme
+from flet import Colors, ColorScheme, Page, Theme, ThemeMode
 
 
 def setup_theme(page: Page):
@@ -7,7 +7,7 @@ def setup_theme(page: Page):
     """
     Configures the theme for the Flet app using the light theme by default.
     """
-    page.theme_mode = "light"
+    page.theme_mode = ThemeMode.LIGHT
     page.theme = get_light_theme()
     page.dark_theme = get_dark_theme()
     page.update()
