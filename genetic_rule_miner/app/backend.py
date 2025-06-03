@@ -1,6 +1,6 @@
 import logging
 from io import StringIO
-from typing import Any, Dict, Set
+from typing import Any, Dict, Set, cast
 
 import diskcache
 import numpy as np
@@ -135,14 +135,16 @@ def get_relevant_anime_ids_cached(username: str, user_id: int) -> Set[int]:
         try:
             df = pd.DataFrame(scraped)
             df.columns = [f"col_{i}" for i in range(df.shape[1])]
-            df = df.fillna("unknown").astype(str)
 
-            # Limpiar col_1 para que solo tenga valores numéricos
-            df["col_1"] = pd.to_numeric(df["col_1"], errors="coerce")
-            df = df.dropna(subset=["col_1"])
-            df["col_1"] = df["col_1"].astype(int)
+            # anime_id
+            df["anime_id"] = pd.to_numeric(df["col_2"], errors="coerce")
+            df = df.dropna(subset=["anime_id"])
+            df["anime_id"] = df["anime_id"].astype(int)
 
-            df["score"] = pd.to_numeric(df["col_2"], errors="coerce")
+            # score
+            df["score"] = pd.to_numeric(df["col_4"], errors="coerce")
+
+            # rating
             df["rating"] = pd.cut(
                 df["score"],
                 bins=[0, 6.9, 7.9, 10],
@@ -150,16 +152,18 @@ def get_relevant_anime_ids_cached(username: str, user_id: int) -> Set[int]:
                 right=False,
             ).astype(str)
 
-            high_ids = df[df["rating"] == "high"]["col_1"].tolist()
+            # high and medium scores
+            high_ids = df[df["rating"] == "high"]["anime_id"].tolist()
             ids.update(high_ids)
 
-            medium_ids = df[df["rating"] == "medium"]["col_1"].tolist()
+            medium_ids = df[df["rating"] == "medium"]["anime_id"].tolist()
             if medium_ids:
                 np.random.seed(42)
                 sampled_ids = np.random.choice(
                     medium_ids, size=len(medium_ids) // 2, replace=False
                 )
                 ids.update(sampled_ids)
+
         except Exception as e:
             logger.warning(f"Error procesando scores para '{username}': {e}")
 
@@ -317,15 +321,30 @@ def api_get_anime_detail(anime_id: int):
 
 
 @app.get("/users/{username}/full_profile")
-def api_get_user_full_profile(username: str):
+def api_get_user_full_profile(username: str) -> Dict[str, Any]:
     profile = get_user_profile_cached(username)
     user_id = profile.get("mal_id") or profile.get("user_id") or 0
     anime_ids = get_relevant_anime_ids_cached(username, int(user_id))
     anime_df = get_anime_data_cached(anime_ids)
-    return {
+    import math
+
+    def clean_nans(data):
+        if isinstance(data, dict):
+            return {k: clean_nans(v) for k, v in data.items()}
+        elif isinstance(data, list):
+            return [clean_nans(v) for v in data]
+        elif isinstance(data, float) and math.isnan(data):
+            return None
+        else:
+            return data
+
+    result = {
         "user": profile,
         "anime_list": anime_df.to_dict(orient="records"),
     }
+
+    cleaned_result = clean_nans(result)
+    return cast(Dict[str, Any], cleaned_result)
 
 
 @app.get("/users/{username}/recommendation")

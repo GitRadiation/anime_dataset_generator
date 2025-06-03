@@ -5,6 +5,7 @@ from io import BytesIO, StringIO
 from typing import List, Optional
 
 import requests
+
 from genetic_rule_miner.config import APIConfig
 from genetic_rule_miner.utils.logging import LogManager
 
@@ -33,7 +34,7 @@ class UserService:
                     return {}
                 response.raise_for_status()
             except requests.RequestException as e:
-                logger.error(
+                logger.warning(
                     "Error on attempt %d for %s: %s",
                     attempt + 1,
                     url,

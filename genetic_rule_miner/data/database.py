@@ -379,41 +379,4 @@ class DatabaseManager:
                 ),
                 {"input_json": json_payload},
             ).fetchall()
-
-            # Convertimos a lista para poder contarlos
-            result_list = [dict(row) for row in result]
-
-            # Si no hay resultados o son menos de 5, ejecutamos la consulta de respaldo
-            if len(result_list) < 5:
-                # Ajustar el límite para completar hasta 5
-                limit = 5 - len(result_list)
-
-                # Ejecutar la consulta de respaldo
-                fallback_result = conn.execute(
-                    text(
-                        f"""
-                        SELECT 
-                            ad.anime_id as anime_id,
-                            ad.name as nombre,
-                            COUNT(*) AS cantidad
-                        FROM 
-                            rules r
-                        JOIN 
-                            anime_dataset ad ON ad.anime_id = r.target_value
-                        GROUP BY 
-                            ad.anime_id, ad.name
-                        ORDER BY 
-                            cantidad DESC
-                        LIMIT {limit};
-                    """
-                    )
-                ).fetchall()
-
-                # Convertimos y añadimos los resultados de respaldo
-                fallback_result_list = [
-                    dict(row._mapping) for row in fallback_result
-                ]
-                result_list.extend(fallback_result_list)
-
-            # Ahora result_list contiene hasta 5 resultados
-            return result_list
+            return [dict(row) for row in result]

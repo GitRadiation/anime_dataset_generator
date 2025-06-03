@@ -27,6 +27,7 @@ def user_profile_view(page: ft.Page):
 
             # Limpiar controles previos
             series_data_list.controls.clear()
+            page.update()
 
             # Agregar hasta 5 elementos con mejor diseño
             for i, item in enumerate(data[:5], 1):

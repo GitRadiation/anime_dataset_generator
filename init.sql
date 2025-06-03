@@ -63,7 +63,6 @@ CREATE TABLE rules (
 );
 
 drop FUNCTION IF EXISTS get_rules_series;
--- Versión optimizada de la función get_rules_series
 CREATE OR REPLACE FUNCTION get_rules_series(input_data JSONB)
 RETURNS TABLE(anime_id INT, nombre TEXT, cantidad INTEGER)
 LANGUAGE plpgsql AS
@@ -74,29 +73,28 @@ DECLARE
 BEGIN
     -- Extraer datos del usuario una sola vez
     user_data := input_data->'user';
-    
-    -- Convertir array JSON a array nativo para mejor rendimiento
-    SELECT array_agg(value) 
-    INTO anime_list 
+
+    -- Convertir array JSON a array nativo
+    SELECT array_agg(value)
+    INTO anime_list
     FROM jsonb_array_elements(input_data->'anime_list');
 
-    -- Consulta optimizada usando CTE y operaciones basadas en conjuntos
     RETURN QUERY
     WITH user_conditions_eval AS (
-        -- Evaluar condiciones de usuario una sola vez por regla
+        -- Evaluar condiciones de usuario
         SELECT 
             r.rule_id,
-            r.target_value::int as target_id,
+            r.target_value::int AS target_id,
             CASE 
                 WHEN jsonb_array_length(r.conditions->'user_conditions') = 0 THEN TRUE
                 ELSE (
                     SELECT bool_and(
                         CASE uc.value->>'operator'
-                            WHEN '<' THEN (user_data->>((uc.value)->>'column'))::numeric < (uc.value->>'value')::numeric
-                            WHEN '<=' THEN (user_data->>((uc.value)->>'column'))::numeric <= (uc.value->>'value')::numeric
-                            WHEN '>' THEN (user_data->>((uc.value)->>'column'))::numeric > (uc.value->>'value')::numeric
-                            WHEN '>=' THEN (user_data->>((uc.value)->>'column'))::numeric >= (uc.value->>'value')::numeric
-                            WHEN '==' THEN (user_data->>((uc.value)->>'column')) = (uc.value->>'value')
+                            WHEN '<'  THEN (user_data->>(uc.value->>'column'))::numeric < (uc.value->>'value')::numeric
+                            WHEN '<=' THEN (user_data->>(uc.value->>'column'))::numeric <= (uc.value->>'value')::numeric
+                            WHEN '>'  THEN (user_data->>(uc.value->>'column'))::numeric > (uc.value->>'value')::numeric
+                            WHEN '>=' THEN (user_data->>(uc.value->>'column'))::numeric >= (uc.value->>'value')::numeric
+                            WHEN '==' THEN (user_data->>(uc.value->>'column')) = (uc.value->>'value')
                             ELSE FALSE
                         END
                     )
@@ -105,23 +103,22 @@ BEGIN
             END AS user_conditions_met
         FROM rules r
     ),
-    
     anime_rule_combinations AS (
-        -- Generar combinaciones anime-regla solo para reglas que cumplen condiciones de usuario
+        -- Generar combinaciones anime-regla
         SELECT 
             uce.rule_id,
             uce.target_id,
-            anime_elem.ordinality as anime_index,
-            anime_elem.value as anime_data
+            anime_elem.ordinality AS anime_index,
+            anime_elem.value AS anime_data
         FROM user_conditions_eval uce
         CROSS JOIN unnest(anime_list) WITH ORDINALITY AS anime_elem(value, ordinality)
         WHERE uce.user_conditions_met = TRUE
     ),
-    
     valid_combinations AS (
         -- Evaluar condiciones de anime
         SELECT 
-            arc.target_id
+            arc.target_id,
+            arc.anime_data
         FROM anime_rule_combinations arc
         JOIN rules r ON r.rule_id = arc.rule_id
         WHERE 
@@ -130,11 +127,18 @@ BEGIN
                 ELSE (
                     SELECT bool_and(
                         CASE oc.value->>'operator'
-                            WHEN '<' THEN (arc.anime_data->>((oc.value)->>'column'))::numeric < (oc.value->>'value')::numeric
-                            WHEN '<=' THEN (arc.anime_data->>((oc.value)->>'column'))::numeric <= (oc.value->>'value')::numeric
-                            WHEN '>' THEN (arc.anime_data->>((oc.value)->>'column'))::numeric > (oc.value->>'value')::numeric
-                            WHEN '>=' THEN (arc.anime_data->>((oc.value)->>'column'))::numeric >= (oc.value->>'value')::numeric
-                            WHEN '==' THEN (arc.anime_data->>((oc.value)->>'column')) = (oc.value->>'value')
+                            WHEN '<'  THEN (arc.anime_data->>(oc.value->>'column'))::numeric < (oc.value->>'value')::numeric
+                            WHEN '<=' THEN (arc.anime_data->>(oc.value->>'column'))::numeric <= (oc.value->>'value')::numeric
+                            WHEN '>'  THEN (arc.anime_data->>(oc.value->>'column'))::numeric > (oc.value->>'value')::numeric
+                            WHEN '>=' THEN (arc.anime_data->>(oc.value->>'column'))::numeric >= (oc.value->>'value')::numeric
+                            WHEN '==' THEN
+                                CASE
+                                    -- Si el campo en la tabla es un array (producers, studios, genres, etc.)
+                                    WHEN oc.value->>'column' IN ('producers', 'studios', 'genres', 'keywords') THEN
+                                        (arc.anime_data->(oc.value->>'column')) @> to_jsonb(oc.value->>'value'::text)
+                                    ELSE
+                                        (arc.anime_data->>(oc.value->>'column')) = (oc.value->>'value')
+                                END
                             ELSE FALSE
                         END
                     )
@@ -142,16 +146,13 @@ BEGIN
                 )
             END
     )
-    
-    -- Resultado final
     SELECT 
-        a.anime_id, 
-        a.name::TEXT as nombre, 
-        COUNT(*)::INTEGER as cantidad
+        a.anime_id,
+        a.name::TEXT AS nombre,
+        COUNT(*)::INTEGER AS cantidad
     FROM valid_combinations vc
     JOIN anime_dataset a ON a.anime_id = vc.target_id
     GROUP BY a.anime_id, a.name
     ORDER BY cantidad DESC;
-
 END;
 $$;

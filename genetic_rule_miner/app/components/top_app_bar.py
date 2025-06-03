@@ -82,10 +82,10 @@ def top_app_bar(page):
                     style=ft.ButtonStyle(
                         overlay_color={
                             ft.ControlState.HOVERED: ft.Colors.with_opacity(
-                                0.1, ft.Colors.WHITE
+                                0.1, ft.Colors.ON_SURFACE
                             ),
                             ft.ControlState.PRESSED: ft.Colors.with_opacity(
-                                0.2, ft.Colors.WHITE
+                                0.2, ft.Colors.ON_SURFACE
                             ),
                         }
                     ),
