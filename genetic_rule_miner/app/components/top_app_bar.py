@@ -21,45 +21,118 @@ def top_app_bar(page):
     def close_window(e):
         page.window.close()
 
-    # Envolver el contenido en WindowDragArea
-    return ft.WindowDragArea(
-        content=ft.Row(
-            [
-                # Lado izquierdo - botón de tema
-                ft.IconButton(
+    # --- Botones lado derecho ---
+    window_controls = []
+    if not page.web:
+        window_controls = [
+            ft.IconButton(
+                icon=ft.Icons.MINIMIZE,
+                tooltip="Minimize",
+                on_click=minimize_window,
+                icon_size=16,
+                style=ft.ButtonStyle(
+                    shape=ft.RoundedRectangleBorder(radius=4),
+                    overlay_color={
+                        ft.ControlState.HOVERED: ft.Colors.with_opacity(
+                            0.1, ft.Colors.ON_SURFACE
+                        ),
+                    },
+                ),
+            ),
+            ft.IconButton(
+                icon=ft.Icons.CROP_SQUARE,
+                tooltip="Maximize/Restore",
+                on_click=toggle_maximize,
+                icon_size=16,
+                style=ft.ButtonStyle(
+                    shape=ft.RoundedRectangleBorder(radius=4),
+                    overlay_color={
+                        ft.ControlState.HOVERED: ft.Colors.with_opacity(
+                            0.1, ft.Colors.ON_SURFACE
+                        ),
+                    },
+                ),
+            ),
+            ft.IconButton(
+                icon=ft.Icons.CLOSE,
+                tooltip="Close",
+                on_click=close_window,
+                icon_size=16,
+                style=ft.ButtonStyle(
+                    shape=ft.RoundedRectangleBorder(radius=4),
+                    overlay_color={
+                        ft.ControlState.HOVERED: ft.Colors.with_opacity(
+                            0.8, ft.Colors.RED_400
+                        ),
+                    },
+                ),
+            ),
+        ]
+
+    # --- Contenido principal ---
+    row_content = ft.Row(
+        [
+            # Lado izquierdo - botón de tema
+            ft.Container(
+                content=ft.IconButton(
                     icon=ft.Icons.BRIGHTNESS_6_ROUNDED,
                     tooltip="Toggle theme",
                     on_click=toggle_theme,
+                    icon_size=20,
+                    style=ft.ButtonStyle(
+                        overlay_color={
+                            ft.ControlState.HOVERED: ft.Colors.with_opacity(
+                                0.1, ft.Colors.WHITE
+                            ),
+                            ft.ControlState.PRESSED: ft.Colors.with_opacity(
+                                0.2, ft.Colors.WHITE
+                            ),
+                        }
+                    ),
                 ),
-                # Centro - título
-                ft.Text(
-                    "Series Recommender", size=20, weight=ft.FontWeight.BOLD
+                padding=ft.padding.only(left=8),
+            ),
+            # Centro - título
+            ft.Container(
+                content=ft.Text(
+                    "Series Recommender",
+                    size=18,
+                    weight=ft.FontWeight.W_500,
+                    color=ft.Colors.ON_SURFACE,
+                    text_align=ft.TextAlign.CENTER,
                 ),
-                # Lado derecho - controles de ventana
-                ft.Row(
-                    [
-                        ft.IconButton(
-                            icon=ft.Icons.MINIMIZE,
-                            tooltip="Minimize",
-                            on_click=minimize_window,
-                            icon_size=18,
-                        ),
-                        ft.IconButton(
-                            icon=ft.Icons.CROP_SQUARE,
-                            tooltip="Maximize/Restore",
-                            on_click=toggle_maximize,
-                            icon_size=18,
-                        ),
-                        ft.IconButton(
-                            icon=ft.Icons.CLOSE,
-                            tooltip="Close",
-                            on_click=close_window,
-                            icon_size=18,
-                        ),
-                    ],
-                    spacing=0,
-                ),
-            ],
-            alignment=ft.MainAxisAlignment.SPACE_BETWEEN,
-        )
+                expand=True,
+                alignment=ft.alignment.center,
+            ),
+            # Lado derecho - controles de ventana (solo si no es web)
+            ft.Container(
+                content=ft.Row(window_controls, spacing=2),
+                padding=ft.padding.only(right=8),
+            ),
+        ],
+        alignment=ft.MainAxisAlignment.SPACE_BETWEEN,
+        vertical_alignment=ft.CrossAxisAlignment.CENTER,
     )
+
+    # --- Contenedor principal ---
+    container = ft.Container(
+        content=(
+            row_content if page.web else ft.WindowDragArea(content=row_content)
+        ),
+        height=48,
+        bgcolor=ft.Colors.SURFACE,
+        border=ft.border.only(
+            bottom=ft.BorderSide(1, ft.Colors.OUTLINE_VARIANT)
+        ),
+        shadow=ft.BoxShadow(
+            spread_radius=0,
+            blur_radius=2,
+            color=ft.Colors.with_opacity(0.1, ft.Colors.BLACK),
+            offset=ft.Offset(0, 1),
+        ),
+        padding=0,
+        margin=0,
+        expand=True,
+    )
+
+    return container
