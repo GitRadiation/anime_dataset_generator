@@ -401,7 +401,7 @@ class DatabaseManager:
                                 rc.column_name,
                                 rc.operator,
                                 rc.value_text,
-                                rc.value_numeric,
+                                rc.value_numeric
                             FROM rules r
                             LEFT JOIN rule_conditions rc ON r.rule_id = rc.rule_id
                             WHERE r.target_value = :target_value
