@@ -243,21 +243,44 @@ class GeneticRuleMiner:
                 logger.debug(f"No values found for column '{col}'")
                 return Condition(column=col, operator="==", value="UNKNOWN")
 
-            # Si la columna tiene listas/arrays, juntar todos los elementos
-            if isinstance(raw_values.iloc[0], list):
-                all_vals = list(
-                    set(item for sublist in raw_values for item in sublist)
+            # Seleccionar aleatoriamente un valor de la columna
+            candidate = self.rng.choice(raw_values)
+
+            # Evaluar si el valor es un array (lista) o texto
+            if isinstance(candidate, list):
+                # Elegir aleatoriamente un elemento del array
+                value = str(self.rng.choice(candidate))
+            elif (
+                isinstance(candidate, str)
+                and (
+                    candidate.strip().startswith("[")
+                    or candidate.strip().startswith("'[")
+                    or candidate.strip().startswith('"[')
                 )
+                and (
+                    candidate.strip().endswith("]")
+                    or candidate.strip().endswith("]'")
+                    or candidate.strip().endswith(']"')
+                )
+            ):
+                # Intentar parsear el string como array usando ast.literal_eval
+                try:
+                    import ast
+
+                    parsed_list = ast.literal_eval(candidate)
+                    if isinstance(parsed_list, list) and parsed_list:
+                        value = str(self.rng.choice(parsed_list))
+                    else:
+                        value = candidate  # fallback si el parseo falla o la lista está vacía
+                except Exception as e:
+                    logger.warning(
+                        f"Error parsing string as array for column '{col}': {e}"
+                    )
+                    value = candidate  # fallback
             else:
-                all_vals = list(raw_values.astype(str).unique())
+                value = str(candidate)  # texto simple
 
-            if not all_vals:
-                logger.debug(f"No unique values found for column '{col}'")
-                return Condition(column=col, operator="==", value="UNKNOWN")
-
-            return Condition(
-                column=col, operator="==", value=str(self.rng.choice(all_vals))
-            )
+            return Condition(column=col, operator="==", value=value)
 
     def _add_condition(
         self, rule: Rule, existing_cols, column_pool, user=False
