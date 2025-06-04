@@ -130,18 +130,10 @@ BEGIN
             CASE condition_record.operator
                 WHEN '>=' THEN
                     user_condition_met := (actual_value::NUMERIC >= condition_record.value_numeric);
-                WHEN '<=' THEN
-                    user_condition_met := (actual_value::NUMERIC <= condition_record.value_numeric);
                 WHEN '>' THEN
                     user_condition_met := (actual_value::NUMERIC > condition_record.value_numeric);
                 WHEN '<' THEN
                     user_condition_met := (actual_value::NUMERIC < condition_record.value_numeric);
-                WHEN '=' THEN
-                    IF condition_record.value_numeric IS NOT NULL THEN
-                        user_condition_met := (actual_value::NUMERIC = condition_record.value_numeric);
-                    ELSE
-                        user_condition_met := (actual_value = condition_record.value_text);
-                    END IF;
                 WHEN '==' THEN
                     IF condition_record.value_numeric IS NOT NULL THEN
                         user_condition_met := (actual_value::NUMERIC = condition_record.value_numeric);
@@ -211,18 +203,10 @@ BEGIN
                     CASE condition_record.operator
                         WHEN '>=' THEN
                             anime_condition_met := (actual_value::NUMERIC >= condition_record.value_numeric);
-                        WHEN '<=' THEN
-                            anime_condition_met := (actual_value::NUMERIC <= condition_record.value_numeric);
                         WHEN '>' THEN
                             anime_condition_met := (actual_value::NUMERIC > condition_record.value_numeric);
                         WHEN '<' THEN
                             anime_condition_met := (actual_value::NUMERIC < condition_record.value_numeric);
-                        WHEN '=' THEN
-                            IF condition_record.value_numeric IS NOT NULL THEN
-                                anime_condition_met := (actual_value::NUMERIC = condition_record.value_numeric);
-                            ELSE
-                                anime_condition_met := (actual_value = condition_record.value_text);
-                            END IF;
                         WHEN '==' THEN
                             IF condition_record.value_numeric IS NOT NULL THEN
                                 anime_condition_met := (actual_value::NUMERIC = condition_record.value_numeric);

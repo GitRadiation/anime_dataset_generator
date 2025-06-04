@@ -280,7 +280,9 @@ class GeneticRuleMiner:
             else:
                 value = str(candidate)  # texto simple
 
-            return Condition(column=col, operator="==", value=value)
+            return Condition(
+                column=col, operator=self.rng.choice(["==", "!="]), value=value
+            )
 
     def _add_condition(
         self, rule: Rule, existing_cols, column_pool, user=False
@@ -385,21 +387,48 @@ class GeneticRuleMiner:
                                 f"Unsupported operator '{op}' for numeric column '{col}'"
                             )
                     else:
-                        col_data = self.df[col].values
+                        col_data = self.df[col]
                         if op == "==":
-                            if pd.api.types.is_numeric_dtype(self.df[col]):
-                                condition_mask = col_data == float(value)
+                            if pd.api.types.is_numeric_dtype(col_data):
+                                condition_mask = col_data.values == float(
+                                    value
+                                )
                             else:
-                                condition_mask = self.df[col].astype(
-                                    str
-                                ) == str(value)
+                                # Si la columna contiene listas/arrays
+                                if col_data.apply(
+                                    lambda x: isinstance(x, list)
+                                ).all():
+                                    condition_mask = col_data.apply(
+                                        lambda x: (
+                                            value in x
+                                            if isinstance(x, list)
+                                            else False
+                                        )
+                                    ).values
+                                else:
+                                    condition_mask = col_data.astype(
+                                        str
+                                    ).values == str(value)
                         elif op == "!=":
-                            if pd.api.types.is_numeric_dtype(self.df[col]):
-                                condition_mask = col_data != float(value)
+                            if pd.api.types.is_numeric_dtype(col_data):
+                                condition_mask = col_data.values != float(
+                                    value
+                                )
                             else:
-                                condition_mask = self.df[col].astype(
-                                    str
-                                ) != str(value)
+                                if col_data.apply(
+                                    lambda x: isinstance(x, list)
+                                ).all():
+                                    condition_mask = col_data.apply(
+                                        lambda x: (
+                                            value not in x
+                                            if isinstance(x, list)
+                                            else True
+                                        )
+                                    ).values
+                                else:
+                                    condition_mask = col_data.astype(
+                                        str
+                                    ).values != str(value)
                         else:
                             raise ValueError(
                                 f"Unsupported operator '{op}' for categorical column '{col}'"

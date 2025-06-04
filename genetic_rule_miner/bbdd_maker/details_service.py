@@ -5,6 +5,7 @@ from io import BytesIO, StringIO
 from typing import List, Optional
 
 import requests
+
 from genetic_rule_miner.config import APIConfig
 from genetic_rule_miner.utils.logging import LogManager
 
