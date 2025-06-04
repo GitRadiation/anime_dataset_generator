@@ -387,34 +387,40 @@ class DatabaseManager:
                 logger.error(f"Error guardando reglas: {e}")
                 raise
 
-    def get_rules_by_target_value(self, target_value: int) -> list[RuleWithID]:
+    def get_rules_by_target_value_paginated(
+        self, target_value: int, offset: int = 0, limit: int = 500
+    ) -> list[RuleWithID]:
         """
         Devuelve todas las reglas asociadas a un target_value específico,
         en forma de lista de namedtuples con rule_id y objeto Rule.
         """
         with self.connection() as conn:
             try:
-                # Query para obtener reglas y sus condiciones
                 result = (
                     conn.execute(
                         text(
                             """
-                        SELECT 
-                            r.rule_id, 
-                            r.target_value,
-                            rc.table_name,
-                            rc.column_name,
-                            rc.operator,
-                            rc.value_text,
-                            rc.value_numeric,
-                            rc.value_array
-                        FROM rules r
-                        LEFT JOIN rule_conditions rc ON r.rule_id = rc.rule_id
-                        WHERE r.target_value = :target_value
-                        ORDER BY r.rule_id, rc.condition_id
-                    """
+                            SELECT 
+                                r.rule_id, 
+                                r.target_value,
+                                rc.table_name,
+                                rc.column_name,
+                                rc.operator,
+                                rc.value_text,
+                                rc.value_numeric,
+                                rc.value_array
+                            FROM rules r
+                            LEFT JOIN rule_conditions rc ON r.rule_id = rc.rule_id
+                            WHERE r.target_value = :target_value
+                            ORDER BY r.rule_id, rc.condition_id
+                            OFFSET :offset LIMIT :limit
+                        """
                         ),
-                        {"target_value": target_value},
+                        {
+                            "target_value": target_value,
+                            "offset": offset,
+                            "limit": limit,
+                        },
                     )
                     .mappings()
                     .all()
