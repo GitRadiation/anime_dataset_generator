@@ -131,7 +131,7 @@ def top_app_bar(page):
             offset=ft.Offset(0, 1),
         ),
         padding=0,
-        margin=0,
+        margin=ft.margin.only(),
         expand=True,
     )
 

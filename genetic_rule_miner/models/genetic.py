@@ -881,14 +881,23 @@ class GeneticRuleMiner:
         del self._fitness_cache
         del self._condition_cache
 
-        # --- COMPARACIÓN CON REGLAS EN BBDD ---
         if self.db_manager is not None:
-            existing_rules = self.db_manager.get_rules_by_target_value(
-                int(target_id)
-            )
+            all_existing_rules = []
+            offset = 0
+            page_size = 500  # ajusta según tus necesidades
+
+            while True:
+                page = self.db_manager.get_rules_by_target_value_paginated(
+                    int(target_id), offset=offset, limit=page_size
+                )
+                if not page:
+                    break  # No hay más datos
+                all_existing_rules.extend(page)
+                offset += page_size
+
             existing_conditions_set = {
                 tuple(sorted(str(cond) for cond in rule.conditions))
-                for rule in existing_rules
+                for rule in all_existing_rules
             }
 
             # Solo conservar las reglas que no están en la base de datos
@@ -898,8 +907,10 @@ class GeneticRuleMiner:
                 if tuple(sorted(str(cond) for cond in rule.conditions))
                 not in existing_conditions_set
             ]
+
             logger.info(
                 f"[Target {target_id}] {len(unique_rules)} nuevas reglas encontradas (no repetidas)"
             )
             return unique_rules
+
         return valid_rules

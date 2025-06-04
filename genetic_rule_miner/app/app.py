@@ -12,7 +12,6 @@ def main(page: Page):
     page.window.width = page.window.min_width
     page.views.append(View("/", controls=[user_profile_view(page)]))
     page.window.title_bar_hidden = True  # Ocultar la barra de título nativa
-    page.window.title_bar_buttons_hidden = True  # Ocultar botones de ventana
     setup_theme(page)
     page.go("/")
 
