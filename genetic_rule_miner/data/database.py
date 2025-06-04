@@ -2,6 +2,7 @@ import ast
 import csv
 import json
 import uuid
+from collections import namedtuple
 from contextlib import contextmanager
 from io import BytesIO, StringIO
 from typing import Generator, Optional
@@ -19,6 +20,9 @@ from genetic_rule_miner.utils.logging import LogManager
 from genetic_rule_miner.utils.rule import Rule
 
 logger = LogManager.get_logger(__name__)
+
+
+RuleWithID = namedtuple("RuleWithID", ["rule_id", "rule_obj"])
 
 
 class DatabaseManager:
@@ -383,10 +387,10 @@ class DatabaseManager:
                 logger.error(f"Error guardando reglas: {e}")
                 raise
 
-    def get_rules_by_target_value(self, target_value: int) -> list[Rule]:
+    def get_rules_by_target_value(self, target_value: int) -> list[RuleWithID]:
         """
         Devuelve todas las reglas asociadas a un target_value específico,
-        en forma de lista de objetos Rule.
+        en forma de lista de namedtuples con rule_id y objeto Rule.
         """
         with self.connection() as conn:
             try:
@@ -453,28 +457,29 @@ class DatabaseManager:
                                 condition
                             )
 
-                # Convertir a objetos Rule
-                rules = []
-                for rule_data in rules_dict.values():
+                # Convertir a objetos RuleWithID
+                rules_with_id = []
+                for rule_id, rule_data in rules_dict.items():
                     try:
                         conditions = {
                             "user_conditions": rule_data["user_conditions"],
                             "other_conditions": rule_data["other_conditions"],
                         }
-
                         rule = Rule(
                             columns=[],  # No se usa en la nueva implementación
                             conditions=conditions,
                             target=np.int64(rule_data["target_value"]),
                         )
-                        rules.append(rule)
+                        rules_with_id.append(
+                            RuleWithID(rule_id=rule_id, rule_obj=rule)
+                        )
 
                     except Exception as e:
                         logger.warning(
                             f"No se pudo construir Rule para target {target_value}: {e}"
                         )
 
-                return rules
+                return rules_with_id
 
             except Exception as e:
                 logger.error(

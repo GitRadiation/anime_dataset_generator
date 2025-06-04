@@ -56,7 +56,7 @@ def process_target(
     tid: int,
     merged_data: pd.DataFrame,
     user_details_columns: list[str],
-    db_config: DBConfig
+    db_config: DBConfig,
 ) -> tuple[int, bool, str | None]:
     db_manager = DatabaseManager(config=db_config)
     """Procesa un target individual para minería genética de reglas."""
@@ -86,11 +86,12 @@ def process_target(
         logger.error(f"❌ Target {tid} failed: {e}")
         return (tid, False, str(e))
 
+
 def remove_obsolete_rules_for_target(
     target_id: int,
     merged_data: pd.DataFrame,
     user_details: pd.DataFrame,
-    db_config: DBConfig
+    db_config: DBConfig,
 ) -> None:
     db_manager = DatabaseManager(config=db_config)
     try:
@@ -98,32 +99,33 @@ def remove_obsolete_rules_for_target(
             # Si el target ya no está en el dataset, eliminar todas sus reglas
             if target_id not in merged_data["anime_id"].values:
                 conn.execute(
-                    text("DELETE FROM rules WHERE target_value::integer = :target_id"),
+                    text("DELETE FROM rules WHERE target_value = :target_id"),
                     {"target_id": target_id},
                 )
-                logger.info(f"Eliminadas todas las reglas del target_id {target_id} (no existe en dataset)")
+                logger.info(
+                    f"Eliminadas todas las reglas del target_id {target_id} (no existe en dataset)"
+                )
                 return
 
-            # Obtener reglas ya parseadas para este target
-            rules = db_manager.get_rules_by_target_value(target_id)
-
-            if not rules:
+            # Obtener reglas para este target (debería devolver objetos con rule_id)
+            rules_with_id = db_manager.get_rules_by_target_value(target_id)
+            if not rules_with_id:
                 return
 
-            # Obtener rule_id desde otro método, o con una consulta separada si se requiere
-            rule_id_rows = conn.execute(
-                text("SELECT rule_id FROM rules WHERE target_value::integer = :target_id group by rule_id"),
-                {"target_id": target_id},
-            ).fetchall()
-            rule_id_list = [row[0] for row in rule_id_rows]
-            filtered_data = merged_data[merged_data["anime_id"] == target_id].copy()
+            # Extraer lista de rule_id de las reglas obtenidas
+            rule_id_list = [rule.rule_id for rule in rules_with_id]
+
+            filtered_data = merged_data[
+                merged_data["anime_id"] == target_id
+            ].copy()
             miner = GeneticRuleMiner(
                 df=filtered_data,
                 target_column="anime_id",
                 user_cols=user_details.columns.tolist(),
                 pop_size=1,
             )
-
+            # Extraer solo los objetos Rule
+            rules = [r.rule_obj for r in rules_with_id]
             fitness_arr = miner.batch_vectorized_confidence(rules)
             support_arr = miner.batch_vectorized_support(rules)
 
@@ -131,20 +133,29 @@ def remove_obsolete_rules_for_target(
             for idx, rule_id in enumerate(rule_id_list):
                 fitness = fitness_arr[idx]
                 support = support_arr[idx]
-                if fitness < 0.95 or support < 0.005:
+                if fitness < 0.95 or support < 0.95:
                     to_delete.append(rule_id)
-                    logger.info(f"Eliminando regla {rule_id} (fitness: {fitness:.4f}, soporte: {support:.4f})")
+                    logger.info(
+                        f"Eliminando regla {rule_id} (fitness: {fitness:.4f}, soporte: {support:.4f})"
+                    )
 
             if to_delete:
+                # Usar ANY con un array en Postgres requiere pasar una lista de UUIDs como array
                 conn.execute(
-                    text("DELETE FROM rules WHERE rule_id = ANY(:ids)"),
+                    text(
+                        "DELETE FROM rules WHERE rule_id = ANY(:ids::uuid[])"
+                    ),
                     {"ids": to_delete},
                 )
-                logger.info(f"Eliminadas {len(to_delete)} reglas obsoletas para target {target_id}")
+                logger.info(
+                    f"Eliminadas {len(to_delete)} reglas obsoletas para target {target_id}"
+                )
 
     except Exception as e:
-        logger.error(f"Fallo al eliminar reglas para target {target_id}: {e}", exc_info=True)
-
+        logger.error(
+            f"Fallo al eliminar reglas para target {target_id}: {e}",
+            exc_info=True,
+        )
 
 
 def main() -> None:
@@ -206,7 +217,6 @@ def main() -> None:
                 for tid in targets
             )
         )
-
 
         completed = len(results)
         logger.info(f"✅ {completed} targets completed.")
