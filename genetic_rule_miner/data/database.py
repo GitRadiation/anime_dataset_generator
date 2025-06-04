@@ -194,48 +194,6 @@ class DatabaseManager:
             logger.error(f"Database error: {e}")
             raise
 
-    def save_rules(self, rules: list[Rule], table: str = "rules") -> None:
-        """
-        Save Rule objects to the PostgreSQL database.
-        """
-        with self.connection() as conn:
-            # Preparar todos los datos primero
-            insert_data = []
-            for rule in rules:
-                user_conditions = [
-                    {"column": col, "operator": op, "value": value}
-                    for col, (op, value) in rule.conditions[0]
-                ]
-                other_conditions = [
-                    {"column": col, "operator": op, "value": value}
-                    for col, (op, value) in rule.conditions[1]
-                ]
-
-                insert_data.append(
-                    {
-                        "rule_id": str(uuid.uuid4()),
-                        "conditions": json.dumps(
-                            {
-                                "user_conditions": user_conditions,
-                                "other_conditions": other_conditions,
-                            }
-                        ),
-                        "target_value": rule.target.item(),
-                    }
-                )
-
-            # Insertar todo en una sola operación
-            conn.execute(
-                text(
-                    f"""
-                    INSERT INTO {table} (rule_id, conditions, target_value)
-                    VALUES (:rule_id, :conditions, :target_value)
-                """
-                ),
-                insert_data,
-            )
-            conn.commit()
-
     def _get_conflict_columns(self, table: str) -> list:
         if table == "user_score":
             return ["user_id", "anime_id"]
@@ -317,40 +275,212 @@ class DatabaseManager:
 
             return all_ids or []
 
+    def save_rules(self, rules: list[Rule], table: str = "rules") -> None:
+        """
+        Save Rule objects to the PostgreSQL database using normalized structure.
+        """
+        with self.connection() as conn:
+            try:
+                # Preparar datos para insertar en la tabla rules
+                rules_data = []
+                conditions_data = []
+
+                for rule in rules:
+                    rule_id = str(uuid.uuid4())
+
+                    # Datos para la tabla rules
+                    rules_data.append(
+                        {
+                            "rule_id": rule_id,
+                            "target_value": (
+                                int(rule.target.item())
+                                if hasattr(rule.target, "item")
+                                else int(rule.target)
+                            ),
+                        }
+                    )
+
+                    # Procesar user_conditions
+                    for col, (op, value) in rule.conditions[0]:
+                        condition_data = {
+                            "condition_id": str(uuid.uuid4()),
+                            "rule_id": rule_id,
+                            "table_name": "user_details",
+                            "column_name": col,
+                            "operator": op,
+                            "value_text": None,
+                            "value_numeric": None,
+                            "value_array": None,
+                        }
+
+                        # Determinar el tipo de valor y asignarlo correctamente
+                        if isinstance(value, (int, float)):
+                            condition_data["value_numeric"] = value
+                        elif isinstance(value, list):
+                            condition_data["value_array"] = value
+                        else:
+                            condition_data["value_text"] = str(value)
+
+                        conditions_data.append(condition_data)
+
+                    # Procesar other_conditions (anime_dataset)
+                    for col, (op, value) in rule.conditions[1]:
+                        condition_data = {
+                            "condition_id": str(uuid.uuid4()),
+                            "rule_id": rule_id,
+                            "table_name": "anime_dataset",
+                            "column_name": col,
+                            "operator": op,
+                            "value_text": None,
+                            "value_numeric": None,
+                            "value_array": None,
+                        }
+
+                        # Determinar el tipo de valor y asignarlo correctamente
+                        if isinstance(value, (int, float)):
+                            condition_data["value_numeric"] = value
+                        elif isinstance(value, list):
+                            condition_data["value_array"] = value
+                        else:
+                            condition_data["value_text"] = str(value)
+
+                        conditions_data.append(condition_data)
+
+                # Insertar reglas
+                if rules_data:
+                    conn.execute(
+                        text(
+                            f"""
+                            INSERT INTO {table} (rule_id, target_value)
+                            VALUES (:rule_id, :target_value)
+                        """
+                        ),
+                        rules_data,
+                    )
+
+                # Insertar condiciones
+                if conditions_data:
+                    conn.execute(
+                        text(
+                            """
+                            INSERT INTO rule_conditions 
+                            (condition_id, rule_id, table_name, column_name, operator, 
+                            value_text, value_numeric, value_array)
+                            VALUES (:condition_id, :rule_id, :table_name, :column_name, 
+                                    :operator, :value_text, :value_numeric, :value_array)
+                        """
+                        ),
+                        conditions_data,
+                    )
+
+                conn.commit()
+                logger.info(
+                    f"Guardadas {len(rules)} reglas con {len(conditions_data)} condiciones"
+                )
+
+            except Exception as e:
+                conn.rollback()
+                logger.error(f"Error guardando reglas: {e}")
+                raise
+
     def get_rules_by_target_value(self, target_value: int) -> list[Rule]:
         """
         Devuelve todas las reglas asociadas a un target_value específico,
         en forma de lista de objetos Rule.
         """
         with self.connection() as conn:
-            result = (
-                conn.execute(
-                    text(
-                        "SELECT conditions, target_value FROM rules WHERE target_value::integer = :tid"
-                    ),
-                    {"tid": target_value},
+            try:
+                # Query para obtener reglas y sus condiciones
+                result = (
+                    conn.execute(
+                        text(
+                            """
+                        SELECT 
+                            r.rule_id, 
+                            r.target_value,
+                            rc.table_name,
+                            rc.column_name,
+                            rc.operator,
+                            rc.value_text,
+                            rc.value_numeric,
+                            rc.value_array
+                        FROM rules r
+                        LEFT JOIN rule_conditions rc ON r.rule_id = rc.rule_id
+                        WHERE r.target_value = :target_value
+                        ORDER BY r.rule_id, rc.condition_id
+                    """
+                        ),
+                        {"target_value": target_value},
+                    )
+                    .mappings()
+                    .all()
                 )
-                .mappings()
-                .all()
-            )
 
-            rules = []
-            for row in result:
-                try:
-                    conditions = row["conditions"]
-                    if isinstance(conditions, str):
-                        conditions = ast.literal_eval(conditions)
-                    rule = Rule(
-                        columns=[],
-                        conditions=conditions,
-                        target=np.int64(row["target_value"]),
-                    )
-                    rules.append(rule)
-                except Exception as e:
-                    logger.warning(
-                        f"No se pudo construir Rule para target {target_value}: {e}"
-                    )
-            return rules
+                # Agrupar condiciones por regla
+                rules_dict = {}
+                for row in result:
+                    rule_id = row["rule_id"]
+
+                    if rule_id not in rules_dict:
+                        rules_dict[rule_id] = {
+                            "target_value": row["target_value"],
+                            "user_conditions": [],
+                            "other_conditions": [],
+                        }
+
+                    # Si hay condiciones (LEFT JOIN puede devolver None)
+                    if row["column_name"]:
+                        # Determinar el valor según el tipo
+                        if row["value_numeric"] is not None:
+                            value = row["value_numeric"]
+                        elif row["value_array"] is not None:
+                            value = row["value_array"]
+                        else:
+                            value = row["value_text"]
+
+                        condition = (
+                            row["column_name"],
+                            (row["operator"], value),
+                        )
+
+                        # Clasificar la condición según la tabla
+                        if row["table_name"] == "user_details":
+                            rules_dict[rule_id]["user_conditions"].append(
+                                condition
+                            )
+                        else:  # anime_dataset
+                            rules_dict[rule_id]["other_conditions"].append(
+                                condition
+                            )
+
+                # Convertir a objetos Rule
+                rules = []
+                for rule_data in rules_dict.values():
+                    try:
+                        conditions = {
+                            "user_conditions": rule_data["user_conditions"],
+                            "other_conditions": rule_data["other_conditions"],
+                        }
+
+                        rule = Rule(
+                            columns=[],  # No se usa en la nueva implementación
+                            conditions=conditions,
+                            target=np.int64(rule_data["target_value"]),
+                        )
+                        rules.append(rule)
+
+                    except Exception as e:
+                        logger.warning(
+                            f"No se pudo construir Rule para target {target_value}: {e}"
+                        )
+
+                return rules
+
+            except Exception as e:
+                logger.error(
+                    f"Error obteniendo reglas para target {target_value}: {e}"
+                )
+                return []
 
     def get_rules_series_by_json(self, json_objeto: dict):
         """

@@ -36,6 +36,7 @@ db = DatabaseManager()
 # --- Cache persistente ---
 USER_CACHE_TTL = 30 * 60  # 30 minutos
 ANIME_CACHE_TTL = 7 * 24 * 3600  # 1 semana
+ONE_DAY_TTL = 24 * 3600  # 1 día en segundos
 
 user_cache = diskcache.Cache(
     directory="./.cache/users", size_limit=500 * 1024 * 1024
@@ -349,10 +350,21 @@ def api_get_user_full_profile(username: str) -> Dict[str, Any]:
 
 @app.get("/users/{username}/recommendation")
 def api_get_user_recommendations(username: str):
+    cache_key = f"user_recommendation:{username}"
+    cached_result = user_cache.get(cache_key)
+    if cached_result is not None:
+        logger.info(f"Cache hit for user recommendations: {username}")
+        return cached_result
+
+    # Cache miss: calcular el resultado
     full_profile = api_get_user_full_profile(username)
     result = db.get_rules_series_by_json(full_profile)
-    logger.debug(result)
-    return [RuleResult(**row) for row in result]
+    rule_results = [RuleResult(**row) for row in result]
+
+    # Guardar en cache
+    user_cache.set(cache_key, rule_results, expire=ONE_DAY_TTL)
+    logger.info(f"Cache set for user recommendations: {username}")
+    return rule_results
 
 
 @app.get("/health")

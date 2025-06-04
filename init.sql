@@ -54,105 +54,195 @@ CREATE TABLE user_score (
     FOREIGN KEY (anime_id) REFERENCES anime_dataset(anime_id)
 );
 
-DROP TABLE IF EXISTS rules;
+DROP TABLE IF EXISTS rules CASCADE;
+DROP TABLE IF EXISTS rule_conditions CASCADE;
 
+-- Esquema corregido de base de datos
 CREATE TABLE rules (
-    rule_id UUID PRIMARY KEY,
-    conditions JSONB NOT NULL,
+    rule_id UUID PRIMARY KEY DEFAULT gen_random_uuid(),
     target_value INTEGER NOT NULL
 );
 
+CREATE TABLE rule_conditions (
+    condition_id UUID PRIMARY KEY DEFAULT gen_random_uuid(),
+    rule_id UUID NOT NULL,
+    table_name VARCHAR(50) NOT NULL CHECK (table_name IN ('user_details', 'anime_dataset')), 
+    column_name VARCHAR(100) NOT NULL,
+    operator VARCHAR(10) NOT NULL CHECK (operator IN ('>=', '<=', '>', '<', '=', '!=', 'IN', 'NOT IN', 'LIKE', 'ILIKE')),
+    value_text TEXT,
+    value_numeric NUMERIC,
+    value_array TEXT[], -- Para operadores IN/NOT IN
+    FOREIGN KEY (rule_id) REFERENCES rules(rule_id) ON DELETE CASCADE,
+    -- Constraint para asegurar que al menos un valor esté presente
+    CHECK (
+        (value_text IS NOT NULL)::int + 
+        (value_numeric IS NOT NULL)::int + 
+        (value_array IS NOT NULL)::int = 1
+    )
+);
+
+-- Índices para optimizar consultas
+CREATE INDEX idx_rule_conditions_rule_id ON rule_conditions(rule_id);
+CREATE INDEX idx_rule_conditions_table_column ON rule_conditions(table_name, column_name);
+CREATE INDEX idx_rules_target_value ON rules(target_value);
+
 drop FUNCTION IF EXISTS get_rules_series;
 CREATE OR REPLACE FUNCTION get_rules_series(input_data JSONB)
-RETURNS TABLE(anime_id INT, nombre TEXT, cantidad INTEGER)
-LANGUAGE plpgsql AS
-$$
+RETURNS TABLE(anime_id INT, nombre TEXT, cantidad INTEGER) AS $$
 DECLARE
+    rule_record RECORD;
     user_data JSONB;
-    anime_list JSONB[];
+    anime_list JSONB;
+    condition_record RECORD;
+    rule_matches BOOLEAN;
+    user_condition_met BOOLEAN;
+    anime_condition_met BOOLEAN;
+    anime_item JSONB;
+    actual_value TEXT;
+    expected_value TEXT;
 BEGIN
-    -- Extraer datos del usuario una sola vez
     user_data := input_data->'user';
-
-    -- Convertir array JSON a array nativo
-    SELECT array_agg(value)
-    INTO anime_list
-    FROM jsonb_array_elements(input_data->'anime_list');
-
-    RETURN QUERY
-    WITH user_conditions_eval AS (
-        -- Evaluar condiciones de usuario
-        SELECT 
-            r.rule_id,
-            r.target_value::int AS target_id,
-            CASE 
-                WHEN jsonb_array_length(r.conditions->'user_conditions') = 0 THEN TRUE
-                ELSE (
-                    SELECT bool_and(
-                        CASE uc.value->>'operator'
-                            WHEN '<'  THEN (user_data->>(uc.value->>'column'))::numeric < (uc.value->>'value')::numeric
-                            WHEN '<=' THEN (user_data->>(uc.value->>'column'))::numeric <= (uc.value->>'value')::numeric
-                            WHEN '>'  THEN (user_data->>(uc.value->>'column'))::numeric > (uc.value->>'value')::numeric
-                            WHEN '>=' THEN (user_data->>(uc.value->>'column'))::numeric >= (uc.value->>'value')::numeric
-                            WHEN '==' THEN (user_data->>(uc.value->>'column')) = (uc.value->>'value')
-                            ELSE FALSE
-                        END
-                    )
-                    FROM jsonb_array_elements(r.conditions->'user_conditions') AS uc(value)
-                )
-            END AS user_conditions_met
+    anime_list := input_data->'anime_list';
+    
+    -- Iterar sobre cada regla única
+    FOR rule_record IN 
+        SELECT DISTINCT r.rule_id
         FROM rules r
-    ),
-    anime_rule_combinations AS (
-        -- Generar combinaciones anime-regla
-        SELECT 
-            uce.rule_id,
-            uce.target_id,
-            anime_elem.ordinality AS anime_index,
-            anime_elem.value AS anime_data
-        FROM user_conditions_eval uce
-        CROSS JOIN unnest(anime_list) WITH ORDINALITY AS anime_elem(value, ordinality)
-        WHERE uce.user_conditions_met = TRUE
-    ),
-    valid_combinations AS (
-        -- Evaluar condiciones de anime
-        SELECT 
-            arc.target_id,
-            arc.anime_data
-        FROM anime_rule_combinations arc
-        JOIN rules r ON r.rule_id = arc.rule_id
-        WHERE 
-            CASE 
-                WHEN jsonb_array_length(r.conditions->'other_conditions') = 0 THEN TRUE
-                ELSE (
-                    SELECT bool_and(
-                        CASE oc.value->>'operator'
-                            WHEN '<'  THEN (arc.anime_data->>(oc.value->>'column'))::numeric < (oc.value->>'value')::numeric
-                            WHEN '<=' THEN (arc.anime_data->>(oc.value->>'column'))::numeric <= (oc.value->>'value')::numeric
-                            WHEN '>'  THEN (arc.anime_data->>(oc.value->>'column'))::numeric > (oc.value->>'value')::numeric
-                            WHEN '>=' THEN (arc.anime_data->>(oc.value->>'column'))::numeric >= (oc.value->>'value')::numeric
-                            WHEN '==' THEN
-                                CASE
-                                    -- Si el campo en la tabla es un array (producers, studios, genres, etc.)
-                                    WHEN oc.value->>'column' IN ('producers', 'studios', 'genres', 'keywords') THEN
-                                        (arc.anime_data->(oc.value->>'column')) @> to_jsonb(oc.value->>'value'::text)
-                                    ELSE
-                                        (arc.anime_data->>(oc.value->>'column')) = (oc.value->>'value')
-                                END
-                            ELSE FALSE
-                        END
-                    )
-                    FROM jsonb_array_elements(r.conditions->'other_conditions') AS oc(value)
-                )
-            END
-    )
-    SELECT 
-        a.anime_id,
-        a.name::TEXT AS nombre,
-        COUNT(*)::INTEGER AS cantidad
-    FROM valid_combinations vc
-    JOIN anime_dataset a ON a.anime_id = vc.target_id
-    GROUP BY a.anime_id, a.name
-    ORDER BY cantidad DESC;
+        JOIN rule_conditions rc ON r.rule_id = rc.rule_id
+    LOOP
+        rule_matches := TRUE;
+        
+        -- Evaluar condiciones de usuario
+        FOR condition_record IN
+            SELECT column_name, operator, value_text, value_numeric, value_array
+            FROM rule_conditions 
+            WHERE rule_id = rule_record.rule_id 
+            AND table_name = 'user_details'
+        LOOP
+            user_condition_met := FALSE;
+            
+            actual_value := user_data->>condition_record.column_name;
+            
+            expected_value := COALESCE(
+                condition_record.value_text,
+                condition_record.value_numeric::TEXT,
+                condition_record.value_array::TEXT
+            );
+            
+            CASE condition_record.operator
+                WHEN '>=' THEN
+                    user_condition_met := (actual_value::NUMERIC >= condition_record.value_numeric);
+                WHEN '<=' THEN
+                    user_condition_met := (actual_value::NUMERIC <= condition_record.value_numeric);
+                WHEN '>' THEN
+                    user_condition_met := (actual_value::NUMERIC > condition_record.value_numeric);
+                WHEN '<' THEN
+                    user_condition_met := (actual_value::NUMERIC < condition_record.value_numeric);
+                WHEN '=' THEN
+                    IF condition_record.value_numeric IS NOT NULL THEN
+                        user_condition_met := (actual_value::NUMERIC = condition_record.value_numeric);
+                    ELSE
+                        user_condition_met := (actual_value = condition_record.value_text);
+                    END IF;
+                WHEN '==' THEN
+                    IF condition_record.value_numeric IS NOT NULL THEN
+                        user_condition_met := (actual_value::NUMERIC = condition_record.value_numeric);
+                    ELSE
+                        user_condition_met := (actual_value = condition_record.value_text);
+                    END IF;
+                WHEN '!=' THEN
+                    IF condition_record.value_numeric IS NOT NULL THEN
+                        user_condition_met := (actual_value::NUMERIC != condition_record.value_numeric);
+                    ELSE
+                        user_condition_met := (actual_value != condition_record.value_text);
+                    END IF;
+                WHEN 'IN' THEN
+                    user_condition_met := (actual_value = ANY(condition_record.value_array));
+                WHEN 'NOT IN' THEN
+                    user_condition_met := (actual_value != ALL(condition_record.value_array));
+                WHEN 'LIKE' THEN
+                    user_condition_met := (actual_value LIKE condition_record.value_text);
+                WHEN 'ILIKE' THEN
+                    user_condition_met := (actual_value ILIKE condition_record.value_text);
+                ELSE
+                    user_condition_met := FALSE;
+            END CASE;
+            
+            IF NOT user_condition_met THEN
+                rule_matches := FALSE;
+                EXIT;
+            END IF;
+        END LOOP;
+        
+        IF NOT rule_matches THEN
+            CONTINUE;
+        END IF;
+        
+        -- Evaluar condiciones de anime para esta regla
+        FOR anime_item IN SELECT * FROM jsonb_array_elements(anime_list)
+        LOOP
+            anime_condition_met := TRUE;
+            
+            FOR condition_record IN
+                SELECT column_name, operator, value_text, value_numeric, value_array
+                FROM rule_conditions 
+                WHERE rule_id = rule_record.rule_id 
+                AND table_name = 'anime_dataset'
+            LOOP
+                actual_value := anime_item->>condition_record.column_name;
+                
+                CASE condition_record.operator
+                    WHEN '>=' THEN
+                        anime_condition_met := (actual_value::NUMERIC >= condition_record.value_numeric);
+                    WHEN '<=' THEN
+                        anime_condition_met := (actual_value::NUMERIC <= condition_record.value_numeric);
+                    WHEN '>' THEN
+                        anime_condition_met := (actual_value::NUMERIC > condition_record.value_numeric);
+                    WHEN '<' THEN
+                        anime_condition_met := (actual_value::NUMERIC < condition_record.value_numeric);
+                    WHEN '=' THEN
+                        IF condition_record.value_numeric IS NOT NULL THEN
+                            anime_condition_met := (actual_value::NUMERIC = condition_record.value_numeric);
+                        ELSE
+                            anime_condition_met := (actual_value = condition_record.value_text);
+                        END IF;
+                    WHEN '==' THEN
+                        IF condition_record.value_numeric IS NOT NULL THEN
+                            anime_condition_met := (actual_value::NUMERIC = condition_record.value_numeric);
+                        ELSE
+                            anime_condition_met := (actual_value = condition_record.value_text);
+                        END IF;
+                    WHEN '!=' THEN
+                        IF condition_record.value_numeric IS NOT NULL THEN
+                            anime_condition_met := (actual_value::NUMERIC != condition_record.value_numeric);
+                        ELSE
+                            anime_condition_met := (actual_value != condition_record.value_text);
+                        END IF;
+                    WHEN 'IN' THEN
+                        anime_condition_met := (actual_value = ANY(condition_record.value_array));
+                    WHEN 'NOT IN' THEN
+                        anime_condition_met := (actual_value != ALL(condition_record.value_array));
+                    WHEN 'LIKE' THEN
+                        anime_condition_met := (actual_value LIKE condition_record.value_text);
+                    WHEN 'ILIKE' THEN
+                        anime_condition_met := (actual_value ILIKE condition_record.value_text);
+                    ELSE
+                        anime_condition_met := FALSE;
+                END CASE;
+                
+                IF NOT anime_condition_met THEN
+                    EXIT;
+                END IF;
+            END LOOP;
+            
+            IF anime_condition_met THEN
+                -- Devolver anime_id, nombre y cantidad 1 por cada coincidencia
+                anime_id := (anime_item->>'anime_id')::INTEGER;
+                nombre := anime_item->>'name';
+                cantidad := 1;
+                RETURN NEXT;
+            END IF;
+        END LOOP;
+    END LOOP;
 END;
-$$;
+$$ LANGUAGE plpgsql;
