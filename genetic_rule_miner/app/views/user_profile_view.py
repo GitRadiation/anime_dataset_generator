@@ -108,7 +108,7 @@ def user_profile_view(page: ft.Page):
             # Intentar obtener recomendaciones de la API principal
             logger.info(f"Fetching recommendations for user: {username}")
             response = requests.get(
-                f"{api_url}/users/{username}/recommendation", timeout=15
+                f"{api_url}/users/{username}/recommendation", timeout=60
             )
             response.raise_for_status()
             data = response.json()

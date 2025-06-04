@@ -314,14 +314,11 @@ class DatabaseManager:
                             "operator": op,
                             "value_text": None,
                             "value_numeric": None,
-                            "value_array": None,
                         }
 
                         # Determinar el tipo de valor y asignarlo correctamente
                         if isinstance(value, (int, float)):
                             condition_data["value_numeric"] = value
-                        elif isinstance(value, list):
-                            condition_data["value_array"] = value
                         else:
                             condition_data["value_text"] = str(value)
 
@@ -337,14 +334,11 @@ class DatabaseManager:
                             "operator": op,
                             "value_text": None,
                             "value_numeric": None,
-                            "value_array": None,
                         }
 
                         # Determinar el tipo de valor y asignarlo correctamente
                         if isinstance(value, (int, float)):
                             condition_data["value_numeric"] = value
-                        elif isinstance(value, list):
-                            condition_data["value_array"] = value
                         else:
                             condition_data["value_text"] = str(value)
 
@@ -369,9 +363,9 @@ class DatabaseManager:
                             """
                             INSERT INTO rule_conditions 
                             (condition_id, rule_id, table_name, column_name, operator, 
-                            value_text, value_numeric, value_array)
+                            value_text, value_numeric)
                             VALUES (:condition_id, :rule_id, :table_name, :column_name, 
-                                    :operator, :value_text, :value_numeric, :value_array)
+                                    :operator, :value_text, :value_numeric)
                         """
                         ),
                         conditions_data,
@@ -408,7 +402,6 @@ class DatabaseManager:
                                 rc.operator,
                                 rc.value_text,
                                 rc.value_numeric,
-                                rc.value_array
                             FROM rules r
                             LEFT JOIN rule_conditions rc ON r.rule_id = rc.rule_id
                             WHERE r.target_value = :target_value
@@ -443,8 +436,6 @@ class DatabaseManager:
                         # Determinar el valor según el tipo
                         if row["value_numeric"] is not None:
                             value = row["value_numeric"]
-                        elif row["value_array"] is not None:
-                            value = row["value_array"]
                         else:
                             value = row["value_text"]
 

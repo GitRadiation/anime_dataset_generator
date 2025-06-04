@@ -242,14 +242,19 @@ class GeneticRuleMiner:
             if raw_values.empty:
                 logger.debug(f"No values found for column '{col}'")
                 return Condition(column=col, operator="==", value="UNKNOWN")
-            all_vals = (
-                list(set(itertools.chain.from_iterable(raw_values)))
-                if isinstance(raw_values.iloc[0], list)
-                else list(raw_values.astype(str).unique())
-            )
+
+            # Si la columna tiene listas/arrays, juntar todos los elementos
+            if isinstance(raw_values.iloc[0], list):
+                all_vals = list(
+                    set(item for sublist in raw_values for item in sublist)
+                )
+            else:
+                all_vals = list(raw_values.astype(str).unique())
+
             if not all_vals:
                 logger.debug(f"No unique values found for column '{col}'")
                 return Condition(column=col, operator="==", value="UNKNOWN")
+
             return Condition(
                 column=col, operator="==", value=str(self.rng.choice(all_vals))
             )
