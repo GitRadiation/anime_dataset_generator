@@ -1,6 +1,5 @@
 import ast
 import csv
-import json
 import uuid
 from collections import namedtuple
 from contextlib import contextmanager
@@ -489,7 +488,7 @@ class DatabaseManager:
         Ejecuta la función SQL get_rules_series pasando el JSON completo obtenido de la API.
 
         :param json_objeto: Diccionario completo del JSON recibido desde la API.
-        :return: Lista de tuplas (nombre, cantidad) con los resultados.
+        :return: Lista de diccionarios con los resultados.
         """
 
         def clean_nans(obj):
@@ -502,13 +501,20 @@ class DatabaseManager:
             return obj
 
         cleaned_data = clean_nans(json_objeto)
-        json_payload = json.dumps(cleaned_data)
         with self.connection() as conn:
-            # Ejecutar la función que devuelve las series de reglas personalizadas
             result = conn.execute(
                 text("SELECT * FROM get_rules_series(:input_json)").bindparams(
                     bindparam("input_json", type_=JSONB)
                 ),
-                {"input_json": json_payload},
+                {"input_json": cleaned_data},
             ).fetchall()
-            return [dict(row) for row in result]
+
+            if not result:
+                return []
+
+            columns = (
+                result[0]._fields
+                if hasattr(result[0], "_fields")
+                else ["id", "nombre", "cantidad"]
+            )
+            return [dict(zip(columns, row)) for row in result]
