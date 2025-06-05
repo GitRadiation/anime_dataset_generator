@@ -242,16 +242,46 @@ class GeneticRuleMiner:
             if raw_values.empty:
                 logger.debug(f"No values found for column '{col}'")
                 return Condition(column=col, operator="==", value="UNKNOWN")
-            all_vals = (
-                list(set(itertools.chain.from_iterable(raw_values)))
-                if isinstance(raw_values.iloc[0], list)
-                else list(raw_values.astype(str).unique())
-            )
-            if not all_vals:
-                logger.debug(f"No unique values found for column '{col}'")
-                return Condition(column=col, operator="==", value="UNKNOWN")
+
+            # Seleccionar aleatoriamente un valor de la columna
+            candidate = self.rng.choice(raw_values)
+
+            # Evaluar si el valor es un array (lista) o texto
+            if isinstance(candidate, list):
+                # Elegir aleatoriamente un elemento del array
+                value = str(self.rng.choice(candidate))
+            elif (
+                isinstance(candidate, str)
+                and (
+                    candidate.strip().startswith("[")
+                    or candidate.strip().startswith("'[")
+                    or candidate.strip().startswith('"[')
+                )
+                and (
+                    candidate.strip().endswith("]")
+                    or candidate.strip().endswith("]'")
+                    or candidate.strip().endswith(']"')
+                )
+            ):
+                # Intentar parsear el string como array usando ast.literal_eval
+                try:
+                    import ast
+
+                    parsed_list = ast.literal_eval(candidate)
+                    if isinstance(parsed_list, list) and parsed_list:
+                        value = str(self.rng.choice(parsed_list))
+                    else:
+                        value = candidate  # fallback si el parseo falla o la lista está vacía
+                except Exception as e:
+                    logger.warning(
+                        f"Error parsing string as array for column '{col}': {e}"
+                    )
+                    value = candidate  # fallback
+            else:
+                value = str(candidate)  # texto simple
+
             return Condition(
-                column=col, operator="==", value=str(self.rng.choice(all_vals))
+                column=col, operator=self.rng.choice(["==", "!="]), value=value
             )
 
     def _add_condition(
@@ -357,21 +387,48 @@ class GeneticRuleMiner:
                                 f"Unsupported operator '{op}' for numeric column '{col}'"
                             )
                     else:
-                        col_data = self.df[col].values
+                        col_data = self.df[col]
                         if op == "==":
-                            if pd.api.types.is_numeric_dtype(self.df[col]):
-                                condition_mask = col_data == float(value)
+                            if pd.api.types.is_numeric_dtype(col_data):
+                                condition_mask = col_data.values == float(
+                                    value
+                                )
                             else:
-                                condition_mask = self.df[col].astype(
-                                    str
-                                ) == str(value)
+                                # Si la columna contiene listas/arrays
+                                if col_data.apply(
+                                    lambda x: isinstance(x, list)
+                                ).all():
+                                    condition_mask = col_data.apply(
+                                        lambda x: (
+                                            value in x
+                                            if isinstance(x, list)
+                                            else False
+                                        )
+                                    ).values
+                                else:
+                                    condition_mask = col_data.astype(
+                                        str
+                                    ).values == str(value)
                         elif op == "!=":
-                            if pd.api.types.is_numeric_dtype(self.df[col]):
-                                condition_mask = col_data != float(value)
+                            if pd.api.types.is_numeric_dtype(col_data):
+                                condition_mask = col_data.values != float(
+                                    value
+                                )
                             else:
-                                condition_mask = self.df[col].astype(
-                                    str
-                                ) != str(value)
+                                if col_data.apply(
+                                    lambda x: isinstance(x, list)
+                                ).all():
+                                    condition_mask = col_data.apply(
+                                        lambda x: (
+                                            value not in x
+                                            if isinstance(x, list)
+                                            else True
+                                        )
+                                    ).values
+                                else:
+                                    condition_mask = col_data.astype(
+                                        str
+                                    ).values != str(value)
                         else:
                             raise ValueError(
                                 f"Unsupported operator '{op}' for categorical column '{col}'"
@@ -881,14 +938,23 @@ class GeneticRuleMiner:
         del self._fitness_cache
         del self._condition_cache
 
-        # --- COMPARACIÓN CON REGLAS EN BBDD ---
         if self.db_manager is not None:
-            existing_rules = self.db_manager.get_rules_by_target_value(
-                int(target_id)
-            )
+            all_existing_rules = []
+            offset = 0
+            page_size = 500  # ajusta según tus necesidades
+
+            while True:
+                page = self.db_manager.get_rules_by_target_value_paginated(
+                    int(target_id), offset=offset, limit=page_size
+                )
+                if not page:
+                    break  # No hay más datos
+                all_existing_rules.extend(page)
+                offset += page_size
+
             existing_conditions_set = {
                 tuple(sorted(str(cond) for cond in rule.conditions))
-                for rule in existing_rules
+                for rule in all_existing_rules
             }
 
             # Solo conservar las reglas que no están en la base de datos
@@ -898,8 +964,10 @@ class GeneticRuleMiner:
                 if tuple(sorted(str(cond) for cond in rule.conditions))
                 not in existing_conditions_set
             ]
+
             logger.info(
                 f"[Target {target_id}] {len(unique_rules)} nuevas reglas encontradas (no repetidas)"
             )
             return unique_rules
+
         return valid_rules

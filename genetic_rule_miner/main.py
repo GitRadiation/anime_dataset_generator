@@ -56,7 +56,7 @@ def process_target(
     tid: int,
     merged_data: pd.DataFrame,
     user_details_columns: list[str],
-    db_config: DBConfig
+    db_config: DBConfig,
 ) -> tuple[int, bool, str | None]:
     db_manager = DatabaseManager(config=db_config)
     """Procesa un target individual para minería genética de reglas."""
@@ -86,65 +86,82 @@ def process_target(
         logger.error(f"❌ Target {tid} failed: {e}")
         return (tid, False, str(e))
 
+
 def remove_obsolete_rules_for_target(
     target_id: int,
     merged_data: pd.DataFrame,
     user_details: pd.DataFrame,
-    db_config: DBConfig
+    db_config: DBConfig,
 ) -> None:
+    BATCH_SIZE = 500
     db_manager = DatabaseManager(config=db_config)
+
     try:
         with db_manager.connection() as conn:
-            # Si el target ya no está en el dataset, eliminar todas sus reglas
             if target_id not in merged_data["anime_id"].values:
                 conn.execute(
-                    text("DELETE FROM rules WHERE target_value::integer = :target_id"),
+                    text("DELETE FROM rules WHERE target_value = :target_id"),
                     {"target_id": target_id},
                 )
-                logger.info(f"Eliminadas todas las reglas del target_id {target_id} (no existe en dataset)")
-                return
-
-            # Obtener reglas ya parseadas para este target
-            rules = db_manager.get_rules_by_target_value(target_id)
-
-            if not rules:
-                return
-
-            # Obtener rule_id desde otro método, o con una consulta separada si se requiere
-            rule_id_rows = conn.execute(
-                text("SELECT rule_id FROM rules WHERE target_value::integer = :target_id group by rule_id"),
-                {"target_id": target_id},
-            ).fetchall()
-            rule_id_list = [row[0] for row in rule_id_rows]
-            filtered_data = merged_data[merged_data["anime_id"] == target_id].copy()
-            miner = GeneticRuleMiner(
-                df=filtered_data,
-                target_column="anime_id",
-                user_cols=user_details.columns.tolist(),
-                pop_size=1,
-            )
-
-            fitness_arr = miner.batch_vectorized_confidence(rules)
-            support_arr = miner.batch_vectorized_support(rules)
-
-            to_delete = []
-            for idx, rule_id in enumerate(rule_id_list):
-                fitness = fitness_arr[idx]
-                support = support_arr[idx]
-                if fitness < 0.95 or support < 0.005:
-                    to_delete.append(rule_id)
-                    logger.info(f"Eliminando regla {rule_id} (fitness: {fitness:.4f}, soporte: {support:.4f})")
-
-            if to_delete:
-                conn.execute(
-                    text("DELETE FROM rules WHERE rule_id = ANY(:ids)"),
-                    {"ids": to_delete},
+                logger.info(
+                    f"Eliminadas todas las reglas del target_id {target_id} (no existe en dataset)"
                 )
-                logger.info(f"Eliminadas {len(to_delete)} reglas obsoletas para target {target_id}")
+                return
+
+            offset = 0
+            while True:
+                # Obtener reglas en lotes
+                rules_with_id = db_manager.get_rules_by_target_value_paginated(
+                    target_id, offset=offset, limit=BATCH_SIZE
+                )
+                if not rules_with_id:
+                    break  # ya no quedan reglas
+
+                filtered_data = merged_data[
+                    merged_data["anime_id"] == target_id
+                ].copy()
+                miner = GeneticRuleMiner(
+                    df=filtered_data,
+                    target_column="anime_id",
+                    user_cols=user_details.columns.tolist(),
+                    pop_size=1,
+                )
+
+                rules = [r.rule_obj for r in rules_with_id]
+                fitness_arr = miner.batch_vectorized_confidence(rules)
+                support_arr = miner.batch_vectorized_support(rules)
+
+                to_delete = []
+                rule_id_list = [r.rule_id for r in rules_with_id]
+
+                for idx, rule_id in enumerate(rule_id_list):
+                    fitness = fitness_arr[idx]
+                    support = support_arr[idx]
+                    if fitness < 0.95 or support < 0.95:
+                        to_delete.append(rule_id)
+                        logger.info(
+                            f"Eliminando regla {rule_id} (fitness: {fitness:.4f}, soporte: {support:.4f})"
+                        )
+
+                if to_delete:
+                    conn.execute(
+                        text(
+                            "DELETE FROM rules WHERE rule_id = ANY(:ids::uuid[])"
+                        ),
+                        {"ids": to_delete},
+                    )
+                    logger.info(
+                        f"Eliminadas {len(to_delete)} reglas obsoletas para target {target_id} (offset {offset})"
+                    )
+
+                # Pasar al siguiente lote
+                offset += BATCH_SIZE
 
     except Exception as e:
-        logger.error(f"Fallo al eliminar reglas para target {target_id}: {e}", exc_info=True)
-
+        logger.error(
+            f"Fallo al eliminar reglas para target {target_id}: {e}",
+            exc_info=True,
+        )
 
 
 def main() -> None:
@@ -206,7 +223,6 @@ def main() -> None:
                 for tid in targets
             )
         )
-
 
         completed = len(results)
         logger.info(f"✅ {completed} targets completed.")

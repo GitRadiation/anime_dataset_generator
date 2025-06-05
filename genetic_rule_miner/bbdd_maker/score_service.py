@@ -9,6 +9,7 @@ from typing import List, Optional
 import pandas as pd
 import requests
 from bs4 import BeautifulSoup
+
 from genetic_rule_miner.config import APIConfig
 from genetic_rule_miner.utils.logging import LogManager
 
