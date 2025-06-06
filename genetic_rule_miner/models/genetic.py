@@ -12,7 +12,6 @@ from typing import List, Optional
 import numpy as np
 import pandas as pd
 from cachetools import LRUCache
-from joblib import Parallel, delayed
 
 from genetic_rule_miner.data.database import DatabaseManager
 from genetic_rule_miner.utils.logging import LogManager
@@ -707,42 +706,11 @@ class GeneticRuleMiner:
             selected.append(candidate)
         return selected
 
-    def _parallel_evaluate_population(
-        self, population: Sequence[Rule]
-    ) -> np.ndarray:
-        """Evalúa la población en paralelo usando ProcessPoolExecutor."""
-        results = Parallel(n_jobs=-1, backend="threads")(
-            delayed(self.fitness)(rule) for rule in population
-        )
-        return np.array(results)
-
     def _evaluate_population_chunk(
         self, population_chunk: Sequence[Rule]
     ) -> List[float]:
         """Evalúa un chunk de la población."""
         return [self.fitness(rule) for rule in population_chunk]
-
-    def _get_best_individual(
-        self,
-        population: Sequence[Rule],
-        fitness_scores: Optional[tuple] = None,
-    ) -> Rule:
-        if fitness_scores is None:
-            fitness_scores = tuple(
-                self._parallel_evaluate_population(population)
-            )
-        best_index = None
-        best_score = -1
-        for i, rule in enumerate(population):
-            support = self._vectorized_support(rule)
-            score = support * fitness_scores[i]
-            if score > best_score:
-                best_score = score
-                best_index = i
-        if best_index is not None:
-            return population[best_index]
-        else:
-            raise ValueError("No best individual found in the population.")
 
     def _create_new_generation(
         self,
