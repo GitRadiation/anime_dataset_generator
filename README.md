@@ -5,12 +5,10 @@
 
 [![numpy](https://img.shields.io/badge/numpy-2.2.5-blue?style=for-the-badge&logo=numpy&logoColor=white)](https://numpy.org/)  
 [![pandas](https://img.shields.io/badge/pandas-2.2.3-blue?style=for-the-badge&logo=pandas&logoColor=white)](https://pandas.pydata.org/)  
-[![psycopg2](https://img.shields.io/badge/psycopg2-2.9.5-blue?style=for-the-badge)](https://www.psycopg.org/)  
 [![sqlalchemy](https://img.shields.io/badge/sqlalchemy-2.0.0-blue?style=for-the-badge)](https://www.sqlalchemy.org/)  
 [![requests](https://img.shields.io/badge/requests-2.32.3-blue?style=for-the-badge&logo=python&logoColor=white)](https://docs.python-requests.org/)  
 [![rake-nltk](https://img.shields.io/badge/rake--nltk-1.0.6-blue?style=for-the-badge)](https://pypi.org/project/rake-nltk/)  
 [![beautifulsoup4](https://img.shields.io/badge/beautifulsoup4-4.13.4-blue?style=for-the-badge)](https://www.crummy.com/software/BeautifulSoup/)  
-[![tqdm](https://img.shields.io/badge/tqdm-4.65.0-blue?style=for-the-badge)](https://tqdm.github.io/)  
 [![python-dotenv](https://img.shields.io/badge/python--dotenv-1.0.0-blue?style=for-the-badge)](https://pypi.org/project/python-dotenv/)  
 [![fastapi](https://img.shields.io/badge/fastapi-0.115.12-blue?style=for-the-badge&logo=fastapi&logoColor=white)](https://fastapi.tiangolo.com/)  
 [![uvicorn](https://img.shields.io/badge/uvicorn-0.34.2-blue?style=for-the-badge)](https://www.uvicorn.org/)  
