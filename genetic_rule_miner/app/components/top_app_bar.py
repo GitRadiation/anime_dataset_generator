@@ -2,11 +2,17 @@ import flet as ft
 
 
 def top_app_bar(page):
+
     def toggle_theme(e):
         page.theme_mode = (
             ft.ThemeMode.LIGHT
             if page.theme_mode == ft.ThemeMode.DARK
             else ft.ThemeMode.DARK
+        )
+        page.bgcolor = (
+            "#282A36"
+            if page.theme_mode == ft.ThemeMode.DARK
+            else ft.Colors.WHITE
         )
         page.update()
 
@@ -117,7 +123,9 @@ def top_app_bar(page):
     # --- Contenedor principal ---
     container = ft.Container(
         content=(
-            row_content if page.web else ft.WindowDragArea(content=row_content)
+            row_content
+            if page.web
+            else ft.WindowDragArea(content=row_content, expand=True)
         ),
         height=48,
         bgcolor=ft.Colors.SURFACE,

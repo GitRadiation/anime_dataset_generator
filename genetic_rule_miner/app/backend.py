@@ -361,10 +361,7 @@ def api_get_user_recommendations(username: str):
 
     # Cache miss: calcular el resultado
     full_profile = api_get_user_full_profile(username)
-    import json
 
-    with open("full_profile.json", "w", encoding="utf-8") as f:
-        json.dump(full_profile, f, ensure_ascii=False, indent=4)
     result = db.get_rules_series_by_json(full_profile)
     rule_results = [RuleResult(**row) for row in result]
 

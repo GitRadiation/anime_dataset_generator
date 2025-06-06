@@ -95,6 +95,7 @@ def remove_obsolete_rules_for_target(
 ) -> None:
     BATCH_SIZE = 500
     db_manager = DatabaseManager(config=db_config)
+    to_delete = []
 
     try:
         with db_manager.connection() as conn:
@@ -131,32 +132,29 @@ def remove_obsolete_rules_for_target(
                 fitness_arr = miner.batch_vectorized_confidence(rules)
                 support_arr = miner.batch_vectorized_support(rules)
 
-                to_delete = []
                 rule_id_list = [r.rule_id for r in rules_with_id]
 
                 for idx, rule_id in enumerate(rule_id_list):
                     fitness = fitness_arr[idx]
                     support = support_arr[idx]
-                    if fitness < 0.95 or support < 0.95:
+                    if fitness < 1 or support < 0.95:
                         to_delete.append(rule_id)
                         logger.info(
                             f"Eliminando regla {rule_id} (fitness: {fitness:.4f}, soporte: {support:.4f})"
                         )
 
-                if to_delete:
-                    conn.execute(
-                        text(
-                            "DELETE FROM rules WHERE rule_id = ANY(:ids::uuid[])"
-                        ),
-                        {"ids": to_delete},
-                    )
-                    logger.info(
-                        f"Eliminadas {len(to_delete)} reglas obsoletas para target {target_id} (offset {offset})"
-                    )
-
                 # Pasar al siguiente lote
                 offset += BATCH_SIZE
-
+            if to_delete:
+                conn.execute(
+                    text(
+                        "DELETE FROM rules WHERE rule_id = ANY(:ids::uuid[])"
+                    ),
+                    {"ids": to_delete},
+                )
+                logger.info(
+                    f"Eliminadas {len(to_delete)} reglas obsoletas para target {target_id} (offset {offset})"
+                )
     except Exception as e:
         logger.error(
             f"Fallo al eliminar reglas para target {target_id}: {e}",

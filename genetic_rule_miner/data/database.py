@@ -7,7 +7,6 @@ from io import BytesIO, StringIO
 from typing import Generator, Optional
 
 import numpy as np
-import pandas as pd
 from sqlalchemy import Connection, bindparam, create_engine, text
 from sqlalchemy.dialects.postgresql import JSONB
 from sqlalchemy.engine import Engine
@@ -233,9 +232,7 @@ class DatabaseManager:
         buffer.seek(0)
         return BytesIO(buffer.getvalue().encode("utf-8"))
 
-    def get_anime_ids_without_rules(
-        self, export_path: Optional[str] = None
-    ) -> Optional[list[int]]:
+    def get_anime_ids_without_rules(self) -> Optional[list[int]]:
         # Consulta original: anime_ids sin reglas
         query_no_rules = """
             WITH rules_exist AS (
@@ -270,11 +267,6 @@ class DatabaseManager:
 
             # Unión sin repetidos
             all_ids = list(anime_ids.union(rule_targets))
-
-            # Exportar a Excel si se proporciona la ruta
-            if export_path:
-                df = pd.DataFrame(all_ids, columns=["anime_id"])
-                df.to_excel(export_path, index=False)
 
             return all_ids or []
 

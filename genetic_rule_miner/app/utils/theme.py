@@ -13,18 +13,18 @@ def setup_theme(page: Page):
     page.update()
 
 
-def get_light_theme():
+def get_light_theme() -> Theme:
     """
     Returns a custom light theme.
     """
     return Theme(
-        color_scheme=ColorScheme(
+        color_scheme=ColorScheme(  # type: ignore
             background="#FFFFFF",
             on_background=Colors.BLACK,
             surface="#FFFFFF",
             on_surface=Colors.BLACK,
-            primary=Colors.PURPLE,
-            secondary=Colors.CYAN,
+            primary=Colors.PURPLE_400,
+            secondary=Colors.PURPLE_400,
             surface_variant="#E0E0E0",
             on_surface_variant=Colors.BLACK,
             error=Colors.RED,
@@ -35,23 +35,24 @@ def get_light_theme():
     )
 
 
-def get_dark_theme():
+def get_dark_theme() -> Theme:
     """
-    Returns a custom dark theme.
+    Returns a custom dark theme with improved contrast.
     """
     return Theme(
-        color_scheme=ColorScheme(
-            background="#FFFFFF",
-            on_background=Colors.WHITE,
-            surface="#282A36",
-            on_surface=Colors.WHITE,
-            primary=Colors.PURPLE,
-            secondary=Colors.CYAN,
-            surface_variant="#383A59",
-            on_surface_variant=Colors.WHITE,
+        color_scheme=ColorScheme(  # type: ignore
+            background="#282A36",
+            on_background="#FFFFFF",
+            surface="#44475A",
+            on_surface="#F0F0F0",
+            primary=Colors.PURPLE_400,
+            secondary="#B39DDB",
+            surface_variant="#323450",
+            on_surface_variant="#F0F0F0",
             error=Colors.RED,
-            on_error=Colors.WHITE,
+            on_error="#FFFFFF",
             error_container=Colors.RED_200,
-            on_error_container=Colors.WHITE,
-        ),
+            on_error_container="#FFFFFF",
+            outline_variant="#282A36",
+        )
     )
