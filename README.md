@@ -1,8 +1,5 @@
 # 🌟📊 Anime Recomendator 🎬📚
 [![Python](https://img.shields.io/badge/Python-3.10%2B-blue?style=for-the-badge&logo=python&logoColor=white&color=blue)](https://www.python.org/)
-[![Jikan](https://img.shields.io/badge/jikan-4.0.0-darkblue?style=for-the-badge&logoColor=white)](https://jikan.moe/)
-[![License](https://img.shields.io/badge/License-MIT-green?style=for-the-badge&logoColor=white&color=blue,yellow)](https://opensource.org/licenses/MIT)
-
 [![numpy](https://img.shields.io/badge/numpy-2.2.5-blue?style=for-the-badge&logo=numpy&logoColor=white)](https://numpy.org/)  
 [![pandas](https://img.shields.io/badge/pandas-2.2.3-blue?style=for-the-badge&logo=pandas&logoColor=white)](https://pandas.pydata.org/)  
 [![sqlalchemy](https://img.shields.io/badge/sqlalchemy-2.0.0-blue?style=for-the-badge)](https://www.sqlalchemy.org/)  
@@ -13,6 +10,8 @@
 [![fastapi](https://img.shields.io/badge/fastapi-0.115.12-blue?style=for-the-badge&logo=fastapi&logoColor=white)](https://fastapi.tiangolo.com/)  
 [![uvicorn](https://img.shields.io/badge/uvicorn-0.34.2-blue?style=for-the-badge)](https://www.uvicorn.org/)  
 [![diskcache](https://img.shields.io/badge/diskcache-5.6.3-blue?style=for-the-badge)](https://pypi.org/project/diskcache/)  
+[![Jikan](https://img.shields.io/badge/jikan-4.0.0-darkblue?style=for-the-badge&logoColor=white)](https://jikan.moe/)
+[![License](https://img.shields.io/badge/License-MIT-green?style=for-the-badge&logoColor=white&color=blue,yellow)](https://opensource.org/licenses/MIT)
 
 This project aims to generate an anime dataset by utilizing the 🚀 [Jikan API (4.0.0)](https://docs.api.jikan.moe/). It retrieves information about anime such as title, score, genres, synopsis, producers, studios, and more. Additionally, it includes functionality to generate a list of usernames from MyAnimeList and fetch user details and anime scores for those usernames. By using these scripts together, you can generate a comprehensive anime dataset that includes information about both individual anime and user-specific scores and details. This dataset can be used for various purposes, such as analysis, recommendation systems, or building anime-related applications.
 
