@@ -130,7 +130,6 @@ def main(page: ft.Page):
                 for i, item in enumerate(data[:5], 1):
                     name = item.get("nombre", "Unknown Title")
                     anime_id = item.get("anime_id")
-
                     series_card = ft.Container(
                         content=ft.Row(
                             [
@@ -159,7 +158,7 @@ def main(page: ft.Page):
                                         ft.Text(
                                             "Recommended for you",
                                             size=12,
-                                            color=ft.Colors.GREY_600,
+                                            color=ft.Colors.ON_SURFACE_VARIANT,
                                         ),
                                     ],
                                     spacing=2,
@@ -169,10 +168,11 @@ def main(page: ft.Page):
                                     icon=ft.Icons.OPEN_IN_NEW,
                                     icon_color=ft.Colors.PURPLE_400,
                                     icon_size=20,
-                                    tooltip="Open in MyAnimeList",
-                                    on_click=lambda e, anime_id=anime_id: (
-                                        webbrowser.open(
-                                            f"https://myanimelist.net/anime/{anime_id}"
+                                    on_click=(
+                                        (
+                                            lambda e, anime_id=anime_id: webbrowser.open(
+                                                f"https://myanimelist.net/anime/{anime_id}"
+                                            )
                                         )
                                         if anime_id
                                         else None
@@ -188,16 +188,19 @@ def main(page: ft.Page):
                         border_radius=12,
                         border=ft.border.all(1, ft.Colors.OUTLINE_VARIANT),
                         ink=True,
-                        on_hover=lambda e: setattr(
-                            e.control,
-                            "bgcolor",
+                        bgcolor=(ft.Colors.SURFACE),
+                        on_click=(
                             (
-                                ft.Colors.ON_SURFACE_VARIANT
-                                if not e.data
-                                else ft.Colors.SURFACE_CONTAINER_HIGHEST
-                            ),
+                                lambda e, anime_id=anime_id: webbrowser.open(
+                                    f"https://myanimelist.net/anime/{anime_id}"
+                                )
+                            )
+                            if anime_id
+                            else logger.info("No hay anime_id")
                         ),
+                        tooltip="Open in MyAnimeList",
                     )
+
                     series_data_list.controls.append(series_card)
                 error_text.value = ""
 
@@ -245,9 +248,9 @@ def main(page: ft.Page):
         autofocus=True,
     )
     series_data_list = ft.Column(
-        spacing=0,
+        spacing=8,
         scroll=ft.ScrollMode.AUTO,
-        expand=True,  # Aquí está la clave
+        expand=True,
     )
 
     error_text = ft.Text("", size=14)
@@ -260,7 +263,7 @@ def main(page: ft.Page):
                         [
                             ft.Icon(
                                 ft.Icons.RECOMMEND,
-                                color=ft.Colors.PURPLE_400,
+                                color=ft.Colors.PRIMARY,
                                 size=24,
                             ),
                             ft.Text(
@@ -280,10 +283,12 @@ def main(page: ft.Page):
                     content=series_data_list,
                     bgcolor=ft.Colors.SURFACE,
                     border_radius=16,
-                    padding=ft.padding.all(20),
+                    padding=ft.padding.only(
+                        top=20, left=20, right=20, bottom=60
+                    ),  # bottom aumentado para evitar corte
                     border=ft.border.all(1, ft.Colors.OUTLINE_VARIANT),
                     width=650,
-                    height=465,
+                    expand=True,
                 ),
                 ft.Container(
                     content=loading_ring,
@@ -319,7 +324,7 @@ def main(page: ft.Page):
                                 icon=ft.Icons.SEARCH,
                                 on_click=fetch_profile,
                                 style=ft.ButtonStyle(
-                                    bgcolor=ft.Colors.PURPLE_400,
+                                    bgcolor=ft.Colors.PRIMARY,
                                     color=ft.Colors.WHITE,
                                     elevation=4,
                                 ),
@@ -333,7 +338,6 @@ def main(page: ft.Page):
                 ),
                 recommended_section,
             ],
-            height=page.height - 48,  # type: ignore
             alignment=ft.MainAxisAlignment.START,
             horizontal_alignment=ft.CrossAxisAlignment.CENTER,
         ),

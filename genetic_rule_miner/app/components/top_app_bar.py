@@ -2,6 +2,7 @@ import flet as ft
 
 
 def top_app_bar(page):
+
     def toggle_theme(e):
         page.theme_mode = (
             ft.ThemeMode.LIGHT
