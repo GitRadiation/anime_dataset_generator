@@ -14,7 +14,7 @@
 [![License: MIT](https://img.shields.io/badge/License-MIT-green?style=for-the-badge&logo=opensourceinitiative&logoColor=white)](https://opensource.org/licenses/MIT)
 
 
-his project is designed to generate a comprehensive anime dataset using the 🚀 [Jikan API (4.0.0)](https://docs.api.jikan.moe/). It collects detailed information about anime titles, including scores, genres, synopses, producers, studios, and more. Additionally, it features functionality to generate lists of usernames from MyAnimeList, fetch user profiles, and retrieve their anime scores. Leveraging this data, the project employs an evolutionary algorithm to recommend anime tailored to each user’s watching history and preferences.
+This project is designed to generate a comprehensive anime dataset using the 🚀 [Jikan API (4.0.0)](https://docs.api.jikan.moe/). It collects detailed information about anime titles, including scores, genres, synopses, producers, studios, and more. Additionally, it features functionality to generate lists of usernames from MyAnimeList, fetch user profiles, and retrieve their anime scores. Leveraging this data, the project employs an evolutionary algorithm to recommend anime tailored to each user’s watching history and preferences.
 
 ## Prerequisites
 
