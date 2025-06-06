@@ -1,23 +1,25 @@
 # 🌟📊 Anime Recomendator 🎬📚
-[![Python](https://img.shields.io/badge/Python-3.10%2B-blue?style=for-the-badge&logo=python&logoColor=white&color=blue)](https://www.python.org/)
-[![numpy](https://img.shields.io/badge/numpy-2.2.5-blue?style=for-the-badge&logo=numpy&logoColor=white)](https://numpy.org/)  
-[![pandas](https://img.shields.io/badge/pandas-2.2.3-blue?style=for-the-badge&logo=pandas&logoColor=white)](https://pandas.pydata.org/)  
-[![sqlalchemy](https://img.shields.io/badge/sqlalchemy-2.0.0-blue?style=for-the-badge)](https://www.sqlalchemy.org/)  
-[![requests](https://img.shields.io/badge/requests-2.32.3-blue?style=for-the-badge&logo=python&logoColor=white)](https://docs.python-requests.org/)  
-[![rake-nltk](https://img.shields.io/badge/rake--nltk-1.0.6-blue?style=for-the-badge)](https://pypi.org/project/rake-nltk/)  
-[![beautifulsoup4](https://img.shields.io/badge/beautifulsoup4-4.13.4-blue?style=for-the-badge)](https://www.crummy.com/software/BeautifulSoup/)  
-[![python-dotenv](https://img.shields.io/badge/python--dotenv-1.0.0-blue?style=for-the-badge)](https://pypi.org/project/python-dotenv/)  
-[![fastapi](https://img.shields.io/badge/fastapi-0.115.12-blue?style=for-the-badge&logo=fastapi&logoColor=white)](https://fastapi.tiangolo.com/)  
-[![uvicorn](https://img.shields.io/badge/uvicorn-0.34.2-blue?style=for-the-badge)](https://www.uvicorn.org/)  
-[![diskcache](https://img.shields.io/badge/diskcache-5.6.3-blue?style=for-the-badge)](https://pypi.org/project/diskcache/)  
-[![Jikan](https://img.shields.io/badge/jikan-4.0.0-darkblue?style=for-the-badge&logoColor=white)](https://jikan.moe/)
-[![License](https://img.shields.io/badge/License-MIT-green?style=for-the-badge&logoColor=white&color=blue,yellow)](https://opensource.org/licenses/MIT)
+[![Python 3.10+](https://img.shields.io/badge/Python-3.10%2B-blue?style=for-the-badge&logo=python&logoColor=white)](https://www.python.org/)  
+[![NumPy 2.2.5](https://img.shields.io/badge/numpy-2.2.5-blue?style=for-the-badge&logo=numpy&logoColor=white)](https://numpy.org/)  
+[![Pandas 2.2.3](https://img.shields.io/badge/pandas-2.2.3-blue?style=for-the-badge&logo=pandas&logoColor=white)](https://pandas.pydata.org/)  
+[![SQLAlchemy 2.0.0](https://img.shields.io/badge/sqlalchemy-2.0.0-blue?style=for-the-badge&logo=sqlalchemy&logoColor=white)](https://www.sqlalchemy.org/)  
+[![Requests 2.32.3](https://img.shields.io/badge/requests-2.32.3-blue?style=for-the-badge&logo=python&logoColor=white)](https://docs.python-requests.org/)  
+[![RAKE-NLTK 1.0.6](https://img.shields.io/badge/rake--nltk-1.0.6-blue?style=for-the-badge&logo=python&logoColor=white)](https://pypi.org/project/rake-nltk/)  
+[![BeautifulSoup4 4.13.4](https://img.shields.io/badge/beautifulsoup4-4.13.4-blue?style=for-the-badge&logo=python&logoColor=white)](https://www.crummy.com/software/BeautifulSoup/)  
+[![python-dotenv 1.0.0](https://img.shields.io/badge/python--dotenv-1.0.0-blue?style=for-the-badge&logo=python&logoColor=white)](https://pypi.org/project/python-dotenv/)  
+[![FastAPI 0.115.12](https://img.shields.io/badge/fastapi-0.115.12-blue?style=for-the-badge&logo=fastapi&logoColor=white)](https://fastapi.tiangolo.com/)  
+[![Uvicorn 0.34.2](https://img.shields.io/badge/uvicorn-0.34.2-blue?style=for-the-badge&logo=python&logoColor=white)](https://www.uvicorn.org/)  
+[![DiskCache 5.6.3](https://img.shields.io/badge/diskcache-5.6.3-blue?style=for-the-badge&logo=python&logoColor=white)](https://pypi.org/project/diskcache/)  
+[![Jikan 4.0.0](https://img.shields.io/badge/jikan-4.0.0-blue?style=for-the-badge&logo=python&logoColor=white)](https://jikan.moe/)  
+[![License: MIT](https://img.shields.io/badge/License-MIT-green?style=for-the-badge&logo=opensourceinitiative&logoColor=white)](https://opensource.org/licenses/MIT)
 
-This project aims to generate an anime dataset by utilizing the 🚀 [Jikan API (4.0.0)](https://docs.api.jikan.moe/). It retrieves information about anime such as title, score, genres, synopsis, producers, studios, and more. Additionally, it includes functionality to generate a list of usernames from MyAnimeList and fetch user details and anime scores for those usernames. By using these scripts together, you can generate a comprehensive anime dataset that includes information about both individual anime and user-specific scores and details. This dataset can be used for various purposes, such as analysis, recommendation systems, or building anime-related applications.
+
+his project is designed to generate a comprehensive anime dataset using the 🚀 [Jikan API (4.0.0)](https://docs.api.jikan.moe/). It collects detailed information about anime titles, including scores, genres, synopses, producers, studios, and more. Additionally, it features functionality to generate lists of usernames from MyAnimeList, fetch user profiles, and retrieve their anime scores. Leveraging this data, the project employs an evolutionary algorithm to recommend anime tailored to each user’s watching history and preferences.
 
 ## Prerequisites
 
 - 💻 Python 3.10 or higher
+- 📦 poetry library
 - 📦 requests library
 - 📦 csv library
 - 📦 re library
@@ -34,7 +36,7 @@ This project aims to generate an anime dataset by utilizing the 🚀 [Jikan API 
 2. Install the required dependencies:
    
    ```
-   pip install requests beautifulsoup4 
+   poetry install
    ```
 3. Run the Python scripts:
    
@@ -155,8 +157,8 @@ This project aims to generate an anime dataset by utilizing the 🚀 [Jikan API 
 
 ## Contributing
 
-🙌 Contributions are welcome! If you have any ideas, suggestions, or improvements, feel free to open an [issue](https://github.com/Sajid030/anime_dataset_generator/issues) or submit a [pull request](https://github.com/Sajid030/anime_dataset_generator/pulls). Your contributions can help enhance the functionality and usability of this project. Together, we can make it even better! 👍🎉
+🙌 Contributions are welcome! If you have any ideas, suggestions, or improvements, feel free to open an [issue](https://github.com/Sajid030/anime_dataset_generator/issues) or submit a [pull request](https://github.com/GitRadiation/anime_dataset_generator/pulls). Your contributions can help enhance the functionality and usability of this project. Together, we can make it even better! 👍🎉
 
 ## License
 
-📝 This project is licensed under the [MIT License](LICENSE.md). You are free to modify and use the code in accordance with the terms and conditions of the license. Feel free to adapt the project to suit your needs and contribute to open-source development. 📜🔒
+📝 This project is licensed under the [MIT License](LICENSE). You are free to modify and use the code in accordance with the terms and conditions of the license. Feel free to adapt the project to suit your needs and contribute to open-source development. 📜🔒
