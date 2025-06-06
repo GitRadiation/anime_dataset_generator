@@ -57,7 +57,6 @@ CREATE TABLE user_score (
 DROP TABLE IF EXISTS rules CASCADE;
 DROP TABLE IF EXISTS rule_conditions CASCADE;
 
--- Esquema corregido de base de datos
 CREATE TABLE rules (
     rule_id UUID PRIMARY KEY DEFAULT gen_random_uuid(),
     target_value INTEGER NOT NULL
@@ -79,9 +78,14 @@ CREATE TABLE rule_conditions (
     )
 );
 
--- Índices para optimizar consultas
+
+-- Índice para acelerar consultas que filtran por rule_id en rule_conditions
 CREATE INDEX idx_rule_conditions_rule_id ON rule_conditions(rule_id);
+
+-- Índice para optimizar consultas que filtran por tabla y columna
 CREATE INDEX idx_rule_conditions_table_column ON rule_conditions(table_name, column_name);
+
+-- Índice para optimizar consultas que ordenan o filtran por target_value en rules
 CREATE INDEX idx_rules_target_value ON rules(target_value);
 
 DROP FUNCTION IF EXISTS get_rules_series;
