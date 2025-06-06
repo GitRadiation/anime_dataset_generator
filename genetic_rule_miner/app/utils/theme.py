@@ -13,7 +13,7 @@ def setup_theme(page: Page):
     page.update()
 
 
-def get_light_theme():
+def get_light_theme() -> Theme:
     """
     Returns a custom light theme.
     """
@@ -24,7 +24,7 @@ def get_light_theme():
             surface="#FFFFFF",
             on_surface=Colors.BLACK,
             primary=Colors.PURPLE,
-            secondary=Colors.CYAN,
+            secondary=Colors.PURPLE,
             surface_variant="#E0E0E0",
             on_surface_variant=Colors.BLACK,
             error=Colors.RED,
@@ -35,18 +35,18 @@ def get_light_theme():
     )
 
 
-def get_dark_theme():
+def get_dark_theme() -> Theme:
     """
     Returns a custom dark theme.
     """
     return Theme(
         color_scheme=ColorScheme(
-            background="#FFFFFF",
+            background="#282A36",
             on_background=Colors.WHITE,
-            surface="#282A36",
+            surface="#44475A",
             on_surface=Colors.WHITE,
             primary=Colors.PURPLE,
-            secondary=Colors.CYAN,
+            secondary=Colors.GREY_300,
             surface_variant="#383A59",
             on_surface_variant=Colors.WHITE,
             error=Colors.RED,
