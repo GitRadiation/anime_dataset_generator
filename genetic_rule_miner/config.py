@@ -24,7 +24,7 @@ class APIConfig:
 class DBConfig:
     """Configuration for database connections"""
 
-    host: str = os.getenv("DB_HOST", "localhost")
+    host: str = os.getenv("DB_HOST", "postgres")
     port: int = int(os.getenv("DB_PORT", 5432))
     database: str = os.getenv("DB_NAME", "mydatabase")
     user: str = os.getenv("DB_USER", "postgres")

@@ -1,0 +1,7 @@
+.cache
+.venv
+.pytest_cache
+*.log
+*.md
+OUTRO
+application.log

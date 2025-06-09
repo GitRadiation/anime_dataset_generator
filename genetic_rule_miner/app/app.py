@@ -98,7 +98,7 @@ def main(page: ft.Page):
 
     def fetch_profile(e):
         load_dotenv(".local.env")
-        api_url = os.getenv("API_URL")
+        api_url = os.getenv("API_URL", "http://uvicorn_server:8000")
         username = (username_field.value or "").strip()
 
         if not username:
@@ -368,7 +368,6 @@ def main(page: ft.Page):
     page.add(scrollable_view)
 
 
-if __name__ == "__main__":
-    from flet import app
-
-    app(target=main)
+app = ft.app(
+    target=main, export_asgi_app=True
+)  # export_asgi_app=False para poder ejecutarlo como app de escritorio

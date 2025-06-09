@@ -37,7 +37,7 @@ def top_app_bar(page):
                 on_click=minimize_window,
                 icon_size=16,
                 style=ft.ButtonStyle(
-                    shape=ft.RoundedRectangleBorder(radius=4),
+                    shape=ft.RoundedRectangleBorder(radius=4),  # type: ignore
                     overlay_color={
                         ft.ControlState.HOVERED: ft.Colors.with_opacity(
                             0.1, ft.Colors.ON_SURFACE

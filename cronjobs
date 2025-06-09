@@ -1,0 +1,5 @@
+# Ejecutar bbdd_maker todos los días a las 3am
+0 3 * * * root /run_bbdd_maker.sh >> /var/log/bbdd_maker.log 2>&1
+
+# Ejecutar genetic_rule_miner/main.py todos los domingos a las 3am
+0 3 * * 0 root /run_main_job.sh >> /var/log/main_job.log 2>&1

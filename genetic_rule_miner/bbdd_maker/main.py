@@ -5,9 +5,9 @@ import threading
 import time
 from io import BytesIO, StringIO
 
-import nltk
 import numpy as np
 import pandas as pd
+
 from genetic_rule_miner.bbdd_maker.anime_service import AnimeService
 from genetic_rule_miner.bbdd_maker.details_service import DetailsService
 from genetic_rule_miner.bbdd_maker.score_service import ScoreService
@@ -16,6 +16,7 @@ from genetic_rule_miner.config import APIConfig, DBConfig
 from genetic_rule_miner.data.database import DatabaseManager
 from genetic_rule_miner.data.preprocessing import preprocess_data
 from genetic_rule_miner.utils.logging import LogManager
+from genetic_rule_miner.utils.nltk_aux import download_nltk_resources
 
 # Configure logging
 LogManager.configure()
@@ -55,21 +56,6 @@ def convert_text_to_list_column(df, column_name):
             return []
 
     df[column_name] = df[column_name].fillna("[]").apply(parse_cell)
-
-
-def download_nltk_resources():
-    try:
-        # Check if 'stopwords' and 'punkt' are downloaded
-        nltk.data.find("corpora/stopwords.zip")
-    except LookupError:
-        print("Downloading stopwords...")
-        nltk.download("stopwords")
-
-    try:
-        nltk.data.find("tokenizers/punkt")
-    except LookupError:
-        print("Downloading punkt...")
-        nltk.download("punkt")
 
 
 # Call the function only on the first execution
