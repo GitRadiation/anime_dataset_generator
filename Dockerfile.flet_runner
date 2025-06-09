@@ -1,0 +1,17 @@
+FROM python:3.11-slim
+
+RUN apt-get update && apt-get upgrade -y
+
+RUN apt-get update && \
+    apt-get install -y curl
+
+# Copiar dependencias
+COPY requeriments-flet_runner.txt ./
+COPY .local.env ./
+
+RUN pip install --no-cache-dir -r requeriments-flet_runner.txt
+
+COPY genetic_rule_miner/ /genetic_rule_miner/
+ENV PYTHONPATH=/genetic_rule_miner
+
+CMD ["hypercorn", "-b", "0.0.0.0:8501", "genetic_rule_miner.app.app:app"]

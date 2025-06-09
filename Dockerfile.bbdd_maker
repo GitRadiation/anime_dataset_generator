@@ -1,0 +1,30 @@
+FROM python:3.11-slim
+
+# Instalar cron y curl
+RUN apt-get update && \
+    DEBIAN_FRONTEND=noninteractive apt-get install -y cron curl && \
+    apt-get clean && rm -rf /var/lib/apt/lists/*
+
+# Copiar dependencias
+COPY requeriments-bbdd_maker.txt ./
+RUN pip install --no-cache-dir -r requeriments-bbdd_maker.txt
+COPY .env ./
+
+# Copiar el código
+COPY genetic_rule_miner/ /genetic_rule_miner/
+
+# Crear scripts de ejecución
+RUN echo '#!/bin/bash\npython /genetic_rule_miner/bbdd_maker/main.py' > /run_bbdd_maker.sh && chmod +x /run_bbdd_maker.sh
+RUN echo '#!/bin/bash\npython /genetic_rule_miner/main.py' > /run_main_job.sh && chmod +x /run_main_job.sh
+
+# Copiar crontab
+COPY cronjobs /etc/cron.d/genetic_jobs
+
+# Dar permisos
+RUN chmod 0644 /etc/cron.d/genetic_jobs
+
+# Aplicar el cron job
+RUN crontab /etc/cron.d/genetic_jobs
+ENV PYTHONPATH=/genetic_rule_miner
+# Comando por defecto
+CMD ["cron", "-f"]

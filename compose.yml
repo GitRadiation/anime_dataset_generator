@@ -2,6 +2,7 @@
 services:
     postgres:
         # Se utiliza la imagen oficial de PostgreSQL mantenida por Bitnami, versión última disponible
+        container_name: postgres
         image: bitnami/postgresql:latest
         
         # Variables de entorno para configurar la base de datos:
@@ -34,6 +35,7 @@ services:
 
 
     pgadmin:
+        container_name: pgadmin
         # Imagen oficial de pgAdmin 4 para administrar visualmente bases PostgreSQL
         image: dpage/pgadmin4:latest
         
@@ -55,8 +57,61 @@ services:
             - shared_net
 
 
-# Volúmenes declarados para almacenar datos persistentes de PostgreSQL y pgAdmin
+    # Servicio para el cron job diario bbdd_maker_job
+    bbdd_maker_job:
+        build:
+            context: .
+            dockerfile: Dockerfile.bbdd_maker
+        image: bbdd_maker_job
+        container_name: bbdd_maker_job
+        restart: unless-stopped
+        volumes:
+            - bbdd_maker-cache:/.cache
+        networks:
+            - shared_net
+
+
+    # Servicio para el backend con uvicorn (FastAPI)
+    uvicorn_server:
+        build:
+            context: .
+            dockerfile: Dockerfile.uvicorn_server
+        image: uvicorn_server
+        container_name: uvicorn_server
+        ports:
+            - "8000:8000"
+        depends_on:
+            - postgres
+        volumes:
+            - uvicorn-cache:/.cache
+        networks:
+            - shared_net
+
+
+    # Servicio para la aplicación Flet en modo web
+    flet_runner:
+        build:
+            context: .
+            dockerfile: Dockerfile.flet_runner
+        image: flet_runner
+        container_name: flet_runner
+        ports:
+            - "8501:8501"
+        restart: unless-stopped
+        volumes:
+            - flet-cache:/.cache
+        networks:
+            - shared_net
+
+
+# Volúmenes declarados para almacenar datos persistentes
 volumes:
+    bbdd_maker-cache:
+        driver: local
+    uvicorn-cache:
+        driver: local
+    flet-cache:
+        driver: local
     postgres-data:
         driver: local
     pgadmin-data:

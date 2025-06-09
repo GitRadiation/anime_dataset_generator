@@ -71,12 +71,11 @@ CREATE TABLE rule_conditions (
     value_text TEXT,
     value_numeric NUMERIC,
     FOREIGN KEY (rule_id) REFERENCES rules(rule_id) ON DELETE CASCADE,
-    -- Constraint para asegurar que al menos un valor esté presente
     CHECK (
-        (value_text IS NOT NULL)::int + 
-        (value_numeric IS NOT NULL)::int
+        value_text IS NOT NULL OR value_numeric IS NOT NULL
     )
 );
+
 
 
 -- Índice para acelerar consultas que filtran por rule_id en rule_conditions

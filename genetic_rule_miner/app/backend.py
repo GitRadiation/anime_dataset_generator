@@ -5,7 +5,9 @@ from typing import Any, Dict, Set, cast
 import diskcache
 import numpy as np
 import pandas as pd
-from fastapi import FastAPI, HTTPException
+from dotenv import load_dotenv
+from fastapi import FastAPI, HTTPException, status
+from fastapi.responses import JSONResponse
 from pydantic import BaseModel, Field
 
 from genetic_rule_miner.bbdd_maker.anime_service import AnimeService
@@ -15,6 +17,10 @@ from genetic_rule_miner.bbdd_maker.user_service import UserService
 from genetic_rule_miner.config import APIConfig
 from genetic_rule_miner.data.database import DatabaseManager
 from genetic_rule_miner.data.preprocessing import preprocess_data
+from genetic_rule_miner.utils.nltk_aux import download_nltk_resources
+
+load_dotenv(".env")
+
 
 logger = logging.getLogger(__name__)
 logging.basicConfig(level=logging.INFO)
@@ -33,6 +39,7 @@ details_service = DetailsService(api_config)
 score_service = ScoreService(api_config)
 anime_service = AnimeService(api_config)
 db = DatabaseManager()
+
 # --- Cache persistente ---
 USER_CACHE_TTL = 30 * 60  # 30 minutos
 ANIME_CACHE_TTL = 7 * 24 * 3600  # 1 semana
@@ -45,6 +52,8 @@ anime_cache = diskcache.Cache(
     directory="./.cache/anime", size_limit=500 * 1024 * 1024
 )
 
+processing_users = set()
+download_nltk_resources()
 
 app = FastAPI(title="Anime Dataset API", version="1.0")
 
@@ -358,19 +367,37 @@ def api_get_user_recommendations(username: str):
     if cached_result is not None:
         logger.info(f"Cache hit for user recommendations: {username}")
         return cached_result
+    if username in processing_users:
+        return JSONResponse(
+            content={
+                "detail": "El usuario está siendo procesado. Por favor, inténtelo más tarde."
+            },
+            status_code=status.HTTP_429_TOO_MANY_REQUESTS,
+        )
 
-    # Cache miss: calcular el resultado
-    full_profile = api_get_user_full_profile(username)
+    # Marca al usuario como en proceso
+    processing_users.add(username)
+    try:
 
-    result = db.get_rules_series_by_json(full_profile)
-    rule_results = [RuleResult(**row) for row in result]
+        # Cache miss: calcular el resultado
+        full_profile = api_get_user_full_profile(username)
 
-    # Guardar en cache
-    user_cache.set(cache_key, rule_results, expire=ONE_DAY_TTL)
-    logger.info(f"Cache set for user recommendations: {username}")
+        result = db.get_rules_series_by_json(full_profile)
+        rule_results = [RuleResult(**row) for row in result]
+
+        # Guardar en cache
+        user_cache.set(cache_key, rule_results, expire=ONE_DAY_TTL)
+        logger.info(f"Cache set for user recommendations: {username}")
+    finally:
+        # Siempre eliminar de proceso para no bloquear futuros requests
+        processing_users.discard(
+            username
+        )  # Evita errores si no existe por cualquier motivo
+
     return rule_results
 
 
 @app.get("/health")
+@app.get("/")
 def health_check():
     return {"status": "ok"}
