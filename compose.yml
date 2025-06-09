@@ -118,7 +118,7 @@ volumes:
     pgadmin-data:
         driver: local
 
-# Red externa para conectar ambos servicios y facilitar la comunicación
+# Red externa para conectar todos los servicios y facilitar la comunicación
 networks:
     shared_net:
         external: true
