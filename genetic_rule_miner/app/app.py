@@ -28,7 +28,6 @@ def main(page: ft.Page):
 
     translations = {
         "en": {
-            "user_profile": "User Profile",
             "enter_username": "Enter your MyAnimeList username",
             "hint_username": "e.g., your_username",
             "load_profile": "Load Profile",
@@ -44,7 +43,6 @@ def main(page: ft.Page):
             "close": "Close",
         },
         "es": {
-            "user_profile": "Perfil de Usuario",
             "enter_username": "Introduce tu usuario de MyAnimeList",
             "hint_username": "ej., tu_usuario",
             "load_profile": "Cargar Perfil",
@@ -281,12 +279,6 @@ def main(page: ft.Page):
     lang = page.session.get("lang") or "en"
     t = translations.get(lang, translations["en"])
 
-    user_profile_title = ft.Text(
-        t["user_profile"],
-        size=28,
-        weight=ft.FontWeight.BOLD,
-    )
-
     load_button = ft.ElevatedButton(
         t["load_profile"],
         icon=ft.Icons.SEARCH,
@@ -311,7 +303,6 @@ def main(page: ft.Page):
         username_field.label = t["enter_username"]
         username_field.hint_text = t["hint_username"]
         load_button.text = t["load_profile"]
-        user_profile_title.value = t["user_profile"]
         recommended_title.value = t["recommended_series"]
         language_selector.tooltip = t["language"]
         app_bar_container.content = top_app_bar(page, translations)
@@ -405,8 +396,8 @@ def main(page: ft.Page):
             [
                 ft.Container(
                     content=ft.Row(
-                        [user_profile_title, language_selector],
-                        alignment=ft.MainAxisAlignment.SPACE_BETWEEN,
+                        [language_selector],
+                        alignment=ft.MainAxisAlignment.END,
                     ),
                     margin=ft.margin.only(bottom=20),
                 ),
