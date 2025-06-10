@@ -69,6 +69,12 @@ This flexibility enables iterative development and smooth deployment across vari
 - `Dockerfile.uvicorn_server`  
 - `Dockerfile.flet_runner`
 
+- Make sure you have the necessary envs files in the project root:
+- `.env`
+- `.local.env`
+- See the examples to do these files.
+  
+  
 - If you face permission or image pull errors, check your Podman and container registry login credentials.
 
 - To stop and remove containers, run:
