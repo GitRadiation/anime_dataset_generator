@@ -14,13 +14,51 @@ logger = logging.getLogger(__name__)
 
 
 def main(page: ft.Page):
-    # Configurar el tamaño mínimo de la ventana
     page.window.min_width = 600
     page.window.min_height = 950
     page.window.height = page.window.min_height
     page.window.width = page.window.min_width
     page.window.title_bar_hidden = True  # Ocultar la barra de título nativa
+    app_bar_container = ft.Container()
     setup_theme(page)
+
+    # Inicializar idioma por sesión
+    if not page.session.get("lang"):
+        page.session.set("lang", "en")
+
+    translations = {
+        "en": {
+            "enter_username": "Enter your MyAnimeList username",
+            "hint_username": "e.g., your_username",
+            "load_profile": "Load Profile",
+            "recommended_series": "Recommended Series",
+            "recommended_for_you": "Recommended for you",
+            "no_recommendations": "No recommended load found",
+            "try_later": "Try with a different username or check back later.",
+            "language": "Language",
+            "title": "Series Recommender",
+            "theme": "Toggle theme",
+            "minimize": "Minimize",
+            "maximize": "Maximize/Restore",
+            "close": "Close",
+        },
+        "es": {
+            "enter_username": "Introduce tu usuario de MyAnimeList",
+            "hint_username": "ej., tu_usuario",
+            "load_profile": "Cargar Perfil",
+            "recommended_series": "Series Recomendadas",
+            "recommended_for_you": "Recomendado para ti",
+            "no_recommendations": "No se encontraron recomendaciones",
+            "try_later": "Prueba con otro usuario o vuelve más tarde.",
+            "language": "Idioma",
+            "title": "Recomendador de Series",
+            "theme": "Cambiar tema",
+            "minimize": "Minimizar",
+            "maximize": "Maximizar/Restaurar",
+            "close": "Cerrar",
+        },
+    }
+
     # Variables globales para los componentes
     loading_ring = ft.ProgressRing(width=40, height=40, visible=False)
 
@@ -67,6 +105,9 @@ def main(page: ft.Page):
 
     def show_no_recommendations_message():
         """Muestra un mensaje informativo cuando no hay recomendaciones"""
+        lang = page.session.get("lang") or "en"
+        t = translations.get(lang, translations["en"])
+
         no_data_container = ft.Container(
             content=ft.Column(
                 [
@@ -76,13 +117,13 @@ def main(page: ft.Page):
                         color=ft.Colors.GREY_400,
                     ),
                     ft.Text(
-                        "No recommended load found",
+                        t["no_recommendations"],
                         size=18,
                         weight=ft.FontWeight.W_500,
                         color=ft.Colors.GREY_600,
                     ),
                     ft.Text(
-                        "Try with a different username or check back later.",
+                        t["try_later"],
                         size=14,
                         color=ft.Colors.GREY_500,
                         text_align=ft.TextAlign.CENTER,
@@ -235,6 +276,57 @@ def main(page: ft.Page):
             loading_ring.visible = False
             page.update()
 
+    lang = page.session.get("lang") or "en"
+    t = translations.get(lang, translations["en"])
+
+    load_button = ft.ElevatedButton(
+        t["load_profile"],
+        icon=ft.Icons.SEARCH,
+        on_click=fetch_profile,
+        style=ft.ButtonStyle(
+            bgcolor=ft.Colors.PRIMARY,
+            color=ft.Colors.WHITE,
+            elevation=4,
+        ),
+    )
+
+    recommended_title = ft.Text(
+        t["recommended_series"],
+        size=20,
+        weight=ft.FontWeight.W_600,
+        color=ft.Colors.ON_SURFACE,
+    )
+
+    def update_labels():
+        lang = page.session.get("lang")
+        t = translations.get(lang or "en", translations["en"])
+        username_field.label = t["enter_username"]
+        username_field.hint_text = t["hint_username"]
+        load_button.text = t["load_profile"]
+        recommended_title.value = t["recommended_series"]
+        language_selector.tooltip = t["language"]
+        app_bar_container.content = top_app_bar(page, translations)
+        page.update()
+
+    def change_language(e):
+        page.session.set("lang", e.control.data)
+        update_labels()
+
+    lang = page.session.get("lang") or "en"
+
+    language_selector = ft.PopupMenuButton(
+        items=[
+            ft.PopupMenuItem(
+                text="English", data="en", on_click=change_language
+            ),
+            ft.PopupMenuItem(
+                text="Español", data="es", on_click=change_language
+            ),
+        ],
+        icon=ft.Icons.LANGUAGE,
+        tooltip=translations[lang]["language"],
+    )
+
     # Componentes de la interfaz
     username_field = ft.TextField(
         label="Enter your MyAnimeList username",
@@ -266,12 +358,7 @@ def main(page: ft.Page):
                                 color=ft.Colors.PRIMARY,
                                 size=24,
                             ),
-                            ft.Text(
-                                "Recommended Series",
-                                size=20,
-                                weight=ft.FontWeight.W_600,
-                                color=ft.Colors.ON_SURFACE,
-                            ),
+                            recommended_title,
                         ],
                         alignment=ft.MainAxisAlignment.CENTER,
                         vertical_alignment=ft.CrossAxisAlignment.CENTER,
@@ -285,7 +372,7 @@ def main(page: ft.Page):
                     border_radius=16,
                     padding=ft.padding.only(
                         top=20, left=20, right=20, bottom=60
-                    ),  # bottom aumentado para evitar corte
+                    ),
                     border=ft.border.all(1, ft.Colors.OUTLINE_VARIANT),
                     width=650,
                     expand=True,
@@ -303,15 +390,14 @@ def main(page: ft.Page):
         expand=True,
     )
 
-    # Contenido scrollable (todo excepto el top bar)
+    # Contenido scrollable
     scrollable_content = ft.Container(
         content=ft.Column(
             [
                 ft.Container(
-                    content=ft.Text(
-                        "User Profile",
-                        size=28,
-                        weight=ft.FontWeight.BOLD,
+                    content=ft.Row(
+                        [language_selector],
+                        alignment=ft.MainAxisAlignment.END,
                     ),
                     margin=ft.margin.only(bottom=20),
                 ),
@@ -319,16 +405,7 @@ def main(page: ft.Page):
                     content=ft.Column(
                         [
                             username_field,
-                            ft.ElevatedButton(
-                                "Load Profile",
-                                icon=ft.Icons.SEARCH,
-                                on_click=fetch_profile,
-                                style=ft.ButtonStyle(
-                                    bgcolor=ft.Colors.PRIMARY,
-                                    color=ft.Colors.WHITE,
-                                    elevation=4,
-                                ),
-                            ),
+                            load_button,
                             error_text,
                         ],
                         horizontal_alignment=ft.CrossAxisAlignment.CENTER,
@@ -342,16 +419,17 @@ def main(page: ft.Page):
             horizontal_alignment=ft.CrossAxisAlignment.CENTER,
         ),
         padding=ft.padding.all(20),
-        expand=True,  # Ocupa todo el espacio disponible
+        expand=True,
     )
+    app_bar_container.content = top_app_bar(page, translations)
 
     # Layout principal con top bar fijo y contenido scrollable
     main_content = ft.Column(
         [
-            top_app_bar(page),  # Top bar fijo
+            app_bar_container,
             ft.Container(
                 content=scrollable_content,
-                expand=True,  # El contenido scrollable ocupa el resto del espacio
+                expand=True,
             ),
         ],
         spacing=0,
@@ -361,11 +439,12 @@ def main(page: ft.Page):
     # Crear vista con scroll solo en el contenido principal
     scrollable_view = ft.Column(
         [main_content],
-        scroll=ft.ScrollMode.AUTO,  # Scroll solo en el contenido
+        scroll=ft.ScrollMode.AUTO,
         expand=True,
     )
 
     page.add(scrollable_view)
+    update_labels()
 
 
 app = ft.app(

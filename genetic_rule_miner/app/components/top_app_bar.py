@@ -1,7 +1,10 @@
 import flet as ft
 
 
-def top_app_bar(page):
+def top_app_bar(page, translations):
+    lang = page.session.get("lang") or "en"
+
+    t = translations.get(lang, translations["en"])
 
     def toggle_theme(e):
         page.theme_mode = (
@@ -27,17 +30,16 @@ def top_app_bar(page):
     def close_window(e):
         page.window.close()
 
-    # --- Botones lado derecho ---
     window_controls = []
     if not page.web:
         window_controls = [
             ft.IconButton(
                 icon=ft.Icons.MINIMIZE,
-                tooltip="Minimize",
+                tooltip=t["minimize"],
                 on_click=minimize_window,
                 icon_size=16,
                 style=ft.ButtonStyle(
-                    shape=ft.RoundedRectangleBorder(radius=4),  # type: ignore
+                    shape=ft.RoundedRectangleBorder(radius=4),
                     overlay_color={
                         ft.ControlState.HOVERED: ft.Colors.with_opacity(
                             0.1, ft.Colors.ON_SURFACE
@@ -47,7 +49,7 @@ def top_app_bar(page):
             ),
             ft.IconButton(
                 icon=ft.Icons.CROP_SQUARE,
-                tooltip="Maximize/Restore",
+                tooltip=t["maximize"],
                 on_click=toggle_maximize,
                 icon_size=16,
                 style=ft.ButtonStyle(
@@ -61,7 +63,7 @@ def top_app_bar(page):
             ),
             ft.IconButton(
                 icon=ft.Icons.CLOSE,
-                tooltip="Close",
+                tooltip=t["close"],
                 on_click=close_window,
                 icon_size=16,
                 style=ft.ButtonStyle(
@@ -75,14 +77,12 @@ def top_app_bar(page):
             ),
         ]
 
-    # --- Contenido principal ---
     row_content = ft.Row(
         [
-            # Lado izquierdo - botón de tema
             ft.Container(
                 content=ft.IconButton(
                     icon=ft.Icons.BRIGHTNESS_6_ROUNDED,
-                    tooltip="Toggle theme",
+                    tooltip=t["theme"],
                     on_click=toggle_theme,
                     icon_size=20,
                     style=ft.ButtonStyle(
@@ -98,10 +98,9 @@ def top_app_bar(page):
                 ),
                 padding=ft.padding.only(left=8),
             ),
-            # Centro - título
             ft.Container(
                 content=ft.Text(
-                    "Series Recommender",
+                    t["title"],
                     size=18,
                     weight=ft.FontWeight.W_500,
                     color=ft.Colors.ON_SURFACE,
@@ -110,7 +109,6 @@ def top_app_bar(page):
                 expand=True,
                 alignment=ft.alignment.center,
             ),
-            # Lado derecho - controles de ventana (solo si no es web)
             ft.Container(
                 content=ft.Row(window_controls, spacing=2),
                 padding=ft.padding.only(right=8),
@@ -120,7 +118,6 @@ def top_app_bar(page):
         vertical_alignment=ft.CrossAxisAlignment.CENTER,
     )
 
-    # --- Contenedor principal ---
     container = ft.Container(
         content=(
             row_content
