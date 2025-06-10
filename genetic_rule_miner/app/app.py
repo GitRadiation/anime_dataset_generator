@@ -457,5 +457,5 @@ def main(page: ft.Page):
 
 
 app = ft.app(
-    target=main, export_asgi_app=False
+    target=main, export_asgi_app=True
 )  # export_asgi_app=False para poder ejecutarlo como app de escritorio
