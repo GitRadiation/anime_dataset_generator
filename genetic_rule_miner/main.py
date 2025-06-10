@@ -1,5 +1,6 @@
 """Main execution pipeline for genetic rule mining."""
 
+import argparse
 import ast
 import time
 
@@ -50,41 +51,6 @@ def convert_text_to_list_column(df: pd.DataFrame, column_name: str) -> None:
             return []
 
     df[column_name] = df[column_name].fillna("[]").apply(parse_cell)
-
-
-def process_target(
-    tid: int,
-    merged_data: pd.DataFrame,
-    user_details_columns: list[str],
-    db_config: DBConfig,
-) -> tuple[int, bool, str | None]:
-    db_manager = DatabaseManager(config=db_config)
-    """Procesa un target individual para minería genética de reglas."""
-    try:
-        # Filtrar merged_data solo para el target actual
-        filtered_data = merged_data[merged_data["anime_id"] == tid].copy()
-        if filtered_data.empty:
-            logger.info(f"⚠️ Target {tid} has no data, skipping.")
-            return (tid, False, "No data for target")
-        rules = GeneticRuleMiner(
-            df=filtered_data,
-            target_column="anime_id",
-            user_cols=user_details_columns,
-            db_manager=db_manager,
-        ).evolve_per_target(tid)
-
-        if rules:
-            db_manager.save_rules(rules)
-            logger.info(
-                f"✅ Target {tid} finished and saved {len(rules)} rules."
-            )
-        else:
-            logger.info(f"⚠️ Target {tid} finished with no rules.")
-
-        return (tid, True, None)
-    except Exception as e:
-        logger.error(f"❌ Target {tid} failed: {e}")
-        return (tid, False, str(e))
 
 
 def remove_obsolete_rules_for_target(
@@ -162,78 +128,154 @@ def remove_obsolete_rules_for_target(
         )
 
 
-def main() -> None:
-    """Execute the complete rule mining pipeline using sequential processing (no joblib)."""
-    try:
-        logger.info("Starting rule mining pipeline")
-
-        # Initialize components
-        db_config = DBConfig()
-        data_manager = DataManager(db_config)
-
-        logger.info("Loading and preprocessing data...")
-        user_details, anime_data, user_scores = (
-            data_manager.load_and_preprocess_data()
-        )
-        if "rating" in user_scores.columns:
-            user_scores = user_scores.drop(columns=["rating"])
-
-        logger.info("Merging preprocessed data...")
-        merged_data = DataManager.merge_data(
-            user_scores, user_details, anime_data
-        )
-
-        if "rating" in merged_data.columns:
-            merged_data = merged_data[merged_data["rating"] != "unknown"]
-
-        merged_data = merged_data.drop(
-            columns=["username", "name", "mal_id", "user_id"], errors="ignore"
-        )
-
-        for col in ["producers", "genres", "keywords"]:
-            if col in merged_data.columns:
-                logger.info(f"Converting column '{col}' from text to list...")
-                convert_text_to_list_column(merged_data, col)
-
-        logger.info("Preparing rule mining tasks...")
-        db_manager = DatabaseManager(config=db_config)
-        # Eliminar reglas obsoletas por target (paralelo)
-        Parallel(n_jobs=-1, prefer="threads", verbose=10)(
-            delayed(remove_obsolete_rules_for_target)(
-                int(tid), merged_data, user_details, db_config
-            )
-            for tid in merged_data["anime_id"].unique()
-        )
-
-        targets = db_manager.get_anime_ids_without_rules() or []
-
-        total_targets = len(targets)
-        logger.info(f"Total targets to process: {total_targets}")
-
-        start_time = time.perf_counter()
-
-        # Procesamiento paralelo con joblib
-        results = list(
-            Parallel(n_jobs=-1, prefer="threads", verbose=10)(
-                delayed(process_target)(
-                    tid, merged_data, user_details.columns.tolist(), db_config
-                )
-                for tid in targets
-            )
-        )
-
-        completed = len(results)
-        logger.info(f"✅ {completed} targets completed.")
-
-        duration = time.perf_counter() - start_time
-        logger.info(
-            f"🎉 Evolution process completed in {duration:.2f} seconds. Total targets: {completed}"
-        )
-
-    except Exception as e:
-        logger.error("Pipeline failed: %s", str(e), exc_info=True)
-        raise
-
-
 if __name__ == "__main__":
+    parser = argparse.ArgumentParser(
+        prog="genetic_rule_miner",
+        description="Pipeline para minería genética de reglas sobre datos de anime y usuarios.",
+        epilog="Ejemplo de uso: python main.py --pop_size 256 --generations 500 --mutation_rate 0.05",
+    )
+
+    parser.add_argument(
+        "--pop_size",
+        type=int,
+        default=512,
+        help="Tamaño de la población inicial del algoritmo genético. Por defecto: 512.",
+    )
+    parser.add_argument(
+        "--generations",
+        type=int,
+        default=720,
+        help="Número de generaciones a ejecutar durante la evolución. Por defecto: 720.",
+    )
+    parser.add_argument(
+        "--mutation_rate",
+        type=float,
+        default=0.10,
+        help="Tasa de mutación (valor entre 0 y 1). Por defecto: 0.10.",
+    )
+    parser.add_argument(
+        "--random_seed",
+        type=int,
+        default=None,
+        help="Semilla aleatoria para reproducibilidad. Si no se especifica, se genera aleatoriamente.",
+    )
+    parser.add_argument(
+        "--max_stagnation",
+        type=int,
+        default=100,
+        help="Número máximo de generaciones sin mejora antes de terminar. Por defecto: 100.",
+    )
+    args = parser.parse_args()
+
+    def process_target_with_params(
+        tid,
+        merged_data,
+        user_details_columns,
+        db_config,
+        pop_size,
+        generations,
+        mutation_rate,
+        random_seed,
+        max_stagnation,
+    ):
+        db_manager = DatabaseManager(config=db_config)
+        try:
+            filtered_data = merged_data[merged_data["anime_id"] == tid].copy()
+            if filtered_data.empty:
+                return (tid, False, "No data for target")
+            rules = GeneticRuleMiner(
+                df=filtered_data,
+                target_column="anime_id",
+                user_cols=user_details_columns,
+                db_manager=db_manager,
+                pop_size=pop_size,
+                generations=generations,
+                mutation_rate=mutation_rate,
+                random_seed=random_seed,
+                max_stagnation=max_stagnation,
+            ).evolve_per_target(tid)
+
+            if rules:
+                db_manager.save_rules(rules)
+                logger.info(
+                    f"✅ Target {tid} finished and saved {len(rules)} rules."
+                )
+            else:
+                logger.info(f"⚠️ Target {tid} finished with no rules.")
+            return (tid, True, None)
+        except Exception as e:
+            logger.error(f"❌ Target {tid} failed: {e}")
+            return (tid, False, str(e))
+
+    def main() -> None:
+        """Execute the complete rule mining pipeline using sequential processing (no joblib)."""
+        try:
+            logger.info("Starting rule mining pipeline with custom parameters")
+
+            db_config = DBConfig()
+            data_manager = DataManager(db_config)
+
+            user_details, anime_data, user_scores = (
+                data_manager.load_and_preprocess_data()
+            )
+            if "rating" in user_scores.columns:
+                user_scores = user_scores.drop(columns=["rating"])
+
+            merged_data = DataManager.merge_data(
+                user_scores, user_details, anime_data
+            )
+
+            if "rating" in merged_data.columns:
+                merged_data = merged_data[merged_data["rating"] != "unknown"]
+
+            merged_data = merged_data.drop(
+                columns=["username", "name", "mal_id", "user_id"],
+                errors="ignore",
+            )
+
+            for col in ["producers", "genres", "keywords"]:
+                if col in merged_data.columns:
+                    convert_text_to_list_column(merged_data, col)
+
+            db_manager = DatabaseManager(config=db_config)
+
+            Parallel(n_jobs=-1, prefer="threads", verbose=10)(
+                delayed(remove_obsolete_rules_for_target)(
+                    int(tid), merged_data, user_details, db_config
+                )
+                for tid in merged_data["anime_id"].unique()
+            )
+
+            targets = db_manager.get_anime_ids_without_rules() or []
+            logger.info(f"Total targets to process: {len(targets)}")
+
+            start_time = time.perf_counter()
+
+            results = list(
+                Parallel(n_jobs=-1, prefer="threads", verbose=10)(
+                    delayed(
+                        lambda tid: process_target_with_params(
+                            tid,
+                            merged_data,
+                            user_details.columns.tolist(),
+                            db_config,
+                            args.pop_size,
+                            args.generations,
+                            args.mutation_rate,
+                            args.random_seed,
+                            args.max_stagnation,
+                        )
+                    )(tid)
+                    for tid in targets
+                )
+            )
+
+            logger.info(f"✅ {len(results)} targets completed.")
+            logger.info(
+                f"🎉 Completed in {time.perf_counter() - start_time:.2f} seconds."
+            )
+        except Exception as e:
+            logger.error("Pipeline failed: %s", str(e), exc_info=True)
+            raise
+
     main()
