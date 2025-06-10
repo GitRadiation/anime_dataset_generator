@@ -48,7 +48,7 @@ This flexibility enables iterative development and smooth deployment across vari
    ```
 2. Navigate to the project directory:
     ```
-    cd anime-dataset-generator
+    cd anime-recommendator
     ```
 
 3. Build and start the containers using Podman Compose:
